@@ -1,0 +1,109 @@
+.page {
+  width: min(100% - 2rem, 76rem);
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
+}
+
+.header {
+  max-width: 55rem;
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  color: var(--action);
+  font-family: var(--font-mono-stack);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  margin: 0.75rem 0 1rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+}
+
+.header p,
+.inspector p {
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.links a {
+  text-underline-offset: 0.3em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.inspector {
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 1.75rem);
+}
+
+.inspector h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.3rem;
+}
+
+.inspector p {
+  margin: 0 0 1.25rem;
+}
+
+.inspector label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.inspector select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  color: var(--ink);
+  background: var(--ground);
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  font: inherit;
+}
+
+.inspector pre {
+  max-height: 30rem;
+  overflow: auto;
+  padding: 1rem;
+  margin: 1rem 0 0;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--ground);
+  color: var(--ink-soft);
+  font-family: var(--font-mono-stack);
+  font-size: 0.8rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.inspector select:focus-visible,
+.inspector pre:focus-visible,
+.links a:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 4px;
+}
+
+@media (max-width: 48rem) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

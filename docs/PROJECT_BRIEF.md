@@ -18,7 +18,39 @@ One community, one mascot with three stage assets, a landing/adoption entry, pet
 
 ## Stretch scope
 
-Accessory saving, multiple communities and market data. No marketplace, launchpad, breeding, trading, staking, chatbot, real-time 3D engine or in-app social feed.
+Accessory saving, multiple communities and market data are deferred. No marketplace, launchpad, breeding, trading, staking, unrestricted chatbot, autonomous wallet agent, second pet, real-time 3D engine or in-app social feed. The bounded read-only companion below is the precise exception to the original chatbot exclusion. It has no signing or transaction authority.
+
+## Approved finale extension — 29 September 2026
+
+The team reports selection for the 7 October finale and organizer permission to
+continue building. Implement the [finale assignments](finale/START_HERE.md) as new
+work; do not backdate it or claim an unconfirmed submitted revision.
+
+Keep MemePet a meme-community participation app, not a token launchpad. First
+resolve the documented automatic community read-back failure. Then add one
+verified community identity/reference integration, a shared cosmetic garden
+mission, a read-only MemePet activity explainer and browser-local personality.
+
+- **Garden rule:** the garden blooms when the configured registry's lifetime
+  community care total reaches **20 confirmed care actions**. Existing confirmed
+  cares count. This newly defined app presentation rule is not a contract reward,
+  unique-user target, token payout or retention metric. Unknown totals cannot
+  unlock it. Do not reset or fabricate live progress for a demonstration.
+- **Personality:** Explore and Practise influence explanation style. The lead
+  saves a resettable profile locally for this browser/chain/registry/wallet.
+  These interactions do not earn growth, change cooldown or train a model.
+- **Companion:** answer bounded questions about the project's confirmed facts:
+  progress, care eligibility and personal/shared contribution. Evidence remains
+  visible without a model. This is not full wallet history or financial advice.
+- **Community identity:** a sourced reference is allowed without claiming a
+  partnership. The lead verifies identity and network coverage before live use.
+
+The companion uses the existing Next.js app. Start with explicitly labelled
+standard explanations. A real free OKX.AI/A2MCP service may expose the same
+deterministic recap; it requires registration and evidence of actual invocation,
+not necessarily a paid language model. Optional model wording needs separately
+established credentials, budget and public abuse controls. No model credits or
+paid service are assumed to be provided by OKX.
 
 ## Architecture boundary
 

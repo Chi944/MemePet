@@ -9,7 +9,7 @@ care for it once a day, and contribute to a shared community ritual.
 Growth comes from confirmed care. No MemePet token to buy; network gas applies.
 
 [![Checks](https://github.com/Chi944/memepet/actions/workflows/checks.yml/badge.svg)](https://github.com/Chi944/memepet/actions/workflows/checks.yml)
-[![OKX Dev Day 2026](https://img.shields.io/badge/OKX_Dev_Day_2026-Submission_in_preparation-black)](https://www.okx.com/en-sg/learn/okx-dev-day-builder-kit)
+[![OKX Dev Day 2026](https://img.shields.io/badge/OKX_Dev_Day_2026-Finalist-black)](https://www.okx.com/en-sg/learn/okx-dev-day-builder-kit)
 [![X Layer testnet](https://img.shields.io/badge/chain-X_Layer_testnet-c6ff00)](https://web3.okx.com/onchainos/dev-docs/xlayer/developer/build-on-xlayer/network-information)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.3.5-black)](https://nextjs.org)
 [![Solidity 0.8.24](https://img.shields.io/badge/Solidity-0.8.24-363636)](https://soliditylang.org)
@@ -29,10 +29,11 @@ Growth comes from confirmed care. No MemePet token to buy; network gas applies.
 | | |
 |---|---|
 | **Event** | OKX Dev Day 2026 |
+| **Finale** | Selected for the 7 October 2026 live pitch; team-provided invitation |
 | **Intended track** | Build a Market — meme application; deployed on X Layer testnet |
 | **Team** | **The four musketeers** — Deston, Kym, Larm and YeeWei |
 | **Live demo** | [memepet.vercel.app](https://memepet.vercel.app) |
-| **Demo video** | [Watch the 3:05 demo](https://youtu.be/ofPOony4nys) · uploaded; **currently Private, judge access pending** |
+| **Demo video** | [Watch the 3:05 demo](https://youtu.be/ofPOony4nys) · last access check: Private on 25 September; not rechecked here |
 | **Contract** | [`0xe844152262D243a7B90F6e07FF7A67F1d7FeD216`](https://www.okx.com/web3/explorer/xlayer-test/address/0xe844152262D243a7B90F6e07FF7A67F1d7FeD216) |
 | **Network** | X Layer testnet · chain **1952** · gas currency **OKB** |
 | **Repository** | [github.com/Chi944/memepet](https://github.com/Chi944/memepet) |
@@ -99,8 +100,9 @@ allowances or token transfers; wallet approval and network gas are still require
 <a id="honest-status"></a>
 ## 🚦 Honest status
 
-Verified **25 September 2026 (Singapore)**. Product runtime: `af886a75`;
-later documentation-only releases retain the same application source.
+Browser evidence below was verified **25 September 2026 (Singapore)** on product
+runtime `af886a75`. Finale work is tracked separately in the
+[four-person build plan](docs/finale/START_HERE.md); planned features are not live claims.
 
 | Area | Verified result |
 |---|---|
@@ -237,6 +239,8 @@ network access. Production builds also download Google Fonts.
 | `/dev/pet` | Fictional pet stages and care-state previews |
 | `/dev/landing` | Fictional landing preview |
 | `/dev/community` | Loading, zero, growing, unavailable and other community previews |
+| `/dev/finale` | Fictional shared inputs for the finale companion, personality and mission work |
+| `/dev/companion` | Development entry point for the finale activity interface; currently a workbench placeholder |
 
 The `/dev/*` routes return **404 in production**. CI checks that gate.
 For local Anvil setup, use [development setup](docs/DEV_SETUP.md) and
@@ -271,7 +275,7 @@ npm run test:contracts
 ```
 
 CI runs these checks and starts the production build to assert `/` returns 200
-and the three `/dev/*` pages return 404. Automated passes are separate from the
+and the `/dev/*` preview pages return 404. Automated passes are separate from the
 [real browser-wallet walkthrough](docs/qa/BROWSER_WALKTHROUGH.md).
 
 ---
@@ -309,7 +313,7 @@ and a read-only holder indicator remain optional future work.
 <a id="known-limitations"></a>
 ## ⚠️ Known limitations
 
-- **Testnet prototype:** one community, one mascot; no mainnet deployment, organic usage metrics or organizer acceptance is claimed.
+- **Testnet prototype:** one community, one mascot; no mainnet deployment or organic usage metrics are claimed. Finale selection does not establish approval of every planned integration.
 - **Community reads:** automatic refresh can return Unknown. A real read-only Retry recovered the confirmed total; automatic refresh itself did not pass that run.
 - **Unrun browser checks:** network away/back and normal-motion foreground playback remain **NOT RUN**. The user kept reduced motion enabled. Real later-day evolution is also unverified; stage artwork is illustrative.
 - **Wallet warnings:** a fresh approval was reported without a warning; automation did not inspect the extension prompt. Leave any warning unapproved and follow [wallet setup](docs/qa/WALLET_SETUP.md).
@@ -319,15 +323,17 @@ and a read-only holder indicator remain optional future work.
 <a id="roadmap"></a>
 ## 🔭 Roadmap
 
-The core implementation is merged and the demo is uploaded. Before
-submission, the team still needs to review the film, make its link accessible to judges and verify signed-out playback,
-finish form/rights declarations and retain the submission receipt. Remaining
-browser checks and the automatic-refresh limitation stay explicit in
-[current status](docs/STATUS.md).
+The team has been selected for the **7 October finale**. The approved extension
+keeps Build a Market as the primary direction: reliable confirmed reads, one
+verified community reference, a cosmetic shared garden at 20 confirmed cares,
+browser-local personality, and a grounded MemePet activity recap. These are
+**in development**, not demonstrated production features.
 
-Future product work may explore multiple communities and accessories after the
-core daily ritual is evaluated with real users. There are no verified retention
-or demand claims yet.
+A free, read-only OKX.AI service is an integration target, pending implementation,
+registration and a genuine successful call. No included model credits or deployed
+AI chat are claimed. The [parallel build plan](docs/finale/START_HERE.md) assigns
+isolated work to all four members. Remaining browser checks and the automatic
+refresh limitation stay explicit in [current status](docs/STATUS.md).
 
 ---
 
@@ -339,7 +345,7 @@ or demand claims yet.
 | **Deston — lead** | Contract, wallet/data integration, routes, shared UI, CI, deployment and release checks |
 | **Kym — pet experience** | Pet presentation, stage artwork and evolution presentation |
 | **Larm — community experience** | Landing/community UI, QA and demo materials |
-| **YeeWei — team member** | Newly joined; included in the four-person introduction without a narration segment |
+| **YeeWei — activity experience** | Assigned the finale activity recap interface; included in the original four-person video introduction |
 
 Responsibilities are documented in [file ownership](docs/OWNERSHIP.md).
 Built with [Next.js](https://nextjs.org), [React](https://react.dev),

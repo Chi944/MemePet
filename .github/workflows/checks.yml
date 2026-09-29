@@ -54,7 +54,7 @@ jobs:
             sleep 2
           done
           fail=0
-          for path in /dev/pet /dev/landing /dev/community; do
+          for path in /dev/pet /dev/landing /dev/community /dev/finale /dev/companion; do
             code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:3000$path")
             echo "$path -> $code"
             if [ "$code" != "404" ]; then
