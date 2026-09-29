@@ -236,6 +236,7 @@ network access. Production builds also download Google Fonts.
 | `/` | Overview, stage artwork and community progress |
 | `/pet` | Connect, adopt, care and view the connected wallet's pet |
 | `/pet/<wallet-address>` | Read-only public pet page and generated share image |
+| `/api/companion` | Read-only, block-sourced MemePet facts and standard explanations; GET describes the API, POST reads a public address |
 | `/dev/pet` | Fictional pet stages and care-state previews |
 | `/dev/landing` | Fictional landing preview |
 | `/dev/community` | Loading, zero, growing, unavailable and other community previews |
@@ -330,9 +331,14 @@ verified community reference, a cosmetic shared garden at 20 confirmed cares,
 browser-local personality, and a grounded MemePet activity recap. These are
 **in development**, not demonstrated production features.
 
-A free, read-only OKX.AI service is an integration target, pending implementation,
-registration and a genuine successful call. No included model credits or deployed
-AI chat are claimed. The [parallel build plan](docs/finale/START_HERE.md) assigns
+The shared services now implement a block-verified recap API, isolated local
+personality storage and a confirmed-total garden adapter. The new presentation
+panels and final route wiring are still in progress. [Dated verification](docs/qa/evidence/FINALE_SERVICES_2026-09-30.md)
+separates automated checks and real read-only RPC evidence from wallet actions.
+
+The free [OKX.AI service packet](docs/finale/OKX_AI_SERVICE.md) is prepared;
+registration and a genuine call through OKX.AI remain pending. No included model
+credits or deployed AI chat are claimed. The [parallel build plan](docs/finale/START_HERE.md) assigns
 isolated work to all four members. Remaining browser checks and the automatic
 refresh limitation stay explicit in [current status](docs/STATUS.md).
 

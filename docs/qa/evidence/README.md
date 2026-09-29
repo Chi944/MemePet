@@ -5,6 +5,10 @@ passes, and a recovered read does not erase an earlier failed refresh.
 
 ## Current records
 
+- [Finale shared services](FINALE_SERVICES_2026-09-30.md): verified recap API, local personality and garden adapters; automated and public-chain read evidence, no fresh wallet acceptance.
+- [Finale receipt retry](FINALE_RECEIPT_RETRY_2026-09-29.md): reproduced viem retry classification repair; genuine latest-release care still pending.
+- [Finale foundation](FINALE_FOUNDATION_2026-09-29.md): shared interfaces, fixture gates and four-person handoffs.
+
 - [Latest-release wallet QA](LATEST_RELEASE_QA_2026-09-24.md): current account/network transitions and follow-up care observations.
 - [Final capture and video QC](FINAL_CAPTURE_2026-09-24.md): Account 2 receipts, adoption read-error recovery, failed community refresh, genuine stills, source hashes and completed-video checks.
 - [First real browser acceptance](FINAL_ACCEPTANCE_2026-09-24.md): earlier wallet's care/cooldown/reload/public view; community header initially stale.

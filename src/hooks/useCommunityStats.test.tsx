@@ -41,6 +41,83 @@ describe("useCommunityStats read stability", () => {
     readContract.mockResolvedValue(BigInt(1));
   });
 
+  it("supplies the garden adapter from confirmed totals without inventing an identity", async () => {
+    readContract.mockResolvedValue(BigInt(20));
+    const { result } = renderHook(() => useCommunityStats({
+      deployment: deploymentFor(1952, "X Layer testnet"), address: null, wrongChain: false,
+    }));
+    expect(result.current.finale.mission.kind).toBe("loading");
+    await waitFor(() => expect(result.current.finale.mission).toMatchObject({
+      kind: "ready", totalCareActions: 20, target: 20, isComplete: true, dataMode: "live",
+    }));
+    expect(result.current.finale.identity.kind).toBe("unconfigured");
+    expect(result.current.finale.onRetry).toBe(result.current.retry);
+
+    readContract.mockRejectedValueOnce(new Error("read failed"));
+    await act(async () => { result.current.finale.onRetry(); });
+    await waitFor(() => expect(result.current.finale.mission.kind).toBe("unavailable"));
+    expect(result.current.finale.community.totalCareActions).toBeNull();
+  });
+
+  it("starts unavailable on the wrong network and does not pretend retry can read", async () => {
+    const deployment = deploymentFor(1952, "X Layer testnet");
+    const { result, rerender } = renderHook(
+      ({ wrongChain }) => useCommunityStats({ deployment, address: null, wrongChain }),
+      { initialProps: { wrongChain: true } },
+    );
+    expect(result.current.community).toMatchObject({
+      isLoading: false, totalCareActions: null,
+      errorMessage: "Community total is unavailable on this network.",
+    });
+    expect(result.current.finale.mission.kind).toBe("unavailable");
+    act(() => { result.current.finale.onRetry(); result.current.refresh(BigInt(11)); });
+    expect(result.current.finale.mission.kind).toBe("unavailable");
+    expect(readContract).not.toHaveBeenCalled();
+
+    rerender({ wrongChain: false });
+    await waitFor(() => expect(result.current.community.totalCareActions).toBe(1));
+    expect(readContract).toHaveBeenLastCalledWith(expect.objectContaining({ blockNumber: undefined }));
+  });
+
+  it.each([
+    { registryAddress: null },
+    { chainId: null },
+    { rpcUrl: null },
+    { rpcUrl: "" },
+    { networkName: null },
+    { status: "not-deployed" as const },
+  ])("keeps missing configuration unavailable before and after retry: %j", (missing) => {
+    const deployment = { ...deploymentFor(1952, "X Layer testnet"), ...missing };
+    const { result } = renderHook(() => useCommunityStats({ deployment, address: null, wrongChain: false }));
+    expect(result.current.community).toMatchObject({ isLoading: false, totalCareActions: null });
+    expect(result.current.community.errorMessage).toMatch(/configured/);
+    expect(result.current.finale.mission.kind).toBe("unavailable");
+    act(() => { result.current.retry(); result.current.refresh(BigInt(11)); });
+    expect(result.current.finale.mission.kind).toBe("unavailable");
+    expect(readContract).not.toHaveBeenCalled();
+  });
+
+  it("clears a confirmed garden when configuration becomes unreadable and recovers after restoration", async () => {
+    const deployment = deploymentFor(1952, "X Layer testnet");
+    const { result, rerender } = renderHook(
+      ({ currentDeployment }: { currentDeployment: Deployment }) => useCommunityStats({
+        deployment: currentDeployment, address: null, wrongChain: false,
+      }),
+      { initialProps: { currentDeployment: deployment } },
+    );
+    await waitFor(() => expect(result.current.finale.mission.kind).toBe("ready"));
+    readContract.mockClear();
+    rerender({ currentDeployment: { ...deployment, rpcUrl: null } });
+    expect(result.current.finale.mission.kind).toBe("unavailable");
+    expect(result.current.community.totalCareActions).toBeNull();
+    act(() => { result.current.finale.onRetry(); });
+    expect(readContract).not.toHaveBeenCalled();
+
+    rerender({ currentDeployment: deployment });
+    await waitFor(() => expect(result.current.community.totalCareActions).toBe(1));
+    expect(readContract).toHaveBeenCalledTimes(1);
+  });
+
   // Regression: chainFromDeployment builds a fresh chain object for any id
   // outside X Layer. Unmemoised, that identity churn re-fired this effect on
   // every render — measured at >7000 reads in 400ms on Anvil.

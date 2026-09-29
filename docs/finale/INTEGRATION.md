@@ -21,8 +21,44 @@ and a `.invalid` source URL. The AI-style example is handwritten fiction.
 
 F0 also implements pure lead-owned helpers in `src/lib/companion/personality.ts`,
 `src/lib/companion/standard-reply.ts` and `src/lib/map-community-mission.ts`.
-They are not yet live route adapters; teammates still consume props/callbacks
-rather than adding their own persistence, fetching or progression logic.
+The lead's live adapters are described below. Teammates still consume
+props/callbacks rather than adding persistence, fetching or progression logic.
+
+## Lead adapters — 30 September
+
+`useCompanion({ deployment, address, wrongChain, confirmedBlockNumber,
+isWriting })` returns `companion: CompanionPanelProps` and
+`personality: PersonalityPanelProps`. Mount it once in the wallet route, pass
+the actual registry hook's `confirmedBlockNumber` and `isSubmitting` as
+`isWriting`, and spread those returned props into the reviewed panels. Codex
+owns this final route wiring when the component PRs are ready.
+
+The hook reads `/api/companion` initially, after a receipt/write transition,
+and on Retry. It does not poll. It rejects stale account/network responses,
+regressing block heights and mismatched API scope; writes hide the previous
+recap. Asking a bounded question uses the validated snapshot locally and
+labels the response `standard`. A retry clears the previous explanation.
+
+`usePersonality` supplies resettable, versioned browser-local preferences,
+isolated by chain, registry and wallet. Storage failures report `unavailable`;
+failed saves do not award interactions. This hook is already composed by
+`useCompanion`; do not mount a second independent store for the same panel.
+
+`useCommunityStats` preserves its existing exports and additionally returns
+`finale: FinaleCommunityPanelProps`. Its mission maps the confirmed community
+view; identity stays `unconfigured` until Larm's candidate is verified. The
+same read-only Retry callback is shared by both community presentations.
+
+The public API fixes its RPC/registry from deployment configuration. It verifies
+chain ID, reads pet and community at one block and rechecks that block's hash.
+`GET /api/companion` describes the API; `POST` accepts only a public `address`,
+optional bounded `question`, and optional decimal `blockNumber`. Responses have
+`schemaVersion: 1`, `scope` and `facts`, with `reply` only when requested. No
+wallet connection or signature is required. See [service preparation](OKX_AI_SERVICE.md).
+
+These adapters do not make the teammate panels visible in production by
+themselves. Their final integration and genuine wallet acceptance are separate
+release gates. Public HTTP verification is not an OKX.AI marketplace invocation.
 
 ## Exact inputs and meaning
 
