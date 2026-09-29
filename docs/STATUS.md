@@ -1,10 +1,35 @@
 # Current delivery status
 
-Updated 25 September 2026 (Singapore). Team **The four musketeers**: Deston,
-Kym, Larm and YeeWei. The recorded release and current follow-up run remain
+Updated 29 September 2026 (Singapore). Team **The four musketeers**: Deston,
+Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Delivered
+## Finale work — 29 September
+
+The team shared its selection invitation for the **7 October 2026** live finale
+and authorized continued building. This establishes finalist selection, not
+approval of every proposed technical integration or an attendance receipt.
+
+[Start the four-person build](finale/START_HERE.md). Kym owns pet personality
+presentation, Larm community presentation and reference research, YeeWei the
+activity recap presentation. Codex handles shared data/services, integration,
+review and release work under Deston's authorization. Deston retains product
+decisions, private setup, wallet approvals and final rehearsal.
+
+F0 supplies shared interfaces, fictional fixtures, a development-only workbench,
+and pure standard-reply/personality/mission helpers. These helpers are not yet
+wired into the public product. The automatic community-refresh defect remains
+open; no additional real wallet QA was performed for the foundation change.
+[Foundation checks](qa/evidence/FINALE_FOUNDATION_2026-09-29.md) passed: 132 app
+tests, 15 contract tests, 8 counter regressions, typecheck, lint, build and five
+production preview gates. The existing lint warning remains.
+
+The proposed free OKX.AI service is not registered or live. Website model replies
+remain optional; no model account, included credits or spending budget has been
+verified. The 25 September submission/access checklist below is historical and
+must not be mistaken for a new check of video access or submitted declarations.
+
+## Delivered — original submission evidence
 
 - Wallet-linked adoption, one care per UTC day, confirmed growth and a shared care counter on X Layer testnet.
 - Responsive black/lime overview, pet home, stage artwork, read-only public pet and share images; development previews return 404 in production.
@@ -30,7 +55,7 @@ warning and no errors. Production-route checks passed: `/` returned 200 and
 all three development routes returned 404. Automated checks do not erase the
 observed automatic counter-refresh failure.
 
-## Remaining
+## Original submission follow-ups — last checked 25 September
 
 | Work | Owner / evidence needed |
 |---|---|
@@ -43,7 +68,8 @@ observed automatic counter-refresh failure.
 rights and delivery fields. The complete scripts/editing pack is preserved in
 private production records and [pinned Git history](https://github.com/Chi944/memepet/blob/19c3fac1f097955f2b6e409ab2f4ab988abc0cee/docs/demo/DEMO_SCRIPT.md).
 No new feature prompt, full voice retake or optional evolution capture is
-required for this edit. No organic usage metrics or organizer approval is claimed.
+required for the original edit. No organic usage metrics are claimed; the later
+finalist invitation is recorded above, separately from this evidence.
 
 Use the [wallet walkthrough](qa/BROWSER_WALKTHROUGH.md), [acceptance checklist](QA_CHECKLIST.md),
 [component worksheet](qa/COMPONENT_QA_WORKSHEET.md) and [evidence index](qa/evidence/README.md)

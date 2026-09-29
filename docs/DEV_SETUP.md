@@ -43,7 +43,7 @@ npm run test:contracts
 ```
 
 `npm test` is a non-interactive Vitest run. CI also starts the production build
-and asserts `/` returns 200 and `/dev/pet`, `/dev/landing`, `/dev/community`
+and asserts `/` returns 200 and `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/finale`, `/dev/companion`
 return 404. For local production inspection, use `npm run start` after building.
 A test pass does not establish a real wallet transaction.
 The separate Node regressions check the read-only counter evidence helper's
@@ -58,6 +58,8 @@ Run the development server and open:
 | `/dev/pet` | Fictional stage/care states, celebration and callback counters |
 | `/dev/landing` | Landing presentation and navigation callback |
 | `/dev/community` | Loading, zero, growing, achieved, unavailable and unknown-target states |
+| `/dev/finale` | Shared fictional companion, personality and garden inputs for parallel finale work |
+| `/dev/companion` | YeeWei's companion preview entry point; F0 supplies a replaceable placeholder |
 
 Previews carry **UI preview — fictional data** labels, never award chain progress,
 and are unavailable in production. Keep them for repeatable visual and error-state QA.
