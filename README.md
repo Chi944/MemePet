@@ -315,6 +315,7 @@ and a read-only holder indicator remain optional future work.
 
 - **Testnet prototype:** one community, one mascot; no mainnet deployment or organic usage metrics are claimed. Finale selection does not establish approval of every planned integration.
 - **Community reads:** automatic refresh can return Unknown. A real read-only Retry recovered the confirmed total; automatic refresh itself did not pass that run.
+- **Finale retry repair:** a reproduced viem error-classification gap is covered by 14 new regressions; [fresh live verification remains pending](docs/qa/evidence/FINALE_RECEIPT_RETRY_2026-09-29.md).
 - **Unrun browser checks:** network away/back and normal-motion foreground playback remain **NOT RUN**. The user kept reduced motion enabled. Real later-day evolution is also unverified; stage artwork is illustrative.
 - **Wallet warnings:** a fresh approval was reported without a warning; automation did not inspect the extension prompt. Leave any warning unapproved and follow [wallet setup](docs/qa/WALLET_SETUP.md).
 - **Security:** no independent security audit. A dated dependency scan cannot establish zero risk.
