@@ -12,6 +12,8 @@ import {
 import { APPROVED_COMMUNITY_ID } from "@/lib/pet-progress";
 import { petRegistryAbi } from "@/lib/pet-registry-abi";
 import { readReceiptWithRetry } from "@/lib/receipt-read-retry";
+import { mapCommunityMission } from "@/lib/map-community-mission";
+import type { FinaleCommunityPanelProps } from "@/types/finale-community";
 import type { CommunityViewModel } from "@/types/view-models";
 
 type UseCommunityStatsArgs = {
@@ -26,33 +28,29 @@ export function useCommunityStats({
   address,
   wrongChain,
 }: UseCommunityStatsArgs) {
-  const cacheKey = `${address ?? "none"}:${deployment.chainId ?? "none"}:${deployment.registryAddress ?? "none"}:${wrongChain ? "wrong" : "ok"}`;
+  // chainFromDeployment builds a fresh object for any chain id outside X Layer,
+  // and this value is an effect dependency: an unstable identity re-fires the
+  // read on every render. getActiveDeployment is now cached, so this is stable.
+  const chain = useMemo(() => chainFromDeployment(deployment), [deployment]);
+  const registryAddress = deployment.registryAddress as Address | null;
+  const canRead = Boolean(registryAddress && chain && deployment.rpcUrl && !wrongChain && deployment.status !== "not-deployed");
+  const initialCommunity = useMemo(() => unknownCommunityViewModel({
+    isLoading: canRead,
+    errorMessage: canRead ? null : wrongChain
+      ? "Community total is unavailable on this network."
+      : "Community total is unavailable until a contract and network are configured.",
+  }), [canRead, wrongChain]);
+  const cacheKey = `${address ?? "none"}:${deployment.chainId ?? "none"}:${deployment.registryAddress ?? "none"}:${deployment.rpcUrl ?? "none"}:${deployment.networkName ?? "none"}:${deployment.status}:${wrongChain ? "wrong" : "ok"}`;
   const [activeKey, setActiveKey] = useState(cacheKey);
-  const [community, setCommunity] = useState<CommunityViewModel>(() =>
-    unknownCommunityViewModel({ isLoading: true }),
-  );
+  const [community, setCommunity] = useState<CommunityViewModel>(() => initialCommunity);
   const [refreshToken, setRefreshToken] = useState(0);
   const [readBlockNumber, setReadBlockNumber] = useState<bigint | undefined>();
 
   if (activeKey !== cacheKey) {
     setActiveKey(cacheKey);
     setReadBlockNumber(undefined);
-    setCommunity(
-      unknownCommunityViewModel({
-        isLoading: Boolean(deployment.registryAddress) && !wrongChain,
-        errorMessage: wrongChain
-          ? "Community total is unavailable on this network."
-          : null,
-      }),
-    );
+    setCommunity(initialCommunity);
   }
-
-  // chainFromDeployment builds a fresh object for any chain id outside X Layer,
-  // and this value is an effect dependency: an unstable identity re-fires the
-  // read on every render. getActiveDeployment is now cached, so this is stable.
-  const chain = useMemo(() => chainFromDeployment(deployment), [deployment]);
-  const registryAddress = deployment.registryAddress as Address | null;
-  const canRead = Boolean(registryAddress && chain && !wrongChain);
 
   useEffect(() => {
     if (!canRead || !registryAddress || !chain) {
@@ -108,17 +106,27 @@ export function useCommunityStats({
   ]);
 
   const refresh = useCallback((blockNumber?: bigint) => {
+    if (!canRead) return;
     setReadBlockNumber(blockNumber);
     setCommunity(unknownCommunityViewModel({ isLoading: true }));
     setRefreshToken((value) => value + 1);
-  }, []);
+  }, [canRead]);
 
   // Recover a failed read without clearing the receipt block. A retry must
   // never fall back to a potentially older "latest" result after confirmed care.
   const retry = useCallback(() => {
+    if (!canRead) return;
     setCommunity(unknownCommunityViewModel({ isLoading: true }));
     setRefreshToken((value) => value + 1);
-  }, []);
+  }, [canRead]);
 
-  return { community, refresh, retry };
+  const finale = useMemo<FinaleCommunityPanelProps>(() => ({
+    community,
+    mission: mapCommunityMission(community),
+    // Larm's sourced candidate still needs verification before live use.
+    identity: { kind: "unconfigured" },
+    onRetry: retry,
+  }), [community, retry]);
+
+  return { community, refresh, retry, finale };
 }

@@ -1,6 +1,6 @@
 # Current delivery status
 
-Updated 29 September 2026 (Singapore). Team **The four musketeers**: Deston,
+Updated 30 September 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
@@ -30,10 +30,32 @@ Fourteen added regressions bring the suite to 146 app tests. The original live
 failure's precise cause remains unproven, and automatic community read-back on
 the new release still needs genuine browser-wallet verification.
 
-The proposed free OKX.AI service is not registered or live. Website model replies
-remain optional; no model account, included credits or spending budget has been
-verified. The 25 September submission/access checklist below is historical and
-must not be mistaken for a new check of video access or submitted declarations.
+## Shared services — 30 September
+
+Codex implemented the public read-only recap API and browser adapters for the
+three teammate panels. Facts are pinned to one block with a final hash check;
+responses are validated against wallet/chain/registry and obsolete sessions are
+discarded. Standard explanations require no model account. Resettable personality
+preferences stay local to this browser and wallet context. The garden uses the
+confirmed total; its community identity remains unconfigured pending research.
+
+Review also repaired an endless-loading case when the community hook starts on
+an unsupported network or without complete deployment settings. All 271 app
+tests, 15 contract tests, 8 counter regressions, typecheck, lint and build passed.
+Lint retains one existing image warning. A real local HTTP recap matched an
+independent X Layer RPC read: Account 3 had one care, 10 points and community
+total 4 at block 42247147. [Service evidence](qa/evidence/FINALE_SERVICES_2026-09-30.md)
+records the exact source and limits.
+
+Teammate panels are not yet wired into the live wallet page. No fresh wallet
+action was performed for this work, so the automatic community refresh,
+network-away/back and other pending browser acceptance rows remain open.
+The [free OKX.AI registration packet](finale/OKX_AI_SERVICE.md) is prepared, but
+the service is not registered or invoked through OKX.AI. Website model replies
+remain optional; no model account, included credits or budget is assumed.
+
+The 25 September submission/access checklist below is historical and must not
+be mistaken for a new check of video access or submitted declarations.
 
 ## Delivered — original submission evidence
 

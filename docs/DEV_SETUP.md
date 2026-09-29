@@ -49,6 +49,32 @@ A test pass does not establish a real wallet transaction.
 The separate Node regressions check the read-only counter evidence helper's
 block selection, interval boundaries and validation; they never sign or write.
 
+## Read-only recap API
+
+After starting the app, `GET /api/companion` returns public API metadata and the
+configured chain/registry. `POST /api/companion` accepts JSON such as:
+
+```json
+{"address":"0xb7E6D789c39D468CfE3c5dA37C29Bd9852247B3a","question":"progress"}
+```
+
+The questions are `progress`, `next-care` and `contribution`. Omit the question
+for facts only. An optional decimal-string `blockNumber` reads a historical or
+receipt snapshot; use its source timestamp rather than implying current state.
+No wallet signature, API key or model account is needed. The endpoint cannot
+accept another RPC URL, registry, chain or arbitrary prompt.
+
+HTTP 200 contains a verified pet snapshot or a genuine no-pet result; failed
+reads use 503. Invalid JSON/input, a stalled body, excessive body size and wrong
+content type use 400/408/413/415. A busy instance returns 429. Bodies are limited
+to 1 KiB; requests and RPC calls have deadlines. Four distinct active reads per
+instance and identical-query coalescing limit load, but are not distributed rate
+limiting or a hosting-quota guarantee. There are no paid model calls.
+
+See [adapter wiring](finale/INTEGRATION.md) and
+[OKX.AI registration preparation](finale/OKX_AI_SERVICE.md). Marketplace listing
+and an actual OKX.AI invocation are separate from a direct API request.
+
 ## Developer previews
 
 Run the development server and open:
