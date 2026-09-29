@@ -1,10 +1,33 @@
 function isReadTemporarilyUnavailable(error: unknown): boolean {
   const visited = new Set<unknown>();
   let cause = error;
+  let unavailableHeaderWrapper = false;
+  let internalRpcCause = false;
   while (typeof cause === "object" && cause !== null && !visited.has(cause)) {
     visited.add(cause);
-    const detail = cause as { name?: string; code?: number; status?: number; cause?: unknown };
-    if (detail.name === "ContractFunctionRevertedError") return false;
+    const detail = cause as {
+      name?: string; code?: number; status?: number; cause?: unknown;
+      data?: unknown; raw?: unknown; signature?: unknown; reason?: unknown;
+    };
+    if (detail.name === "ContractFunctionRevertedError") {
+      // viem can wrap an RPC -32603 (for example, "header not found") as a
+      // contract revert. Only look through this specific provider message with
+      // no revert payload and a nested -32603. ABI errors and other reasons
+      // stay terminal; the wrapper name alone cannot classify the RPC failure.
+      const unavailableState = typeof detail.reason === "string" &&
+        /^header not found$/i.test(detail.reason.trim());
+      if (detail.data !== undefined || detail.raw !== undefined ||
+          detail.signature !== undefined || !unavailableState) return false;
+      unavailableHeaderWrapper = true;
+    }
+    if (unavailableHeaderWrapper) {
+      // Check the whole nested cause chain: viem may put an UnknownRpcError
+      // (-1) above an actual execution-reverted code (3).
+      if (detail.code === 3) return false;
+      if (detail.code === -32603) internalRpcCause = true;
+      cause = detail.cause;
+      continue;
+    }
     if (detail.name === "BlockNotFoundError" || detail.name === "TimeoutError") return true;
     if (detail.name === "HttpRequestError") {
       return detail.status === undefined || [408, 429, 500, 502, 503, 504].includes(detail.status);
@@ -14,7 +37,7 @@ function isReadTemporarilyUnavailable(error: unknown): boolean {
     }
     cause = detail.cause;
   }
-  return false;
+  return unavailableHeaderWrapper && internalRpcCause;
 }
 
 /** Retry unavailable RPC state at one receipt block; never retry a wallet write. */

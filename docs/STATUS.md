@@ -24,6 +24,12 @@ open; no additional real wallet QA was performed for the foundation change.
 tests, 15 contract tests, 8 counter regressions, typecheck, lint, build and five
 production preview gates. The existing lint warning remains.
 
+The [F1 retry follow-up](qa/evidence/FINALE_RECEIPT_RETRY_2026-09-29.md) repairs a
+reproduced viem classification gap for a temporary `header not found` RPC error.
+Fourteen added regressions bring the suite to 146 app tests. The original live
+failure's precise cause remains unproven, and automatic community read-back on
+the new release still needs genuine browser-wallet verification.
+
 The proposed free OKX.AI service is not registered or live. Website model replies
 remain optional; no model account, included credits or spending budget has been
 verified. The 25 September submission/access checklist below is historical and
