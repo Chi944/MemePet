@@ -1,8 +1,9 @@
 # Free OKX.AI service: registration handoff
 
 Prepared **30 September 2026** from current official documentation. This is the
-registration packet for Codex's bounded endpoint work, **not proof that the
-endpoint is deployed, registered or callable through OKX.AI**.
+registration packet for the deployed bounded endpoint. [Direct HTTPS checks
+passed](../qa/evidence/FINALE_SERVICES_2026-09-30.md); **registration, listing
+and invocation through OKX.AI remain pending**.
 
 ## Listing fields
 
@@ -11,9 +12,9 @@ endpoint is deployed, registered or callable through OKX.AI**.
 | Service name | `MemePetVerifiedRecap` |
 | Type | A2MCP, free read-only API |
 | Price per call | `0` |
-| Intended endpoint | `https://memepet.vercel.app/api/companion` |
+| Verified endpoint | `https://memepet.vercel.app/api/companion` |
 | Method / content type | `POST` / `application/json` |
-| Discovery metadata | Intended `GET` at the same URL; verify deployed schema before registration |
+| Discovery metadata | `GET` at the same URL; OpenAPI 3.1 metadata verified after PR #57 |
 
 **Description to paste:**
 
@@ -88,7 +89,7 @@ working MemePet app and standard recap do not depend on marketplace approval.
 |---|---|
 | Implementation and automated checks | PASS at the 30 September code checkpoint — 271 app tests, 15 contract tests, 8 counter regressions, typecheck/lint/build; [dated evidence](../qa/evidence/FINALE_SERVICES_2026-09-30.md) |
 | Local HTTP backed by real testnet reads | PASS — Account 3 at block 42247147 matched an independent RPC read; historical block, no-pet and invalid-input cases also checked |
-| Public HTTPS endpoint verified | PENDING — commit, UTC time, genuine request/result |
+| Public HTTPS endpoint verified | PASS — PR #57, commit `3c9cdd0`; 29 September 18:26:46Z, Account 3 at block 42247566 matched independent RPC; [evidence](../qa/evidence/FINALE_SERVICES_2026-09-30.md) |
 | ASP registered | PENDING — actual service ID |
 | Marketplace listed | PENDING — actual listing URL and status |
 | Invoked through OKX.AI | PENDING — client, UTC time, request and returned block/facts |

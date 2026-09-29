@@ -80,10 +80,33 @@ Additional real HTTP checks at approximately **18:20:22Z**:
 - `/` returned 200; `/dev/pet`, `/dev/community`, `/dev/landing`, `/dev/finale`
   and `/dev/companion` each returned 404 in production.
 
-## Remaining release evidence
+## Public release verification
 
-Public deployment verification will be recorded after the reviewed merge.
-No claim is made here about a deployed commit before that observation.
+[PR #57](https://github.com/Chi944/MemePet/pull/57) passed App, Contracts and
+Vercel checks at head `be1b46467a37fd49aae5bdde6a13a51701a70ac9`, then merged as
+`3c9cdd0243636ebf1159ceafdb59940ba3a133d3` at 2026-09-29T18:25:25Z. GitHub's
+Vercel deployment record **6742315810** associates that commit with Production
+and reports success at **18:26:10Z**. The previous main `ddd7f7e` remains the
+rollback baseline; no force-push or deployment-setting change was used.
+[Post-merge Checks](https://github.com/Chi944/MemePet/actions/runs/36611948361)
+also passed App and Contracts on that exact merge commit.
+
+At **18:26:46.540Z**, the public alias
+`https://memepet.vercel.app/api/companion` returned HTTP 200 with `no-store`,
+schema version 1, chain 1952 and the expected registry. The Account 3 progress
+question returned one care, 10 points, hatchling and community total 4 at block
+**42247566**, timestamp **2026-09-29T18:26:43Z**, hash
+`0x4265366ea4f181f9599585c45285daf559791cf28a78d48511100ffc1d29af04`.
+An independent RPC client matched that source block, pet and total. The reply
+was labelled `standard`; metadata explicitly said `not-registered` for OKX.AI.
+
+Public `/`, `/pet` and Account 3's read-only pet route returned 200; all five
+development previews returned 404. The public zero-address query returned
+genuine no-pet with HTTP 200. An extra `chainId` field was rejected with HTTP
+400. These were HTTP checks, not foreground UI or extension observations.
+
+## Remaining acceptance
+
 The existing genuine-wallet gaps remain unchanged, including automatic
 community refresh on a fresh care, network away/back and later-day evolution.
 Respect the user's reduced-motion preference. Final component/browser QA is
