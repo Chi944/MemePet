@@ -47,6 +47,12 @@ independent X Layer RPC read: Account 3 had one care, 10 points and community
 total 4 at block 42247147. [Service evidence](qa/evidence/FINALE_SERVICES_2026-09-30.md)
 records the exact source and limits.
 
+[PR #57](https://github.com/Chi944/MemePet/pull/57) merged after green checks;
+production deployment 6742315810 records commit `3c9cdd0`. The public HTTPS
+recap was verified at 29 September 18:26:46Z against independent RPC block
+42247566. Its real pet/total matched, no-pet and invalid-input cases behaved
+correctly, public routes returned 200 and all five preview gates returned 404.
+
 Teammate panels are not yet wired into the live wallet page. No fresh wallet
 action was performed for this work, so the automatic community refresh,
 network-away/back and other pending browser acceptance rows remain open.

@@ -62,6 +62,14 @@ adapters. Fixtures stay in tests/development previews, never as live fallbacks.
 Only Codex merges reviewed passing changes. A feature is not release-complete
 because its isolated preview looks good.
 
+**30 September handoff:** the F0 interfaces were merged in PR #55 (`c296e9e`),
+and [PR #57](https://github.com/Chi944/MemePet/pull/57) adds the live adapters
+without changing those props. Each teammate can continue their assigned UI
+against the same shared types. [Exact adapter wiring](INTEGRATION.md#lead-adapters--30-september)
+is owned by Codex after component review. No teammate needs to add RPC calls,
+personality persistence, a model client or another API. The public recap API is
+verified; the visible panels and OKX.AI registration remain separate work.
+
 ## Milestones and evidence
 
 | Target, Singapore time | Deliverable |
