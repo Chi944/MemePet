@@ -84,3 +84,25 @@ walkthrough on the resulting release: due care, automatic pet/community/recap
 read-back, refresh, account/network isolation, failure recovery and disconnect.
 Preserve the earlier failure until a real later run proves recovery. Later-day
 evolution, pitch rehearsal and backup recording remain separate checks.
+
+## Hosted release verification
+
+PR #62 merged as **`6f50a9eb29345c0e417b2f8cbce7c1ef9f25c2e9`** after
+[App/Contracts checks](https://github.com/Chi944/MemePet/actions/runs/36731260847)
+and Vercel preview passed. GitHub production deployment **6762354307** records
+that commit and success at **2026-09-30T14:45:57Z**. Previous good production:
+**6762133252**, commit `e173c983b320d4466ab6dd26f4576db9fa9a33f8`.
+
+- Public browser `/pet` visibly contains the recap and garden, with the accurate
+  disconnected state in a browser with no wallet extension. No wallet was opened.
+- Public HTTP `/` and `/pet` return 200; all five previews return 404.
+- Public recap at **14:46:37.921Z**, Account 3: block **42320758**, one care,
+  10 points, Hatchling and shared total 4. Progress answer is `standard` with
+  the matching block/time. This is a fresh API read, not new care.
+- Deston confirmed Kym has not started her new personality panel. Her role sheet
+  now points to the integrated main branch and unchanged shared props.
+
+The separate landing-copy PR #60 is synchronized with this release and names the
+20-care garden in How it works. Its two targeted copy tests passed locally;
+combined hosted checks must pass before merge. Its source change does not alter
+wallet, contract or adapter behavior.

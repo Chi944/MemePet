@@ -23,7 +23,7 @@ const STEPS = [
   {
     id: "care",
     title: "Care once a day",
-    body: "Each care adds 10 growth points to your pet, and one to the community's shared total. Miss a day and you lose nothing.",
+    body: "Each care adds 10 growth points to your pet, and one to the community's shared garden, which blooms at 20 confirmed care actions. Miss a day and you lose nothing.",
   },
 ] as const;
 
