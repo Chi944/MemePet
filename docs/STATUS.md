@@ -1,8 +1,35 @@
 # Current delivery status
 
-Updated 30 September 2026 (Singapore). Team **The four musketeers**: Deston,
+Updated 1 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
+
+## Personality integration — 1 October
+
+Kym completed F2 in reviewed PR #67, now merged (`a82eafd`). Larm's focus-ring
+repair/QA #66 also merged (`d79df25`) after the lead corrected runbook claims
+about retries, remaining cares and already-known demo-wallet ownership.
+
+The lead integration mounts Explore/Practise, style counts, reset and honest
+storage states on the wallet pet page using the existing local preference
+adapter. Already-open Standard explanations immediately follow the current
+style using the same verified snapshot. Interactions neither fetch again nor
+award growth. Pending writes, wrong networks, disconnected/unconfirmed/no-pet
+states do not offer the controls.
+
+Local checks pass: **343 app tests / 37 files, 15 contract tests, 8 counter
+regressions**, typecheck, lint (one existing image warning), production build,
+public-page 200s and all five production preview 404 gates. Integration tests
+exercise persistence, reset and A–B–A wallet isolation. Hosted browser verification
+is pending at this checkpoint; no new wallet action was performed.
+
+Next assignments are executable in [the four-person handoff](finale/START_HERE.md):
+Kym F5 earned-form viewer, YeeWei F6 concise recap/evidence disclosure, Larm F7
+presentation/recovery QA. Codex owns shared integration and releases. Target
+feature-complete 2 October, QA 3–4 October, freeze 5 October. These new tasks are
+assigned, not claimed started or finished. Deston keeps only private approvals
+and the final review/rehearsal. The free OKX.AI packet is updated against official
+documentation; registration, review and an actual OKX.AI invocation remain pending.
 
 ## Finale integration — 30 September
 
@@ -31,9 +58,9 @@ checks preserve reduced motion and distinguish real reads from fixtures.
 [Integration evidence](qa/evidence/FINALE_INTEGRATION_2026-09-30.md) records the
 build, release and browser boundaries. No fresh wallet action was performed.
 
-Deston confirmed that Kym has not started the new personality panel. Her existing
-pet/art contribution is separate; this new UI is the remaining feature
-deliverable. The local personality engine is already ready for her panel.
+At the 30 September checkpoint Kym had not started the new personality panel.
+That checkpoint is superseded by completed F2/#67 above; her earlier pet/art
+contribution remains separate.
 Larm's landing-copy PR #60 follows the integrated garden release in #62. The optional
 OKX.AI service is still prepared, not registered or invoked.
 

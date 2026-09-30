@@ -163,9 +163,17 @@ export function useCompanion({
     : !configured || !validAddress ? unavailableCompanionFacts()
     : wrongChain ? { kind: "wrong-network", dataMode: "live", expectedChainId: chainId! }
     : isWriting || view.inputKey !== inputKey ? loadingFacts : view.facts;
+  const storedReply: CompanionReplyState = canRead && view.inputKey === inputKey
+    ? view.reply : { kind: "idle" };
+  // A style change rephrases the same verified snapshot locally. It must not
+  // leave an old introduction under the new style or trigger another read.
+  const reply = storedReply.kind === "answer" && storedReply.source === "standard" &&
+    facts.kind === "ready" && storedReply.contextKey === facts.snapshot.contextKey
+    ? createStandardReply(facts, storedReply.question, profile.profile)
+    : storedReply;
   return {
     companion: { facts, personality: profile.profile,
-      reply: canRead && view.inputKey === inputKey ? view.reply : { kind: "idle" }, onAsk, onRetry },
+      reply, onAsk, onRetry },
     personality: { ...profile, dataMode: "live" },
   };
 }

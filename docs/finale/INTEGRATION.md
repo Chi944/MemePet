@@ -3,7 +3,7 @@
 Read the actual TypeScript definitions before implementation. These are the
 single source for prop names; do not invent parallel schemas in UI folders.
 
-| New component export | Shared props | Owner |
+| Existing component export | Shared props | Owner |
 |---|---|---|
 | `PersonalityPanel` | `PersonalityPanelProps` in `src/types/companion.ts` | Kym |
 | `CompanionPanel` | `CompanionPanelProps` in `src/types/companion.ts` | YeeWei |
@@ -31,13 +31,18 @@ isWriting })` returns `companion: CompanionPanelProps` and
 `personality: PersonalityPanelProps`. Mount it once in the wallet route, pass
 the actual registry hook's `confirmedBlockNumber` and `isSubmitting` as
 `isWriting`, and spread those returned props into the reviewed panels. Codex
-owns this final route wiring when the component PRs are ready.
+owns this route wiring. The 1 October integration code uses this single hook
+for both `PersonalityPanel` and `CompanionPanel`; do not add a parallel store.
 
 The hook reads `/api/companion` initially, after a receipt/write transition,
 and on Retry. It does not poll. It rejects stale account/network responses,
 regressing block heights and mismatched API scope; writes hide the previous
 recap. Asking a bounded question uses the validated snapshot locally and
 labels the response `standard`. A retry clears the previous explanation.
+Changing the personality locally recomputes an existing Standard explanation
+only when its `contextKey` matches the same ready snapshot. The introduction
+changes immediately; chain facts and block evidence do not. It performs no new
+read, model call or transaction and does not rephrase an AI-labelled reply.
 
 `usePersonality` supplies resettable, versioned browser-local preferences,
 isolated by chain, registry and wallet. Storage failures report `unavailable`;
@@ -60,10 +65,31 @@ wallet connection or signature is required. See [service preparation](OKX_AI_SER
 
 The lead now mounts `CompanionPanel` and `FinaleCommunitySection` in the wallet
 route, and the latter in the live overview. The wrapper explicitly separates the
-care network from the reference network. Kym's `PersonalityPanel` is the remaining
-presentation integration: use the existing `personality` return from this same
-hook when its PR is ready. Genuine wallet acceptance is a separate release gate.
+care network from the reference network. Kym's component (#67) is merged, and
+its live wiring is now present in the integration branch: show `PersonalityPanel`
+only when a wallet is connected on the correct network, `registry.readStatus`
+is `ready`, `registry.hasPet` is true and `registry.isSubmitting` is false.
+Pending writes and account/network changes hide obsolete controls/facts.
+The integration's release and browser verification are pending until recorded
+in [status](../STATUS.md); code present does not mean wallet acceptance passed.
 Public HTTP verification is not an OKX.AI marketplace invocation.
+
+## Current follow-up interfaces — 1 October
+
+- **F5, Kym:** keep `PetSceneProps` unchanged. The selected earlier earned form
+  is component-local presentation state; `pet.stage`, growth and care remain
+  authoritative. Kym resets selection on a supplied stage change. Codex must
+  key both live and public `PetScene` mounts by the displayed owner's address,
+  deployment chain ID and registry so switching accounts at the same stage
+  remounts the gallery. The live owner is the connected wallet; the public owner
+  is the route address. Do not add wallet access or an identity prop to the scene.
+  This remount work is a lead integration dependency, not already-completed QA.
+- **F6, YeeWei:** preserve `CompanionPanelProps`, every evidence field, question
+  ID and reply-context rule. A native evidence disclosure changes presentation
+  only; it adds no fetching, persistence or inferred readiness from browser time.
+- **F7, Larm:** preserve `FinaleCommunityPanelProps`. Codex supplies any safe
+  local failure/recovery setup. Until an actual failed read and recovery are
+  observed on a named runtime, fixture callback checks remain fixture evidence.
 
 ## Exact inputs and meaning
 
@@ -132,11 +158,10 @@ control never changes personality, earned progress or wallet state.
 
 ### Fixture and route boundaries
 
-F0 adds `/dev/finale` as a labelled fixture workbench, not finished teammate UI.
-Kym extends `PetPreview`; Larm extends `CommunityPreview`. F0 wires
-`/dev/companion` to a minimal `CompanionPreview` stub so YeeWei can replace it
-with her state inspector immediately. Codex owns all routes and their production
-404 gates. No production `CompanionPanel` is implemented by the stub.
+`/dev/finale` remains a labelled fixture workbench. Kym extends `PetPreview`;
+Larm extends `CommunityPreview`; YeeWei extends the implemented `CompanionPreview`
+state inspector at `/dev/companion`. Codex owns all routes and their production
+404 gates. These previews are never a production data fallback.
 
 Fixtures are fictional. Import collections only in tests or labelled preview
 files, not production panel implementations or live adapters. Codex integrates

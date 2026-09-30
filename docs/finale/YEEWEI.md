@@ -1,60 +1,46 @@
-# YeeWei — grounded companion interface
+# YeeWei — a recap judges can read quickly
 
-**Task F3 UI · branch `feat/finale-companion-ui` · base: reviewed F0 merged into main.**
-Build the useful read-only explanation surface, not a second application.
+**Current task F6 · branch `feat/companion-evidence-layout` · assigned 1 October 2026.**
+F3/PR #61 is merged and connected to verified facts. Start a fresh branch from
+current reviewed `origin/main`; preserve its fixes and stable props.
 
 **Allowed:** `src/components/companion/**`, `docs/qa/finale/yeewei/**`.
-Include co-located tests/CSS modules. No API/RPC clients, wallet libraries,
-localStorage, hooks, routes, shared types/fixtures, global CSS, dependencies,
-contracts, deployment or other owners' files.
+No routes, hooks, shared schemas/fixtures, API/RPC, persistence, dependencies or
+other owners' files. Reuse installed components and supplied callbacks.
 
-## Deliver
+## Build
 
-- Export `CompanionPanel` using `CompanionPanelProps` from
-  `src/types/companion.ts`. Three controls call `onAsk` with `progress`,
-  `next-care` or `contribution`. A Hatchling can use recap immediately.
-- A fact/evidence card showing the supplied network, wallet, registry, read
-  block/time, care count, growth/stage and care eligibility where known. Label
-  the scope **MemePet activity**, not full wallet history. Community total may
-  be unknown even when personal facts are ready. F0 has no receipt links: do
-  not invent them; ask Codex for any extension.
-- Safe response text and personality context. Display `standard` answers as
-  **Standard explanation**; label actual `ai` answers distinctly. A fictional
-  AI fixture is not a real provider result or an OKX.AI integration.
-- All facts/reply variants, including needs-wallet, wrong-network, loading,
-  no-pet, unavailable, pending and answered. Facts remain readable when only the
-  explanation fails. Ignore loading/answer replies with an obsolete `contextKey`.
-- Replace F0's minimal `CompanionPreview` stub with a real state inspector using
-  shared facts/reply/personality fixtures. `/dev/companion` is already wired for
-  this work and blocked in production; do not edit its route or fixture schema.
+- Rework the ready card so its first view answers "Where is my pet now?":
+  current stage, growth, personal confirmed cares and next eligible care time.
+  Keep question controls and the answer easy to reach. Do not bury them below
+  a twelve-row technical table.
+- Put detailed registry/block/observation evidence in a keyboard-accessible
+  native `details` disclosure, "View verified evidence". Retain every existing
+  source field. Keep the account, network, scope (MemePet activity only), and
+  standard/AI/fixture provenance understandable even when details are closed.
+- Use only supplied facts; do not calculate care-ready from browser time or add
+  streaks, retention, transaction hashes, holder status or full-wallet history.
+  Unknown community total remains unknown, distinct from personal care count.
+- Preserve all current empty/loading/wrong-network/failure states and safe text
+  rendering. A failed explanation cannot erase valid facts. Obsolete-context
+  replies stay hidden. Source `standard` remains "Standard explanation".
+- Kym owns the separate personality controls. Consume the supplied style as
+  today; do not duplicate Explore/Practise, persistence or model calls.
 
-## Accept when
+## Acceptance and handoff
 
-- A question fires one callback with the correct ID. Pending/non-ready controls
-  do not issue duplicate or inapplicable requests; retry is read-only.
-- Unknown stays unknown. No inferred streaks, dates, fees, transfer history or
-  unsupplied transaction proof appears. Standard/model/fixture provenance is clear.
-- An old account/snapshot reply is hidden when its context differs from facts.
-- Read and reply failures are separate; valid facts survive explanation failure.
-- Response text cannot execute HTML. Long text/addresses do not overflow and
-  keyboard focus/status announcements are usable at 320/390/1440px.
-- Meaningful tests cover unavailable facts, no-pet, pending input, stale reply,
-  safe text and provenance. Run component tests, typecheck/lint and report actual
-  visual checks separately.
+Test disclosure keyboard access, preserved evidence, answer visibility,
+unknown/no-pet/failure distinctions and obsolete reply isolation. Inspect
+320/390/1440px with long addresses and actual question/answer states. Keep
+callback IDs and `CompanionPanelProps` unchanged. Run component tests,
+typecheck/lint and separate automated results from browser observations.
 
-## Handoff
+Target PR by **2 October, Singapore**. Open a draft early. Return base/head SHAs,
+screenshots, actual checks, limitations and precise shared integration requests.
+Codex handles review, conflicts, merge and release.
 
-Open a draft PR early with state screenshots/viewing steps, actual checks and
-exact integration requests. After integration, record a few consented usability
-observations in your QA folder. These are small tests, not retention or organic
-traction evidence. Codex reviews, merges and releases.
-
-## Paste into YeeWei's coding session
+## Paste into YeeWei's agent
 
 ```text
-Implement MemePet task F3 UI from docs/finale/YEEWEI.md on feat/finale-companion-ui, starting from the reviewed merged F0 foundation on origin/main. Read AGENTS.md, scope, ownership, setup, docs/finale/INTEGRATION.md and actual shared types/fixtures first. Record your base SHA; preserve existing work and state intended files before editing.
-
-Own only src/components/companion/** and docs/qa/finale/yeewei/**. Build CompanionPanel, meaningful tests and CompanionPreview described in your sheet. Use supplied facts, personality, reply and callbacks to explain progress, eligibility and contribution. Include evidence and distinct unknown/no-pet/pending/failure states, hide stale-context replies, and keep standard explanations visibly labelled. No wallet/RPC/API calls, persistence, unsafe HTML or invented facts. Codex owns optional model/OKX.AI service access and route wiring.
-
-Use frozen types/fixtures and request missing shared inputs instead of inventing another schema. Open a draft PR early, commit/push scoped work, and return its URL with screenshots/viewing steps, actual checks and limits. Codex handles adapters, wiring, conflicts, review, merge and release. Do not merge/deploy yourself. Continue independent UI work when an integration request is pending.
+Continue MemePet with task F6 in docs/finale/YEEWEI.md. F3/PR #61 is already integrated. Read AGENTS.md, scope, ownership, setup and docs/finale/INTEGRATION.md. Preserve local work, fetch origin and start feat/companion-evidence-layout from current reviewed origin/main; record its SHA. Build a concise ready recap with accessible verified-evidence disclosure, question controls and clear answer provenance only in src/components/companion/** and docs/qa/finale/yeewei/**. Preserve all supplied facts/states, source labels, safe rendering and stale-context protection. Do not add fetching, storage, models, routes, shared props or packages. Run meaningful tests/typecheck/lint and real responsive/keyboard observations. Commit/push, open a draft PR early and return its URL with actual results. Codex reviews/merges/releases. Target 2 October Singapore.
 ```

@@ -3,24 +3,29 @@
 **Approved 29 September 2026.** The team reports selection for the 7 October
 finale and permission from OKX developers to continue building. This folder is
 the current assignment set. It supersedes the earlier downloaded proposal where
-scope differs; it does not claim these features have shipped.
+scope differs. **Updated 1 October 2026:** the first wave of teammate components
+is merged, including Kym's personality panel (#67) and Larm's release QA/focus
+repair (#66). Their merge does not by itself establish integrated release or
+wallet acceptance.
 
 ## What we are building
 
 One clear demonstration: **care → confirmed progress → shared garden → Mochi
 explains the evidence in a personality shaped by your interactions.**
 
-1. Codex fixes and verifies the existing automatic community read-back failure.
-2. Larm builds a credible community reference and a garden that blooms at **20
-   lifetime confirmed care actions** from the configured registry. Existing cares
-   count; this is a new cosmetic app rule, not a contract reward or token launch.
-3. YeeWei builds a bounded MemePet recap with evidence and useful questions.
-4. Kym makes Explore/Practise interactions visibly shape Mochi's explanation
-   style, reusing the three existing stage artworks.
-5. Codex supplies verified data, isolated local personality storage, standard
-   explanations and integration. A real free OKX.AI service can expose the same
-   deterministic recap if registration and invocation succeed; optional model
-   wording needs a separate access/budget/abuse-control decision.
+The garden and bounded recap already use live adapters. The garden blooms at
+**20 lifetime confirmed care actions** from the configured registry, including
+earlier cares; this is a cosmetic app rule, not a contract reward. Explore and
+Practise change a browser-local explanation style without changing earned
+growth. The personality panel's live wiring is now present in the integration
+branch; its release and browser verification remain pending in [status](../STATUS.md).
+
+The remaining build is deliberately small: an earlier-earned-form viewer, a
+clearer recap/evidence layout, and combined presentation/recovery QA. Codex owns
+integration, reliability and final release verification. A free OKX.AI service
+can expose the same deterministic recap if authentication, registration and
+invocation succeed; the registration packet is prepared, not an approved listing.
+Optional model wording still needs a separate access/budget/abuse-control decision.
 
 No second pet, token launchpad, contract migration, trading, autonomous signing,
 new application or chat-history database. No invented community partnership,
@@ -30,9 +35,9 @@ holders, retention or model-training claims. Standard explanations are labelled.
 
 | Human + coding agent | Build | Branch / instructions |
 |---|---|---|
-| Kym | Pet interactions, personality and stage presentation | `feat/finale-pet` · [KYM.md](KYM.md) |
-| Larm | Community reference, 20-care garden, landing and independent QA | `feat/finale-community` · [LARM.md](LARM.md) |
-| YeeWei | Read-only recap, questions, evidence and response states | `feat/finale-companion-ui` · [YEEWEI.md](YEEWEI.md) |
+| Kym · F5 | View current/earlier earned forms while preserving actual progress | `feat/earned-stage-viewer` · [KYM.md](KYM.md) |
+| Larm · F7 | Presentation/recovery QA, timed runbook and backup shot list | `test/finale-presentation-recovery` · [LARM.md](LARM.md) |
+| YeeWei · F6 | Concise recap with accessible verified-evidence disclosure | `feat/companion-evidence-layout` · [YEEWEI.md](YEEWEI.md) |
 | Codex in Deston's session | Reliability, shared interfaces/data, integration, tests, reviews and release | [CODEX.md](CODEX.md) |
 
 **Deston:** privately handle necessary account setup, genuinely approve wallet
@@ -42,11 +47,12 @@ their own coding session, review its result and return a PR link.
 
 ## Start together without conflicts
 
-1. Codex lands the reviewed **F0 foundation** first. Do not build against the old
-   main while F0 is in review. Its PR and merge commit are the start signal.
-2. In a clean checkout, fetch `origin` and create your assigned branch from that
-   reviewed `origin/main`. Record `git rev-parse HEAD` as the base in the PR. No
-   base SHA is invented here; every lane uses the actual merged F0 revision.
+1. Preserve any local work. The F0 foundation and first component PRs are already
+   merged; do not rebuild them or reuse their merged branches for F5/F6/F7.
+2. In a clean checkout, fetch `origin` and create your new assigned branch from
+   the **current reviewed `origin/main`**, including later integration fixes.
+   Record `git rev-parse HEAD` as the actual base in the PR. Do not reset to the
+   original F0 commit or start from an unreviewed sibling branch.
 3. Read [AGENTS](../../AGENTS.md), [scope](../PROJECT_BRIEF.md),
    [ownership](../OWNERSHIP.md), [setup](../DEV_SETUP.md),
    [shared contract](INTEGRATION.md) and your role sheet. Paste the starter prompt
@@ -57,21 +63,22 @@ their own coding session, review its result and return a PR link.
    or control separate teammates' Claude sessions. These committed handoffs plus
    the PRs are the coordination record; messages are not assumed delivered.
 
-Each teammate can proceed against labelled fixtures while Codex builds live
-adapters. Fixtures stay in tests/development previews, never as live fallbacks.
+Each teammate can proceed against the existing stable props and labelled
+fixtures while Codex completes shared integration. Fixtures stay in
+tests/development previews, never as live fallbacks.
 Only Codex merges reviewed passing changes. A feature is not release-complete
 because its isolated preview looks good.
 
-**30 September handoff:** the F0 interfaces were merged in PR #55 (`c296e9e`),
-and [PR #57](https://github.com/Chi944/MemePet/pull/57) adds the live adapters
-without changing those props. Each teammate can continue their assigned UI
-against the same shared types. [Exact adapter wiring](INTEGRATION.md#lead-adapters--30-september)
-is owned by Codex after component review. No teammate needs to add RPC calls,
-personality persistence, a model client or another API. The public recap API is
-verified. PR #59 (garden) and PR #61 (recap) are merged; the lead integration
-wires those panels into the public routes. Kym should continue `feat/finale-pet`
-against the unchanged props and open her PR; no new data hook is needed.
-OKX.AI registration and genuine wallet acceptance remain separate work.
+**Completed foundation/history:** F0 interfaces merged in PR #55 (`c296e9e`);
+[PR #57](https://github.com/Chi944/MemePet/pull/57) added the live adapters.
+The garden (#59), recap (#61), live integration (#62), landing copy (#60),
+read recovery (#64), motion control (#65), release QA/focus repair (#66) and
+personality component (#67) are merged. Dated evidence records what each run
+actually checked. [Exact adapter wiring](INTEGRATION.md#lead-adapters--30-september)
+stays with Codex; teammates add no RPC calls, persistence, model client or API.
+The new personality integration and F5/F6/F7 work need their own release checks.
+The historical automatic community-refresh failure remains recorded; genuine
+wallet acceptance on the final combined release has not been replaced by tests.
 
 ## Milestones and evidence
 
@@ -79,7 +86,7 @@ OKX.AI registration and genuine wallet acceptance remain separate work.
 |---|---|
 | 29 September | Merge foundation; three teammates start their branches |
 | 30 September–1 October | Components/adapters; resolve reads; free OKX.AI service feasibility and optional model decision |
-| 2 October | Integrated feature-complete build; stop expanding scope |
+| 2 October | F5/F6 initial PRs and F7 runbook/QA; integrated feature-complete build; stop expanding scope |
 | 3–4 October | Real wallet checks, recovery, later-day progress and usability |
 | 5 October | Code freeze except blockers; record a labelled backup demo |
 | 6 October | Timed three-minute rehearsal and venue/network fallback |
@@ -90,7 +97,9 @@ Known starting main is `fa78ed0459f9e1cddd9a84e5100c91da682339d1`. It is a
 the original video and dated QA. [Previous wallet evidence](../qa/evidence/LATEST_RELEASE_QA_2026-09-24.md)
 records a genuine automatic community refresh failure followed by successful
 read-only retry; do not change that record to a pass. Network-away/back and
-normal-motion playback were not run. Respect Deston's reduced-motion preference.
+normal-motion playback were not run at that checkpoint. Later motion evidence
+is separate. Respect the device preference outside Deston's explicitly approved
+Mochi-artwork exception and preserve the saved Animate Mochi off control.
 
 The [status](../STATUS.md) separates the submission release from the new finale
 work. New PRs and dated evidence describe later changes. Complete the attendance

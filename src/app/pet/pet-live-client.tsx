@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CarePanel } from "@/components/pet/CarePanel";
 import { PetScene } from "@/components/pet/PetScene";
+import { PersonalityPanel } from "@/components/pet/PersonalityPanel";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -30,7 +31,7 @@ export function PetLiveClient() {
     address: wallet.address,
     wrongChain: wallet.wrongChain,
   });
-  const { companion } = useCompanion({
+  const { companion, personality } = useCompanion({
     deployment: wallet.deployment,
     address: wallet.address,
     wrongChain: wallet.wrongChain,
@@ -278,6 +279,8 @@ export function PetLiveClient() {
               Standard explanations of confirmed MemePet activity. These questions do not send transactions.
             </p>
           </div>
+          {wallet.address && !wallet.wrongChain && registry.readStatus === "ready" &&
+            registry.hasPet && !registry.isSubmitting ? <PersonalityPanel {...personality} /> : null}
           <CompanionPanel {...companion} />
         </section>
         <FinaleCommunitySection {...community.finale} deployment={wallet.deployment} />
