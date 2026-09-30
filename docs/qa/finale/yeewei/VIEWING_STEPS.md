@@ -13,79 +13,47 @@ npm test            # all tests pass
 
 These have been run and passed. Results are in the PR description.
 
-## Visual inspection — `/dev/companion`
+## Manual visual checks — `/dev/companion`
 
-The development server must be running (`npm run dev`) and the app must be in development mode. This route returns 404 in production.
+**Checked by:** Yee-Wei  
+**Date:** 2026-09-30  
+**Method:** development server (`npm run dev`), browser at `http://localhost:3000/dev/companion`
+
+The following checks **passed**. Only these checks are recorded as confirmed; nothing beyond this list is claimed as visually verified.
+
+| Check | Result |
+|---|---|
+| `ready` facts render correctly (evidence card visible with all fields) | ✓ Pass |
+| Three question controls present and functional | ✓ Pass |
+| `Standard explanation` label present on standard answers | ✓ Pass |
+| `unavailable` reply keeps confirmed facts card visible | ✓ Pass |
+| `no-pet` state renders correct message | ✓ Pass |
+| `unavailable` facts state renders correctly | ✓ Pass |
+| Fixture provenance badge visible | ✓ Pass |
+| Page usable at 390 px mobile width | ✓ Pass |
+| Desktop layout usable | ✓ Pass |
+
+### Checks not yet run by Yee-Wei (not claimed above)
+
+- `needsWallet`, `wrongNetwork`, `loading`, `zeroActivity`, `unknownCommunity` facts states not individually confirmed.
+- `aiAnswer`, `loading` reply, `idle` reply not individually confirmed.
+- Stale reply (contextKey mismatch) hide behaviour not confirmed visually.
+- Personality indicator switching not confirmed.
+- Callback log counter behaviour not confirmed.
+- 320 px and 1440 px viewport widths not confirmed.
+- Browser test with a real wallet on X Layer testnet (chain 1952) — requires integration.
+- Live read via `POST /api/companion` — requires integration.
+- Reduced-motion preference — not checked.
+- Screen reader live region announcement — not checked.
+
+## Viewing steps for future review
+
+The development server must be running (`npm run dev`). This route returns 404 in production.
 
 1. Open [http://localhost:3000/dev/companion](http://localhost:3000/dev/companion).
-2. Confirm the banner reads **"UI preview — fictional data"** in amber.
-3. Confirm the heading reads **"Companion UI workbench"**.
-4. Confirm the disclaimer: "No wallet, RPC or model calls."
-
-### State inspector: facts states
-
-Work through each radio in the **Facts state** fieldset and confirm:
-
-| Selection | Expected |
-|---|---|
-| `needsWallet` | "Connect a wallet to read MemePet activity." No ask buttons. |
-| `wrongNetwork` | "Switch to chain 1952 to read MemePet activity." No ask buttons. |
-| `loading` | "Loading MemePet activity…" No ask buttons. |
-| `noPet` | "No pet found in this wallet at the checked registry." No ask buttons. |
-| `unavailable` | Error message. **Retry read** button visible. No ask controls. |
-| `ready` | Full facts card with 12 rows (Network … Community total). Three ask buttons visible. |
-| `zeroActivity` | Ready card with care count 0, growth points 0, community total 0 (not "Unknown"). |
-| `unknownCommunity` | Ready card with Community total: **Unknown (not zero)**. |
-
-### State inspector: reply states (set facts to `ready` first)
-
-| Selection | Expected |
-|---|---|
-| `idle` | No reply area rendered. |
-| `loading` | "Mochi is thinking…" shown. Ask buttons are **disabled**. |
-| `standardAnswer` | **Standard explanation** badge (green). Answer text visible. |
-| `aiAnswer` | **AI response** badge (blue). Answer text visible. No "Standard explanation" label. |
-| `unavailable` | Reply error message visible. Facts card still shows confirmed data. **Retry** button in reply area. |
-
-### Stale reply check
-
-1. Set facts to `ready`, reply to `standardAnswer`.
-2. The standard answer appears with "Standard explanation" label.
-3. Set facts to `noPet` (which has no contextKey). The answer disappears — it was from a different context.
-
-### Provenance check
-
-- With `standardAnswer`: the label reads exactly **"Standard explanation"** (green badge). No "AI response" label.
-- With `aiAnswer`: the label reads exactly **"AI response"** (blue badge). No "Standard explanation" label.
-- Fixture badge (**Fixture**, amber) appears in both states.
-
-### Personality indicator
-
-With facts set to `ready`:
-- Personality `playful` → shows "Mochi's style: Playful"
-- Personality `curious` → shows "Mochi's style: Curious"
-- Personality `focused` → shows "Mochi's style: Focused"
-
-### Callback log
-
-1. With facts `ready`, click **Explain progress** → `onAsk calls: progress`.
-2. Click **Next care time** → `onAsk calls: progress, next-care`.
-3. Click **Contribution** → `onAsk calls: progress, next-care, contribution`.
-4. Click **Clear log** → log resets.
-5. Set reply to `loading` → three ask buttons disabled. Click does not append to log.
-6. Set facts to `unavailable`, click **Retry read** → `onRetry: 1 time`.
-
-### Responsive layout
-
-Check at three viewport widths. The browser DevTools device toolbar works:
-
-| Width | Check |
-|---|---|
-| 320 px | Facts list is readable; no horizontal overflow; addresses wrap cleanly. |
-| 390 px | Controls wrap to two rows if needed; all text is readable. |
-| 1440 px | Panel has reasonable max-width; no stretched layout. |
-
-Long fictional addresses in fixture data are truncated (`0x…` format) with the full value in the `title` attribute.
+2. The banner reads **"UI preview — fictional data"**.
+3. Facts, reply and personality radio pickers are in the top card.
+4. The `CompanionPanel` renders below the picker card.
 
 ## Integration requests for Codex
 
