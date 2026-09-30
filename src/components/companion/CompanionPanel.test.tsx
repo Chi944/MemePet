@@ -95,6 +95,46 @@ describe("CompanionPanel", () => {
     expect(screen.queryByText("Standard explanation")).not.toBeInTheDocument();
   });
 
+  it("updates the same polite region for immediate answers and clears it when the snapshot changes", () => {
+    const { rerender } = render(<CompanionPanel {...baseProps} />);
+    const region = screen.getByRole("region", { name: "Mochi's response" });
+    expect(region).toBeEmptyDOMElement();
+    expect(region).toHaveAttribute("aria-live", "polite");
+    expect(region).toHaveAttribute("aria-atomic", "true");
+
+    rerender(<CompanionPanel {...baseProps} reply={companionReplyFixtures.standardAnswer} />);
+    expect(screen.getByRole("region", { name: "Mochi's response" })).toBe(region);
+    expect(region).toHaveTextContent(companionReplyFixtures.standardAnswer.text);
+
+    rerender(
+      <CompanionPanel
+        {...baseProps}
+        facts={{
+          ...companionFactsFixtures.ready,
+          snapshot: { ...companionFactsFixtures.ready.snapshot, contextKey: "OTHER_WALLET" },
+        }}
+        reply={companionReplyFixtures.standardAnswer}
+      />,
+    );
+    expect(screen.getByRole("region", { name: "Mochi's response" })).toBe(region);
+    expect(region).toBeEmptyDOMElement();
+  });
+
+  it("preserves the response region through loading and clears busy state for the answer", () => {
+    const { rerender } = render(<CompanionPanel {...baseProps} />);
+    const region = screen.getByRole("region", { name: "Mochi's response" });
+
+    rerender(<CompanionPanel {...baseProps} reply={companionReplyFixtures.loading} />);
+    expect(screen.getByRole("region", { name: "Mochi's response" })).toBe(region);
+    expect(region).toHaveAttribute("aria-busy", "true");
+    expect(region).toHaveTextContent("Mochi is thinking…");
+
+    rerender(<CompanionPanel {...baseProps} reply={companionReplyFixtures.standardAnswer} />);
+    expect(screen.getByRole("region", { name: "Mochi's response" })).toBe(region);
+    expect(region).toHaveAttribute("aria-busy", "false");
+    expect(region).toHaveTextContent(companionReplyFixtures.standardAnswer.text);
+  });
+
   it("labels standard answers as 'Standard explanation', not 'AI response'", () => {
     render(
       <CompanionPanel {...baseProps} reply={companionReplyFixtures.standardAnswer} />,

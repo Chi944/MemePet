@@ -13,6 +13,18 @@ npm test            # all tests pass
 
 These have been run and passed. Results are in the PR description.
 
+### Codex review follow-up — 30 September 2026
+
+- Kept an empty polite response region mounted before replies arrive, with stale
+  replies removed from that same region when the snapshot changes.
+- Used the shared high-contrast error token and allowed unbroken reply/error
+  strings to wrap inside the panel.
+- Targeted component tests: **14 passed**, including immediate-answer,
+  loading-to-answer and stale-context announcement-region regressions.
+- Typecheck and lint passed; lint retains the existing ShareImage warning.
+- These are code and automated checks. Screen-reader behavior and responsive
+  rendering after these changes still require actual browser verification.
+
 ## Manual visual checks — `/dev/companion`
 
 **Checked by:** Yee-Wei  

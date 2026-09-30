@@ -166,42 +166,40 @@ function ReplySection({
   reply: CompanionReplyState;
   onRetry: () => void;
 }) {
-  if (reply.kind === "loading") {
-    return (
+  const hasResponse = reply.kind === "loading" || reply.kind === "answer";
+  return (
+    <>
+      {/* Keep this region mounted before an immediate standard answer arrives. */}
       <div
-        className={styles.replyArea}
-        role="status"
+        className={hasResponse ? styles.replyArea : undefined}
+        role="region"
+        aria-label="Mochi's response"
         aria-live="polite"
-        aria-busy="true"
+        aria-atomic="true"
+        aria-busy={reply.kind === "loading"}
       >
-        <p>Mochi is thinking…</p>
+        {reply.kind === "loading" && <p>Mochi is thinking…</p>}
+        {reply.kind === "answer" && (
+          <>
+            <span className={reply.source === "ai" ? styles.aiLabel : styles.standardLabel}>
+              {reply.source === "ai" ? "AI response" : "Standard explanation"}
+            </span>
+            <p>{reply.text}</p>
+          </>
+        )}
       </div>
-    );
-  }
-  if (reply.kind === "unavailable") {
-    return (
-      <div className={styles.replyArea}>
-        <p role="alert" className={styles.errorText}>
-          {reply.message}
-        </p>
-        <Button tone="quiet" onClick={onRetry}>
-          Retry
-        </Button>
-      </div>
-    );
-  }
-  if (reply.kind === "answer") {
-    const isAI = reply.source === "ai";
-    return (
-      <div className={styles.replyArea} role="region" aria-label="Mochi's response">
-        <span className={isAI ? styles.aiLabel : styles.standardLabel}>
-          {isAI ? "AI response" : "Standard explanation"}
-        </span>
-        <p>{reply.text}</p>
-      </div>
-    );
-  }
-  return null;
+      {reply.kind === "unavailable" && (
+        <div className={styles.replyArea}>
+          <p role="alert" className={styles.errorText}>
+            {reply.message}
+          </p>
+          <Button tone="quiet" onClick={onRetry}>
+            Retry
+          </Button>
+        </div>
+      )}
+    </>
+  );
 }
 
 export function CompanionPanel({
@@ -252,7 +250,7 @@ export function CompanionPanel({
         </>
       )}
 
-      {showReply && <ReplySection reply={reply} onRetry={onRetry} />}
+      <ReplySection reply={showReply ? reply : { kind: "idle" }} onRetry={onRetry} />
     </div>
   );
 }
