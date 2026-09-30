@@ -20,8 +20,12 @@ states do not offer the controls.
 Local checks pass: **343 app tests / 37 files, 15 contract tests, 8 counter
 regressions**, typecheck, lint (one existing image warning), production build,
 public-page 200s and all five production preview 404 gates. Integration tests
-exercise persistence, reset and A–B–A wallet isolation. Hosted browser verification
-is pending at this checkpoint; no new wallet action was performed.
+exercise persistence, reset and A–B–A wallet isolation. PR #68 merged as
+`3cd4b0a`; production deployment `6767546180` succeeded. Hosted Chrome verified
+Explore/Practise, immediate answer rewording, saved counts after reload and reset
+back to the initial zero-count profile. Account 2 remained Buddy/20 points and
+the community stayed at 7. [Release evidence](qa/evidence/PERSONALITY_INTEGRATION_2026-10-01.md)
+records the exact runtime and limits; no new wallet action was performed.
 
 Next assignments are executable in [the four-person handoff](finale/START_HERE.md):
 Kym F5 earned-form viewer, YeeWei F6 concise recap/evidence disclosure, Larm F7

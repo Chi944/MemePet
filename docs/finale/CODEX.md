@@ -9,18 +9,18 @@ their shared contract, verified adapters, wiring, PR review and release.
 F0/shared adapters and the first teammate component wave are merged, including
 Kym's personality panel (#67) and Larm's release QA/focus repair (#66). Garden
 and recap already have live integration. Personality wiring and same-snapshot
-Standard explanation updates are present in the current integration branch;
-release and browser verification remain pending in [status](../STATUS.md).
+Standard explanation updates shipped in #68 (`3cd4b0a`); release and browser
+preference checks are recorded in [status](../STATUS.md).
 Preserve the dated historical wallet failure and later read-only recovery.
 Implemented retry protection does not prove a new genuine care read-back passed.
 
 ## Next work in order
 
-1. **Finish personality integration:** use the existing single `useCompanion`
-   instance, gate controls on a confirmed pet/correct network/no pending write,
-   and prove preferences change wording without changing chain facts or issuing
-   requests. Check storage failure, reset, refresh and account isolation. Release
-   only after combined checks and add exact runtime/browser evidence.
+1. **Preserve personality integration:** #68 uses one `useCompanion` instance,
+   gates controls on a confirmed pet/correct network/no pending write, and keeps
+   style changes separate from chain facts. Regression tests cover storage and
+   isolation; genuine browser preference/reload/reset checks passed. Keep these
+   guarantees during F5/F6 and do not substitute them for final wallet QA.
 2. **Integrate F5/F6:** review Kym's earned-form viewer and YeeWei's recap/evidence
    layout from fresh branches based on current reviewed `origin/main`. Preserve
    shared props. For F5, key live and public `PetScene` by displayed owner,
