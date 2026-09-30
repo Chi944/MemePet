@@ -46,7 +46,9 @@ failed saves do not award interactions. This hook is already composed by
 
 `useCommunityStats` preserves its existing exports and additionally returns
 `finale: FinaleCommunityPanelProps`. Its mission maps the confirmed community
-view; identity stays `unconfigured` until Larm's candidate is verified. The
+view; the known testnet deployment now uses the independently checked XDOG
+reference in `src/lib/community-reference.ts`. Other deployments stay
+`unconfigured`. The
 same read-only Retry callback is shared by both community presentations.
 
 The public API fixes its RPC/registry from deployment configuration. It verifies
@@ -56,9 +58,12 @@ optional bounded `question`, and optional decimal `blockNumber`. Responses have
 `schemaVersion: 1`, `scope` and `facts`, with `reply` only when requested. No
 wallet connection or signature is required. See [service preparation](OKX_AI_SERVICE.md).
 
-These adapters do not make the teammate panels visible in production by
-themselves. Their final integration and genuine wallet acceptance are separate
-release gates. Public HTTP verification is not an OKX.AI marketplace invocation.
+The lead now mounts `CompanionPanel` and `FinaleCommunitySection` in the wallet
+route, and the latter in the live overview. The wrapper explicitly separates the
+care network from the reference network. Kym's `PersonalityPanel` is the remaining
+presentation integration: use the existing `personality` return from this same
+hook when its PR is ready. Genuine wallet acceptance is a separate release gate.
+Public HTTP verification is not an OKX.AI marketplace invocation.
 
 ## Exact inputs and meaning
 

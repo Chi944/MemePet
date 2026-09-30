@@ -116,6 +116,14 @@ export const communityMissionFixtures = {
     isComplete: false,
     dataMode: "fixture",
   },
+  exactlyReached: {
+    title: "Mochi garden",
+    target: 20,
+    kind: "ready",
+    totalCareActions: 20,
+    isComplete: true,
+    dataMode: "fixture",
+  },
   reached: {
     title: "Mochi garden",
     target: 20,
