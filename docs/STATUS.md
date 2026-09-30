@@ -6,6 +6,14 @@ separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09
 
 ## Finale integration — 30 September
 
+The [initial-read follow-up](qa/evidence/COMMUNITY_INITIAL_READ_2026-09-30.md)
+records genuine read-only recovery from Unknown to **7 cares** in Chrome and
+adds bounded automatic retries to initial/latest community reads. **321 app
+tests / 34 files** pass. Buddy with 20 points was observed, but no new care or
+evolution transition was performed. Automatic read-back after a genuine care
+on the resulting release remains pending. Reduced motion remains enabled as
+requested; this intentionally suppresses Mochi's hover movement.
+
 Reviewed and merged Larm's garden PR #59 and YeeWei's recap PR #61. The lead
 fixed answer announcements and error contrast in #61, then connected both panels
 to verified data on the real overview/pet routes. The garden reads 4 confirmed

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createPublicClient, custom, encodeErrorResult, encodeFunctionResult, parseAbi, type Hex } from "viem";
 import { petRegistryAbi } from "./pet-registry-abi";
-import { readReceiptWithRetry } from "./receipt-read-retry";
+import { readReceiptWithRetry, readWithRetry } from "./receipt-read-retry";
 
 const registryAddress = "0x1111111111111111111111111111111111111111";
 const confirmedBlock = BigInt(11);
@@ -16,7 +16,7 @@ function setupRead(respond: () => Promise<Hex>, retryCount = 0) {
     return respond();
   });
   const client = createPublicClient({ transport: custom({ request }, { retryCount }) });
-  const read = vi.fn((blockNumber: bigint) => client.readContract({
+  const read = vi.fn((blockNumber?: bigint) => client.readContract({
     address: registryAddress, abi: petRegistryAbi, functionName: "communityStats",
     args: [1], blockNumber,
   }));
@@ -28,6 +28,45 @@ function expectPinnedCalls(request: ReturnType<typeof setupRead>["request"]) {
     expect(call).toMatchObject({ method: "eth_call", params: [expect.any(Object), "0xb"] });
   }
 }
+
+describe("latest read retry with real viem error classification", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("recovers resource-unavailable latest state with at most three RPC calls", async () => {
+    const respond = vi.fn<() => Promise<Hex>>()
+      .mockRejectedValueOnce({ code: -32002, message: "Resource unavailable" })
+      .mockResolvedValue(encodedTotal);
+    const { request, read } = setupRead(respond);
+    const result = readWithRetry(() => read(), () => true);
+    await vi.runAllTimersAsync();
+
+    await expect(result).resolves.toBe(BigInt(4));
+    expect(request).toHaveBeenCalledTimes(2);
+    for (const [call] of request.mock.calls) {
+      expect(call).toMatchObject({ method: "eth_call", params: [expect.any(Object), "latest"] });
+    }
+  });
+
+  it("leaves a persistent latest failure rejected after three physical RPC calls", async () => {
+    const { request, read } = setupRead(async () => { throw { code: -32002, message: "Resource unavailable" }; });
+    const result = readWithRetry(() => read(), () => true);
+    const rejected = expect(result).rejects.toMatchObject({ name: "ContractFunctionExecutionError" });
+    await vi.runAllTimersAsync();
+    await rejected;
+    expect(request).toHaveBeenCalledTimes(3);
+  });
+
+  it("does not retry a real contract revert on an unpinned read", async () => {
+    const { request, read } = setupRead(async () => { throw {
+      code: 3, message: "execution reverted",
+      data: encodeErrorResult({ abi: petRegistryAbi, errorName: "InvalidCommunity" }),
+    }; });
+    await expect(readWithRetry(() => read(), () => true))
+      .rejects.toMatchObject({ name: "ContractFunctionExecutionError" });
+    expect(request).toHaveBeenCalledTimes(1);
+  });
+});
 
 describe("receipt read retry with real viem error classification", () => {
   beforeEach(() => vi.useFakeTimers());

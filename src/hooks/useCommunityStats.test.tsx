@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, render, renderHook, waitFor } from "@testing-library/react";
 import { ResourceUnavailableRpcError, type Address } from "viem";
 import type { Deployment } from "@/lib/deployment";
@@ -34,6 +34,77 @@ function Probe({ deployment, address = "0x11111111111111111111111111111111111111
 }
 
 const settle = () => new Promise((resolve) => setTimeout(resolve, 300));
+
+describe("useCommunityStats initial and latest read recovery", () => {
+  const deployment = deploymentFor(1952, "X Layer testnet");
+  const temporaryFailure = () => new ResourceUnavailableRpcError(new Error("Resource unavailable"));
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    readContract.mockReset();
+  });
+  afterEach(() => { vi.useRealTimers(); });
+
+  it("keeps an initial transient failure loading, then recovers without manual retry", async () => {
+    readContract.mockRejectedValueOnce(temporaryFailure()).mockResolvedValue(BigInt(7));
+    const { result } = renderHook(() => useCommunityStats({ deployment, address: null, wrongChain: false }));
+    await act(async () => {});
+    expect(result.current.community).toMatchObject({ isLoading: true, totalCareActions: null, errorMessage: null });
+    await act(async () => { await vi.advanceTimersByTimeAsync(500); });
+
+    expect(result.current.finale.mission).toMatchObject({ kind: "ready", totalCareActions: 7 });
+    expect(readContract).toHaveBeenCalledTimes(2);
+    for (const [args] of readContract.mock.calls) expect(args.blockNumber).toBeUndefined();
+  });
+
+  it("stops an unavailable initial read after three attempts and keeps the garden unknown", async () => {
+    readContract.mockRejectedValue(temporaryFailure());
+    const { result } = renderHook(() => useCommunityStats({ deployment, address: null, wrongChain: false }));
+    await act(async () => { await vi.advanceTimersByTimeAsync(1500); });
+
+    expect(readContract).toHaveBeenCalledTimes(3);
+    expect(result.current.community).toMatchObject({ isLoading: false, totalCareActions: null });
+    expect(result.current.finale.mission.kind).toBe("unavailable");
+    await act(async () => { await vi.advanceTimersByTimeAsync(10000); });
+    expect(readContract).toHaveBeenCalledTimes(3);
+  });
+
+  it("gives a manual latest retry the same bounded transient recovery", async () => {
+    readContract.mockRejectedValueOnce(new Error("Terminal initial read failure"));
+    const { result } = renderHook(() => useCommunityStats({ deployment, address: null, wrongChain: false }));
+    await act(async () => {});
+    expect(result.current.finale.mission.kind).toBe("unavailable");
+    readContract.mockRejectedValueOnce(temporaryFailure()).mockResolvedValue(BigInt(7));
+
+    await act(async () => { result.current.finale.onRetry(); });
+    expect(result.current.community).toMatchObject({ isLoading: true, totalCareActions: null });
+    await act(async () => { await vi.advanceTimersByTimeAsync(500); });
+    expect(result.current.finale.mission).toMatchObject({ kind: "ready", totalCareActions: 7 });
+    expect(readContract).toHaveBeenCalledTimes(3);
+    for (const [args] of readContract.mock.calls) expect(args.blockNumber).toBeUndefined();
+  });
+
+  it("cancels a pending initial retry when the wallet network changes", async () => {
+    readContract.mockRejectedValueOnce(temporaryFailure()).mockResolvedValue(BigInt(7));
+    const { result, rerender } = renderHook(
+      ({ wrongChain }) => useCommunityStats({ deployment, address: null, wrongChain }),
+      { initialProps: { wrongChain: false } },
+    );
+    await act(async () => {});
+    expect(result.current.community.isLoading).toBe(true);
+    rerender({ wrongChain: true });
+    await act(async () => { await vi.advanceTimersByTimeAsync(1500); });
+    expect(readContract).toHaveBeenCalledTimes(1);
+    expect(result.current.community).toMatchObject({
+      isLoading: false, totalCareActions: null, errorMessage: "Community total is unavailable on this network.",
+    });
+
+    rerender({ wrongChain: false });
+    await act(async () => {});
+    expect(result.current.community.totalCareActions).toBe(7);
+    expect(readContract).toHaveBeenCalledTimes(2);
+  });
+});
 
 describe("useCommunityStats read stability", () => {
   beforeEach(() => {

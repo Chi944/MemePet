@@ -11,7 +11,7 @@ import {
 } from "@/lib/map-community";
 import { APPROVED_COMMUNITY_ID } from "@/lib/pet-progress";
 import { petRegistryAbi } from "@/lib/pet-registry-abi";
-import { readReceiptWithRetry } from "@/lib/receipt-read-retry";
+import { readWithRetry } from "@/lib/receipt-read-retry";
 import { mapCommunityMission } from "@/lib/map-community-mission";
 import { communityReferenceFor } from "@/lib/community-reference";
 import type { FinaleCommunityPanelProps } from "@/types/finale-community";
@@ -64,7 +64,9 @@ export function useCommunityStats({
       try {
         const publicClient = createPublicClient({
           chain,
-          transport: http(deployment.rpcUrl ?? undefined),
+          // One retry budget covers initial, manual and receipt reads. Disable
+          // transport retries so one attempt cannot multiply into several.
+          transport: http(deployment.rpcUrl ?? undefined, { retryCount: 0, timeout: 10_000 }),
         });
 
         const readTotal = (blockNumber?: bigint) => publicClient.readContract({
@@ -74,11 +76,9 @@ export function useCommunityStats({
           args: [APPROVED_COMMUNITY_ID],
           blockNumber,
         });
-        // A receipt can be visible before a replica can serve its state.
-        // Keep every retry pinned and discard it if this effect is replaced.
-        const total = readBlockNumber === undefined
-          ? await readTotal()
-          : await readReceiptWithRetry(readBlockNumber, readTotal, () => !cancelled);
+        // Latest reads can also hit a temporarily unavailable replica. Receipt
+        // reads keep their block; replaced wallet/network sessions discard both.
+        const total = await readWithRetry(() => readTotal(readBlockNumber), () => !cancelled);
 
         if (!cancelled && total !== undefined) {
           setCommunity(mapCommunityStatsToViewModel(total));

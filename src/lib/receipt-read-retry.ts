@@ -40,16 +40,15 @@ function isReadTemporarilyUnavailable(error: unknown): boolean {
   return unavailableHeaderWrapper && internalRpcCause;
 }
 
-/** Retry unavailable RPC state at one receipt block; never retry a wallet write. */
-export async function readReceiptWithRetry<T>(
-  blockNumber: bigint,
-  read: (blockNumber: bigint) => Promise<T>,
+/** Retry temporary RPC read failures at most twice; never retry a wallet write. */
+export async function readWithRetry<T>(
+  read: () => Promise<T>,
   isCurrent: () => boolean,
 ): Promise<T | undefined> {
   for (let attempt = 0; ; attempt += 1) {
     if (!isCurrent()) return undefined;
     try {
-      const result = await read(blockNumber);
+      const result = await read();
       return isCurrent() ? result : undefined;
     } catch (error) {
       if (!isCurrent()) return undefined;
@@ -57,4 +56,13 @@ export async function readReceiptWithRetry<T>(
       await new Promise<void>((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
     }
   }
+}
+
+/** Keep every retry pinned to the same confirmed receipt block. */
+export async function readReceiptWithRetry<T>(
+  blockNumber: bigint,
+  read: (blockNumber: bigint) => Promise<T>,
+  isCurrent: () => boolean,
+): Promise<T | undefined> {
+  return readWithRetry(() => read(blockNumber), isCurrent);
 }
