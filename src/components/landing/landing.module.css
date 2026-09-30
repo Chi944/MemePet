@@ -161,6 +161,12 @@
   cursor: default;
 }
 
+/* The artwork fills its frame, so an outside ring would cover the motion
+   switch above and the stage name below. Draw the ring just inside instead. */
+.artButton:focus-visible {
+  outline-offset: -4px;
+}
+
 .art {
   width: 88%;
   height: auto;

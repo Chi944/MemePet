@@ -99,6 +99,11 @@ Viewport emulation in a desktop browser, **not device testing**.
 | A3 | **BLOCKED** | True `prefers-reduced-motion: reduce`. The browser tool cannot emulate it, and changing the OS setting is not something this assistant may do. **Deston's reduced-motion preference is the real test case** |
 | A4 | **PASS** (simulated) | With `animation: none` applied to the bloom — exactly what the reduced-motion rule sets — all 7 flowers read **opacity 1**. The bloom stays visible without motion. A reduced-motion rule covering the bloom, the loading sweep and the bar is present |
 
+Since #65, Mochi's **artwork** animates even under reduced motion, by Deston's
+explicit choice, with a saved "Animate Mochi" off switch. A3 still applies to
+the **garden** bloom, which follows the OS setting. Switch checks on `abc0194`:
+`RELEASE_QA_abc0194_2026-09-30.md`.
+
 A3, by hand: Windows Settings → Accessibility → Visual effects → **Animation
 effects off**, reload `/dev/community`, choose "Above the goal". Expected: the
 garden appears already in bloom, with no animation.
