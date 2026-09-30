@@ -1,70 +1,48 @@
-# Kym — pet personality and presentation
+# Kym — earlier earned forms
 
-**Task F2 · branch `feat/finale-pet` · base: reviewed F0 merged into main.**
-Own the Mochi experience. Build real components, styling and meaningful tests;
-this task is not only a design document.
+**Current task F5 · branch `feat/earned-stage-viewer` · assigned 1 October 2026.**
+Start a fresh branch from current reviewed `origin/main`; do not reuse the merged
+F2 branch. Your personality panel shipped in PR #67. Codex owns its live wiring.
 
-**30 September start handoff:** Deston confirmed this new panel has not started.
-Create your branch from the latest `origin/main` (PRs #59, #61 and #62 are merged).
-The garden and read-only recap are already integrated. Your shared props are
-unchanged, and local personality storage/reset is implemented by Codex. Build the
-panel and preview only; Codex will connect it to the existing `useCompanion`
-instance and check that Explore/Practise change wording without changing growth.
+**Allowed:** `src/components/pet/**`. Reuse the three approved `/pets/*.png`
+artworks. No new assets, routes, shared types, hooks, storage, RPC, dependencies
+or changes to another owner's files.
 
-**30 September motion follow-up:** Deston explicitly requested Mochi animation
-on by default, including for reduced-motion visitors, with a saved off control.
-Codex supplies `useMochiMotion` and `MochiMotionControl`; preserve this narrow
-artwork interaction when syncing main. It is a cosmetic browser preference,
-not personality training, care or earned progress. Do not duplicate its storage.
+## Build
 
-**Allowed:** `src/components/pet/**`, `public/pets/**`, `docs/pet-assets.md`.
-No routes, hooks, API calls, shared types/fixtures, localStorage, global CSS,
-packages, contracts, deployment or other owners' files. Reuse approved Mochi art.
+- Make the existing growth trail let a person view Mochi's **current or earlier
+  earned form**. Hatchling offers Hatchling; Buddy also offers Hatchling;
+  Guardian offers all three. Future forms remain labelled locked and cannot be
+  selected as an earned pet. Derive this solely from the supplied `pet.stage`.
+- Default to the current form. Choosing an earlier form changes only artwork
+  and its accessible description. Keep the actual current stage, earned points,
+  progress bar and next target authoritative and visible. Show a clear notice,
+  e.g. "Viewing Hatchling · Your current stage is Buddy", and a return-to-current
+  control. This is a form gallery, not an event history; invent no dates/streaks.
+- Keep the supplied missing-art placeholder honest; do not replace a missing
+  current image with an apparently live pet. Preserve fixture/live labels.
+- Preserve `PetSceneProps`, care behavior and Codex's Animate Mochi preference.
+  Reset the viewed form on supplied stage changes. Codex will key the route's
+  scene by wallet/chain/registry for account changes; request that integration in
+  your PR, without adding wallet access or an identity schema to the component.
+- Preserve keyboard focus, selected state and understandable locked labels.
+  Use native controls, no hover-only interaction. Other effects still respect
+  reduced motion; Mochi's explicit on/off exception stays narrow.
 
-## Deliver
+## Acceptance and handoff
 
-- Export `PersonalityPanel` using `PersonalityPanelProps` from
-  `src/types/companion.ts`. Preserve `PetScene`, `CarePanel`, `PetPreview` and
-  existing inputs. The lead wires the new panel into the live route.
-- Explore and Practise controls, visible counts and playful/curious/focused style.
-  Explain why Mochi's delivery changed; avoid an unexplained decorative badge.
-  Use `onInteract("explore" | "practise")` and `onReset()` only.
-- A browser-local saving notice and storage-unavailable state driven by
-  `storageStatus`. Do not claim saving succeeded when it is unavailable. Codex
-  handles storage and account isolation; the parent controls panel availability.
-- Readable earned growth and restrained expressions using the three current
-  artworks. No second pet, financial badge or unrelated decorative resource bars.
-- Extend `PetPreview` with `personalityFixtures` from the shared finale fixtures.
-  If a needed state is missing, request it rather than creating another schema.
+Test earned/future selection, return to current, stage change, missing art and
+unchanged actual growth/care. Inspect labelled previews at 320/390/1440px and
+keyboard focus, including the artwork ring beside its motion switch/stage label.
+If overlap is reproduced, fix it within this folder and record before/after.
+Run component tests, typecheck and lint; report actual visual checks separately.
 
-## Accept when
+Target PR by **2 October, Singapore**. No second pet or new progression rule.
+Open a draft early; return base/head SHAs, screenshots, commands/results and
+unrun cases. Codex handles shared integration, review, merge and release.
 
-- Each interaction invokes its supplied callback once; reset invokes reset once.
-  These controls never call care, award points or alter cooldown.
-- Default, exploration-led, practice-led and storage-unavailable states are
-  understandable. Wording describes explanation style, not trained intelligence.
-- Stage/growth still comes only from the supplied pet. Off-chain interactions
-  do not trigger confirmed-care celebrations.
-- Keyboard focus, accessible names, 320/390px and a 1440px presentation view work.
-  Reduced motion keeps meaning/art visible. The user-approved Mochi control is
-  the narrow exception; switching Animate Mochi off stops the artwork movement.
-  Other interface/celebration motion still respects the device preference.
-- Component tests plus typecheck/lint pass; observed visual checks are reported
-  separately. Normal animation is unrun unless actually watched in a suitable
-  browser. Do not ask Deston to change his OS preference.
-
-## Handoff
-
-Open a draft PR early. Include state screenshots, actual commands/results,
-asset provenance if changed, limitations and exact route/fixture requests.
-Codex reviews and merges; do not merge or deploy yourself.
-
-## Paste into Kym's coding session
+## Paste into Kym's agent
 
 ```text
-Implement MemePet task F2 from docs/finale/KYM.md on feat/finale-pet, starting from the reviewed merged F0 foundation on origin/main. Read AGENTS.md, docs/PROJECT_BRIEF.md, docs/OWNERSHIP.md, docs/DEV_SETUP.md and docs/finale/INTEGRATION.md first, then inspect actual shared types/fixtures. Record the base SHA; preserve uncommitted work and state intended files before editing.
-
-Build PersonalityPanel, meaningful tests and preview states described in your sheet. Own only src/components/pet/**, public/pets/** and docs/pet-assets.md. Reuse approved Mochi assets and preserve existing exports. Explore/Practise shape explanation style through supplied callbacks only: no growth/cooldown changes, RPC/model calls or persistence in components. Respect reduced motion, keyboard access and narrow layouts.
-
-Request missing shared inputs from Codex in a draft PR instead of inventing parallel types or editing other owners' paths. Commit/push your task changes and open the draft PR early. Report exact checks and actual visual observations, keep failures/unrun states, and return the PR URL. Codex handles review, conflicts, merge and release. Do not merge or deploy yourself.
+Continue MemePet with task F5 in docs/finale/KYM.md. F2/PR #67 is complete; do not rebuild it. Read AGENTS.md, docs/PROJECT_BRIEF.md, docs/OWNERSHIP.md, docs/DEV_SETUP.md and docs/finale/INTEGRATION.md. Preserve existing work, fetch origin, start feat/earned-stage-viewer from the current reviewed origin/main and record its SHA. State intended paths, then build the earned-form viewer and tests only in src/components/pet/**. Preserve authoritative current progress, missing-art honesty, existing props and Animate Mochi. Do not add wallet/RPC/storage logic. Open a draft PR and request the lead's account-scope remount explicitly. Run the listed checks, report genuine browser observations separately, commit/push and return the PR URL. Do not merge or deploy. Target 2 October Singapore.
 ```

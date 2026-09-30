@@ -7,11 +7,15 @@ delegation may narrow these paths; shared interface changes require lead review.
 | Owner | Editable area |
 |---|---|
 | Codex integration lead | `contracts/**`, `src/app/**`, `src/hooks/**`, `src/lib/**`, `src/types/**`, `src/fixtures/**`, `src/components/ui/**`, `src/components/share/**`, global styles, configuration, packages/lockfile, CI/deployment, shared specification docs |
-| Kym / `feat/finale-pet` | `src/components/pet/**`, `public/pets/**`, `docs/pet-assets.md` |
-| Larm / `feat/finale-community` | `src/components/landing/**`, `src/components/community/**`, `docs/qa/finale/larm/**`, `docs/finale/COMMUNITY_CANDIDATE.md` |
-| YeeWei / `feat/finale-companion-ui` | `src/components/companion/**`, `docs/qa/finale/yeewei/**` |
+| Kym / F5 `feat/earned-stage-viewer` | `src/components/pet/**`, `public/pets/**`, `docs/pet-assets.md` |
+| Larm / F7 `test/finale-presentation-recovery` | `src/components/landing/**`, `src/components/community/**`, `docs/qa/finale/larm/**`, `docs/finale/COMMUNITY_CANDIDATE.md` |
+| YeeWei / F6 `feat/companion-evidence-layout` | `src/components/companion/**`, `docs/qa/finale/yeewei/**` |
 
 Task-level allowlists can be narrower than this table. Ownership is a coordination agreement, not a technical permission system. Everyone reviews their diff and the lead reviews every merge.
+
+The 1 October role sheets assign F5/F6/F7 after the first component wave merged
+(including #67 and #66). F5 is currently limited to `src/components/pet/**` and
+reuses existing art; the broader asset ownership above does not expand that task.
 
 Component folders include co-located tests and CSS modules. Deston is the final
 reviewer and wallet operator; Codex handles his engineering lane. Larm's former
@@ -20,9 +24,9 @@ overwriting another lane's evidence. No one edits old wallet failures into passe
 
 ## Stable component exports
 
-- Kym: `PetScene`, `CarePanel`, and `PetPreview` in `src/components/pet/`; add `PersonalityPanel` using the finale shared props.
-- Larm: `LandingHero`, `LandingPreview`, `HowItWorks` in `src/components/landing/`; `CommunityPanel`, `CommunityPreview` in `src/components/community/`; add `FinaleCommunityPanel` using the finale shared props.
-- YeeWei: new `CompanionPanel` and `CompanionPreview` in `src/components/companion/`, using the finale shared props.
+- Kym: `PetScene`, `CarePanel`, `PetPreview` and `PersonalityPanel` in `src/components/pet/`; preserve their existing shared props.
+- Larm: `LandingHero`, `LandingPreview`, `HowItWorks` in `src/components/landing/`; `CommunityPanel`, `CommunityPreview` and `FinaleCommunityPanel` in `src/components/community/`.
+- YeeWei: `CompanionPanel` and `CompanionPreview` in `src/components/companion/`, using the finale shared props.
 - Lead: integration routes and shared UI (`Button`, `Card`, `Badge`,
   `DataModeBadge`, `AppShell`) in `src/components/ui/`. Component owners preserve
   the agreed exported prop types.
@@ -44,10 +48,9 @@ clients, browser-local personality storage and stale account/network isolation.
 
 ## Developer previews
 
-The lead provides `/dev/pet`, `/dev/landing`, `/dev/community` and the F0 fixture
-workbench `/dev/finale`, labelled **UI preview — fictional data**. F0 also wires
-`/dev/companion` to a minimal `CompanionPreview` stub; YeeWei replaces that stub
-with her state inspector from day one. Owners extend their preview components;
+The lead provides `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/companion`
+and the F0 fixture workbench `/dev/finale`, labelled **UI preview — fictional
+data**. The teammate state inspectors are implemented. Owners extend their preview components;
 the lead controls routes and production gates. Fixture imports belong only in
 preview components/tests, never as a failed live read's fallback.
 
@@ -62,10 +65,12 @@ independent UI work while a shared request is pending.
 
 ## Branch policy
 
-Start each assigned finale branch from the reviewed F0 commit merged into
-`origin/main`. Record that actual base SHA in your PR; do not start from an
-unreviewed sibling branch or the old downloaded proposal. Use separate clones
-or worktrees for simultaneous sessions. Open a small draft PR early.
+Start each new assigned finale branch from the **current reviewed `origin/main`**
+after fetching. F0 and the first component wave are already merged; retain later
+fixes instead of branching from the original F0 revision or reusing an old merged
+branch. Record the actual base SHA in your PR; do not start from an unreviewed
+sibling branch or the old downloaded proposal. Use separate clones or worktrees
+for simultaneous sessions. Open a small draft PR early.
 
 The user authorizes the lead Codex session to review and merge passing work,
 resolve integration conflicts and handle release checks. This does not

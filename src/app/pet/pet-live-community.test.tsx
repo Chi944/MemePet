@@ -54,6 +54,14 @@ function recap() {
   return within(screen.getByRole("region", { name: "Ask Mochi about your progress" }));
 }
 
+function personality() {
+  return within(screen.getByRole("region", { name: "Mochi, your way" }));
+}
+
+function interactionCount(label: "Explore interactions" | "Practise interactions") {
+  return personality().getByText(label).parentElement?.querySelector("dd");
+}
+
 function companionResponse(walletAddress: Address = address, block = 10, careCount = 0) {
   const growthPoints = careCount * 10;
   return new Response(JSON.stringify({
@@ -142,6 +150,7 @@ describe("live care refreshes the community counter", () => {
       expect(recap().getByText("Loading MemePet activity…")).toBeInTheDocument();
       expect(recap().queryByRole("button", { name: "Explain progress" })).not.toBeInTheDocument();
       expect(recap().getByRole("region", { name: "Mochi's response" })).toBeEmptyDOMElement();
+      expect(screen.queryByRole("region", { name: "Mochi, your way" })).not.toBeInTheDocument();
 
       await act(async () => {
         confirmed = true;
@@ -247,6 +256,89 @@ describe("live care refreshes the community counter", () => {
     expect(rpc.waitForTransactionReceipt).not.toHaveBeenCalled();
   });
 
+  it("updates the existing explanation style and resets preferences without changing earned care or reading again", async () => {
+    rpc.getBlock.mockResolvedValue({ number: BigInt(10), timestamp: day * BigInt(86400) });
+    rpc.readContract.mockImplementation(async ({ functionName }) =>
+      functionName === "communityStats" ? BigInt(4) : [true, 1, 0, BigInt(0)]);
+    await act(async () => { render(<PetLiveClient />); });
+
+    expect(personality().getByRole("heading", { name: "Playful" })).toBeInTheDocument();
+    expect(interactionCount("Explore interactions")).toHaveTextContent("0");
+    expect(interactionCount("Practise interactions")).toHaveTextContent("0");
+    const care = screen.getByRole("region", { name: "Care for your pet" });
+    const careBefore = care.textContent;
+    const requestsBefore = fetchMock.mock.calls.length;
+    const readsBefore = rpc.readContract.mock.calls.length;
+    fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
+    const response = recap().getByRole("region", { name: "Mochi's response" });
+    expect(response).toHaveTextContent("A little Mochi update:");
+
+    fireEvent.click(personality().getByRole("button", { name: "Explore" }));
+    expect(personality().getByRole("heading", { name: "Curious" })).toBeInTheDocument();
+    expect(interactionCount("Explore interactions")).toHaveTextContent("1");
+    expect(response).toHaveTextContent("Here is what Mochi found:");
+
+    fireEvent.click(personality().getByRole("button", { name: "Practise" }));
+    expect(personality().getByRole("heading", { name: "Playful" })).toBeInTheDocument();
+    expect(response).toHaveTextContent("A little Mochi update:");
+    fireEvent.click(personality().getByRole("button", { name: "Practise" }));
+    expect(personality().getByRole("heading", { name: "Focused" })).toBeInTheDocument();
+    expect(interactionCount("Practise interactions")).toHaveTextContent("2");
+    expect(response).toHaveTextContent("Mochi's progress check:");
+
+    fireEvent.click(personality().getByRole("button", { name: "Reset personality" }));
+    expect(personality().getByRole("heading", { name: "Playful" })).toBeInTheDocument();
+    expect(interactionCount("Explore interactions")).toHaveTextContent("0");
+    expect(interactionCount("Practise interactions")).toHaveTextContent("0");
+    expect(response).toHaveTextContent("A little Mochi update:");
+    expect(response).toHaveTextContent("0 confirmed care actions, 0 growth points");
+    expect(response).toHaveTextContent("Based on block 10");
+    expect(screen.getByText("0 growth points")).toBeInTheDocument();
+    expect(care.textContent).toBe(careBefore);
+    expect(communityTotal()).toHaveTextContent("4");
+    expect(fetchMock).toHaveBeenCalledTimes(requestsBefore);
+    expect(rpc.readContract).toHaveBeenCalledTimes(readsBefore);
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+    expect(rpc.waitForTransactionReceipt).not.toHaveBeenCalled();
+  });
+
+  it("restores saved personality after remount and keeps wallets A–B–A isolated", async () => {
+    rpc.getBlock.mockResolvedValue({ number: BigInt(10), timestamp: day * BigInt(86400) });
+    rpc.readContract.mockImplementation(async ({ functionName }) =>
+      functionName === "communityStats" ? BigInt(4) : [true, 1, 0, BigInt(0)]);
+    const firstWallet = wallet.useWallet.getMockImplementation()!();
+    const firstView = await act(async () => render(<PetLiveClient />));
+    fireEvent.click(personality().getByRole("button", { name: "Explore" }));
+    expect(personality().getByRole("heading", { name: "Curious" })).toBeInTheDocument();
+    firstView.unmount();
+
+    const view = await act(async () => render(<PetLiveClient />));
+    expect(personality().getByRole("heading", { name: "Curious" })).toBeInTheDocument();
+    expect(interactionCount("Explore interactions")).toHaveTextContent("1");
+    fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
+    expect(recap().getByRole("region", { name: "Mochi's response" })).toHaveTextContent("Here is what Mochi found:");
+
+    wallet.useWallet.mockReturnValue({ ...firstWallet, address: otherAddress });
+    await act(async () => { view.rerender(<PetLiveClient />); });
+    expect(personality().getByRole("heading", { name: "Playful" })).toBeInTheDocument();
+    expect(interactionCount("Explore interactions")).toHaveTextContent("0");
+    expect(recap().getByRole("region", { name: "Mochi's response" })).toBeEmptyDOMElement();
+    fireEvent.click(personality().getByRole("button", { name: "Practise" }));
+    fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
+    expect(recap().getByRole("region", { name: "Mochi's response" })).toHaveTextContent("Mochi's progress check:");
+
+    wallet.useWallet.mockReturnValue(firstWallet);
+    await act(async () => { view.rerender(<PetLiveClient />); });
+    expect(personality().getByRole("heading", { name: "Curious" })).toBeInTheDocument();
+    expect(interactionCount("Explore interactions")).toHaveTextContent("1");
+    expect(interactionCount("Practise interactions")).toHaveTextContent("0");
+    expect(recap().getByRole("region", { name: "Mochi's response" })).toBeEmptyDOMElement();
+    fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
+    expect(recap().getByRole("region", { name: "Mochi's response" })).toHaveTextContent("Here is what Mochi found:");
+    expect(screen.getByText("0 growth points")).toBeInTheDocument();
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+  });
+
   it("clears the old wallet answer and ignores a late response after switching A–B–A", async () => {
     rpc.getBlock.mockResolvedValue({ number: BigInt(10), timestamp: day * BigInt(86400) });
     rpc.readContract.mockImplementation(async ({ functionName }) =>
@@ -284,6 +376,7 @@ describe("live care refreshes the community counter", () => {
     const view = await act(async () => render(<PetLiveClient />));
     fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
     const requests = fetchMock.mock.calls.length;
+    expect(personality().getByRole("heading", { name: "Playful" })).toBeInTheDocument();
 
     wallet.useWallet.mockReturnValue({ ...firstWallet, wrongChain: true, chainId: 1 });
     await act(async () => { view.rerender(<PetLiveClient />); });
@@ -291,11 +384,13 @@ describe("live care refreshes the community counter", () => {
     expect(recap().queryByRole("button", { name: "Explain progress" })).not.toBeInTheDocument();
     expect(recap().getByRole("region", { name: "Mochi's response" })).toBeEmptyDOMElement();
     expect(garden().queryByRole("progressbar")).not.toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "Mochi, your way" })).not.toBeInTheDocument();
 
     wallet.useWallet.mockReturnValue({ ...firstWallet, address: null });
     await act(async () => { view.rerender(<PetLiveClient />); });
     expect(recap().getByText("Connect a wallet to read MemePet activity.")).toBeInTheDocument();
     expect(recap().queryByTitle(address)).not.toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "Mochi, your way" })).not.toBeInTheDocument();
     expect(fetchMock).toHaveBeenCalledTimes(requests);
     expect(rpc.writeContract).not.toHaveBeenCalled();
   });

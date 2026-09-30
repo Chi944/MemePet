@@ -110,8 +110,11 @@ runtime `af886a75`. Finale work is tracked separately in the
 are implemented on the overview/pet routes. A sourced, text-only XDOG reference
 labels its mainnet separately from MemePet's testnet; it adds no token ownership
 check or affiliation. [Integration evidence](docs/qa/evidence/FINALE_INTEGRATION_2026-09-30.md)
-records release checks and limits. Kym's personality controls and fresh integrated
-wallet acceptance remain pending. Recap wording is a **Standard explanation**,
+records release checks and limits. **1 October:** Kym's Explore/Practise controls
+are integrated with wallet-scoped browser preferences, reset and immediate
+answer rewording. [Personality verification](docs/qa/evidence/PERSONALITY_INTEGRATION_2026-10-01.md)
+records automated checks and the separate hosted-browser checkpoint. Fresh final
+wallet acceptance remains pending. Recap wording is a **Standard explanation**,
 not a model-generated response.
 
 | Area | Verified result |
@@ -344,8 +347,9 @@ are not confused.
 
 The shared services now implement a block-verified recap API, isolated local
 personality storage and a confirmed-total garden adapter. Larm's garden and
-YeeWei's recap panels now have live route integration. Kym's visible personality
-controls are still pending. [Dated verification](docs/qa/evidence/FINALE_INTEGRATION_2026-09-30.md)
+YeeWei's recap panels now have live route integration. Kym's personality controls
+use the same existing adapter; preferences change explanation style, not earned
+growth. [Dated verification](docs/qa/evidence/PERSONALITY_INTEGRATION_2026-10-01.md)
 separates automated and read-only browser checks from genuine wallet actions.
 
 The free [OKX.AI service packet](docs/finale/OKX_AI_SERVICE.md) is prepared;

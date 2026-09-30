@@ -4,27 +4,37 @@ Deston delegates routine engineering to this lane. Do not hand him a list of
 coding commands. Teammates own their three presentation branches; Codex owns
 their shared contract, verified adapters, wiring, PR review and release.
 
-## Build in order
+## Current checkpoint — 1 October
 
-1. **F0 foundation:** interfaces, labelled fixtures, task sheets and ownership.
-   Preserve the pre-finale baseline and original QA. Publish the reviewed F0
-   PR/merge commit before dependent teammate work begins.
-2. **F1 reliability:** reproduce automatic community read-back failure and repair
-   its demonstrated cause. Keep bounded retries, explicit unknown states and
-   read-only recovery. Discard late responses after account/network changes.
-3. **Live community adapter:** verify candidate identity/network/links, distinguish
-   reference from partnership, and map the lifetime confirmed care total to the
-   20-care cosmetic garden. No speculative increments, contract migration or
-   manufactured demonstration data.
-4. **Local personality:** versioned, resettable browser-local state scoped by
-   chain/registry/account. Validate stored input, isolate wallets, handle disabled
-   storage and keep preferences separate from earned growth/cooldown.
-5. **Grounded recap:** verified registry snapshots with source provenance,
-   bounded standard explanations and meaningful evidence. No full-wallet indexer
-   promise. Separate read failure from optional explanation/model failure.
-6. **Integration:** review component PRs, resolve conflicts deliberately, wire live
-   adapters, update current status and add dated evidence. Run release checks on
-   the combined result, not only isolated component previews.
+F0/shared adapters and the first teammate component wave are merged, including
+Kym's personality panel (#67) and Larm's release QA/focus repair (#66). Garden
+and recap already have live integration. Personality wiring and same-snapshot
+Standard explanation updates are present in the current integration branch;
+release and browser verification remain pending in [status](../STATUS.md).
+Preserve the dated historical wallet failure and later read-only recovery.
+Implemented retry protection does not prove a new genuine care read-back passed.
+
+## Next work in order
+
+1. **Finish personality integration:** use the existing single `useCompanion`
+   instance, gate controls on a confirmed pet/correct network/no pending write,
+   and prove preferences change wording without changing chain facts or issuing
+   requests. Check storage failure, reset, refresh and account isolation. Release
+   only after combined checks and add exact runtime/browser evidence.
+2. **Integrate F5/F6:** review Kym's earned-form viewer and YeeWei's recap/evidence
+   layout from fresh branches based on current reviewed `origin/main`. Preserve
+   shared props. For F5, key live and public `PetScene` by displayed owner,
+   chain and registry to reset the gallery on same-stage account changes;
+   Kym owns stage-change resets. Test the integrated behavior before release.
+3. **Supply F7 recovery setup:** give Larm a bounded, local-only way to produce
+   a real failing read and then restore a successful read on a named runtime.
+   Keep faults out of production and wallet-write paths. A fixture showing an
+   error proves presentation only; it is not read recovery. Record setup,
+   release SHA, observations and teardown without altering historical results.
+4. **Review and release the combined build:** reconcile incoming PRs and exact
+   heads, run relevant checks, verify production preview gates and preserve a
+   previous good deployment. Coordinate Larm's combined presentation pass after
+   F5/F6, then plan one final genuine wallet session and timed rehearsal.
 
 Shared code/routes are in the lead [allowlist](../OWNERSHIP.md). Do not enter
 teammates' files while they are editing; coordinate a specific handover for
@@ -37,6 +47,12 @@ read-only recap can be published as a free service using the documented HTTPS
 200 response path without x402 payment; paid model wording is not a prerequisite.
 Codex handles endpoint code, validation, registration preparation and invocation
 tests. Deston performs only private account verification/login where required.
+
+The [registration packet](OKX_AI_SERVICE.md) is prepared and describes the
+deployed direct HTTP endpoint. Private authentication, ASP registration,
+marketplace acceptance/listing and an actual OKX.AI invocation remain pending.
+Inspect the official setup and installed tool requirements before registering;
+do not treat the packet or a direct HTTPS response as a listed integration.
 
 Do not claim listing or integration until the actual registered service has been
 invoked through the intended OKX.AI client. A normal chatbot API call is not proof.
