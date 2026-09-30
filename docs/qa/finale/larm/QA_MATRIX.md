@@ -105,7 +105,11 @@ garden appears already in bloom, with no animation.
 
 ## Integrated checks — after Codex wires the live adapters
 
-All **NOT RUN**: they need the integrated release. Record release SHA,
+**Run on 2026-09-30 against `08d0e5b` — results in
+[`INTEGRATED_QA_2026-09-30.md`](INTEGRATED_QA_2026-09-30.md):** X1, X2, X6 PASS;
+X8 PASS (layout; keyboard partial); X3, X4, X5 NOT RUN; X7 BLOCKED here.
+
+The rows below were written before that run. They needed the integrated release. Record release SHA,
 network, account (public address only) and receipt where applicable. Keep the
 old automatic-refresh failure in `FINAL_ACCEPTANCE_2026-09-24.md` as is.
 
