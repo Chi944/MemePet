@@ -20,10 +20,10 @@ checks preserve reduced motion and distinguish real reads from fixtures.
 [Integration evidence](qa/evidence/FINALE_INTEGRATION_2026-09-30.md) records the
 build, release and browser boundaries. No fresh wallet action was performed.
 
-Kym has no published finale branch/PR visible at this check; unpublished work is
-unknown, not assumed absent. Her personality controls are the remaining UI
+Deston confirmed that Kym has not started the new personality panel. Her existing
+pet/art contribution is separate; this new UI is the remaining feature
 deliverable. The local personality engine is already ready for her panel.
-Larm's stacked landing-copy PR #60 follows the garden release. The optional
+Larm's landing-copy PR #60 follows the integrated garden release in #62. The optional
 OKX.AI service is still prepared, not registered or invoked.
 
 ## Foundation history — 29 September

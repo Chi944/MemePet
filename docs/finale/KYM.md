@@ -4,6 +4,13 @@
 Own the Mochi experience. Build real components, styling and meaningful tests;
 this task is not only a design document.
 
+**30 September start handoff:** Deston confirmed this new panel has not started.
+Create your branch from the latest `origin/main` (PRs #59, #61 and #62 are merged).
+The garden and read-only recap are already integrated. Your shared props are
+unchanged, and local personality storage/reset is implemented by Codex. Build the
+panel and preview only; Codex will connect it to the existing `useCompanion`
+instance and check that Explore/Practise change wording without changing growth.
+
 **Allowed:** `src/components/pet/**`, `public/pets/**`, `docs/pet-assets.md`.
 No routes, hooks, API calls, shared types/fixtures, localStorage, global CSS,
 packages, contracts, deployment or other owners' files. Reuse approved Mochi art.
