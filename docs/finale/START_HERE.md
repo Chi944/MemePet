@@ -17,8 +17,8 @@ The garden and bounded recap already use live adapters. The garden blooms at
 **20 lifetime confirmed care actions** from the configured registry, including
 earlier cares; this is a cosmetic app rule, not a contract reward. Explore and
 Practise change a browser-local explanation style without changing earned
-growth. The personality panel's live wiring is now present in the integration
-branch; its release and browser verification remain pending in [status](../STATUS.md).
+growth. Personality integration shipped in #68 (`3cd4b0a`); its live browser
+checks and separate remaining wallet acceptance are recorded in [status](../STATUS.md).
 
 The remaining build is deliberately small: an earlier-earned-form viewer, a
 clearer recap/evidence layout, and combined presentation/recovery QA. Codex owns
@@ -76,7 +76,7 @@ read recovery (#64), motion control (#65), release QA/focus repair (#66) and
 personality component (#67) are merged. Dated evidence records what each run
 actually checked. [Exact adapter wiring](INTEGRATION.md#lead-adapters--30-september)
 stays with Codex; teammates add no RPC calls, persistence, model client or API.
-The new personality integration and F5/F6/F7 work need their own release checks.
+Personality's release checks are recorded in status; F5/F6/F7 need their own checks.
 The historical automatic community-refresh failure remains recorded; genuine
 wallet acceptance on the final combined release has not been replaced by tests.
 

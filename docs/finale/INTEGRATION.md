@@ -66,12 +66,12 @@ wallet connection or signature is required. See [service preparation](OKX_AI_SER
 The lead now mounts `CompanionPanel` and `FinaleCommunitySection` in the wallet
 route, and the latter in the live overview. The wrapper explicitly separates the
 care network from the reference network. Kym's component (#67) is merged, and
-its live wiring is now present in the integration branch: show `PersonalityPanel`
+its live wiring shipped in #68 (`3cd4b0a`): show `PersonalityPanel`
 only when a wallet is connected on the correct network, `registry.readStatus`
 is `ready`, `registry.hasPet` is true and `registry.isSubmitting` is false.
 Pending writes and account/network changes hide obsolete controls/facts.
-The integration's release and browser verification are pending until recorded
-in [status](../STATUS.md); code present does not mean wallet acceptance passed.
+The integration's release and browser preference checks are recorded in
+[status](../STATUS.md); they do not mean final wallet acceptance passed.
 Public HTTP verification is not an OKX.AI marketplace invocation.
 
 ## Current follow-up interfaces — 1 October
