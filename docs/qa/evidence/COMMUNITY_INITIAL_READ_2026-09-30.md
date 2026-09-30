@@ -23,6 +23,13 @@ Overview failure was not captured. The existing tab's loaded revision was not
 independently identified; the current deployment record alone cannot prove it.
 Buddy is an observed current state, not a witnessed evolution transition.
 
+Larm's later [independent report](../finale/larm/INTEGRATED_QA_2026-09-30.md)
+records the three care receipts that raised the total from 4 to 7. Its
+unattributed addresses match Deston's previously supplied demo Accounts 1–3;
+this attribution comes from the user conversation, not chain inference.
+The receipts/counter blocks were independently rechecked during lead review
+of PR #63. These are team-demo cares, not evidence of outside-user adoption.
+
 ## Reproduction and repair
 
 A real-viem test with transport retries disabled reproduces a temporary RPC
