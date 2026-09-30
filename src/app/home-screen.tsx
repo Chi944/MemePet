@@ -14,6 +14,7 @@ import {
 } from "@/lib/deployment";
 import { unknownCommunityViewModel } from "@/lib/map-community";
 import type { CommunityViewModel } from "@/types/view-models";
+import { FinaleCommunitySection } from "./finale-community-section";
 
 /**
  * No registry is connected, so the live total is genuinely unknown. This is a
@@ -25,13 +26,13 @@ const unpublishedCommunity: CommunityViewModel = unknownCommunityViewModel({
 
 function LiveHomeCommunity() {
   const wallet = useWallet();
-  const { community } = useCommunityStats({
+  const { finale } = useCommunityStats({
     deployment: wallet.deployment,
     address: wallet.address,
     wrongChain: wallet.wrongChain,
   });
 
-  return <CommunityPanel community={community} />;
+  return <FinaleCommunitySection {...finale} deployment={wallet.deployment} />;
 }
 
 export function HomeScreen() {

@@ -580,6 +580,23 @@ button, a {
   font-size: 0.9rem;
 }
 
+.pet-finale-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.pet-recap, .finale-community-section {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.pet-recap h2, .finale-community-section > .status-note {
+  margin: 0;
+}
+
 /* Visible fictional-data labels remain on every development preview. */
 .preview-links {
   display: flex;
@@ -647,7 +664,7 @@ button, a {
   .app-footer {
     grid-template-columns: 1fr 1fr;
   }
-  .pet-live-grid, .pet-live-empty-grid {
+  .pet-live-grid, .pet-live-empty-grid, .pet-finale-grid {
     grid-template-columns: 1fr;
   }
   .pet-live-meta {

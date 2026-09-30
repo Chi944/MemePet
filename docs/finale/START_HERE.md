@@ -68,7 +68,10 @@ without changing those props. Each teammate can continue their assigned UI
 against the same shared types. [Exact adapter wiring](INTEGRATION.md#lead-adapters--30-september)
 is owned by Codex after component review. No teammate needs to add RPC calls,
 personality persistence, a model client or another API. The public recap API is
-verified; the visible panels and OKX.AI registration remain separate work.
+verified. PR #59 (garden) and PR #61 (recap) are merged; the lead integration
+wires those panels into the public routes. Kym should continue `feat/finale-pet`
+against the unchanged props and open her PR; no new data hook is needed.
+OKX.AI registration and genuine wallet acceptance remain separate work.
 
 ## Milestones and evidence
 

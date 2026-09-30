@@ -11,6 +11,9 @@ import { Card } from "@/components/ui/Card";
 import { useCommunityStats } from "@/hooks/useCommunityStats";
 import { usePetRegistry } from "@/hooks/usePetRegistry";
 import { useWallet } from "@/hooks/useWallet";
+import { useCompanion } from "@/hooks/useCompanion";
+import { CompanionPanel } from "@/components/companion/CompanionPanel";
+import { FinaleCommunitySection } from "../finale-community-section";
 import { resolveCareActionState } from "@/lib/care-action-machine";
 import { publicPetPath } from "@/lib/public-pet";
 
@@ -26,6 +29,13 @@ export function PetLiveClient() {
     deployment: wallet.deployment,
     address: wallet.address,
     wrongChain: wallet.wrongChain,
+  });
+  const { companion } = useCompanion({
+    deployment: wallet.deployment,
+    address: wallet.address,
+    wrongChain: wallet.wrongChain,
+    confirmedBlockNumber: registry.confirmedBlockNumber,
+    isWriting: registry.isSubmitting,
   });
 
   const dismissTx = registry.dismissTx;
@@ -259,6 +269,19 @@ export function PetLiveClient() {
           />
         </div>
       )}
+      <div className="pet-finale-grid">
+        <section className="pet-recap" aria-labelledby="pet-recap-title">
+          <div>
+            <p className="eyebrow">Read-only recap</p>
+            <h2 id="pet-recap-title">Ask Mochi about your progress</h2>
+            <p className="status-note">
+              Standard explanations of confirmed MemePet activity. These questions do not send transactions.
+            </p>
+          </div>
+          <CompanionPanel {...companion} />
+        </section>
+        <FinaleCommunitySection {...community.finale} deployment={wallet.deployment} />
+      </div>
     </div>
   );
 }
