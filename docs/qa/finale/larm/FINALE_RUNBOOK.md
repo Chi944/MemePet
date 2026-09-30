@@ -20,19 +20,25 @@ test, anywhere — it cannot care again on stage.** Rehearse with a different
 wallet, as `docs/finale/CODEX.md` already requires. Cares before 08:00 SGT on
 the 7th fall on the previous UTC day and do not block the pitch.
 
-### 2. The garden will almost certainly not bloom live
+### 2. Show the actual garden total
 
 | When | `communityStats(1)` | Source |
 |---|---|---|
 | 2026-09-30 02:59:56 UTC, block 42 278 359 | **4** | `node docs/qa/counter-check.mjs` |
+| 2026-09-30 17:45:35 UTC, block 42 331 498 | **7** | `node docs/qa/counter-check.mjs` |
 
-Blooming needs 20. Sixteen more genuine confirmed cares, at most one per
-wallet per UTC day, is unlikely to happen organically before the pitch.
+Blooming needs 20. At the recorded total of 7, 13 more genuine confirmed
+cares remain. Each wallet can care at most once per UTC day. Use the actual
+total on stage; this table is a dated observation, not a forecast.
 
 - **Show the garden as it really is** — the true total, sprouting, with how
   many cares remain. That is the honest story and it demonstrates the product.
 - If the team's own wallets push the total to 20, it is real and may be shown,
   but say it plainly: **team cares, not community adoption.**
+- The rise from 4 to 7 came from three team demo wallets within 44 blocks.
+  Chain evidence is in `INTEGRATED_QA_2026-09-30.md`; Deston's prior account
+  attribution is recorded in [the lead's read-recovery evidence](../../evidence/COMMUNITY_INITIAL_READ_2026-09-30.md).
+  These are team cares, not evidence of outside-user adoption.
 - The fictional preview at `/dev/community` shows a bloom, but it is a labelled
   fixture and `/dev/*` is 404 in production. Never present it as live.
 
@@ -58,8 +64,8 @@ this document.
 
 - [ ] Codex has named the release SHA to demo; confirm the hosted site serves
       a deployment built from it.
-- [ ] `/dev/pet`, `/dev/landing`, `/dev/community` all return 404 on the hosted
-      site.
+- [ ] `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/finale` and
+      `/dev/companion` all return 404 on the hosted site.
 - [ ] Phone hotspot tested with the demo laptop: the site loads and the
       registry reads succeed over it.
 - [ ] A **genuine** backup recording exists (see below), made on the release
@@ -67,12 +73,18 @@ this document.
 - [ ] Reduced motion checked on the release with the OS setting on — QA matrix
       row A3. Deston's machine is the natural test.
 - [ ] Browser zoom and font size are legible from the back of a room.
+- [ ] Pitch wording reflects the documented team demo cares. Attribute any
+      later increase separately; the counter counts actions, not people.
 
 ### Morning of 7 October
 
 - [ ] **The pitch wallet has not cared since 08:00 SGT today.**
 - [ ] Take a counter baseline: `node docs/qa/counter-check.mjs`. Note the block.
 - [ ] Open the hosted site once in a clean profile. No console errors.
+- [ ] **"Animate Mochi" reads On** in the browser used on stage. An Off chosen
+      in a rehearsal is saved in that browser and stays off after a reload.
+      Mochi animates even with the OS reduced-motion setting on (Deston's
+      choice); the garden and other effects still follow the OS setting.
 - [ ] Close unrelated tabs and notifications. Nothing private on screen.
 - [ ] Backup recording opened and paused on its first frame, one click away.
 
@@ -83,7 +95,8 @@ Decide fast. Do not debug on stage.
 | What happens | What to do |
 |---|---|
 | Venue Wi-Fi is down | Switch to the pre-tested hotspot. If it is still down after ~10 s, go to the backup recording |
-| Community total shows **Unknown** or "could not be loaded" | Say so — it is the honest-state design working: *"it never invents a number when the chain can't be read."* Press **Retry reading** once. If it stays unavailable, carry on, or go to the backup |
+| Community total shows **Unknown** or "could not be loaded" | Classified temporary read failures receive up to two automatic retries (#64). Unknown alone does not establish the cause or prove retries ran. Say *"the total is unverified, so the app does not invent a number."* Press **Retry reading** once. If it stays unavailable, carry on, or go to the backup |
+| Mochi is not moving | Check "Animate Mochi" — it was probably switched off earlier. One press turns it on. It changes only the artwork, never the pet's data |
 | Wallet prompt does not appear | Do not wait more than ~15 s. Move on; show the confirmed part from the backup |
 | Transaction stays pending | Say *"progress appears only after the receipt confirms"* — true, and a feature. Continue the talk and come back; if it has not confirmed by the end, the backup shows a confirmed care |
 | Wrong network | Use **Switch network** in the app |
