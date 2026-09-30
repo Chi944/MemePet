@@ -5,6 +5,7 @@ passes, and a recovered read does not erase an earlier failed refresh.
 
 ## Current records
 
+- [Mochi motion control](MOCHI_MOTION_2026-09-30.md): explicitly approved default-on artwork, saved off control and real browser keyboard/hover checks; no wallet action.
 - [Community initial-read recovery](COMMUNITY_INITIAL_READ_2026-09-30.md): real manual recovery to 7 cares, bounded initial/latest retries and the reduced-motion hover diagnosis; no new wallet action.
 - [Finale panel integration](FINALE_INTEGRATION_2026-09-30.md): garden and recap routes, sourced community reference, responsive/reduced-motion checks and release boundaries; no fresh wallet acceptance.
 - [Finale shared services](FINALE_SERVICES_2026-09-30.md): verified recap API, local personality and garden adapters; automated and public-chain read evidence, no fresh wallet acceptance.

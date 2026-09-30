@@ -23,6 +23,13 @@ Overview failure was not captured. The existing tab's loaded revision was not
 independently identified; the current deployment record alone cannot prove it.
 Buddy is an observed current state, not a witnessed evolution transition.
 
+Larm's later [independent report](../finale/larm/INTEGRATED_QA_2026-09-30.md)
+records the three care receipts that raised the total from 4 to 7. Its
+unattributed addresses match Deston's previously supplied demo Accounts 1–3;
+this attribution comes from the user conversation, not chain inference.
+The receipts/counter blocks were independently rechecked during lead review
+of PR #63. These are team-demo cares, not evidence of outside-user adoption.
+
 ## Reproduction and repair
 
 A real-viem test with transport retries disabled reproduces a temporary RPC
@@ -52,7 +59,11 @@ changing its callers. Contracts, writes, pet artwork and dependencies are unchan
 - Independent read-only diff review: no blockers.
 - `npm run build`: PASS with explicit public X Layer testnet configuration.
 - Local production HTTP: `/` and `/pet` 200; all five development previews 404.
-- Hosted release verification: pending at this checkpoint.
+- [PR #64](https://github.com/Chi944/MemePet/pull/64) merged after passing App,
+  Contracts and Vercel checks as `cc2f67c994eae357b0785bc803c56923ca58a236`.
+- Production deployment **6763346984** reports success at
+  **2026-09-30T15:29:59Z** for that commit. The previous good release is
+  **6762453804**, commit `08d0e5b4416d18222c46f6bcd4c1b9e62b7d6b3b`.
 
 ## Motion observation
 

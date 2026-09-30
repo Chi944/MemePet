@@ -11,8 +11,11 @@ records genuine read-only recovery from Unknown to **7 cares** in Chrome and
 adds bounded automatic retries to initial/latest community reads. **321 app
 tests / 34 files** pass. Buddy with 20 points was observed, but no new care or
 evolution transition was performed. Automatic read-back after a genuine care
-on the resulting release remains pending. Reduced motion remains enabled as
-requested; this intentionally suppresses Mochi's hover movement.
+on the resulting release remains pending. Reduced motion initially explained
+the stationary hover. Deston then explicitly requested default-on Mochi motion
+for everyone, with a saved off control. The [motion follow-up](qa/evidence/MOCHI_MOTION_2026-09-30.md)
+records the narrow artwork exception, keyboard/hover verification and **331 app
+tests / 35 files**. Other UI still respects reduced motion; Windows was unchanged.
 
 Reviewed and merged Larm's garden PR #59 and YeeWei's recap PR #61. The lead
 fixed answer announcements and error contrast in #61, then connected both panels

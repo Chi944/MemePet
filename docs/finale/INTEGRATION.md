@@ -119,6 +119,19 @@ integration check, not a visual badge.
 
 ## Previews and integration
 
+### Mochi motion preference
+
+The lead-owned `useMochiMotion` hook and `MochiMotionControl` are a narrow
+presentation exception to parent-owned preferences. The approved PetScene and
+LandingHero integrations use them for artwork motion only. The preference is
+browser-wide, defaults on after hydration, and supports a saved off choice.
+Deston explicitly approved motion even when the device requests reduced motion;
+only Mochi's finite artwork interaction overrides it. Other UI stays governed
+by the device preference. No component accesses storage directly, and this
+control never changes personality, earned progress or wallet state.
+
+### Fixture and route boundaries
+
 F0 adds `/dev/finale` as a labelled fixture workbench, not finished teammate UI.
 Kym extends `PetPreview`; Larm extends `CommunityPreview`. F0 wires
 `/dev/companion` to a minimal `CompanionPreview` stub so YeeWei can replace it

@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
-import type { CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import type { PetSceneProps, PetStage } from "@/types/view-models";
 import { DataModeBadge } from "@/components/ui/Badge";
+import { MochiMotionControl } from "@/components/ui/MochiMotionControl";
+import { useMochiMotion } from "@/hooks/useMochiMotion";
 import styles from "./pet.module.css";
 
 const STAGE_LABEL: Record<PetStage, string> = {
@@ -29,6 +33,15 @@ function getProgress(growthPoints: number, nextStageAt: number | null) {
 }
 
 export function PetScene({ pet, celebrate }: PetSceneProps) {
+  const { enabled, setEnabled } = useMochiMotion();
+  const [greeting, setGreeting] = useState(false);
+  const canAnimate = enabled && Boolean(pet.artSrc);
+  if (!canAnimate && greeting) setGreeting(false);
+  useEffect(() => {
+    if (!greeting || !canAnimate) return;
+    const timer = window.setTimeout(() => setGreeting(false), 650);
+    return () => window.clearTimeout(timer);
+  }, [canAnimate, greeting]);
   const progress = getProgress(pet.growthPoints, pet.nextStageAt);
   const progressStyle =
     typeof progress === "number"
@@ -44,11 +57,25 @@ export function PetScene({ pet, celebrate }: PetSceneProps) {
     <section
       className={`${styles.scene} ${celebrate ? styles.celebrating : ""}`.trim()}
       aria-labelledby="pet-name"
+      data-mochi-motion={canAnimate ? "on" : "off"}
     >
+      <div className={styles.motionBar}>
+        <MochiMotionControl enabled={enabled} onChange={setEnabled} />
+      </div>
       <div className={styles.artFrame}>
         {celebrate ? <span className={styles.evolutionGlow} aria-hidden="true" /> : null}
-        <div className={styles.artInner}>
-          {pet.artSrc ? (
+        {pet.artSrc ? (
+          <button
+            className={`${styles.artInner} ${styles.artButton}`}
+            type="button"
+            aria-label={`Say hello to ${pet.displayName}`}
+            disabled={!enabled}
+            data-greeting={greeting ? "true" : "false"}
+            onClick={() => setGreeting(true)}
+            onAnimationEnd={(event) => {
+              if (event.target !== event.currentTarget) setGreeting(false);
+            }}
+          >
             <Image
               className={styles.art}
               data-stage-art={
@@ -61,7 +88,9 @@ export function PetScene({ pet, celebrate }: PetSceneProps) {
               sizes="(max-width: 760px) 80vw, 28rem"
               priority
             />
-          ) : (
+          </button>
+        ) : (
+          <div className={styles.artInner}>
             <div
               className={styles.placeholder}
               role="img"
@@ -70,8 +99,8 @@ export function PetScene({ pet, celebrate }: PetSceneProps) {
               <span aria-hidden="true">✦</span>
               <strong>Pet artwork coming soon</strong>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <div className={styles.sceneDetails}>

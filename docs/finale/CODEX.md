@@ -80,7 +80,11 @@ disconnect on the new runtime. Skipped steps remain NOT RUN. Human approvals
 stay private; never request secrets or bypass extension restrictions. Tests and
 fixtures cannot replace real wallet evidence.
 
-Preserve reduced motion. Reserve pitch-day care on one demo wallet and rehearse
+Preserve reduced motion outside the explicit 30 September Mochi exception:
+Deston requested default-on artwork interaction for everyone with a saved
+Animate Mochi off control. Do not change Windows settings or extend this
+exception to garden, page or transaction-status animation.
+Reserve pitch-day care on one demo wallet and rehearse
 with another. Record a genuine backup and label it if live connectivity or a
 pending transaction requires its use.
 

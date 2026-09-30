@@ -84,6 +84,13 @@
   background: var(--surface);
 }
 
+.motionBar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.75rem 1rem;
+  background: #0b0d09;
+}
+
 .artFrame {
   position: relative;
   display: grid;
@@ -116,6 +123,20 @@
   display: grid;
   place-items: center;
   animation: pet-arrive 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.artButton {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.artButton:disabled {
+  cursor: default;
 }
 
 .art {
@@ -535,12 +556,6 @@
   }
 }
 
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .artFrame:hover .art {
-    transform: translateY(-4px);
-  }
-}
-
 @media (max-width: 760px) {
   .previewGrid {
     grid-template-columns: 1fr;
@@ -568,4 +583,46 @@
   .progressFill {
     transition: none;
   }
+}
+
+/* The browser's explicit Mochi preference applies only to the artwork.
+ * Keep all other reduced-motion rules, including status effects, untouched. */
+.scene[data-mochi-motion="on"] .artInner {
+  animation: pet-arrive 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-duration: 800ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+.scene[data-mochi-motion="on"] .art {
+  transition: transform 320ms ease-out;
+  transition-duration: 320ms !important;
+}
+
+.scene[data-mochi-motion="on"] .artButton:focus-visible .art {
+  transform: translateY(-4px) rotate(-2deg);
+}
+
+@media (hover: hover) {
+  .scene[data-mochi-motion="on"] .artButton:hover .art {
+    transform: translateY(-4px) rotate(-2deg);
+  }
+}
+
+.scene[data-mochi-motion="on"] .artButton[data-greeting="true"] .art {
+  animation: mochi-hello 650ms ease-in-out;
+  animation-duration: 650ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+.scene[data-mochi-motion="off"] .artInner,
+.scene[data-mochi-motion="off"] .art {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+@keyframes mochi-hello {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  35% { transform: translateY(-6px) rotate(-3deg); }
+  65% { transform: translateY(-3px) rotate(2deg); }
 }
