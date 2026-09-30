@@ -11,6 +11,12 @@ unchanged, and local personality storage/reset is implemented by Codex. Build th
 panel and preview only; Codex will connect it to the existing `useCompanion`
 instance and check that Explore/Practise change wording without changing growth.
 
+**30 September motion follow-up:** Deston explicitly requested Mochi animation
+on by default, including for reduced-motion visitors, with a saved off control.
+Codex supplies `useMochiMotion` and `MochiMotionControl`; preserve this narrow
+artwork interaction when syncing main. It is a cosmetic browser preference,
+not personality training, care or earned progress. Do not duplicate its storage.
+
 **Allowed:** `src/components/pet/**`, `public/pets/**`, `docs/pet-assets.md`.
 No routes, hooks, API calls, shared types/fixtures, localStorage, global CSS,
 packages, contracts, deployment or other owners' files. Reuse approved Mochi art.
@@ -40,7 +46,9 @@ packages, contracts, deployment or other owners' files. Reuse approved Mochi art
 - Stage/growth still comes only from the supplied pet. Off-chain interactions
   do not trigger confirmed-care celebrations.
 - Keyboard focus, accessible names, 320/390px and a 1440px presentation view work.
-  Reduced motion keeps meaning/art visible without animation.
+  Reduced motion keeps meaning/art visible. The user-approved Mochi control is
+  the narrow exception; switching Animate Mochi off stops the artwork movement.
+  Other interface/celebration motion still respects the device preference.
 - Component tests plus typecheck/lint pass; observed visual checks are reported
   separately. Normal animation is unrun unless actually watched in a suitable
   browser. Do not ask Deston to change his OS preference.

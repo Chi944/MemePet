@@ -1,10 +1,20 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { petFixtures } from "@/fixtures/ui-fixtures";
 import { PetScene } from "./PetScene";
 
+vi.mock("@/hooks/useMochiMotion", async () => {
+  const { useState } = await import("react");
+  return {
+    useMochiMotion() {
+      const [enabled, setEnabled] = useState(true);
+      return { enabled, setEnabled };
+    },
+  };
+});
+
 describe("PetScene", () => {
-  afterEach(() => vi.unstubAllGlobals());
+  afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
 
   it("announces the confirmed new stage and advances the trail", () => {
     const { rerender } = render(<PetScene pet={petFixtures.hatchling} celebrate={false} />);
@@ -32,7 +42,7 @@ describe("PetScene", () => {
     vi.stubGlobal("matchMedia", vi.fn().mockReturnValue({ matches: true, media: "(prefers-reduced-motion: reduce)" }));
     render(<PetScene pet={petFixtures.guardian} celebrate />);
     expect(screen.getByRole("status")).toHaveTextContent("Mochi grew into Guardian!");
-    // CSS disables motion; this DOM check ensures the announcement is unconditional.
+    // Status effects still respect reduced motion; the announcement is unconditional.
     expect(screen.getByText("Mochi grew into Guardian!")).toBeVisible();
   });
 
@@ -44,6 +54,49 @@ describe("PetScene", () => {
     expect(
       screen.getByRole("img", { name: "Mochi artwork placeholder" }),
     ).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Say hello to Mochi" })).not.toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Mochi" })).toHaveAttribute("data-mochi-motion", "off");
+    fireEvent.click(screen.getByRole("switch", { name: "Animate Mochi" }));
+    fireEvent.click(screen.getByRole("switch", { name: "Animate Mochi" }));
+    expect(screen.getByRole("region", { name: "Mochi" })).toHaveAttribute("data-mochi-motion", "off");
+  });
+
+  it("enables the explicit Mochi motion preference even when the system requests reduced motion", () => {
+    vi.stubGlobal("matchMedia", vi.fn().mockReturnValue({ matches: true }));
+    render(<PetScene pet={petFixtures.hatchling} celebrate={false} />);
+    expect(screen.getByRole("switch", { name: "Animate Mochi" })).toHaveAttribute("aria-checked", "true");
+    expect(screen.getByRole("button", { name: "Say hello to Mochi" })).toBeEnabled();
+    expect(screen.getByRole("region", { name: "Mochi" })).toHaveAttribute("data-mochi-motion", "on");
+  });
+
+  it("finishes a decorative greeting without changing care progress or awarding a celebration", () => {
+    vi.useFakeTimers();
+    render(<PetScene pet={petFixtures.hatchling} celebrate={false} />);
+    const greeting = screen.getByRole("button", { name: "Say hello to Mochi" });
+    fireEvent.click(greeting);
+    expect(greeting).toHaveAttribute("data-greeting", "true");
+    expect(screen.getByText("10 growth points")).toBeInTheDocument();
+    expect(screen.getByRole("status")).toBeEmptyDOMElement();
+    act(() => { vi.advanceTimersByTime(650); });
+    expect(greeting).toHaveAttribute("data-greeting", "false");
+    expect(screen.getByText("10 growth points")).toBeInTheDocument();
+  });
+
+  it("cancels a greeting when motion is turned off while leaving the toggle usable", () => {
+    render(<PetScene pet={petFixtures.hatchling} celebrate={false} />);
+    const greeting = screen.getByRole("button", { name: "Say hello to Mochi" });
+    const toggle = screen.getByRole("switch", { name: "Animate Mochi" });
+    fireEvent.click(greeting);
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-checked", "false");
+    expect(greeting).toBeDisabled();
+    expect(greeting).toHaveAttribute("data-greeting", "false");
+    expect(screen.getByRole("region", { name: "Mochi" })).toHaveAttribute("data-mochi-motion", "off");
+    fireEvent.click(greeting);
+    expect(greeting).toHaveAttribute("data-greeting", "false");
+    fireEvent.click(toggle);
+    expect(greeting).toBeEnabled();
+    expect(greeting).toHaveAttribute("data-greeting", "false");
   });
 
   it("renders supplied hatchling art and details", () => {

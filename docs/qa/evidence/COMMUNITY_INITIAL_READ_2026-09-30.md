@@ -52,7 +52,11 @@ changing its callers. Contracts, writes, pet artwork and dependencies are unchan
 - Independent read-only diff review: no blockers.
 - `npm run build`: PASS with explicit public X Layer testnet configuration.
 - Local production HTTP: `/` and `/pet` 200; all five development previews 404.
-- Hosted release verification: pending at this checkpoint.
+- [PR #64](https://github.com/Chi944/MemePet/pull/64) merged after passing App,
+  Contracts and Vercel checks as `cc2f67c994eae357b0785bc803c56923ca58a236`.
+- Production deployment **6763346984** reports success at
+  **2026-09-30T15:29:59Z** for that commit. The previous good release is
+  **6762453804**, commit `08d0e5b4416d18222c46f6bcd4c1b9e62b7d6b3b`.
 
 ## Motion observation
 

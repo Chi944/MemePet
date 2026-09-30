@@ -102,6 +102,7 @@
 
 .showcaseHeader {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
@@ -147,6 +148,19 @@
   animation: pet-arrive 650ms var(--ease-out) both;
 }
 
+.artButton {
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.artButton:disabled {
+  cursor: default;
+}
+
 .art {
   width: 88%;
   height: auto;
@@ -154,12 +168,6 @@
   object-fit: contain;
   filter: drop-shadow(0 22px 15px rgb(0 0 0 / 25%));
   transition: transform 450ms var(--ease-out);
-}
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .artFrame:hover .art {
-    transform: translateY(-6px) rotate(-3deg);
-  }
 }
 
 .artCross, .artCrossBottom {
@@ -530,4 +538,46 @@
     grid-column: 2;
     max-width: none;
   }
+}
+
+/* Only Mochi artwork opts into the saved motion preference. */
+.showcase[data-mochi-motion="on"] .artEnter {
+  animation: pet-arrive 650ms var(--ease-out) both;
+  animation-duration: 650ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+.showcase[data-mochi-motion="on"] .art {
+  transition: transform 320ms ease-out;
+  transition-duration: 320ms !important;
+}
+
+.showcase[data-mochi-motion="on"] .artButton:focus-visible .art {
+  transform: translateY(-4px) rotate(-2deg);
+}
+
+@media (hover: hover) {
+  .showcase[data-mochi-motion="on"] .artButton:hover .art {
+    transform: translateY(-4px) rotate(-2deg);
+  }
+}
+
+.showcase[data-mochi-motion="on"] .artButton[data-greeting="true"] .art {
+  animation: mochi-hello 650ms ease-in-out;
+  animation-duration: 650ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+.showcase[data-mochi-motion="off"],
+.showcase[data-mochi-motion="off"] .artEnter,
+.showcase[data-mochi-motion="off"] .art {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+@keyframes mochi-hello {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  35% { transform: translateY(-6px) rotate(-3deg); }
+  65% { transform: translateY(-3px) rotate(2deg); }
 }
