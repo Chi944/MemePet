@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Address, WalletClient } from "viem";
 import type { Deployment } from "@/lib/deployment";
@@ -10,6 +10,7 @@ const rpc = vi.hoisted(() => ({
   writeContract: vi.fn(),
 }));
 const wallet = vi.hoisted(() => ({ useWallet: vi.fn() }));
+const fetchMock = vi.fn<typeof fetch>();
 
 vi.mock("viem", async (importOriginal) => {
   const actual = await importOriginal<typeof import("viem")>();
@@ -20,6 +21,7 @@ vi.mock("@/hooks/useWallet", () => wallet);
 import { PetLiveClient } from "./pet-live-client";
 
 const address = "0x1111111111111111111111111111111111111111" as Address;
+const otherAddress = "0x2222222222222222222222222222222222222222" as Address;
 const deployment: Deployment = {
   status: "local",
   networkName: "Anvil",
@@ -44,10 +46,43 @@ function communityTotal() {
   return screen.getByText("Community cares", { selector: "dt" }).nextElementSibling;
 }
 
+function garden() {
+  return within(screen.getByRole("region", { name: "Mochi garden" }));
+}
+
+function recap() {
+  return within(screen.getByRole("region", { name: "Ask Mochi about your progress" }));
+}
+
+function companionResponse(walletAddress: Address = address, block = 10, careCount = 0) {
+  const growthPoints = careCount * 10;
+  return new Response(JSON.stringify({
+    schemaVersion: 1,
+    scope: { walletAddress, chainId: deployment.chainId, registryAddress: deployment.registryAddress },
+    facts: { kind: "ready", dataMode: "live", snapshot: {
+      contextKey: `${walletAddress}:${block}:${careCount}`,
+      walletAddress, registryAddress: deployment.registryAddress, chainId: deployment.chainId,
+      blockNumber: String(block), blockTimestampIso: "2026-09-30T12:00:00.000Z",
+      observedAtIso: "2026-09-30T12:00:01.000Z", careCount, growthPoints,
+      stage: growthPoints >= 50 ? "guardian" : growthPoints >= 20 ? "buddy" : "hatchling",
+      nextStageAt: growthPoints >= 50 ? null : growthPoints >= 20 ? 50 : 20,
+      nextCareAtIso: careCount === 0 ? "2026-09-30T12:00:00.000Z" : "2026-10-01T00:00:00.000Z",
+      communityTotalCares: careCount,
+    } },
+  }), { headers: { "Content-Type": "application/json" } });
+}
+
 describe("live care refreshes the community counter", () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.resetAllMocks();
+    localStorage.clear();
+    vi.stubGlobal("fetch", fetchMock);
+    fetchMock.mockImplementation(async (_url, init) => {
+      const body = JSON.parse(String(init?.body)) as { address: Address; blockNumber?: string };
+      const block = Number(body.blockNumber ?? 10);
+      return companionResponse(body.address, block, block >= Number(receiptBlock) ? 1 : 0);
+    });
     wallet.useWallet.mockReturnValue({
       installed: true,
       address,
@@ -65,7 +100,7 @@ describe("live care refreshes the community counter", () => {
     rpc.writeContract.mockResolvedValue(hash);
   });
 
-  afterEach(() => { vi.useRealTimers(); });
+  afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
 
   it.each([false, true])(
     "rereads confirmed care without retaining the pre-care total (latest RPC lags: %s)",
@@ -92,12 +127,21 @@ describe("live care refreshes the community counter", () => {
 
       await act(async () => { render(<PetLiveClient />); });
       expect(communityTotal()).toHaveTextContent("0");
+      expect(garden().getByRole("progressbar")).toHaveAttribute("aria-valuenow", "0");
+      expect(garden().getByRole("img")).toHaveAccessibleName(/bare soil/);
+
+      fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
+      expect(recap().getByRole("region", { name: "Mochi's response" }))
+        .toHaveTextContent("0 confirmed care actions, 0 growth points");
 
       await act(async () => {
         fireEvent.click(screen.getByRole("button", { name: /Care for Mochi/ }));
       });
       expect(screen.getByRole("button", { name: "Pending confirmation" })).toBeDisabled();
       expect(communityTotal()).toHaveTextContent("0");
+      expect(recap().getByText("Loading MemePet activity…")).toBeInTheDocument();
+      expect(recap().queryByRole("button", { name: "Explain progress" })).not.toBeInTheDocument();
+      expect(recap().getByRole("region", { name: "Mochi's response" })).toBeEmptyDOMElement();
 
       await act(async () => {
         confirmed = true;
@@ -105,6 +149,11 @@ describe("live care refreshes the community counter", () => {
       });
       expect(screen.getByText("10 growth points")).toBeInTheDocument();
       expect(communityTotal()).toHaveTextContent("1");
+      expect(garden().getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1");
+      expect(garden().getByText("19 more confirmed care actions until it blooms.")).toBeInTheDocument();
+      fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
+      expect(recap().getByRole("region", { name: "Mochi's response" }))
+        .toHaveTextContent("1 confirmed care action, 10 growth points");
       expect(rpc.readContract).toHaveBeenCalledWith(expect.objectContaining({
         functionName: "communityStats",
         blockNumber: receiptBlock,
@@ -151,12 +200,14 @@ describe("live care refreshes the community counter", () => {
     await act(async () => { communityRead.reject(new Error("Receipt state unavailable")); });
     await act(async () => { await vi.advanceTimersByTimeAsync(1600); });
     expect(communityTotal()).toHaveTextContent("Unknown");
+    expect(garden().queryByRole("progressbar")).not.toBeInTheDocument();
+    expect(garden().queryByRole("img")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Care unavailable" })).toBeDisabled();
     expect(screen.getByText(/Retry only reads the chain/)).toBeInTheDocument();
 
     await act(async () => {
       retrying = true;
-      fireEvent.click(screen.getByRole("button", { name: "Retry community total" }));
+      fireEvent.click(garden().getByRole("button", { name: "Retry reading" }));
     });
     expect(communityTotal()).toHaveTextContent("Reading…");
     expect(screen.queryByRole("button", { name: "Retry community total" })).not.toBeInTheDocument();
@@ -169,8 +220,83 @@ describe("live care refreshes the community counter", () => {
 
     await act(async () => { recoveredRead.resolve(BigInt(1)); });
     expect(communityTotal()).toHaveTextContent("1");
+    expect(garden().getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1");
     expect(screen.queryByText(/could not be loaded/)).not.toBeInTheDocument();
     expect(rpc.writeContract).toHaveBeenCalledTimes(1);
     expect(rpc.waitForTransactionReceipt).toHaveBeenCalledTimes(1);
+  });
+
+  it("answers all recap questions from the displayed snapshot without signing or fetching again", async () => {
+    rpc.getBlock.mockResolvedValue({ number: BigInt(10), timestamp: day * BigInt(86400) });
+    rpc.readContract.mockImplementation(async ({ functionName }) =>
+      functionName === "communityStats" ? BigInt(4) : [true, 1, 0, BigInt(0)]);
+
+    await act(async () => { render(<PetLiveClient />); });
+    const requests = fetchMock.mock.calls.length;
+    const response = recap().getByRole("region", { name: "Mochi's response" });
+    fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
+    expect(response).toHaveTextContent("Standard explanation");
+    expect(response).toHaveTextContent("0 confirmed care actions, 0 growth points");
+    fireEvent.click(recap().getByRole("button", { name: "Next care time" }));
+    expect(response).toHaveTextContent("2026-09-30T12:00:00.000Z");
+    fireEvent.click(recap().getByRole("button", { name: "Contribution" }));
+    expect(response).toHaveTextContent("This pet has contributed 0 confirmed care actions");
+    expect(response).toHaveTextContent("Based on block 10");
+    expect(fetchMock).toHaveBeenCalledTimes(requests);
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+    expect(rpc.waitForTransactionReceipt).not.toHaveBeenCalled();
+  });
+
+  it("clears the old wallet answer and ignores a late response after switching A–B–A", async () => {
+    rpc.getBlock.mockResolvedValue({ number: BigInt(10), timestamp: day * BigInt(86400) });
+    rpc.readContract.mockImplementation(async ({ functionName }) =>
+      functionName === "communityStats" ? BigInt(4) : [true, 1, 0, BigInt(0)]);
+    const slowOtherWallet = deferred<Response>();
+    const firstWallet = wallet.useWallet.getMockImplementation()!();
+    const view = await act(async () => render(<PetLiveClient />));
+    fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
+
+    fetchMock.mockReturnValueOnce(slowOtherWallet.promise);
+    wallet.useWallet.mockReturnValue({ ...firstWallet, address: otherAddress });
+    await act(async () => { view.rerender(<PetLiveClient />); });
+    expect(recap().getByText("Loading MemePet activity…")).toBeInTheDocument();
+    expect(recap().queryByTitle(address)).not.toBeInTheDocument();
+    expect(recap().getByRole("region", { name: "Mochi's response" })).toBeEmptyDOMElement();
+
+    fetchMock.mockResolvedValueOnce(companionResponse(address, 12, 1));
+    wallet.useWallet.mockReturnValue(firstWallet);
+    await act(async () => { view.rerender(<PetLiveClient />); });
+    expect(recap().getByTitle(address)).toBeInTheDocument();
+    await act(async () => { slowOtherWallet.resolve(companionResponse(otherAddress, 13, 2)); });
+    expect(recap().queryByTitle(otherAddress)).not.toBeInTheDocument();
+    fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
+    expect(recap().getByRole("region", { name: "Mochi's response" }))
+      .toHaveTextContent("1 confirmed care action, 10 growth points");
+    expect(recap().getByRole("region", { name: "Mochi's response" })).toHaveTextContent("Based on block 12");
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+  });
+
+  it("hides recap facts and actions when the route switches network or disconnects", async () => {
+    rpc.getBlock.mockResolvedValue({ number: BigInt(10), timestamp: day * BigInt(86400) });
+    rpc.readContract.mockImplementation(async ({ functionName }) =>
+      functionName === "communityStats" ? BigInt(4) : [true, 1, 0, BigInt(0)]);
+    const firstWallet = wallet.useWallet.getMockImplementation()!();
+    const view = await act(async () => render(<PetLiveClient />));
+    fireEvent.click(recap().getByRole("button", { name: "Explain progress" }));
+    const requests = fetchMock.mock.calls.length;
+
+    wallet.useWallet.mockReturnValue({ ...firstWallet, wrongChain: true, chainId: 1 });
+    await act(async () => { view.rerender(<PetLiveClient />); });
+    expect(recap().getByText("Switch to chain 31337 to read MemePet activity.")).toBeInTheDocument();
+    expect(recap().queryByRole("button", { name: "Explain progress" })).not.toBeInTheDocument();
+    expect(recap().getByRole("region", { name: "Mochi's response" })).toBeEmptyDOMElement();
+    expect(garden().queryByRole("progressbar")).not.toBeInTheDocument();
+
+    wallet.useWallet.mockReturnValue({ ...firstWallet, address: null });
+    await act(async () => { view.rerender(<PetLiveClient />); });
+    expect(recap().getByText("Connect a wallet to read MemePet activity.")).toBeInTheDocument();
+    expect(recap().queryByTitle(address)).not.toBeInTheDocument();
+    expect(fetchMock).toHaveBeenCalledTimes(requests);
+    expect(rpc.writeContract).not.toHaveBeenCalled();
   });
 });

@@ -30,6 +30,7 @@ const missionLabels: Record<MissionFixtureKey, string> = {
   unavailable: "Unavailable",
   empty: "Zero care actions",
   progress: "Below the goal",
+  exactlyReached: "Exactly the goal",
   reached: "Above the goal",
 };
 

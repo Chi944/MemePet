@@ -5,6 +5,7 @@ passes, and a recovered read does not erase an earlier failed refresh.
 
 ## Current records
 
+- [Finale panel integration](FINALE_INTEGRATION_2026-09-30.md): garden and recap routes, sourced community reference, responsive/reduced-motion checks and release boundaries; no fresh wallet acceptance.
 - [Finale shared services](FINALE_SERVICES_2026-09-30.md): verified recap API, local personality and garden adapters; automated and public-chain read evidence, no fresh wallet acceptance.
 - [Finale receipt retry](FINALE_RECEIPT_RETRY_2026-09-29.md): reproduced viem retry classification repair; genuine latest-release care still pending.
 - [Finale foundation](FINALE_FOUNDATION_2026-09-29.md): shared interfaces, fixture gates and four-person handoffs.

@@ -4,7 +4,29 @@ Updated 30 September 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Finale work — 29 September
+## Finale integration — 30 September
+
+Reviewed and merged Larm's garden PR #59 and YeeWei's recap PR #61. The lead
+fixed answer announcements and error contrast in #61, then connected both panels
+to verified data on the real overview/pet routes. The garden reads 4 confirmed
+cares in the local browser against the public testnet. Exactly-20 bloom and
+unavailable states were checked separately as labelled fixtures. XDOG's token
+address was independently checked against an official OKX source and mainnet
+RPC; its reference network (196) is explicitly separate from care network 1952.
+
+Combined checks: **312 app tests / 33 files, 15 contract tests, 8 counter
+regressions**, typecheck and lint pass (one existing image warning). Browser
+checks preserve reduced motion and distinguish real reads from fixtures.
+[Integration evidence](qa/evidence/FINALE_INTEGRATION_2026-09-30.md) records the
+build, release and browser boundaries. No fresh wallet action was performed.
+
+Kym has no published finale branch/PR visible at this check; unpublished work is
+unknown, not assumed absent. Her personality controls are the remaining UI
+deliverable. The local personality engine is already ready for her panel.
+Larm's stacked landing-copy PR #60 follows the garden release. The optional
+OKX.AI service is still prepared, not registered or invoked.
+
+## Foundation history — 29 September
 
 The team shared its selection invitation for the **7 October 2026** live finale
 and authorized continued building. This establishes finalist selection, not
@@ -17,8 +39,8 @@ review and release work under Deston's authorization. Deston retains product
 decisions, private setup, wallet approvals and final rehearsal.
 
 F0 supplies shared interfaces, fictional fixtures, a development-only workbench,
-and pure standard-reply/personality/mission helpers. These helpers are not yet
-wired into the public product. The automatic community-refresh defect remains
+and pure standard-reply/personality/mission helpers. At this milestone these helpers
+were not yet wired into the public product. The automatic community-refresh defect remains
 open; no additional real wallet QA was performed for the foundation change.
 [Foundation checks](qa/evidence/FINALE_FOUNDATION_2026-09-29.md) passed: 132 app
 tests, 15 contract tests, 8 counter regressions, typecheck, lint, build and five
@@ -37,7 +59,7 @@ three teammate panels. Facts are pinned to one block with a final hash check;
 responses are validated against wallet/chain/registry and obsolete sessions are
 discarded. Standard explanations require no model account. Resettable personality
 preferences stay local to this browser and wallet context. The garden uses the
-confirmed total; its community identity remains unconfigured pending research.
+confirmed total; its community identity was unconfigured at this milestone.
 
 Review also repaired an endless-loading case when the community hook starts on
 an unsupported network or without complete deployment settings. All 271 app
@@ -53,7 +75,7 @@ recap was verified at 29 September 18:26:46Z against independent RPC block
 42247566. Its real pet/total matched, no-pet and invalid-input cases behaved
 correctly, public routes returned 200 and all five preview gates returned 404.
 
-Teammate panels are not yet wired into the live wallet page. No fresh wallet
+Teammate panels were not yet wired into the live wallet page at this milestone. No fresh wallet
 action was performed for this work, so the automatic community refresh,
 network-away/back and other pending browser acceptance rows remain open.
 The [free OKX.AI registration packet](finale/OKX_AI_SERVICE.md) is prepared, but

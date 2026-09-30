@@ -13,6 +13,7 @@ import { APPROVED_COMMUNITY_ID } from "@/lib/pet-progress";
 import { petRegistryAbi } from "@/lib/pet-registry-abi";
 import { readReceiptWithRetry } from "@/lib/receipt-read-retry";
 import { mapCommunityMission } from "@/lib/map-community-mission";
+import { communityReferenceFor } from "@/lib/community-reference";
 import type { FinaleCommunityPanelProps } from "@/types/finale-community";
 import type { CommunityViewModel } from "@/types/view-models";
 
@@ -123,10 +124,9 @@ export function useCommunityStats({
   const finale = useMemo<FinaleCommunityPanelProps>(() => ({
     community,
     mission: mapCommunityMission(community),
-    // Larm's sourced candidate still needs verification before live use.
-    identity: { kind: "unconfigured" },
+    identity: communityReferenceFor(deployment),
     onRetry: retry,
-  }), [community, retry]);
+  }), [community, deployment, retry]);
 
   return { community, refresh, retry, finale };
 }

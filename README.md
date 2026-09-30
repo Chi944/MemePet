@@ -83,6 +83,8 @@ retention or demand through community testing.
 - **Care** once per UTC calendar day through an explicit wallet transaction.
 - **Grow** by ten points per confirmed care: Hatchling → Buddy → Guardian.
 - **Contribute** one care action to the community total with every confirmed care.
+- **Grow a shared garden** that blooms at 20 lifetime confirmed care actions; a cosmetic app goal.
+- **Ask Mochi** for a read-only standard explanation of your progress, next care time or contribution, with the source block displayed.
 - **Share** a read-only public pet page with a generated stage-aware share image.
 
 Missing a day never removes earned growth. The prototype has no MemePet token,
@@ -103,6 +105,14 @@ allowances or token transfers; wallet approval and network gas are still require
 Browser evidence below was verified **25 September 2026 (Singapore)** on product
 runtime `af886a75`. Finale work is tracked separately in the
 [four-person build plan](docs/finale/START_HERE.md); planned features are not live claims.
+
+**30 September finale integration:** the shared garden and block-sourced recap
+are implemented on the overview/pet routes. A sourced, text-only XDOG reference
+labels its mainnet separately from MemePet's testnet; it adds no token ownership
+check or affiliation. [Integration evidence](docs/qa/evidence/FINALE_INTEGRATION_2026-09-30.md)
+records release checks and limits. Kym's personality controls and fresh integrated
+wallet acceptance remain pending. Recap wording is a **Standard explanation**,
+not a model-generated response.
 
 | Area | Verified result |
 |---|---|
@@ -234,14 +244,14 @@ network access. Production builds also download Google Fonts.
 | Route | Purpose |
 |---|---|
 | `/` | Overview, stage artwork and community progress |
-| `/pet` | Connect, adopt, care and view the connected wallet's pet |
+| `/pet` | Connect, adopt, care, inspect the shared garden and ask for a verified activity recap |
 | `/pet/<wallet-address>` | Read-only public pet page and generated share image |
 | `/api/companion` | Read-only, block-sourced MemePet facts and standard explanations; GET describes the API, POST reads a public address |
 | `/dev/pet` | Fictional pet stages and care-state previews |
 | `/dev/landing` | Fictional landing preview |
 | `/dev/community` | Loading, zero, growing, unavailable and other community previews |
 | `/dev/finale` | Fictional shared inputs for the finale companion, personality and mission work |
-| `/dev/companion` | Development entry point for the finale activity interface; currently a workbench placeholder |
+| `/dev/companion` | Fictional recap facts, explanations and failure states |
 
 The `/dev/*` routes return **404 in production**. CI checks that gate.
 For local Anvil setup, use [development setup](docs/DEV_SETUP.md) and
@@ -329,12 +339,14 @@ The team has been selected for the **7 October finale**. The approved extension
 keeps Build a Market as the primary direction: reliable confirmed reads, one
 verified community reference, a cosmetic shared garden at 20 confirmed cares,
 browser-local personality, and a grounded MemePet activity recap. These are
-**in development**, not demonstrated production features.
+tracked as separate deliverables so implemented features and real wallet evidence
+are not confused.
 
 The shared services now implement a block-verified recap API, isolated local
-personality storage and a confirmed-total garden adapter. The new presentation
-panels and final route wiring are still in progress. [Dated verification](docs/qa/evidence/FINALE_SERVICES_2026-09-30.md)
-separates automated checks and real read-only RPC evidence from wallet actions.
+personality storage and a confirmed-total garden adapter. Larm's garden and
+YeeWei's recap panels now have live route integration. Kym's visible personality
+controls are still pending. [Dated verification](docs/qa/evidence/FINALE_INTEGRATION_2026-09-30.md)
+separates automated and read-only browser checks from genuine wallet actions.
 
 The free [OKX.AI service packet](docs/finale/OKX_AI_SERVICE.md) is prepared;
 registration and a genuine call through OKX.AI remain pending. No included model
@@ -352,7 +364,7 @@ refresh limitation stay explicit in [current status](docs/STATUS.md).
 | **Deston — lead** | Contract, wallet/data integration, routes, shared UI, CI, deployment and release checks |
 | **Kym — pet experience** | Pet presentation, stage artwork and evolution presentation |
 | **Larm — community experience** | Landing/community UI, QA and demo materials |
-| **YeeWei — activity experience** | Assigned the finale activity recap interface; included in the original four-person video introduction |
+| **YeeWei — activity experience** | Finale activity recap interface, bounded questions, evidence and response states |
 
 Responsibilities are documented in [file ownership](docs/OWNERSHIP.md).
 Built with [Next.js](https://nextjs.org), [React](https://react.dev),
