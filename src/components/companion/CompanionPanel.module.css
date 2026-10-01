@@ -99,6 +99,11 @@
   cursor: pointer;
 }
 
+/* Inset so the global 5px offset cannot draw over the evidence text below. */
+.evidenceSummary:focus-visible {
+  outline-offset: -4px;
+}
+
 .evidenceBody {
   padding: 0 1rem 1rem;
   display: flex;
