@@ -32,7 +32,10 @@ export function createStandardReply(
         : ` The next stage starts at ${pet.nextStageAt} points.`;
       break;
     case "next-care":
-      detail = `The next eligible care time is ${pet.nextCareAtIso} (UTC). Check the live Care panel for the current status before confirming a transaction.`;
+      detail = Date.parse(pet.nextCareAtIso) <= Date.parse(pet.blockTimestampIso)
+        ? `Care was available as of block ${pet.blockNumber} (${pet.blockTimestampIso}, UTC).`
+        : `The next eligible care time is ${pet.nextCareAtIso} (UTC).`;
+      detail += " Check the live Care panel for the current status before confirming a transaction.";
       break;
     case "contribution":
       detail = `This pet has contributed ${pet.careCount} confirmed care action${pet.careCount === 1 ? "" : "s"}.`;

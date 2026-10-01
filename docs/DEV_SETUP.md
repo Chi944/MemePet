@@ -31,6 +31,7 @@ npm run lint
 npm test
 npm run build
 node --test docs/qa/counter-check.regression.mjs
+node --test docs/qa/rpc-recovery.regression.mjs
 ```
 
 With Foundry installed:
@@ -48,6 +49,8 @@ return 404. For local production inspection, use `npm run start` after building.
 A test pass does not establish a real wallet transaction.
 The separate Node regressions check the read-only counter evidence helper's
 block selection, interval boundaries and validation; they never sign or write.
+The recovery regressions use a mocked upstream to test a local read-only fault
+proxy. For actual browser failure/recovery, follow [the controlled setup](qa/READ_RECOVERY.md).
 
 ## Read-only recap API
 

@@ -31,6 +31,10 @@ Implemented retry protection does not prove a new genuine care read-back passed.
    Keep faults out of production and wallet-write paths. A fixture showing an
    error proves presentation only; it is not read recovery. Record setup,
    release SHA, observations and teardown without altering historical results.
+   The [setup](../qa/READ_RECOVERY.md) is now implemented with isolated Node
+   regressions and CI coverage. Its real local execution is recorded separately
+   from final production wallet acceptance. Larm's initial F7 PR #70 is merged;
+   he continues with a new combined-QA follow-up branch after F5/F6.
 4. **Review and release the combined build:** reconcile incoming PRs and exact
    heads, run relevant checks, verify production preview gates and preserve a
    previous good deployment. Coordinate Larm's combined presentation pass after

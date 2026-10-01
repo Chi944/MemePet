@@ -20,14 +20,15 @@ review is documentation/source review, not a new invocation or approval.
 
 ### Four-part service description packet
 
-The official [listing field reference](https://github.com/okx/onchainos-skills/blob/main/skills/okx-ai/references/identity-invariants.md)
+The official [listing field reference](https://github.com/okx/onchainos-skills/blob/main/skills/okx-ai/references/identity/service-contract.md#servicedescription)
 describes four numbered sections for an A2MCP service description: capability,
 parameter specification, request method, and a complete `curl` example. This
 draft describes the existing endpoint; review the actual installed tool's
 requirements and the final listing before submission. It is not evidence of
-registration. The GitHub reference was available through the web reader on
-1 October, but its raw URL was unavailable, so do not assume a locally installed
-version has identical fields.
+registration. Larm found the earlier `identity-invariants.md` link returned 404;
+the lead verified this current replacement on 1 October. Validate the packet
+against the installed tool before submission, including its description-length
+limit and requirement that the service name differ from the agent name.
 
 ```text
 1. [Service Description] Read a public wallet's confirmed MemePet progress on X Layer testnet (1952): pet growth, next-care timing and community contribution, with source block/time evidence and an optional standard explanation. Reads only MemePet's configured registry.

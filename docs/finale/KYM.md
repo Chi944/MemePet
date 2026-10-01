@@ -35,6 +35,9 @@ Test earned/future selection, return to current, stage change, missing art and
 unchanged actual growth/care. Inspect labelled previews at 320/390/1440px and
 keyboard focus, including the artwork ring beside its motion switch/stage label.
 If overlap is reproduced, fix it within this folder and record before/after.
+Larm's [readability check](../qa/finale/larm/READABILITY_QA_2026-10-01.md)
+also flags the low-contrast empty growth track. Verify it and give the full track
+a visible boundary (as in the garden), preserving the actual progress value.
 Run component tests, typecheck and lint; report actual visual checks separately.
 
 Target PR by **2 October, Singapore**. No second pet or new progression rule.

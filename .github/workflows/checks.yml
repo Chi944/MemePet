@@ -42,6 +42,9 @@ jobs:
       - name: Verify counter evidence helper
         run: node --test docs/qa/counter-check.regression.mjs
 
+      - name: Verify local read-recovery harness
+        run: node --test docs/qa/rpc-recovery.regression.mjs
+
       # next/font downloads faces at build time, so this step needs network.
       - name: Build
         run: npm run build

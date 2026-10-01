@@ -33,7 +33,7 @@ Growth comes from confirmed care. No MemePet token to buy; network gas applies.
 | **Intended track** | Build a Market — meme application; deployed on X Layer testnet |
 | **Team** | **The four musketeers** — Deston, Kym, Larm and YeeWei |
 | **Live demo** | [memepet.vercel.app](https://memepet.vercel.app) |
-| **Demo video** | [Watch the 3:05 demo](https://youtu.be/ofPOony4nys) · last access check: Private on 25 September; not rechecked here |
+| **Demo video** | [Watch the 3:05 demo](https://youtu.be/ofPOony4nys) · Larm's 1 October signed-out check found it public and playable; [access evidence](docs/qa/finale/larm/LINKS_AND_RECAP_QA_2026-10-01.md) |
 | **Contract** | [`0xe844152262D243a7B90F6e07FF7A67F1d7FeD216`](https://www.okx.com/web3/explorer/xlayer-test/address/0xe844152262D243a7B90F6e07FF7A67F1d7FeD216) |
 | **Network** | X Layer testnet · chain **1952** · gas currency **OKB** |
 | **Repository** | [github.com/Chi944/memepet](https://github.com/Chi944/memepet) |

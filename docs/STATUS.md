@@ -4,6 +4,40 @@ Updated 1 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
+## F7 presentation and read recovery — 1 October, later checkpoint
+
+Larm's PR #70 is reviewed and merged as `9fa6438`. It adds the Ask Mochi landing
+step, visible garden-track boundary, initial presentation checks, timed runbook,
+judge Q&A and backup shot list. The combined checklist remains NOT RUN until
+F5/F6 are integrated; a shot list is not recorded footage.
+
+Codex supplied a bounded local-only read-recovery proxy, a reproducible handoff
+and CI regressions. Actual browser testing observed Unknown during deliberate
+read failure, then **7 confirmed cares / 13 remaining** after Retry reading
+without reloading or connecting a wallet. Repeated failure/recovery passed.
+The read-only recap also recovered from HTTP 503 to a real block-pinned 200.
+Standard next-care wording now distinguishes care available at the verified
+block from a future cooldown time. [Dated evidence](qa/evidence/READ_RECOVERY_2026-10-01.md)
+preserves the test-tool defect found and repaired during verification.
+
+| Lane | Completed | Remaining |
+|---|---|---|
+| Kym | F2 personality panel, integrated by Codex | F5 earned-form viewer **not started**, confirmed by Deston; growth-track visibility check. |
+| YeeWei | F3 recap, integrated by Codex | F6 concise recap/evidence layout **not started**, confirmed by Deston. |
+| Larm | Garden, landing and initial F7 presentation/runbook PR #70 | Recovery follow-up and final combined QA after F5/F6; actual backup capture is separate. |
+| Codex / Deston | Shared facts/adapters, integration, retry protection, motion, preference verification and recovery setup | Review/integrate F5/F6, final release checks and one genuine wallet/rehearsal session with Deston. |
+
+**Planning estimate: about 80% finale-ready**, not a measured acceptance score.
+The first teammate wave is complete; two small follow-up features and final
+combined acceptance still remain. Role sheets are current. Teammates should
+fetch reviewed main and use their assigned fresh branches; Larm's old F7 branch
+is merged, so his next branch is `test/finale-combined-qa`. No messages to their
+separate Claude sessions are assumed delivered.
+
+The README/submission notes now distinguish Larm's 1 October signed-out public
+video-access check from the historical private upload. Full human playback,
+attendance receipt, optional OKX.AI registration and invocation are not claimed.
+
 ## Personality integration — 1 October
 
 Kym completed F2 in reviewed PR #67, now merged (`a82eafd`). Larm's focus-ring

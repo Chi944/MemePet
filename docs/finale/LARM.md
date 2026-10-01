@@ -1,8 +1,11 @@
 # Larm — finale presentation and recovery readiness
 
-**Current task F7 · branch `test/finale-presentation-recovery` · assigned 1 October 2026.**
-Garden, landing and QA PRs #59/#60/#63/#66 are merged. Start from current reviewed
-`origin/main`; preserve the lead's counter/retry corrections in your runbook.
+**Current task F7 follow-up · branch `test/finale-combined-qa` · updated 1 October 2026.**
+Garden, landing and QA PRs #59/#60/#63/#66/#70 are merged. PR #70 completed the
+initial presentation audit, Ask Mochi landing step, garden-track contrast,
+runbook, judge Q&A and backup shot list. Do not redo them or reuse the merged
+branch. Start the follow-up from current reviewed `origin/main`; preserve the
+lead's counter/retry and block-time corrections.
 This lane improves and proves the existing experience; it does not add a new system.
 
 **Allowed:** `src/components/landing/**`, `src/components/community/**`,
@@ -24,7 +27,10 @@ or deployment changes. Request shared test harness needs from Codex.
   an actual failing read then a successful read on a named runtime. Do not change
   public deployment settings or disable security to cause failure. If the lead
   has not supplied a safe local setup, leave that execution pending and continue
-  the independent checks.
+  the independent checks. The [local recovery setup](../qa/READ_RECOVERY.md) is
+  now available; it needs no wallet, deployment changes or OS changes. Codex's
+  dated execution evidence is separate from your own run and from the final
+  combined-release regression.
 - After F5/F6 merge, perform one combined presentation regression on Codex's
   release SHA: narrow layouts, source/provenance visibility, clear read-only
   controls, production `/dev/*` gates, motion on/off and keyboard access. Honour
@@ -48,5 +54,5 @@ in one planned final session, not scattered requests from each lane.
 ## Paste into Larm's agent
 
 ```text
-Continue MemePet with F7 in docs/finale/LARM.md. Previous garden/landing/focus-ring PRs are merged. Read AGENTS.md, scope, ownership, setup, docs/finale/INTEGRATION.md and current evidence. Preserve local work, fetch origin, start test/finale-presentation-recovery from reviewed origin/main and record its SHA. Audit and fix only reproduced landing/community presentation defects in your allowlist, update the timed finale/recovery runbook and backup shot list, and report responsive/keyboard checks honestly. Request a controlled local failure/recovery setup from Codex; fixtures alone do not prove recovery. Do not change deployments, wallets, OS settings, shared files or another owner's code. Do not repeat already-recorded demo-wallet ownership questions. Open a draft PR, commit/push and return the URL with exact results and NOT RUN rows. Codex handles merge and final-release integration. Initial PR target 2 October Singapore; combined QA after F5/F6 on 3–4 October.
+Continue the F7 follow-up in docs/finale/LARM.md. PR #70 is reviewed and merged; do not rebuild its deliverables or reuse its merged branch. Read AGENTS.md, scope, ownership, setup, docs/finale/INTEGRATION.md and current evidence. Preserve local work, fetch origin, start test/finale-combined-qa from reviewed origin/main and record its SHA. Use docs/qa/READ_RECOVERY.md for controlled local read recovery; no wallet is needed. Preserve Codex's run as separate evidence. After F5/F6 merge, run your combined regression checklist on the named release. Fix only reproduced landing/community presentation defects in your allowlist. Do not change deployments, wallets, OS settings, shared files or another owner's code. Do not repeat already-recorded demo-wallet ownership questions. Open a draft PR, commit/push and return the URL with exact results and NOT RUN rows. Codex handles merge/release. Combined QA target 3–4 October Singapore; actual backup footage and final wallet acceptance remain separate from the shot plan.
 ```
