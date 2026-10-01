@@ -43,6 +43,24 @@ viewport override was reset. No device motion preference was changed.
 
 ## Limits
 
+### Production follow-up
+
+PR #72 merged as `e1f5011426dde77bf58025ec9b24de4405073f20`. Exact-head
+checks 36884279163 and main checks 36884552164 passed, including the production
+preview-route 404 gate. GitHub's Vercel deployment 6788282844 reports success
+at 2026-10-01T15:28:59Z. The pre-release main `d279344` remains a known-good
+revision for rollback through the existing deployment process.
+
+After reloading the existing Chrome tab at `https://memepet.vercel.app/pet`,
+Account 2 (`0x86F7De84EBB97c875e1494675Bfcd664f0773CE9`) reconnected from its
+existing permission. The actual recap showed Buddy, 20 points, 2 personal cares,
+community total 7 and **Care at this read: Available**. Source block was
+42409755, timestamp `2026-10-01T15:29:52.000Z`, observed at
+`2026-10-01T15:29:55.048Z`. The read-only Next care time button produced a Standard
+explanation attributed to that block. Opening evidence showed all full source
+fields and the separate community total. These were browser text observations,
+not a fresh Chrome screenshot or a wallet-transaction walkthrough.
+
 - Chrome screenshot capture timed out twice, including after resetting its
   viewport. Chrome DOM/keyboard observations above are not a fresh visual pass.
   The saved visual is from the in-app browser and is explicitly fixture data.

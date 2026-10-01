@@ -8,6 +8,13 @@ F2 branch. Your personality panel shipped in PR #67. Codex owns its live wiring.
 artworks. No new assets, routes, shared types, hooks, storage, RPC, dependencies
 or changes to another owner's files.
 
+**Lead checkpoint, 1 October:** PR #73 is under review while your agent is still
+working (confirmed by Deston). Keep finishing your branch; do not discard local
+changes or restart F5. Codex has separately implemented both route remount keys
+and their regression tests. The lead will reconcile current main and your final
+head, then verify the combined build. Return your final head/PR and remaining
+limits when done; no shared-route changes are required from your agent.
+
 ## Build
 
 - Make the existing growth trail let a person view Mochi's **current or earlier

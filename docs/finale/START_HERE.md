@@ -69,7 +69,9 @@ fixtures while Codex completes shared integration. Fixtures stay in
 tests/development previews, never as live fallbacks.
 Deston's earlier 1 October report that F6 had not started is superseded by
 YeeWei's completed PR #72. Kym's F5 draft PR #73 is now open and under lead
-review; its remaining tests and account-scope integration are pending.
+review. Its current draft has tests and browser evidence, but Deston confirms
+Kym's agent is still working. Codex prepared the account-scope keys in a separate
+lead change; final F5 handoff and combined acceptance remain pending.
 Do not rebuild either teammate's completed first-wave work.
 Larm's initial F7 PR #70 is merged. Use the updated role sheets from current
 main rather than an old copied prompt; follow-up QA must retain NOT RUN rows.

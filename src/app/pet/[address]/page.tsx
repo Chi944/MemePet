@@ -5,6 +5,7 @@ import { PetScene } from "@/components/pet/PetScene";
 import { AppShell } from "@/components/ui/AppShell";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
+import { getActiveDeployment } from "@/lib/deployment";
 import {
   parsePublicWalletAddress,
   readPublicPet,
@@ -54,6 +55,7 @@ export default async function PublicPetPage({ params }: PageProps) {
   }
 
   const snapshot = await readPublicPet(owner);
+  const deployment = getActiveDeployment();
 
   return (
     <AppShell>
@@ -91,7 +93,11 @@ export default async function PublicPetPage({ params }: PageProps) {
         </Card>
 
         {snapshot.kind === "pet" ? (
-          <PetScene pet={snapshot.pet} celebrate={false} />
+          <PetScene
+            key={`${deployment.chainId}:${deployment.registryAddress?.toLowerCase()}:${owner.toLowerCase()}`}
+            pet={snapshot.pet}
+            celebrate={false}
+          />
         ) : null}
 
         {snapshot.kind === "no-pet" ? (

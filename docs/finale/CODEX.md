@@ -29,6 +29,10 @@ Implemented retry protection does not prove a new genuine care read-back passed.
    F6 is delivered in #72 using the existing adapter with no shared interface
    changes. Lead review repaired source-time wording and narrow-card date
    overflow. Preserve those fixes; F5 remains the outstanding feature.
+   F6 is merged/released as `e1f5011` and its live read-only recap is verified.
+   The two F5 route keys and eight reconciliation tests are implemented
+   separately. Deston confirms Kym's PR #73 is still active: keep her branch
+   untouched and await final handoff before the combined release review.
 3. **Supply F7 recovery setup:** give Larm a bounded, local-only way to produce
    a real failing read and then restore a successful read on a named runtime.
    Keep faults out of production and wallet-write paths. A fixture showing an
