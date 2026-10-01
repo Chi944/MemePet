@@ -3,10 +3,12 @@
 **Approved 29 September 2026.** The team reports selection for the 7 October
 finale and permission from OKX developers to continue building. This folder is
 the current assignment set. It supersedes the earlier downloaded proposal where
-scope differs. **Updated 1 October 2026:** the first wave of teammate components
-is merged, including Kym's personality panel (#67) and Larm's release QA/focus
-repair (#66). Their merge does not by itself establish integrated release or
-wallet acceptance.
+scope differs. **Updated 2 October 2026:** the approved feature scope is complete.
+Kym's earned-form viewer (#73), its lead route wiring, YeeWei's recap (#72) and
+evidence-focus follow-up (#75) are merged. Combined source candidate is
+`d0fc02057eb9d06350c598220a62c68960cd8ab2`. See [status](../STATUS.md) for exact
+release verification; merging and automated tests do not establish final wallet
+acceptance, which remains **NOT RUN**.
 
 ## What we are building
 
@@ -20,13 +22,16 @@ Practise change a browser-local explanation style without changing earned
 growth. Personality integration shipped in #68 (`3cd4b0a`); its live browser
 checks and separate remaining wallet acceptance are recorded in [status](../STATUS.md).
 
-The remaining build is deliberately small: an earlier-earned-form viewer and
-combined presentation/recovery QA. YeeWei's clearer recap/evidence layout is
-delivered in PR #72. Codex owns
-integration, reliability and final release verification. A free OKX.AI service
+The earned-form gallery and clearer recap/evidence layout are implemented. The
+remaining work is combined presentation/recovery QA, one final wallet session,
+backup capture and rehearsal. Codex owns reliability and release verification.
+A free OKX.AI service
 can expose the same deterministic recap if authentication, registration and
 invocation succeed; the registration packet is prepared, not an approved listing.
-Optional model wording still needs a separate access/budget/abuse-control decision.
+Optional registration/invocation remain unverified and are not release blockers.
+Paid integrations are not authorized for this work and stay inactive. No billable model
+call, purchase or trial is authorized. The working Standard explanation is the
+release path.
 
 No second pet, token launchpad, contract migration, trading, autonomous signing,
 new application or chat-history database. No invented community partnership,
@@ -34,12 +39,12 @@ holders, retention or model-training claims. Standard explanations are labelled.
 
 ## Assignments
 
-| Human + coding agent | Build | Branch / instructions |
+| Human + coding agent | Next responsibility | Branch / instructions |
 |---|---|---|
-| Kym · F5 | View current/earlier earned forms while preserving actual progress | `feat/earned-stage-viewer` · [KYM.md](KYM.md) |
-| Larm · F7 | Initial presentation/runbook merged in #70; recovery and combined QA follow-up | `test/finale-combined-qa` · [LARM.md](LARM.md) |
-| YeeWei · F6 follow-up | Recap layout delivered in #72; release/combined QA | `test/companion-release-qa` · [YEEWEI.md](YEEWEI.md) |
-| Codex in Deston's session | Reliability, shared interfaces/data, integration, tests, reviews and release | [CODEX.md](CODEX.md) |
+| Kym · F5 complete | Pet/gallery/personality combined QA; fix reproduced defects | `test/pet-release-qa` · [KYM.md](KYM.md) |
+| Larm · F7 | Combined presentation/recovery QA; final runbook and backup coordination | `test/finale-combined-qa` · [LARM.md](LARM.md) |
+| YeeWei · F6 complete | Recap/disclosure combined QA; preserve #75 focus repair | `test/companion-combined-qa` · [YEEWEI.md](YEEWEI.md) |
+| Codex in Deston's session | Exact release verification, fixes/reviews, one final wallet session and freeze | [CODEX.md](CODEX.md) |
 
 **Deston:** privately handle necessary account setup, genuinely approve wallet
 prompts, and run the final integrated check/rehearsal. Codex handles routine
@@ -48,8 +53,9 @@ their own coding session, review its result and return a PR link.
 
 ## Start together without conflicts
 
-1. Preserve any local work. The F0 foundation and first component PRs are already
-   merged; do not rebuild them or reuse their merged branches for F5/F6/F7.
+1. Preserve any local work. F0 and the approved feature PRs are merged; do not
+   rebuild them or reuse merged feature/QA branches. Preserve an active Larm
+   follow-up and reconcile it safely rather than restarting it.
 2. In a clean checkout, fetch `origin` and create your new assigned branch from
    the **current reviewed `origin/main`**, including later integration fixes.
    Record `git rev-parse HEAD` as the actual base in the PR. Do not reset to the
@@ -57,24 +63,21 @@ their own coding session, review its result and return a PR link.
 3. Read [AGENTS](../../AGENTS.md), [scope](../PROJECT_BRIEF.md),
    [ownership](../OWNERSHIP.md), [setup](../DEV_SETUP.md),
    [shared contract](INTEGRATION.md) and your role sheet. Paste the starter prompt
-   from your sheet into your agent. Each task builds real components and tests.
-4. Open a draft PR early. Shared changes go to Codex as exact requests; do not
+   from your sheet into your agent. Current tasks verify the combined build and
+   fix reproduced defects; no new features are assigned.
+4. Open a small draft PR for evidence or necessary fixes. Shared changes go to Codex as exact requests; do not
    create local substitutes for shared types or edit another owner's area.
 5. Return each PR URL to the integration session. Codex cannot automatically see
    or control separate teammates' Claude sessions. These committed handoffs plus
    the PRs are the coordination record; messages are not assumed delivered.
 
-Each teammate can proceed against the existing stable props and labelled
-fixtures while Codex completes shared integration. Fixtures stay in
-tests/development previews, never as live fallbacks.
-Deston's earlier 1 October report that F6 had not started is superseded by
-YeeWei's completed PR #72. Kym's F5 draft PR #73 is now open and under lead
-review. Its current draft has tests and browser evidence, but Deston confirms
-Kym's agent is still working. Codex prepared the account-scope keys in a separate
-lead change; final F5 handoff and combined acceptance remain pending.
-Do not rebuild either teammate's completed first-wave work.
-Larm's initial F7 PR #70 is merged. Use the updated role sheets from current
-main rather than an old copied prompt; follow-up QA must retain NOT RUN rows.
+Each teammate can proceed with independent combined QA against the existing
+stable props and labelled fixtures. Fixtures stay in tests/development previews,
+never as live fallbacks. Earlier reports that F5/F6 were unstarted or still under
+construction are superseded by merged #72/#73/#75. Lead account-scope wiring is
+also merged. Use the updated role sheets from current main rather than an old
+copied build prompt; retain NOT RUN rows and keep mock tests separate from real
+wallet evidence. Final wallet prompts belong to one planned Codex/Deston session.
 Only Codex merges reviewed passing changes. A feature is not release-complete
 because its isolated preview looks good.
 
@@ -85,7 +88,8 @@ read recovery (#64), motion control (#65), release QA/focus repair (#66) and
 personality component (#67) are merged. Dated evidence records what each run
 actually checked. [Exact adapter wiring](INTEGRATION.md#lead-adapters--30-september)
 stays with Codex; teammates add no RPC calls, persistence, model client or API.
-Personality's release checks are recorded in status; F5/F6/F7 need their own checks.
+Personality's release checks and later F5/F6 checks remain dated in status;
+final combined acceptance and F7 follow-up are separate remaining work.
 The historical automatic community-refresh failure remains recorded; genuine
 wallet acceptance on the final combined release has not been replaced by tests.
 
@@ -95,8 +99,8 @@ wallet acceptance on the final combined release has not been replaced by tests.
 |---|---|
 | 29 September | Merge foundation; three teammates start their branches |
 | 30 September–1 October | Components/adapters; resolve reads; free OKX.AI service feasibility and optional model decision |
-| 2 October | F5/F6 initial PRs and F7 runbook/QA; integrated feature-complete build; stop expanding scope |
-| 3–4 October | Real wallet checks, recovery, later-day progress and usability |
+| 2 October | F5/F6 merged; approved features complete; combined checks and release verification |
+| 3–4 October | Teammate combined QA and recovery; one planned final lead wallet session; later-day progress where genuinely available |
 | 5 October | Code freeze except blockers; record a labelled backup demo |
 | 6 October | Timed three-minute rehearsal and venue/network fallback |
 | 7 October | Finale; invitation says arrive by 11am |

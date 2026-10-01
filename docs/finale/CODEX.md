@@ -4,13 +4,21 @@ Deston delegates routine engineering to this lane. Do not hand him a list of
 coding commands. Teammates own their three presentation branches; Codex owns
 their shared contract, verified adapters, wiring, PR review and release.
 
-## Current checkpoint — 1 October
+## Current checkpoint — 2 October
 
 F0/shared adapters and the first teammate component wave are merged, including
 Kym's personality panel (#67) and Larm's release QA/focus repair (#66). Garden
 and recap already have live integration. Personality wiring and same-snapshot
 Standard explanation updates shipped in #68 (`3cd4b0a`); release and browser
 preference checks are recorded in [status](../STATUS.md).
+F5 earned forms (#73), normalized live/public scene scope keys, and F6's recap
+and focus fixes (#72/#75) are now merged. The approved feature scope is complete.
+Combined source candidate: `d0fc02057eb9d06350c598220a62c68960cd8ab2`.
+Combined checks pass: 379 app tests, 15 contract tests, 22 read-helper tests,
+typecheck, lint and build. Local browser checks covered the F5 gallery at
+320/390/1440px, keyboard/missing-art behavior and F6 evidence focus at 390px.
+These are automated and local presentation checks; production verification is
+recorded separately in status. Final genuine wallet acceptance is **NOT RUN**.
 Preserve the dated historical wallet failure and later read-only recovery.
 Implemented retry protection does not prove a new genuine care read-back passed.
 
@@ -20,32 +28,28 @@ Implemented retry protection does not prove a new genuine care read-back passed.
    gates controls on a confirmed pet/correct network/no pending write, and keeps
    style changes separate from chain facts. Regression tests cover storage and
    isolation; genuine browser preference/reload/reset checks passed. Keep these
-   guarantees during F5/F6 and do not substitute them for final wallet QA.
-2. **Integrate F5/F6:** review Kym's earned-form viewer and YeeWei's recap/evidence
-   layout from fresh branches based on current reviewed `origin/main`. Preserve
-   shared props. For F5, key live and public `PetScene` by displayed owner,
-   chain and registry to reset the gallery on same-stage account changes;
-   Kym owns stage-change resets. Test the integrated behavior before release.
-   F6 is delivered in #72 using the existing adapter with no shared interface
-   changes. Lead review repaired source-time wording and narrow-card date
-   overflow. Preserve those fixes; F5 remains the outstanding feature.
-   F6 is merged/released as `e1f5011` and its live read-only recap is verified.
-   The two F5 route keys and eight reconciliation tests are implemented
-   separately. Deston confirms Kym's PR #73 is still active: keep her branch
-   untouched and await final handoff before the combined release review.
-3. **Supply F7 recovery setup:** give Larm a bounded, local-only way to produce
-   a real failing read and then restore a successful read on a named runtime.
-   Keep faults out of production and wallet-write paths. A fixture showing an
-   error proves presentation only; it is not read recovery. Record setup,
-   release SHA, observations and teardown without altering historical results.
-   The [setup](../qa/READ_RECOVERY.md) is now implemented with isolated Node
-   regressions and CI coverage. Its real local execution is recorded separately
-   from final production wallet acceptance. Larm's initial F7 PR #70 is merged;
-   he continues with a new combined-QA follow-up branch after F5/F6.
-4. **Review and release the combined build:** reconcile incoming PRs and exact
-   heads, run relevant checks, verify production preview gates and preserve a
-   previous good deployment. Coordinate Larm's combined presentation pass after
-   F5/F6, then plan one final genuine wallet session and timed rehearsal.
+   guarantees through combined QA; do not substitute them for final wallet QA.
+2. **Verify the combined release:** check the exact deployed SHA, production
+   preview gates, real public read-only pages and rollback reference. F5 and F6
+   need no new feature work. Preserve route scope keys, stage-change resets,
+   source-time wording, narrow-card dates and evidence focus. Review incoming
+   fixes against their exact heads, keeping the combined suite green.
+3. **Coordinate 3–4 October QA:** Kym checks pet/gallery behavior, YeeWei checks
+   recap/disclosure behavior, and Larm checks the integrated presentation and
+   read recovery. The [local recovery setup](../qa/READ_RECOVERY.md) is already
+   implemented with helper regressions and CI coverage. Preserve its prior real
+   local execution as separate evidence, and record each new named-runtime run
+   honestly. Keep faults out of production and wallet-write paths. A fixture
+   callback or mocked transaction is not genuine read recovery or wallet proof.
+4. **Run one planned final wallet session:** prepare prerequisites and the full
+   checklist first, then request only the necessary private approvals from
+   Deston. Capture rejection/adoption/care where applicable, automatic reads,
+   reload and account/network isolation on the final runtime. Preserve NOT RUN
+   entries rather than fragmenting work into repeated teammate wallet requests.
+5. **Freeze and rehearse:** fix release blockers, preserve the previous good
+   deployment, capture a dated backup on 5 October and run the three-minute
+   rehearsal with a network fallback on 6 October. No scope expansion or extra
+   human coding work is assigned.
 
 Shared code/routes are in the lead [allowlist](../OWNERSHIP.md). Do not enter
 teammates' files while they are editing; coordinate a specific handover for
@@ -53,9 +57,9 @@ integration fixes instead of silently overwriting work.
 
 ## OKX.AI service and optional model
 
-Time-box the free A2MCP integration feasibility check to 1 October. A deterministic
-read-only recap can be published as a free service using the documented HTTPS
-200 response path without x402 payment; paid model wording is not a prerequisite.
+The free A2MCP feasibility packet remains optional. A deterministic read-only
+recap can use the documented HTTPS 200 response path without x402 payment;
+paid model wording is not a prerequisite.
 Codex handles endpoint code, validation, registration preparation and invocation
 tests. Deston performs only private account verification/login where required.
 
@@ -69,6 +73,10 @@ Do not claim listing or integration until the actual registered service has been
 invoked through the intended OKX.AI client. A normal chatbot API call is not proof.
 The optional service must not block the working X Layer product if registration,
 review or network support is unavailable. Do not change the primary track.
+Its registration/invocation remain unverified and are not release blockers.
+Keep paid integrations inactive for this work, use free
+local tools, and do not make billable calls or start trials without new explicit
+authorization. Available credentials do not authorize spending.
 
 Model access is a separate optional enhancement. Before enabling it publicly,
 establish actual provider access, approved budget/quota, server-only credentials,

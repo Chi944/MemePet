@@ -74,23 +74,33 @@ The integration's release and browser preference checks are recorded in
 [status](../STATUS.md); they do not mean final wallet acceptance passed.
 Public HTTP verification is not an OKX.AI marketplace invocation.
 
-## Current follow-up interfaces — 1 October
+## Completed feature interfaces and QA — 2 October
+
+The approved feature scope is complete. F5/#73 and F6/#72/#75 are merged with
+the lead's live/public scope wiring in combined source candidate
+`d0fc02057eb9d06350c598220a62c68960cd8ab2`. These interfaces stay stable during
+3–4 October combined QA; [status](../STATUS.md) records exact release verification.
+Final wallet acceptance is **NOT RUN**. Automated state tests and labelled
+fixtures are not genuine wallet proof. Backup capture is planned for 5 October,
+timed rehearsal for 6 October; no new feature or extra Deston coding is assigned.
 
 - **F5, Kym:** keep `PetSceneProps` unchanged. The selected earlier earned form
   is component-local presentation state; `pet.stage`, growth and care remain
-  authoritative. Kym resets selection on a supplied stage change. Codex must
-  key both live and public `PetScene` mounts by the displayed owner's address,
+  authoritative. Kym's component resets selection on a supplied stage change.
+  Codex now keys both live and public `PetScene` mounts by the displayed owner's address,
   deployment chain ID and registry so switching accounts at the same stage
   remounts the gallery. The live owner is the connected wallet; the public owner
   is the route address. Do not add wallet access or an identity prop to the scene.
   Lead integration now keys both routes and has eight route reconciliation
   regressions covering owner/chain/registry changes plus same-scope retention.
-  See the lead wiring PR and current status for release results. Kym's component
-  branch remains separate until her final handoff; genuine wallet switching on
-  the combined release is not implied by these automated tests.
+  Kym's component and the lead keys are now merged together; preserve this
+  separation of responsibilities. Genuine wallet switching on the combined
+  release is not implied by these automated tests.
 - **F6, YeeWei:** preserve `CompanionPanelProps`, every evidence field, question
   ID and reply-context rule. A native evidence disclosure changes presentation
   only; it adds no fetching, persistence or inferred readiness from browser time.
+  Preserve the lead's block-relative care wording and narrow-card date repair,
+  plus #75's evidence-focus correction. YeeWei's next task is combined QA.
 - **F7, Larm:** preserve `FinaleCommunityPanelProps`. Codex supplies any safe
   local failure/recovery setup. Until an actual failed read and recovery are
   observed on a named runtime, fixture callback checks remain fixture evidence.
