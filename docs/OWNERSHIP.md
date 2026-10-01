@@ -7,20 +7,27 @@ delegation may narrow these paths; shared interface changes require lead review.
 | Owner | Editable area |
 |---|---|
 | Codex integration lead | `contracts/**`, `src/app/**`, `src/hooks/**`, `src/lib/**`, `src/types/**`, `src/fixtures/**`, `src/components/ui/**`, `src/components/share/**`, global styles, configuration, packages/lockfile, CI/deployment, shared specification docs |
-| Kym / F5 `feat/earned-stage-viewer` | `src/components/pet/**`, `public/pets/**`, `docs/pet-assets.md` |
+| Kym / pet release QA `test/pet-release-qa` | `src/components/pet/**`, `public/pets/**`, `docs/pet-assets.md` |
 | Larm / F7 follow-up `test/finale-combined-qa` | `src/components/landing/**`, `src/components/community/**`, `docs/qa/finale/larm/**`, `docs/finale/COMMUNITY_CANDIDATE.md` |
-| YeeWei / F6 follow-up `test/companion-release-qa` | `src/components/companion/**`, `docs/qa/finale/yeewei/**` |
+| YeeWei / combined QA `test/companion-combined-qa` | `src/components/companion/**`, `docs/qa/finale/yeewei/**` |
 
 Task-level allowlists can be narrower than this table. Ownership is a coordination agreement, not a technical permission system. Everyone reviews their diff and the lead reviews every merge.
 
-The 1 October role sheets assign F5/F6/F7 after the first component wave merged
-(including #67 and #66). F5 is currently limited to `src/components/pet/**` and
-reuses existing art; the broader asset ownership above does not expand that task.
+The 2 October role sheets follow the merged F5/#73 and F6/#72/#75 work. Approved
+features are complete; current tasks are combined QA and reproduced-defect fixes.
+Kym's task remains limited to `src/components/pet/**`; broader asset ownership
+above does not authorize new artwork or expand scope. Use fresh assigned QA
+branches; preserve and safely reconcile Larm's existing combined-QA work.
 
 Component folders include co-located tests and CSS modules. Deston is the final
 reviewer and wallet operator; Codex handles his engineering lane. Larm's former
 broad `docs/qa/**` permission is narrowed to his own finale folder to avoid
 overwriting another lane's evidence. No one edits old wallet failures into passes.
+Combined QA is planned for 3–4 October, backup capture for 5 October and rehearsal
+for 6 October. Genuine final wallet acceptance remains a single planned lead
+session; mock tests and fixture clicks are not wallet proof. No extra coding is
+assigned to Deston. Optional OKX.AI registration/invocation remains unverified
+and non-blocking; paid integrations stay inactive without explicit authorization.
 
 ## Stable component exports
 

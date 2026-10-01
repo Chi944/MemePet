@@ -41,8 +41,8 @@ Growth comes from confirmed care. No MemePet token to buy; network gas applies.
 ### Review in 60 seconds — no wallet needed
 
 1. Open the [live overview](https://memepet.vercel.app) to see Mochi's three stage designs and the shared care counter.
-2. Visit the [verified demo pet](https://memepet.vercel.app/pet/0xb7E6D789c39D468CfE3c5dA37C29Bd9852247B3a). This public page reads the registry without a wallet connection; the checked run showed a live Hatchling with 10 growth points.
-3. Inspect its [confirmed care transaction](https://www.okx.com/web3/explorer/xlayer-test/tx/0xa340d65b2e59276568c8ff364ea01ec4cf1cc995b6e0ce720ddd1477906e1a55) and [browser/receipt evidence](docs/qa/evidence/LATEST_RELEASE_QA_2026-09-24.md): one real care added ten points and exactly one community care.
+2. Visit the [public demo pet](https://memepet.vercel.app/pet/0x86F7De84EBB97c875e1494675Bfcd664f0773CE9). This page reads the registry without a wallet connection. Select an earlier earned form: the artwork changes while the current stage and points remain visible. Future forms stay locked.
+3. Inspect a [recorded care transaction](https://www.okx.com/web3/explorer/xlayer-test/tx/0xa340d65b2e59276568c8ff364ea01ec4cf1cc995b6e0ce720ddd1477906e1a55) and its [browser/receipt evidence](docs/qa/evidence/LATEST_RELEASE_QA_2026-09-24.md): one real care added ten points and exactly one community care.
 
 To try adoption and care yourself, use the [wallet walkthrough](docs/qa/BROWSER_WALKTHROUGH.md) with an injected wallet and X Layer testnet gas. Browsing and public sharing require neither.
 
@@ -82,9 +82,11 @@ retention or demand through community testing.
 - **Adopt** a pet linked to your wallet. One pet per wallet; network gas applies.
 - **Care** once per UTC calendar day through an explicit wallet transaction.
 - **Grow** by ten points per confirmed care: Hatchling → Buddy → Guardian.
+- **Revisit earned forms** without changing current growth, stage or care eligibility.
 - **Contribute** one care action to the community total with every confirmed care.
 - **Grow a shared garden** that blooms at 20 lifetime confirmed care actions; a cosmetic app goal.
-- **Ask Mochi** for a read-only standard explanation of your progress, next care time or contribution, with the source block displayed.
+- **Ask Mochi** for a read-only standard explanation of your progress, next care time or contribution, with the source block displayed and full evidence one click away.
+- **Choose an explanation style** through browser-local Explore/Practise interactions; these never award growth or train a model.
 - **Share** a read-only public pet page with a generated stage-aware share image.
 
 Missing a day never removes earned growth. The prototype has no MemePet token,
@@ -116,6 +118,12 @@ answer rewording. [Personality verification](docs/qa/evidence/PERSONALITY_INTEGR
 records automated checks and the separate hosted-browser checkpoint. Fresh final
 wallet acceptance remains pending. Recap wording is a **Standard explanation**,
 not a model-generated response.
+
+**2 October combined release:** the earned-form gallery and concise recap with
+keyboard-accessible evidence are integrated. Live public/connected-page reads
+and gallery interactions were checked on `d0fc020`; no new transaction was
+performed. [Combined release evidence](docs/qa/evidence/COMBINED_RELEASE_2026-10-02.md)
+separates those observations from the final wallet session still to run.
 
 | Area | Verified result |
 |---|---|
@@ -277,6 +285,7 @@ npm run lint
 npm test
 npm run build
 node --test docs/qa/counter-check.regression.mjs
+node --test docs/qa/rpc-recovery.regression.mjs
 ```
 
 Install Foundry and its test library before running contract checks:
@@ -352,6 +361,8 @@ use the same existing adapter; preferences change explanation style, not earned
 growth. [Dated verification](docs/qa/evidence/PERSONALITY_INTEGRATION_2026-10-01.md)
 separates automated and read-only browser checks from genuine wallet actions.
 
+The approved feature scope is implemented. The remaining finale work is combined
+acceptance, one genuine wallet session, a labelled backup and a timed rehearsal.
 The free [OKX.AI service packet](docs/finale/OKX_AI_SERVICE.md) is prepared;
 registration and a genuine call through OKX.AI remain pending. No included model
 credits or deployed AI chat are claimed. The [parallel build plan](docs/finale/START_HERE.md) assigns

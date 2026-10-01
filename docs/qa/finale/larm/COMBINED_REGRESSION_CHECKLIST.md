@@ -1,7 +1,8 @@
 # Combined presentation regression — checklist (F7)
 
-Written **before** F5 and F6 exist, so the combined check on 3–4 October can
-start immediately. It is drawn from the acceptance criteria in
+Originally written before F5 and F6 were complete. Updated **2 October 2026**:
+F5/#73 and F6/#72/#75 are merged, so this template is ready for the 3–4 October
+check on Codex's named combined release. It is drawn from the acceptance criteria in
 `docs/finale/KYM.md` (F5), `docs/finale/YEEWEI.md` (F6) and
 `docs/finale/LARM.md` (F7).
 
@@ -39,13 +40,17 @@ file and fill in that copy; do not edit results into this checklist.
 
 ## F5 — earned forms (Kym)
 
-Live rows on the **public page** (Buddy, no wallet), fixture rows on `/dev/pet`.
+Live rows on the **public page** (no wallet), fixture rows on `/dev/pet`.
+Record its actual starting stage, growth and next target before interacting.
+The hosted examples below assume Buddy; if the chosen pet has since evolved,
+use an actually verified Buddy for those cases or label the matching fixture
+checks explicitly. Never force a historical points value into the expected result.
 
 | ID | Check | Expected | Where |
 |---|---|---|---|
 | E1 | Default | The current form (Buddy) is shown and selected | Hosted |
 | E2 | Earned vs locked | Hatchling selectable; **Guardian labelled locked and not selectable**, by mouse or keyboard | Hosted |
-| E3 | Viewing an earlier form | Only artwork and its description change. Stage, **20** growth points, the 20/50 progress bar and the next target stay as they were. Notice reads like "Viewing Hatchling · Your current stage is Buddy" | Hosted |
+| E3 | Viewing an earlier form | Only artwork and its description change. Preserve the actual stage, growth points, progress fraction and next target recorded before selection; do not assume a fixed count. Notice reads like "Viewing Hatchling · Your current stage is Buddy" for an actual Buddy | Hosted |
 | E4 | Return to current | The return control restores Buddy; focus is not lost to the page top | Hosted |
 | E5 | Keyboard and state | Native controls; selected state exposed (`aria-pressed`, radio or equivalent); nothing hover-only | Hosted |
 | E6 | No invented history | No dates, streaks or "evolved on" claims | Hosted |
@@ -63,7 +68,7 @@ rows on `/dev/companion` at the release SHA.
 
 | ID | Check | Expected | Where |
 |---|---|---|---|
-| R1 | First view | Stage, growth, personal confirmed cares and next eligible care time visible **without** opening anything | Fixture |
+| R1 | First view | Stage, growth and personal confirmed cares visible **without** opening anything. If care is eligible at the source block, show "Care at this read" / "Available" and direct users to Daily care for current status; otherwise show the future eligible UTC time | Fixture |
 | R2 | Questions first | Question controls and the answer sit above the evidence, reachable without scrolling past a table | Fixture |
 | R3 | Evidence disclosure | Native `details`, summary "View verified evidence"; Enter/Space toggles; every source field present inside: registry, read block, block time, observed at, care actions, growth, next stage, next care time, community total | Fixture |
 | R4 | Closed-state context | Account, network, "MemePet activity only" scope, and provenance stay visible with the disclosure closed | Fixture |
@@ -73,7 +78,7 @@ rows on `/dev/companion` at the release SHA.
 | R8 | Failed explanation | Valid facts stay visible when the answer fails | Fixture |
 | R9 | Nothing invented | No streaks, retention, transaction hashes, holder status, wallet history | Fixture |
 | R10 | Long address | 1440/390/320 with a full address: no overflow | Fixture |
-| R11 | "Next care" wording | Note whether the "next eligible care time" wording now handles "open now" (reported in `LINKS_AND_RECAP_QA_2026-10-01.md`) | Fixture + `curl` |
+| R11 | Care-at-read wording | Compare next-care time with the recorded block time. Eligible at that block: "Care at this read" / "Available"; future at that block: "Next eligible care" with its UTC time. Changing the browser clock must not imply "ready now". Preserve the original source timestamp inside evidence; retain the earlier note in `LINKS_AND_RECAP_QA_2026-10-01.md` as history | Fixture + read-only API |
 | R12 | API unchanged | `POST /api/companion` for the demo address still returns the same fields and `source: standard` | Hosted |
 
 ## Wallet session (Deston) — listed so nothing is assumed
@@ -87,7 +92,7 @@ rows on `/dev/companion` at the release SHA.
 | W5 | Earned-form viewer on the connected pet; switch wallet → viewer resets (E12) |
 | W6 | Attribute the care: `node docs/qa/counter-check.mjs <G4 block> <after>` |
 
-## Runbook and shot-list sync — after F6 merges
+## Runbook and shot-list sync — combined release
 
 | ID | Check | If different |
 |---|---|---|

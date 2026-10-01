@@ -1,12 +1,16 @@
 # Larm — finale presentation and recovery readiness
 
-**Current task F7 follow-up · branch `test/finale-combined-qa` · updated 1 October 2026.**
+**Current task F7 combined QA · branch `test/finale-combined-qa` · updated 2 October 2026.**
 Garden, landing and QA PRs #59/#60/#63/#66/#70 are merged. PR #70 completed the
 initial presentation audit, Ask Mochi landing step, garden-track contrast,
 runbook, judge Q&A and backup shot list. Do not redo them or reuse the merged
 branch. Start the follow-up from current reviewed `origin/main`; preserve the
 lead's counter/retry and block-time corrections.
 This lane improves and proves the existing experience; it does not add a new system.
+F5/#73 and F6/#72/#75 are now merged. The approved feature scope is complete;
+combined source candidate is `d0fc02057eb9d06350c598220a62c68960cd8ab2`.
+Use [status](../STATUS.md) for production verification and the exact release to
+check. Final genuine wallet acceptance remains **NOT RUN**.
 
 **Allowed:** `src/components/landing/**`, `src/components/community/**`,
 `docs/qa/finale/larm/**`, `docs/finale/COMMUNITY_CANDIDATE.md`.
@@ -31,7 +35,7 @@ or deployment changes. Request shared test harness needs from Codex.
   now available; it needs no wallet, deployment changes or OS changes. Codex's
   dated execution evidence is separate from your own run and from the final
   combined-release regression.
-- After F5/F6 merge, perform one combined presentation regression on Codex's
+- Perform one combined presentation regression on Codex's
   release SHA: narrow layouts, source/provenance visibility, clear read-only
   controls, production `/dev/*` gates, motion on/off and keyboard access. Honour
   the approved Mochi-only motion exception; never change Deston's OS setting.
@@ -46,7 +50,9 @@ observed result, reproducible issues and NOT RUN cases. The counter measures
 care actions, not people; the recorded demo wallets are already attributed to
 Deston in the lead's evidence. Don't ask him to confirm them again.
 
-Target initial PR by **2 October, Singapore**, combined QA **3–4 October**.
+Target combined QA **3–4 October, Singapore**, backup **5 October**, timed
+rehearsal **6 October**. Reuse the completed runbook and shot list; refine them
+only to match verified final behavior. No extra feature or Deston coding task.
 Run relevant component tests/typecheck/lint for any source fix. Return draft PR
 URL with actual results; Codex merges/releases. Wallet prompts stay with Deston
 in one planned final session, not scattered requests from each lane.
@@ -54,5 +60,5 @@ in one planned final session, not scattered requests from each lane.
 ## Paste into Larm's agent
 
 ```text
-Continue the F7 follow-up in docs/finale/LARM.md. PR #70 is reviewed and merged; do not rebuild its deliverables or reuse its merged branch. Read AGENTS.md, scope, ownership, setup, docs/finale/INTEGRATION.md and current evidence. Preserve local work, fetch origin, start test/finale-combined-qa from reviewed origin/main and record its SHA. Use docs/qa/READ_RECOVERY.md for controlled local read recovery; no wallet is needed. Preserve Codex's run as separate evidence. After F5/F6 merge, run your combined regression checklist on the named release. Fix only reproduced landing/community presentation defects in your allowlist. Do not change deployments, wallets, OS settings, shared files or another owner's code. Do not repeat already-recorded demo-wallet ownership questions. Open a draft PR, commit/push and return the URL with exact results and NOT RUN rows. Codex handles merge/release. Combined QA target 3–4 October Singapore; actual backup footage and final wallet acceptance remain separate from the shot plan.
+Continue combined QA in docs/finale/LARM.md. F5/#73, F6/#72/#75 and your #70 deliverables are merged; do not rebuild them. Read AGENTS.md, scope, ownership, setup, docs/finale/INTEGRATION.md and current evidence. Preserve local work, fetch origin and use test/finale-combined-qa from reviewed origin/main; if this follow-up is already active, reconcile it safely rather than restarting it. Record the exact base/head and release runtime. Run the combined narrow/desktop/keyboard/presentation checks and use docs/qa/READ_RECOVERY.md for controlled local read recovery without a wallet. Keep prior dated evidence separate. Fix only reproduced landing/community defects in your allowlist; keep fixtures/mock tests distinct from actual reads and wallet evidence. No new features, deployment/wallet/OS/shared-file changes, or repeated ownership questions. Return a small draft PR with exact results and NOT RUN rows. Codex handles review/merge/release and one planned genuine wallet session. QA 3–4 October Singapore; labelled backup 5 October and timed rehearsal 6 October. The shot plan alone is not footage.
 ```

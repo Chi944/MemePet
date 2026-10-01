@@ -1,10 +1,50 @@
 # Current delivery status
 
-Updated 1 October 2026 (Singapore). Team **The four musketeers**: Deston,
+Updated 2 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## F6 released; F5 shared wiring prepared — 1 October, latest checkpoint
+## Combined F5/F6 release — 2 October, latest checkpoint
+
+Both open teammate PRs are reviewed and merged: Kym's earned-form viewer **#73**
+and YeeWei's evidence focus repair **#75**. Shared owner/chain/registry isolation
+was already supplied in #74. Combined product source is
+`d0fc02057eb9d06350c598220a62c68960cd8ab2`; its Vercel production deployment
+`6790243257` succeeded. The approved feature scope is implemented. New feature
+expansion stops while the team completes acceptance and rehearsal.
+
+The combined local run passed **379 app tests / 38 files, 15 contract tests,
+22 helper regressions, typecheck, lint and production build**. One existing
+share-image lint warning remains. Root browser checks covered the earned gallery
+at 320/390/1440px, keyboard selection/return, stage-change reset, missing artwork
+and the recap focus repair. These local cases used labelled fixtures.
+
+On production, the public Account 2 page and connected Account 3 page both
+showed Buddy at 30 points; selecting earned Hatchling preserved current stage,
+growth and locked Guardian, and Return restored focus. Account 3's read-only
+recap showed 3 personal cares and community total 12 at block 42415259. Before
+reloading, the older tab's Unknown community total recovered to 11 through
+read-only Retry; the later fresh read returned 12. Neither observation proves
+automatic post-transaction refresh. No care/adoption/signature was performed.
+[Dated evidence](qa/evidence/COMBINED_RELEASE_2026-10-02.md) records the runtime,
+checks and limitations; the release handoff PR records final CI/deployment.
+
+| Member | Planning estimate | Next owned work |
+|---|---:|---|
+| Kym | 95% | Pet/gallery/motion/keyboard regression on the combined release; fix reproduced pet presentation defects only. |
+| YeeWei | 98% | Combined recap/evidence/answer readability and accessibility pass; preserve source-time semantics. |
+| Larm | 85% | Coordinate the combined checklist and local recovery run, update the three-minute pitch/backup plan. |
+| Codex / Deston's engineering lane | 95% | Review findings, coordinate one final real-wallet run and release/freeze; Deston handles private approvals and final review/rehearsal. |
+
+**Overall finale readiness: approximately 90%.** These are estimates of remaining
+scope/acceptance, not measured scores or a claim that all QA passed. Still needed:
+combined teammate sign-off, genuine final-release wallet acceptance (including
+automatic read-back and context changes), a real labelled backup and timed
+rehearsal. Optional OKX.AI registration/invocation remains unverified and does
+not block the approved working-product scope. Updated role sheets contain fresh
+QA branches/prompts; separate teammate agent sessions are not automatically notified.
+
+## F6 released; F5 shared wiring prepared — 1 October, earlier checkpoint
 
 F6 PR #72 merged as `e1f5011426dde77bf58025ec9b24de4405073f20`.
 Its final-head CI (`36884279163`), main CI (`36884552164`) and production

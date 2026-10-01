@@ -88,7 +88,7 @@ Run the development server and open:
 | `/dev/landing` | Landing presentation and navigation callback |
 | `/dev/community` | Loading, zero, growing, achieved, unavailable and unknown-target states |
 | `/dev/finale` | Shared fictional companion, personality and garden inputs for parallel finale work |
-| `/dev/companion` | YeeWei's companion preview entry point; F0 supplies a replaceable placeholder |
+| `/dev/companion` | Recap/evidence workbench with fictional ready, unknown, stale-reply and failure states |
 
 Previews carry **UI preview — fictional data** labels, never award chain progress,
 and are unavailable in production. Keep them for repeatable visual and error-state QA.

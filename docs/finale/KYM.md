@@ -1,23 +1,38 @@
-# Kym — earlier earned forms
+# Kym — pet release QA
 
-**Current task F5 · branch `feat/earned-stage-viewer` · assigned 1 October 2026.**
-Start a fresh branch from current reviewed `origin/main`; do not reuse the merged
-F2 branch. Your personality panel shipped in PR #67. Codex owns its live wiring.
+**F2 and F5 complete · QA branch `test/pet-release-qa` · updated 2 October 2026.**
+Your personality panel (#67) and earned-form viewer (#73) are merged. Codex's
+live/public account-scope wiring is also merged. Start the QA follow-up from
+current reviewed `origin/main`; do not reuse either merged feature branch.
 
 **Allowed:** `src/components/pet/**`. Reuse the three approved `/pets/*.png`
 artworks. No new assets, routes, shared types, hooks, storage, RPC, dependencies
 or changes to another owner's files.
 
-**Lead checkpoint, 1 October:** PR #73 is under review while your agent is still
-working (confirmed by Deston). Keep finishing your branch; do not discard local
-changes or restart F5. Codex has separately implemented both route remount keys
-and their regression tests. The lead will reconcile current main and your final
-head, then verify the combined build. Return your final head/PR and remaining
-limits when done; no shared-route changes are required from your agent.
+**Combined candidate, 2 October:** `d0fc02057eb9d06350c598220a62c68960cd8ab2`
+contains F5 and F6. The lead's combined automated checks and local browser
+gallery checks passed; [status](../STATUS.md) records the exact coverage and
+production verification. Final genuine wallet acceptance remains **NOT RUN**.
+Preserve [your original handoff](../../src/components/pet/qa/F5-HANDOFF.md).
 
-## Build
+## Next: combined pet QA, 3–4 October
 
-- Make the existing growth trail let a person view Mochi's **current or earlier
+- On the named combined release, check earned/locked forms, return-to-current
+  focus, missing art, authoritative progress/care and Animate Mochi at
+  320/390/1440px. Use labelled fixtures for unavailable live states and identify
+  them clearly. Do not present fixture selection as wallet evidence.
+- Check the gallery alongside the recap and personality panel. Fix only
+  reproduced pet presentation defects; preserve existing progression and props.
+- Record the actual SHA, runtime, screenshots, checks and NOT RUN cases under
+  `src/components/pet/qa/`. Existing evidence remains dated historical evidence.
+- Send precise shared-route defects to Codex. Wallet prompts belong to one
+  planned lead session, not a separate round of requests from each teammate.
+
+No new feature or artwork is assigned. The approved feature scope is complete.
+
+## Implemented F5 behavior to preserve
+
+- The growth trail lets a person view Mochi's **current or earlier
   earned form**. Hatchling offers Hatchling; Buddy also offers Hatchling;
   Guardian offers all three. Future forms remain labelled locked and cannot be
   selected as an earned pet. Derive this solely from the supplied `pet.stage`.
@@ -29,9 +44,9 @@ limits when done; no shared-route changes are required from your agent.
 - Keep the supplied missing-art placeholder honest; do not replace a missing
   current image with an apparently live pet. Preserve fixture/live labels.
 - Preserve `PetSceneProps`, care behavior and Codex's Animate Mochi preference.
-  Reset the viewed form on supplied stage changes. Codex will key the route's
-  scene by wallet/chain/registry for account changes; request that integration in
-  your PR, without adding wallet access or an identity schema to the component.
+  Reset the viewed form on supplied stage changes. Both routes now key the
+  scene by normalized owner/chain/registry for account changes. Preserve that
+  boundary without adding wallet access or an identity schema to the component.
 - Preserve keyboard focus, selected state and understandable locked labels.
   Use native controls, no hover-only interaction. Other effects still respect
   reduced motion; Mochi's explicit on/off exception stays narrow.
@@ -41,18 +56,19 @@ limits when done; no shared-route changes are required from your agent.
 Test earned/future selection, return to current, stage change, missing art and
 unchanged actual growth/care. Inspect labelled previews at 320/390/1440px and
 keyboard focus, including the artwork ring beside its motion switch/stage label.
-If overlap is reproduced, fix it within this folder and record before/after.
-Larm's [readability check](../qa/finale/larm/READABILITY_QA_2026-10-01.md)
-also flags the low-contrast empty growth track. Verify it and give the full track
-a visible boundary (as in the garden), preserving the actual progress value.
+If a new defect is reproduced, fix it within this folder and record before/after.
+F5 repaired the focus-ring clipping and empty-track boundary originally recorded
+in Larm's [readability check](../qa/finale/larm/READABILITY_QA_2026-10-01.md).
+Preserve those fixes and the actual progress value.
 Run component tests, typecheck and lint; report actual visual checks separately.
 
-Target PR by **2 October, Singapore**. No second pet or new progression rule.
-Open a draft early; return base/head SHAs, screenshots, commands/results and
-unrun cases. Codex handles shared integration, review, merge and release.
+Combined QA target **3–4 October, Singapore**. No second pet or new progression
+rule. Return base/head SHAs, screenshots, commands/results and unrun cases.
+Codex reviews and releases fixes; backup capture is planned for 5 October and
+the timed rehearsal for 6 October. No extra coding work is assigned to Deston.
 
 ## Paste into Kym's agent
 
 ```text
-Continue MemePet with task F5 in docs/finale/KYM.md. F2/PR #67 is complete; do not rebuild it. Read AGENTS.md, docs/PROJECT_BRIEF.md, docs/OWNERSHIP.md, docs/DEV_SETUP.md and docs/finale/INTEGRATION.md. Preserve existing work, fetch origin, start feat/earned-stage-viewer from the current reviewed origin/main and record its SHA. State intended paths, then build the earned-form viewer and tests only in src/components/pet/**. Preserve authoritative current progress, missing-art honesty, existing props and Animate Mochi. Do not add wallet/RPC/storage logic. Open a draft PR and request the lead's account-scope remount explicitly. Run the listed checks, report genuine browser observations separately, commit/push and return the PR URL. Do not merge or deploy. Target 2 October Singapore.
+Continue the pet release QA in docs/finale/KYM.md. F2/#67 and F5/#73 are merged, including the lead's route scope keys; do not rebuild them. Read AGENTS.md, scope, ownership, setup and docs/finale/INTEGRATION.md. Preserve local work, fetch origin and start test/pet-release-qa from current reviewed origin/main; record its SHA. Verify the combined gallery/personality/care presentation at 320/390/1440px and with keyboard access, keeping actual progress, missing-art honesty and Animate Mochi intact. Fix only reproduced defects in src/components/pet/** and record exact evidence in its qa folder. Distinguish labelled fixtures and mock tests from real wallet checks. Request shared changes from Codex, retain NOT RUN cases, run relevant checks and return a small draft PR if changes are needed. No new assets/features/RPC/storage/shared props, wallet requests or deployment changes. Codex handles review/merge/release and one final genuine wallet session. QA target 3–4 October Singapore; backup 5 October, rehearsal 6 October.
 ```
