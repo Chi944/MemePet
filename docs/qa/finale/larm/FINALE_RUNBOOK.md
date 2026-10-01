@@ -103,7 +103,10 @@ reload while the care is pending.
       being demoed, and plays offline from the laptop.
 - [ ] Reduced motion checked on the release with the OS setting on — QA matrix
       row A3. Deston's machine is the natural test.
-- [ ] Browser zoom and font size are legible from the back of a room.
+- [ ] Browser zoom and font size are legible from the back of a room. Start
+      from **150% browser zoom on a 1920×1080 output** (125–150% on 1440×900);
+      layout was checked at these zooms in `READABILITY_QA_2026-10-01.md`.
+      Set it with Ctrl +/−, not the OS display settings.
 - [ ] Pitch wording reflects the documented team demo cares. Attribute any
       later increase separately; the counter counts actions, not people.
 - [ ] Timed rehearsal done on the demo release, with the **rehearsal**
