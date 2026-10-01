@@ -18,6 +18,13 @@ features are complete; current tasks are combined QA and reproduced-defect fixes
 Kym's task remains limited to `src/components/pet/**`; broader asset ownership
 above does not authorize new artwork or expand scope. Use fresh assigned QA
 branches; preserve and safely reconcile Larm's existing combined-QA work.
+Preserve active unmerged QA work in any lane; fresh branches are for tasks that
+have not started. All four role sheets define deliverables and paste-ready
+continuation prompts. Larm owns the combined result index; Kym/YeeWei keep their
+dated results in their own allowlisted folders and return links for citation.
+If there is no defect, an evidence-only PR completes the handoff without adding
+unnecessary code. The shared [handoff](finale/START_HERE.md#release-identity-and-common-handoff)
+defines completion and how to distinguish checkout from deployed revisions.
 
 Component folders include co-located tests and CSS modules. Deston is the final
 reviewer and wallet operator; Codex handles his engineering lane. Larm's former

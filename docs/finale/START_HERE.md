@@ -5,7 +5,7 @@ finale and permission from OKX developers to continue building. This folder is
 the current assignment set. It supersedes the earlier downloaded proposal where
 scope differs. **Updated 2 October 2026:** the approved feature scope is complete.
 Kym's earned-form viewer (#73), its lead route wiring, YeeWei's recap (#72) and
-evidence-focus follow-up (#75) are merged. Combined source candidate is
+evidence-focus follow-up (#75) are merged. Verified product source is
 `d0fc02057eb9d06350c598220a62c68960cd8ab2`. See [status](../STATUS.md) for exact
 release verification; merging and automated tests do not establish final wallet
 acceptance, which remains **NOT RUN**.
@@ -53,13 +53,17 @@ their own coding session, review its result and return a PR link.
 
 ## Start together without conflicts
 
+**Start now; 3–4 October is the completion target, not a start gate.** Each
+teammate can run their independent checks without waiting for another lane.
+
 1. Preserve any local work. F0 and the approved feature PRs are merged; do not
    rebuild them or reuse merged feature/QA branches. Preserve an active Larm
    follow-up and reconcile it safely rather than restarting it.
-2. In a clean checkout, fetch `origin` and create your new assigned branch from
-   the **current reviewed `origin/main`**, including later integration fixes.
-   Record `git rev-parse HEAD` as the actual base in the PR. Do not reset to the
-   original F0 commit or start from an unreviewed sibling branch.
+2. Inspect status/branch and fetch `origin`. Start a new task from the **current
+   reviewed `origin/main`**, including later integration fixes. If the assigned
+   unmerged QA branch already has work, preserve it and reconcile main safely;
+   do not restart it or overwrite a dirty checkout. Record the actual base/head
+   in the PR. Do not reset to F0 or use an unreviewed sibling branch.
 3. Read [AGENTS](../../AGENTS.md), [scope](../PROJECT_BRIEF.md),
    [ownership](../OWNERSHIP.md), [setup](../DEV_SETUP.md),
    [shared contract](INTEGRATION.md) and your role sheet. Paste the starter prompt
@@ -80,6 +84,36 @@ copied build prompt; retain NOT RUN rows and keep mock tests separate from real
 wallet evidence. Final wallet prompts belong to one planned Codex/Deston session.
 Only Codex merges reviewed passing changes. A feature is not release-complete
 because its isolated preview looks good.
+
+## Release identity and common handoff
+
+The verified product checkpoint is `d0fc02057eb9d06350c598220a62c68960cd8ab2`,
+Production deployment `6790243257`. The subsequent `aede952f123e241fb7e8d22a84c495c4807f49ed`
+(#76) changes docs/evidence only; its main CI passed. It is a documentation
+baseline, not a claim of a new production deployment. Fetch current main before
+starting and consult [status](../STATUS.md) and
+[combined evidence](../qa/evidence/COMBINED_RELEASE_2026-10-02.md).
+Record checkout SHA and deployed SHA separately. If a hosted SHA cannot be
+established, say so; never infer it merely from a successful local build.
+
+Each lane returns one small PR with:
+
+- A dated report under its allowed QA folder: actual runtime/URL, SHA, viewport,
+  browser, commands/results, screenshots and PASS/FAIL/NOT RUN rows.
+- Reproduced defects with steps and expected/actual behavior. Fix only owned
+  presentation files; refer shared defects to Codex and keep working elsewhere.
+- Links to original evidence for any reused result. A teammate's report is
+  cited evidence, not a check personally rerun by the receiving agent.
+- Any changes to the existing demo material required by verified behavior.
+  If no defect is found, return an evidence-only PR; do not invent code changes.
+- A final handoff with PR URL, base/head commits, remaining blockers and exact
+  lead requests. Start as draft and mark ready when the agreed work is complete;
+  retain justified NOT RUN rows rather than claiming unavailable checks passed.
+
+Larm maps the three reports into the combined checklist; Kym and YeeWei keep
+their own results in their folders to avoid simultaneous edits. Codex owns
+shared fixes, release verification and the single genuine wallet session.
+All observed counts/stages are time-bound snapshots, not permanent demo values.
 
 **Completed foundation/history:** F0 interfaces merged in PR #55 (`c296e9e`);
 [PR #57](https://github.com/Chi944/MemePet/pull/57) added the live adapters.

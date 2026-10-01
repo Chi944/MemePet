@@ -13,7 +13,10 @@ Standard explanation updates shipped in #68 (`3cd4b0a`); release and browser
 preference checks are recorded in [status](../STATUS.md).
 F5 earned forms (#73), normalized live/public scene scope keys, and F6's recap
 and focus fixes (#72/#75) are now merged. The approved feature scope is complete.
-Combined source candidate: `d0fc02057eb9d06350c598220a62c68960cd8ab2`.
+Verified product source: `d0fc02057eb9d06350c598220a62c68960cd8ab2`.
+The later #76 main commit `aede952f123e241fb7e8d22a84c495c4807f49ed` changes
+documentation/evidence only and passed CI. Record checkout and deployed revisions
+separately using the [common handoff](START_HERE.md#release-identity-and-common-handoff).
 Combined checks pass: 379 app tests, 15 contract tests, 22 read-helper tests,
 typecheck, lint and build. Local browser checks covered the F5 gallery at
 320/390/1440px, keyboard/missing-art behavior and F6 evidence focus at 390px.
@@ -54,6 +57,25 @@ Implemented retry protection does not prove a new genuine care read-back passed.
 Shared code/routes are in the lead [allowlist](../OWNERSHIP.md). Do not enter
 teammates' files while they are editing; coordinate a specific handover for
 integration fixes instead of silently overwriting work.
+
+## Concrete release deliverable
+
+- Collect Kym's pet report, YeeWei's companion report and Larm's combined report
+  as PR links. Preserve each agent's dated observations; Larm may cite them but
+  does not need to rerun every specialist check. Review all source fixes and
+  rerun the affected checks on the final combined source.
+- Maintain one release record under `docs/qa/evidence/` with source/deployment
+  SHA, check results, actual browser evidence, remaining blockers and rollback.
+  Keep the existing 2 October observations historical; a new build needs its own
+  record where relevant. Docs-only commits do not imply a fresh production run.
+- Before asking Deston for wallet actions, prepare the runtime, account/network
+  prerequisites, due-care state, recording plan and ordered checklist from
+  [BROWSER_WALKTHROUGH.md](../qa/BROWSER_WALKTHROUGH.md). Combine the team's wallet
+  requests into one session. Do not consume the reserved pitch-day care while
+  preparing read-only checks. No signature or testnet funding is automated here.
+- Publish the final acceptance record with actual transaction hashes/receipts
+  only when performed; route blockers to the correct owner. Confirm the dated
+  backup file exists and plays before calling backup capture complete.
 
 ## OKX.AI service and optional model
 
@@ -133,3 +155,9 @@ pending transaction requires its use.
 Return a short release report: shipped behavior, PRs/commit, real vs automated
 checks, limits and the exact next human step. Teammates return PR links here;
 automatic access to their separate coding agents is not assumed.
+
+## Resume prompt for the lead session
+
+```text
+Continue MemePet's release lane in docs/finale/CODEX.md. Fetch and inspect current reviewed main, open PRs and local work without discarding anything. All approved features are implemented; use the latest team briefs for QA, not new feature work. Review incoming Kym/YeeWei/Larm reports and exact PR heads, fix shared blockers, run relevant integrated checks and release through the existing process. Record checkout and deployed SHAs separately. Preserve real/fixture/cited/NOT RUN evidence and historical failures. Prepare one complete final wallet-and-capture session before requesting only necessary private approvals from Deston. Verify actual backup footage and coordinate the three-minute rehearsal. No paid integration, scope expansion, force-push or autonomous wallet signing. Return a concise release report and the exact remaining human step.
+```
