@@ -15,11 +15,17 @@ other owners' files. Reuse installed components and supplied callbacks.
 ## Next: combined QA, 3–4 October
 
 The approved feature scope is complete. Verified product source
-`d0fc02057eb9d06350c598220a62c68960cd8ab2` contains F5 and F6. Main subsequently
-includes the documentation-only #76 merge at `aede952`; fetch current reviewed
-main rather than pinning to either SHA. Check
+`62d487d5d4e1f7c7b26332753f042fcb91a748d8` contains F5, F6 and Kym's completed
+pet QA/preview fix #78, with production deployment `6794766512`. The
+[current release evidence](../qa/evidence/PET_QA_RELEASE_2026-10-02.md) records
+the time-bound alias-to-SHA check and a separate lead read-only combined check.
+Fetch current reviewed main rather than pinning to this checkpoint. Check
 [status](../STATUS.md) for production verification and the exact release to test.
 Final genuine wallet acceptance is **NOT RUN** and belongs to one lead session.
+
+Kym's [dated pet report](../../src/components/pet/qa/PET_RELEASE_QA_2026-10-02.md)
+is complete. Cite it or the lead's follow-up only within their stated limits;
+they do not replace your owned recap acceptance or establish a wallet pass.
 
 - Verify the released recap at narrow/desktop widths and with keyboard access.
   Record the actual release SHA and URL. Use the existing labelled workbench
@@ -111,5 +117,5 @@ No additional coding is assigned to Deston; mock tests are not wallet evidence.
 ## Paste into YeeWei's agent
 
 ```text
-Continue task COMPANION-COMBINED-QA in docs/finale/YEEWEI.md. F3/F6, #72/#75 and handoff #76 are merged; do not rebuild them or reuse merged feature/release-QA branches. Read AGENTS.md, scope, ownership, setup, docs/finale/INTEGRATION.md and dated evidence. Inspect local changes, branch and existing PR before fetching origin. Preserve active unmerged QA work; reconcile reviewed origin/main when clean. Only create test/companion-combined-qa if no active QA branch exists. Never reset/discard work, force-push or overwrite a branch. Record actual base/head SHAs and runtime details. Verify recap/disclosure/answer readability, keyboard focus, source labels and unknown/stale states at 320/390/1440px, alongside F5 and personality. Fix only reproduced companion defects in src/components/companion/**. Create docs/qa/finale/yeewei/COMBINED_QA_<actual-date>.md with screenshots, commands/results and NOT RUN rows, separating local fictional previews, production read-only observations and wallet evidence. Preserve care-at-read wording, date-width and #75 focus fixes. Do not trigger wallet prompts, change OS settings or add features, fetching/storage/models/routes/shared props/packages or paid services. Run documented checks and open a small draft PR, including an evidence-only PR if no fixes are needed. Return the PR/report link for Larm's combined checklist and exact shared-change requests to Codex; do not edit other lanes. Codex reviews/merges/releases and coordinates one final wallet session with Deston. QA 3–4 October Singapore; backup 5 October, rehearsal 6 October.
+Continue task COMPANION-COMBINED-QA in docs/finale/YEEWEI.md. F3/F6, #72/#75, handoffs #76/#77 and Kym's pet QA #78 are merged; do not rebuild them or reuse merged feature/release-QA branches. Read AGENTS.md, scope, ownership, setup, docs/finale/INTEGRATION.md and dated evidence. The verified product checkpoint is 62d487d5d4e1f7c7b26332753f042fcb91a748d8, production deployment 6794766512; docs/qa/evidence/PET_QA_RELEASE_2026-10-02.md records the time-bound alias-to-SHA proof and lead read-only check. Kym's src/components/pet/qa/PET_RELEASE_QA_2026-10-02.md is complete; cite its limits without repeating her brief or substituting it for your recap acceptance. Inspect local changes, branch and existing PR before fetching origin. Preserve active unmerged QA work; reconcile reviewed origin/main when clean. Only create test/companion-combined-qa if no active QA branch exists. Never reset/discard work, force-push or overwrite a branch. Record actual base/head SHAs and runtime details, checking current status for later releases. Verify recap/disclosure/answer readability, keyboard focus, source labels and unknown/stale states at 320/390/1440px, alongside F5 and personality. Fix only reproduced companion defects in src/components/companion/**. Create docs/qa/finale/yeewei/COMBINED_QA_<actual-date>.md with screenshots, commands/results and NOT RUN rows, separating local fictional previews, production read-only observations and wallet evidence. Preserve care-at-read wording, date-width and #75 focus fixes. Do not trigger wallet prompts, change OS settings or add features, fetching/storage/models/routes/shared props/packages or paid services. Run documented checks and open a small draft PR, including an evidence-only PR if no fixes are needed. Return the PR/report link for Larm's combined checklist and exact shared-change requests to Codex; do not edit other lanes. Codex reviews/merges/releases and coordinates the prepared docs/qa/FINAL_WALLET_SESSION.md with Deston. QA 3–4 October Singapore; backup 5 October, rehearsal 6 October.
 ```

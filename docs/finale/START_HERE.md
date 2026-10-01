@@ -4,9 +4,10 @@
 finale and permission from OKX developers to continue building. This folder is
 the current assignment set. It supersedes the earlier downloaded proposal where
 scope differs. **Updated 2 October 2026:** the approved feature scope is complete.
-Kym's earned-form viewer (#73), its lead route wiring, YeeWei's recap (#72) and
-evidence-focus follow-up (#75) are merged. Verified product source is
-`d0fc02057eb9d06350c598220a62c68960cd8ab2`. See [status](../STATUS.md) for exact
+Kym's earned-form viewer (#73), its lead route wiring, YeeWei's recap (#72),
+evidence-focus follow-up (#75) and Kym's pet QA/preview fix (#78) are merged.
+Verified product source is `62d487d5d4e1f7c7b26332753f042fcb91a748d8`.
+See [status](../STATUS.md) for exact
 release verification; merging and automated tests do not establish final wallet
 acceptance, which remains **NOT RUN**.
 
@@ -41,7 +42,7 @@ holders, retention or model-training claims. Standard explanations are labelled.
 
 | Human + coding agent | Next responsibility | Branch / instructions |
 |---|---|---|
-| Kym · F5 complete | Pet/gallery/personality combined QA; fix reproduced defects | `test/pet-release-qa` · [KYM.md](KYM.md) |
+| Kym · F2/F5 and pet QA complete | #78 handed off; available for reproduced pet regressions only | Do not reuse merged `test/pet-release-qa` · [KYM.md](KYM.md) |
 | Larm · F7 | Combined presentation/recovery QA; final runbook and backup coordination | `test/finale-combined-qa` · [LARM.md](LARM.md) |
 | YeeWei · F6 complete | Recap/disclosure combined QA; preserve #75 focus repair | `test/companion-combined-qa` · [YEEWEI.md](YEEWEI.md) |
 | Codex in Deston's session | Exact release verification, fixes/reviews, one final wallet session and freeze | [CODEX.md](CODEX.md) |
@@ -87,12 +88,12 @@ because its isolated preview looks good.
 
 ## Release identity and common handoff
 
-The verified product checkpoint is `d0fc02057eb9d06350c598220a62c68960cd8ab2`,
-Production deployment `6790243257`. The subsequent `aede952f123e241fb7e8d22a84c495c4807f49ed`
-(#76) changes docs/evidence only; its main CI passed. It is a documentation
-baseline, not a claim of a new production deployment. Fetch current main before
-starting and consult [status](../STATUS.md) and
-[combined evidence](../qa/evidence/COMBINED_RELEASE_2026-10-02.md).
+The verified product checkpoint is `62d487d5d4e1f7c7b26332753f042fcb91a748d8`,
+Production deployment `6794766512`. Vercel's API resolved the public alias to
+READY deployment `dpl_28SRHMBY4m1ojxe8c5zCRpwEXriG` at this SHA. Its PR/main
+checks passed. Fetch current main before starting and consult [status](../STATUS.md)
+and [current release evidence](../qa/evidence/PET_QA_RELEASE_2026-10-02.md).
+Later docs-only commits do not imply that another browser run occurred.
 Record checkout SHA and deployed SHA separately. If a hosted SHA cannot be
 established, say so; never infer it merely from a successful local build.
 
@@ -109,6 +110,12 @@ Each lane returns one small PR with:
 - A final handoff with PR URL, base/head commits, remaining blockers and exact
   lead requests. Start as draft and mark ready when the agreed work is complete;
   retain justified NOT RUN rows rather than claiming unavailable checks passed.
+
+Kym's [completed #78 report](../../src/components/pet/qa/PET_RELEASE_QA_2026-10-02.md)
+and the lead's live same-page follow-up are ready for Larm to cite. Her unrun
+cases remain explicit; the lead's follow-up closes only its stated read-only gap.
+The [final wallet session](../qa/FINAL_WALLET_SESSION.md) is prepared; private
+approvals stay consolidated there. No teammate needs to initiate wallet prompts.
 
 Larm maps the three reports into the combined checklist; Kym and YeeWei keep
 their own results in their folders to avoid simultaneous edits. Codex owns

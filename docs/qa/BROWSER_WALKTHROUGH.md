@@ -16,14 +16,22 @@ wallet action. Record only what was actually performed.
 - A local Anvil run is separate evidence; follow [development setup](../DEV_SETUP.md)
   and label its chain, registry and results as local. No time travel on testnet.
 
-The [latest-release run](evidence/LATEST_RELEASE_QA_2026-09-24.md) owns current
-results. The [recorded Account 2 run](evidence/FINAL_CAPTURE_2026-09-24.md)
+For the finale, use the [final wallet session plan](FINAL_WALLET_SESSION.md)
+and [current release/preflight evidence](evidence/PET_QA_RELEASE_2026-10-02.md).
+The 2 October release passed read-only combined checks; its new signed-care and
+account/network acceptance rows remain NOT RUN. Consult [status](../STATUS.md)
+for subsequent releases and re-establish the actual deployed SHA before a run.
+
+## Historical September wallet checkpoint
+
+The [24 September release run](evidence/LATEST_RELEASE_QA_2026-09-24.md) owns
+the following historical results. The [recorded Account 2 run](evidence/FINAL_CAPTURE_2026-09-24.md)
 contains genuine rejection/adoption/care, receipts, later read-back and public
 viewing, including read failures and explicit capture gaps. Neither record
 upgrades a step that it did not actually exercise. [Earlier evidence](evidence/README.md)
 remains dated and separately accessible.
 
-The current tested product revision is **af886a75**, deployed successfully as
+That run's tested product revision was **af886a75**, deployed successfully as
 **6644949897** on 24 September at 18:17:39 UTC. Account 3 genuinely rejected,
 adopted and cared: the pet automatically reached 10 points/cooldown, but the
 community header became Unknown. **Retry community total** recovered 4 without

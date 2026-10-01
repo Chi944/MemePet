@@ -5,6 +5,10 @@ passes, and a recovered read does not erase an earlier failed refresh.
 
 ## Current records
 
+- [Pet QA release and wallet preflight](PET_QA_RELEASE_2026-10-02.md): #78 review/merge, current alias-to-SHA proof, same-page live gallery/personality/recap check and four public account reads. Final signed acceptance remains NOT RUN; use the [prepared session plan](../FINAL_WALLET_SESSION.md).
+- [Combined F5/F6 release](COMBINED_RELEASE_2026-10-02.md): integrated checks, earned-form and evidence-focus browser checks, public/connected reads and explicit transaction gaps.
+- [F6 integration](F6_INTEGRATION_2026-10-01.md): recap layout/source-time fixes and fixture keyboard/viewport observations.
+- [Controlled read recovery](READ_RECOVERY_2026-10-01.md): actual local failed-read/retry recovery; no new wallet action.
 - [Personality integration](PERSONALITY_INTEGRATION_2026-10-01.md): Kym's panel wired to scoped preferences and immediate standard explanations; automated isolation checks and separate browser/release checkpoint.
 
 - [Mochi motion control](MOCHI_MOTION_2026-09-30.md): explicitly approved default-on artwork, saved off control and real browser keyboard/hover checks; no wallet action.
@@ -14,7 +18,7 @@ passes, and a recovered read does not erase an earlier failed refresh.
 - [Finale receipt retry](FINALE_RECEIPT_RETRY_2026-09-29.md): reproduced viem retry classification repair; genuine latest-release care still pending.
 - [Finale foundation](FINALE_FOUNDATION_2026-09-29.md): shared interfaces, fixture gates and four-person handoffs.
 
-- [Latest-release wallet QA](LATEST_RELEASE_QA_2026-09-24.md): current account/network transitions and follow-up care observations.
+- [September wallet QA](LATEST_RELEASE_QA_2026-09-24.md): dated account/network limitations and follow-up care observations; not acceptance of the October release.
 - [Final capture and video QC](FINAL_CAPTURE_2026-09-24.md): Account 2 receipts, adoption read-error recovery, failed community refresh, genuine stills, source hashes and completed-video checks.
 - [First real browser acceptance](FINAL_ACCEPTANCE_2026-09-24.md): earlier wallet's care/cooldown/reload/public view; community header initially stale.
 - [Larm's browser audit](LARM_FINAL_BROWSER_QA.md): four viewport layouts, keyboard/preview/error checks, with reduced-motion and foreground playback gaps kept explicit.
