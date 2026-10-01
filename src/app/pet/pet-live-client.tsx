@@ -242,7 +242,11 @@ export function PetLiveClient() {
 
       {registry.hasPet && registry.pet ? (
         <div className="pet-live-grid">
-          <PetScene pet={registry.pet} celebrate={celebrate} />
+          <PetScene
+            key={`${wallet.deployment.chainId}:${wallet.deployment.registryAddress?.toLowerCase()}:${wallet.address?.toLowerCase()}`}
+            pet={registry.pet}
+            celebrate={celebrate}
+          />
           <CarePanel
             pet={registry.pet}
             action={action}

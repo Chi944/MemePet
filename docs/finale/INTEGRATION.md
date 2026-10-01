@@ -83,7 +83,11 @@ Public HTTP verification is not an OKX.AI marketplace invocation.
   deployment chain ID and registry so switching accounts at the same stage
   remounts the gallery. The live owner is the connected wallet; the public owner
   is the route address. Do not add wallet access or an identity prop to the scene.
-  This remount work is a lead integration dependency, not already-completed QA.
+  Lead integration now keys both routes and has eight route reconciliation
+  regressions covering owner/chain/registry changes plus same-scope retention.
+  See the lead wiring PR and current status for release results. Kym's component
+  branch remains separate until her final handoff; genuine wallet switching on
+  the combined release is not implied by these automated tests.
 - **F6, YeeWei:** preserve `CompanionPanelProps`, every evidence field, question
   ID and reply-context rule. A native evidence disclosure changes presentation
   only; it adds no fetching, persistence or inferred readiness from browser time.

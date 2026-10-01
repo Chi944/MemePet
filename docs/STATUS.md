@@ -4,7 +4,35 @@ Updated 1 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## F6 recap delivery — 1 October, latest checkpoint
+## F6 released; F5 shared wiring prepared — 1 October, latest checkpoint
+
+F6 PR #72 merged as `e1f5011426dde77bf58025ec9b24de4405073f20`.
+Its final-head CI (`36884279163`), main CI (`36884552164`) and production
+deployment (`6788282844`) passed. After reload, Chrome displayed the connected
+Account 2's Buddy, 20 points, 2 personal cares and shared total 7 at block
+42409755. The new recap, read-only Standard explanation and expanded full
+evidence were observed. No new wallet transaction was performed.
+
+Deston confirms Kym is **still working** on F5 PR #73. At reviewed draft head
+`4f3bf148a18f8e9557231b43f600aafec6ac9050`, it now includes earned-form
+regressions and her local browser evidence; green draft checks are not a final
+handoff. Codex has separately implemented the requested live/public scene
+keys, isolated by owner, deployment chain and registry. Eight route tests verify
+state resets for changed scope and preservation for unchanged scope/casing.
+This shared wiring does not include or release her unfinished component branch.
+The lead wiring PR records its exact final checks and release result.
+Local integrated checks pass **368 app tests / 38 files**, typecheck and lint
+(the same existing image warning). The route tests use a stateful scene double;
+they prove page reconciliation, not a new real-wallet interaction.
+
+Current planning estimates (scope and remaining acceptance, not measured scores):
+**overall 85%; Codex/Deston 90%; Kym 85%; Larm 85%; YeeWei 95%.**
+YeeWei moves to release/combined QA, Kym finishes and hands off #73, Larm prepares
+the combined pass, and Codex integrates/reviews/releases. Final genuine wallet
+acceptance, a labelled backup and rehearsal remain outstanding. Deston has no
+routine coding or merge work assigned.
+
+## F6 delivery details
 
 YeeWei completed F6 in PR #72: the compact recap keeps stage, growth, personal
 cares and care timing in view, places questions/answers nearby, and preserves
@@ -27,7 +55,7 @@ The PR records the exact final CI, merge and deployment results.
 | Member | Current completion | Next step |
 |---|---|---|
 | YeeWei | F3 and F6 implementation complete | Verify the released recap and help Larm with the combined QA; no additional feature assigned. |
-| Kym | F2 complete; F5 draft PR #73 now open | Finish the earned-form viewer tests/observations; lead review and account-scope wiring are pending. |
+| Kym | F2 complete; F5 draft PR #73 has tests/evidence, but her agent remains active | Finish and hand off #73. Lead account-scope wiring is prepared separately; final integrated review remains. |
 | Larm | Initial F7 presentation/runbook work merged in #70 | Use the recovery setup; finish combined QA after F5. |
 | Codex / Deston | Shared adapters, recovery and F6 integration complete | Integrate F5, review/release and coordinate one final genuine wallet session. Deston retains private approvals/rehearsal. |
 
