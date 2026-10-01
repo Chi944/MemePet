@@ -7,7 +7,8 @@ For the 7 October 2026 finale. It covers:
 - pre-flight checks;
 - what to do when the network, the wallet or the chain misbehaves.
 
-The backup recording plan is in [`BACKUP_SHOT_LIST.md`](BACKUP_SHOT_LIST.md).
+The backup recording plan is in [`BACKUP_SHOT_LIST.md`](BACKUP_SHOT_LIST.md);
+honest answers for the questions afterwards are in [`JUDGE_QA_PREP.md`](JUDGE_QA_PREP.md).
 The final script and timing are Deston's call; this is a proposal the whole
 team can rehearse against.
 
