@@ -23,9 +23,15 @@ function displayAddress(addr: string): string {
  * it never compares against the browser clock, so it cannot imply "ready now".
  * Anything that is not a plain UTC ISO string is shown exactly as supplied.
  */
-function readableUtc(iso: string): string {
+function ReadableUtc({ iso }: { iso: string }) {
   const match = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})(?::\d{2}(?:\.\d+)?)?Z$/.exec(iso);
-  return match ? `${match[1]} ${match[2]} UTC` : iso;
+  if (!match) return <>{iso}</>;
+  return (
+    <>
+      <span className={styles.nowrap}>{match[1]}</span>{" "}
+      <span className={styles.nowrap}>{match[2]} UTC</span>
+    </>
+  );
 }
 
 function FactsSection({
@@ -121,7 +127,9 @@ function FactsSection({
         </div>
         <div className={styles.recapItem}>
           <dt>Next eligible care</dt>
-          <dd>{readableUtc(s.nextCareAtIso)}</dd>
+          <dd>
+            <ReadableUtc iso={s.nextCareAtIso} />
+          </dd>
         </div>
       </dl>
     </Card>
