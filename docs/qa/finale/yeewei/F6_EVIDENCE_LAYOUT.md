@@ -61,7 +61,10 @@ unknown vs zero community total, separate from personal cares; each non-ready
 state without recap/evidence/questions/answer; and an obsolete answer dropped
 after a context change.
 
-## Browser observations — 1 October 2026
+## Automated browser observations (headless Chrome) — 1 October 2026
+
+These are scripted agent observations, not human QA. Human results are in the
+next section.
 
 **Method:** headless Google Chrome (installed app) driven via the DevTools
 protocol from a scratch script (not committed, no packages added), against
@@ -99,16 +102,43 @@ workbench picker, so the selected state is visible. The red "Developer preview"
 bar part-way down is the preview route's fixed banner captured during full-page
 capture; the "N" circle is the Next.js dev indicator. Neither belongs to the panel.
 
-### NOT RUN — needs a human or Codex
+## Human visual QA — YeeWei
+
+**Performed by:** YeeWei (Yee-Wei). **Recorded:** 1 October 2026, from YeeWei's
+report after completing the check. **Route:** `/dev/companion` fixture
+workbench (fictional data). YeeWei did not specify the browser, exact viewport
+widths or which non-ready states were reviewed, so none are claimed here.
+
+YeeWei personally confirmed:
+
+| Check | Result |
+|---|---|
+| Concise ready recap is clear and readable | ✓ Confirmed |
+| `standardAnswer` appears above the evidence disclosure | ✓ Confirmed |
+| "View verified evidence" opens and closes correctly | ✓ Confirmed |
+| Keyboard focus state on the disclosure is visible | ✓ Confirmed |
+| All technical evidence remains available when opened | ✓ Confirmed |
+| Long fictional addresses do not overflow | ✓ Confirmed |
+| `unknownCommunity` displays `Unknown` rather than `0` | ✓ Confirmed |
+| Checked mobile and desktop layouts are usable | ✓ Confirmed (widths not specified) |
+| Other required states reviewed behaved correctly | ✓ Confirmed for the states reviewed (not individually listed) |
+
+## NOT RUN — needs a human or Codex
+
+These items were not covered by either the headless observations or YeeWei's
+human QA above.
 
 - **Screen reader** (VoiceOver/NVDA): announcement of the summary's
   expanded/collapsed state and of the answer live region.
-- **Real Safari/Firefox** keyboard toggling. Only headless Chrome was driven.
+- **Named Safari/Firefox** keyboard toggling. The headless run used Chrome; the
+  human QA did not record a browser.
 - **Live wallet route** (`/pet` with a real wallet on X Layer testnet, chain
   1952): real addresses, a `Live read` label and a real recap. Codex owns route
   wiring; no change to it is needed.
 - **Reduced motion / zoom 200%** — not checked. The panel adds no animation.
-- **`npm run build`** and the production 404 gate for `/dev/companion` — CI.
+- **Local `npm run build`.** PR CI run
+  [36879970672](https://github.com/Chi944/MemePet/actions/runs/36879970672) at
+  `eb24314` passed the App job (typecheck, lint, test, build) and Contracts.
 
 ## Integration requests
 
