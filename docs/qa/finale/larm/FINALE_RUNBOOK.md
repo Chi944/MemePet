@@ -1,9 +1,15 @@
-# Finale runbook — community segment and network failure
+# Finale runbook — three-minute demo and recovery
 
-For the 7 October 2026 finale. Covers the community/garden part of the
-three-minute demo and what to do when the network or the chain misbehaves.
-The overall pitch script and timing are the lead's; this is a proposal for
-Larm's part plus a failure playbook the whole team can use.
+For the 7 October 2026 finale. It covers:
+
+- a proposed three-minute flow for the finished loop;
+- the words to use and to avoid;
+- pre-flight checks;
+- what to do when the network, the wallet or the chain misbehaves.
+
+The backup recording plan is in [`BACKUP_SHOT_LIST.md`](BACKUP_SHOT_LIST.md).
+The final script and timing are Deston's call; this is a proposal the whole
+team can rehearse against.
 
 **Deston is the only signer.** Nobody else connects, approves, adopts or cares.
 
@@ -42,21 +48,43 @@ total on stage; this table is a dated observation, not a forecast.
 - The fictional preview at `/dev/community` shows a bloom, but it is a labelled
   fixture and `/dev/*` is 404 in production. Never present it as live.
 
-## Proposed community segment (≈ 30 s)
+## Three-minute flow (proposal)
 
-For the lead to fit into the three minutes.
+Written for the release at `7d4144b`. Labels in quotes are the app's own text.
+**Recheck the recap labels after YeeWei's F6 merges**, because F6 reworks that
+panel.
 
-1. Point at the community total: *"Every confirmed care adds one here — it
-   counts care actions, not people."*
-2. Point at the garden: *"When the community reaches 20 confirmed cares, the
-   garden blooms. It's a goal inside the app — no token, no reward. We're at
-   [real total] now."*
-3. If a reference is configured, one line: *"Themed around an X Layer meme
-   community — a reference, not a partnership."* If identity is
-   `unconfigured`, skip this line.
+The care confirmation is the only step whose length we do not control. Its
+slot below is a **buffer**, not a measurement. Time it in the rehearsal, from
+approving in the wallet to "Confirmed", and adjust. On 30 September, X Layer
+testnet produced roughly one block per second; that is not a receipt time.
 
-Read the real total off the screen at the time. Do not quote a number from
-this document.
+| Time | Screen | What to show and say |
+|---|---|---|
+| 0:00–0:20 | Overview `/` | The idea in one line: *"Adopt a meme-community mascot. A little daily care grows your pet and the community's garden."* No token to buy |
+| 0:20–0:40 | Pet home `/pet`, connected | The real pet: stage, growth points, "Ready" in **Daily care**. *"Everything here is read from the registry on X Layer testnet."* |
+| 0:40–1:30 | **Daily care** | Press care. In the wallet: approve (Deston only). The badge moves "In your wallet" → "Pending" → "Confirmed". **This is the buffer.** While it is pending, say: *"No progress is awarded until the receipt confirms."* When it confirms: "Care is confirmed. Your pet's progress is up to date." Expected: growth **+10** (automatic read-back on this release is still NOT RUN; check in rehearsal) |
+| 1:30–1:55 | Garden (same page) | Expected: the garden total is one higher. **The automatic garden update after a new care has not been observed live yet** (QA row X3), so check it in the rehearsal. If it has not moved, press **Retry reading** once. *"Every confirmed care adds one here. It counts care actions, not people. At 20 the garden blooms. It's a goal inside the app: no token, no reward. We're at [read it off the screen]."* One line for the reference: *"Themed around XDOG, an X Layer meme community. A reference, not a partnership."* |
+| 1:55–2:20 | **Read-only recap** | Ask "Explain progress". Point at the label **"Standard explanation"** and at "Read block" / "Block time". *"Every answer is a standard explanation of confirmed activity, and it shows the block it was read from."* |
+| 2:20–2:50 | **Mochi, your way** | With that answer still on screen, press "Explore interactions" or "Practise interactions". The style line changes (curious when Explore leads, focused when Practise leads, playful when balanced) and the same answer is reworded, with the same facts and the same Read block. *"This changes how Mochi explains, not the facts. It is stored only in this browser, earns no growth and trains no model."* |
+| 2:50–3:00 | — | Close. If the care did not confirm, say so and use the backup (below) |
+
+If the care is still pending at 1:30, go on to the garden and the explanation
+style, then come back to **Daily care** at the end. Whether the page shows the
+confirmation without a reload is a rehearsal check, not a promise. Do not
+reload while the care is pending.
+
+### Words to use, words to avoid
+
+| Say | Do not say |
+|---|---|
+| "care actions" / "confirmed cares" | "users", "holders", "members", "people", "community growth" |
+| "team demo cares" (for today's total) | "organic", "traction", "adoption" |
+| "explanation style" / "Mochi explains differently" | "Mochi learns", "AI personality", "trained", "smart" |
+| "Standard explanation" | "AI answer", "the model says" |
+| "a reference to XDOG" | "partnered with", "endorsed by", "official XDOG app" |
+| "a free read-only service is prepared" | "listed on OKX.AI" (it is **not registered**) |
+| "no token, no rewards" | "earn", "rewards", "airdrop" |
 
 ## Pre-flight
 
@@ -75,6 +103,14 @@ this document.
 - [ ] Browser zoom and font size are legible from the back of a room.
 - [ ] Pitch wording reflects the documented team demo cares. Attribute any
       later increase separately; the counter counts actions, not people.
+- [ ] Timed rehearsal done on the demo release, with the **rehearsal**
+      wallet. Write down how long the care took from approval to "Confirmed",
+      and set the 0:40–1:30 buffer from it. Also note whether growth and the
+      garden total updated **without a reload** (QA row X3); if not, plan the
+      Retry press into the script.
+- [ ] Recap labels rechecked after F6 merges ("Explain progress",
+      "Standard explanation", "Read block"); this runbook updated if they
+      changed.
 
 ### Morning of 7 October
 
@@ -85,6 +121,10 @@ this document.
       in a rehearsal is saved in that browser and stays off after a reload.
       Mochi animates even with the OS reduced-motion setting on (Deston's
       choice); the garden and other effects still follow the OS setting.
+- [ ] **Explanation style is where you want it.** Explore/Practise counts are
+      saved per browser and wallet, so rehearsal presses carry over. If the
+      style is not the one you plan to show, press **Reset personality**
+      (preferences only; earned growth stays) and rehearse the presses once.
 - [ ] Close unrelated tabs and notifications. Nothing private on screen.
 - [ ] Backup recording opened and paused on its first frame, one click away.
 
@@ -103,16 +143,23 @@ Decide fast. Do not debug on stage.
 | Wallet or browser shows a **security warning** | **Do not approve it.** Go to the backup. Never bypass a warning on stage |
 | Care is refused as already cared today | The cooldown trap above has been hit. Show the cooldown message — it demonstrates the once-a-day rule — and use the backup for the care itself |
 | Garden total is lower than expected | Show it as it is. Never switch to the preview to make it look further along |
+| **Mochi, your way** is missing | It is shown only for a connected, adopted pet on the right network, and it hides while a care is being written. Wait for "Confirmed", or skip this beat |
+| "Browser saving is unavailable" appears | Say: *"Preferences aren't saved in this browser right now; the facts are unaffected."* Carry on |
+| The recap says activity is unavailable | Same as Unknown: the app will not make an answer up. Retry once, then move on |
+| An explorer link opens an OKX login page | Do not log in on stage. Reload once; if it persists, skip it. The app's own "Read block" and the receipt are the evidence (see `LINKS_AND_RECAP_QA_2026-10-01.md`) |
 
 ## The backup recording
 
-- Made on the demoed release, of a **genuine** care: real wallet, real
-  receipt, real total before and after.
-- The screen says, for the whole recording, that it is a recording — for
-  example *"Recorded [date, time] — not live"* — not just the narrator.
+The full plan is in [`BACKUP_SHOT_LIST.md`](BACKUP_SHOT_LIST.md). The rules:
+
+- It must be made on the demoed release, of a **genuine** care: real wallet,
+  real receipt, real total before and after.
+- The screen says it is a recording **for the whole recording**, for example
+  *"Recorded [date, time] — not live"*. The narrator saying so is not enough.
 - Say out loud when switching to it: *"This is a recording from [date]."*
-- Never present a recording, a fixture or the preview as live. A backup that
-  is labelled is fine; one that is passed off as live is not.
+- Never present a recording, a fixture or the preview as live. A labelled
+  backup is fine; one passed off as live is not.
+- The plan is not footage. Until it is captured, the backup does not exist.
 
 ## After the pitch
 
