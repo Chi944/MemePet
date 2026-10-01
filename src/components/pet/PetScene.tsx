@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { PetSceneProps, PetStage } from "@/types/view-models";
 import { DataModeBadge } from "@/components/ui/Badge";
 import { MochiMotionControl } from "@/components/ui/MochiMotionControl";
@@ -34,6 +34,7 @@ function getProgress(growthPoints: number, nextStageAt: number | null) {
 
 export function PetScene({ pet, celebrate }: PetSceneProps) {
   const { enabled, setEnabled } = useMochiMotion();
+  const currentFormButton = useRef<HTMLButtonElement>(null);
   const [greeting, setGreeting] = useState(false);
   const [form, setForm] = useState({ earnedStage: pet.stage, viewedStage: pet.stage });
   // Reset before rendering children; never flash another stage's selection.
@@ -86,7 +87,10 @@ export function PetScene({ pet, celebrate }: PetSceneProps) {
             : `Current form: ${STAGE_LABEL[pet.stage]}`}
         </p>
         {viewingEarlier ? (
-          <button type="button" onClick={() => viewForm(pet.stage)}>Return to current form</button>
+          <button type="button" onClick={() => {
+            viewForm(pet.stage);
+            currentFormButton.current?.focus();
+          }}>Return to current form</button>
         ) : null}
         {!pet.artSrc ? <p>Current artwork unavailable. Earlier forms cannot be viewed while current artwork is missing.</p> : null}
       </div>
@@ -159,12 +163,13 @@ export function PetScene({ pet, celebrate }: PetSceneProps) {
               <li key={stage} aria-current={index === currentIndex ? "step" : undefined}>
                 <button
                   type="button"
+                  ref={index === currentIndex ? currentFormButton : undefined}
                   className={state}
                   aria-pressed={stage === viewedStage}
                   disabled={index > currentIndex || (!pet.artSrc && index < currentIndex)}
                   onClick={() => viewForm(stage)}
                 >
-                  <span>{STAGE_LABEL[stage]}</span>
+                  <span>{STAGE_LABEL[stage]}</span>{" "}
                   <span className={styles.formState}>
                     {index > currentIndex ? "Locked" : index === currentIndex ? "Current" : !pet.artSrc ? "Art unavailable" : "Earned"}
                   </span>
