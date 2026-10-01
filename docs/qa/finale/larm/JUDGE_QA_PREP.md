@@ -113,7 +113,8 @@ note.
 > Three things:
 >
 > - Automatic refresh of the shared total has returned Unknown before. The
->   app shows Unknown instead of a number, and Retry recovers it.
+>   app shows Unknown instead of a number. Retry recovered it in our recorded
+>   test; persistent failures remain unknown.
 > - We haven't yet seen, on this release, the page update by itself after a
 >   new care.
 > - There is no security audit.

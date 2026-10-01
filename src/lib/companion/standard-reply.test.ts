@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import type { CompanionFactsState, CompanionSnapshot } from "@/types/companion";
 import { defaultPersonality } from "./personality";
 import { createStandardReply } from "./standard-reply";
@@ -36,9 +36,46 @@ describe("grounded standard replies", () => {
     expect(reply.text).toContain("MemePet activity only");
   });
 
-  it("gives the verified eligibility time rather than promising a write will succeed", () => {
-    const reply = createStandardReply({ kind: "ready", dataMode: "fixture", snapshot }, "next-care", defaultPersonality());
-    expect(reply).toMatchObject({ text: expect.stringContaining(snapshot.nextCareAtIso) });
-    expect(reply).toMatchObject({ text: expect.stringContaining("Check the live Care panel") });
+  it.each([snapshot.blockTimestampIso, "2030-01-01T00:00:00.000Z"])(
+    "describes already-available care at the source block, regardless of the browser clock (%s)",
+    (nextCareAtIso) => {
+      vi.useFakeTimers();
+      try {
+        const facts: CompanionFactsState = { kind: "ready", dataMode: "fixture", snapshot: { ...snapshot, nextCareAtIso } };
+        vi.setSystemTime("2000-01-01T00:00:00.000Z");
+        const earlierClock = createStandardReply(facts, "next-care", { ...defaultPersonality(), style: "curious" });
+        vi.setSystemTime("2040-01-01T00:00:00.000Z");
+        const laterClock = createStandardReply(facts, "next-care", { ...defaultPersonality(), style: "curious" });
+
+        expect(laterClock).toEqual(earlierClock);
+        expect(laterClock).toMatchObject({
+          kind: "answer", source: "standard", contextKey: snapshot.contextKey, question: "next-care",
+          text: expect.stringContaining("Here is what Mochi found: Care was available as of block 100 (2030-01-01T12:00:00.000Z, UTC)."),
+        });
+        expect(laterClock).toMatchObject({ text: expect.stringContaining("Check the live Care panel") });
+        expect(laterClock).toMatchObject({ text: expect.not.stringContaining("next eligible care time is") });
+      } finally {
+        vi.useRealTimers();
+      }
+    },
+  );
+
+  it("keeps the verified cooldown time in UTC even when the browser clock has passed it", () => {
+    vi.useFakeTimers();
+    try {
+      const facts: CompanionFactsState = { kind: "ready", dataMode: "fixture", snapshot };
+      vi.setSystemTime("2000-01-01T00:00:00.000Z");
+      const earlierClock = createStandardReply(facts, "next-care", defaultPersonality());
+      vi.setSystemTime("2040-01-01T00:00:00.000Z");
+      const laterClock = createStandardReply(facts, "next-care", defaultPersonality());
+
+      expect(laterClock).toEqual(earlierClock);
+      expect(laterClock).toMatchObject({ text: expect.stringContaining(`The next eligible care time is ${snapshot.nextCareAtIso} (UTC).`) });
+      expect(laterClock).toMatchObject({ text: expect.stringContaining("Check the live Care panel") });
+      expect(laterClock).toMatchObject({ text: expect.stringContaining(`Based on block ${snapshot.blockNumber} (${snapshot.blockTimestampIso})`) });
+      expect(laterClock).toMatchObject({ text: expect.not.stringContaining("Care was available") });
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

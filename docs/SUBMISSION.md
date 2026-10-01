@@ -17,7 +17,7 @@ required; network gas applies.
 | Network | X Layer testnet, chain **1952**, gas currency **OKB** |
 | Registry | [0xe844152262D243a7B90F6e07FF7A67F1d7FeD216](https://www.okx.com/web3/explorer/xlayer-test/address/0xe844152262D243a7B90F6e07FF7A67F1d7FeD216) |
 | Video | **185 seconds / 3:05**, 1080p30 MP4 and 66-caption SRT; technical QC passed |
-| Video link | [YouTube demo](https://youtu.be/ofPOony4nys) — upload observed in Studio on 25 September; **Private**, judge access and signed-out playback remain unverified |
+| Video link | [YouTube demo](https://youtu.be/ofPOony4nys) — initially Private on 25 September; Larm's 1 October signed-out check found it **public and playable** ([evidence](qa/finale/larm/LINKS_AND_RECAP_QA_2026-10-01.md)). Full team playback review remains separate |
 | Verified product release | `af886a75`; production deployment **6644949897**, 24 September 18:17:39 UTC. Later documentation commits are separate |
 | Final submission revision | **UNVERIFIED — FINAL_COMMIT_AND_DEPLOYMENT** |
 | Submission receipt | **UNVERIFIED — SUBMISSION_RECEIPT** |
@@ -30,7 +30,7 @@ are explicitly labelled; no continuous successful 0→10 video or live evolution
 is claimed. Export hashes, actual transaction evidence and QC limits are in the
 [capture record](qa/evidence/FINAL_CAPTURE_2026-09-24.md).
 
-Latest browser evidence includes real Account 3 rejection, adoption, care,
+Original-submission browser evidence includes real Account 3 rejection, adoption, care,
 automatic 10-point pet/cooldown read-back and a normal reload. Automatic community
 refresh showed Unknown; read-only Retry recovered 4 without reloading or another
 transaction. Preserve that limitation when describing the working integration.
@@ -41,7 +41,13 @@ That reload used documentation-only `edae08a`, with unchanged runtime source.
 Network away/back remains NOT RUN; see
 [current status](STATUS.md) and [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Official requirements and open form details
+## Original submission requirements and open form details
+
+The kit/form checks below are historical. The later invitation confirms the
+team's selection for the **7 October 2026 finale**; see [current status](STATUS.md).
+The invitation's attendance-confirmation step still needs its actual receipt;
+finalist selection does not establish which submission revision or declarations
+were sent. Preserve the unverified fields above.
 
 The checked [OKX builder kit](https://www.okx.com/en-sg/learn/okx-dev-day-builder-kit)
 requires a **2–4 minute working-integration video** and gives the deadline as
@@ -52,11 +58,11 @@ attendance count, project summary, repository/video/product links and project
 origin. Its product-link field permits a live/deployed/test environment.
 
 No acceptance-letter upload or separate written testnet-approval requirement
-was found in the checked kit/form page. No organizer acceptance or guaranteed
-eligibility is claimed. Form pages 2–3 and their exact declarations remain
-unverified. The kit lists the finale as 7 October, while the linked
-[terms](https://www.okx.com/learn/okx-dev-day-terms) list 6 October; clarify that
-before making travel or attendance commitments.
+was found in the checked kit/form page. At that checkpoint no organizer
+acceptance was evidenced; finalist selection is now recorded above. Form pages
+2–3 and the submitted declarations remain unverified. The earlier kit/terms date
+discrepancy is superseded for event planning by the team's invitation naming
+7 October; follow the actual organizer invitation and later updates.
 
 ## Rights
 
@@ -75,7 +81,7 @@ licence; none has been selected. Do not put ID documents or credentials in Git.
 - Deston confirms exact roster details, route, attendance, project origin and remaining form declarations; each member confirms their details/permissions.
 - Kym resolves the remaining artwork-input provenance questions; Larm checks public app/repository/video/technical links while logged out.
 - Review the final release evidence and documented limitations in [current status](STATUS.md); finish the still-pending browser rows without upgrading failures or unrun checks.
-- Set the uploaded video to Unlisted (or Public if required), add the corrected SRT and prepared thumbnail, verify signed-out playback through the last frame, submit before the deadline, and retain the receipt.
+- The original demo is now reported public/playable. Confirm the intended visibility, uploaded captions/thumbnail and full playback through the last frame; retain the original submission receipt. Prepare the separate, labelled finale backup on the final release.
 
 The combined/individual scripts and editing notes are preserved with the private
 video production archive; their [pinned source snapshot](https://github.com/Chi944/memepet/blob/19c3fac1f097955f2b6e409ab2f4ab988abc0cee/docs/demo/DEMO_SCRIPT.md)
