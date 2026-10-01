@@ -132,4 +132,103 @@ describe("PetScene", () => {
     expect(screen.getByText("Stage: Buddy")).toBeInTheDocument();
     expect(screen.getByText("20 growth points")).toBeInTheDocument();
   });
+  it.each([
+    ["hatchling", 1], ["buddy", 2], ["guardian", 3],
+  ] as const)("only offers earned forms for %s", (stage, earned) => {
+    render(<PetScene pet={petFixtures[stage]} celebrate={false} />);
+    for (const [index, label] of ["Hatchling", "Buddy", "Guardian"].entries()) {
+      const control = screen.getByRole("button", { name: new RegExp(`^${label} `) });
+      if (index < earned) expect(control).toBeEnabled();
+      else {
+        expect(control).toBeDisabled();
+        expect(control).toHaveTextContent("Locked");
+        fireEvent.click(control);
+      }
+    }
+    expect(screen.getByRole("img", { name: `Mochi, the ${stage} pet` })).toBeInTheDocument();
+  });
+
+  it("does not unlock forms by inspecting growth points", () => {
+    render(<PetScene pet={{ ...petFixtures.hatchling, growthPoints: 999 }} celebrate={false} />);
+    expect(screen.getByRole("button", { name: "Buddy Locked" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Guardian Locked" })).toBeDisabled();
+  });
+
+  it("views an earlier form while retaining actual stage, points, target, provenance and current marker", () => {
+    render(<PetScene pet={petFixtures.buddy} celebrate={false} />);
+    const progress = screen.getByRole("progressbar");
+    const hatchling = screen.getByRole("button", { name: "Hatchling Earned" });
+    fireEvent.click(hatchling);
+    expect(hatchling).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Buddy Current" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("button", { name: "Buddy Current" }).closest("li")).toHaveAttribute("aria-current", "step");
+    expect(screen.getByRole("img", { name: "Mochi, earlier earned hatchling form; current stage Buddy" })).toHaveAttribute("data-stage-art", "hatchling");
+    expect(screen.getByText("Viewing Hatchling · Your current stage is Buddy")).toBeInTheDocument();
+    expect(screen.getByText("Stage: Buddy")).toBeInTheDocument();
+    expect(screen.getByText("20 growth points")).toBeInTheDocument();
+    expect(screen.getByText("20 of 50 points toward Guardian.")).toBeInTheDocument();
+    expect(progress).toHaveAttribute("aria-valuenow", "20");
+    expect(progress).toHaveAttribute("aria-valuemax", "50");
+    expect(progress.firstElementChild).toHaveStyle({ "--pet-progress": "40%" });
+    expect(screen.getByText("Preview data")).toBeInTheDocument();
+    expect(screen.getByRole("status")).toBeEmptyDOMElement();
+    fireEvent.click(screen.getByRole("button", { name: "Return to current form" }));
+    expect(screen.getByRole("img", { name: "Mochi, the buddy pet" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Return to current form" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buddy Current" })).toHaveFocus();
+  });
+
+  it("preserves the supplied current artwork and the live label after returning", () => {
+    render(<PetScene pet={{ ...petFixtures.buddy, artSrc: "/custom.png", dataMode: "live" }} celebrate={false} />);
+    const originalSrc = screen.getByRole("img").getAttribute("src");
+    fireEvent.click(screen.getByRole("button", { name: "Hatchling Earned" }));
+    expect(screen.getByRole("img").getAttribute("src")).not.toBe(originalSrc);
+    expect(screen.getByText("Live")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Buddy Current" }));
+    expect(screen.getByRole("img")).toHaveAttribute("src", originalSrc);
+  });
+
+  it("retains selection on same-stage updates and resets on every supplied stage change", () => {
+    const { rerender } = render(<PetScene pet={petFixtures.buddy} celebrate={false} />);
+    fireEvent.click(screen.getByRole("button", { name: "Hatchling Earned" }));
+    rerender(<PetScene pet={{ ...petFixtures.buddy, growthPoints: 30 }} celebrate={false} />);
+    expect(screen.getByRole("button", { name: "Hatchling Earned" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText("30 growth points")).toBeInTheDocument();
+    rerender(<PetScene pet={petFixtures.guardian} celebrate />);
+    expect(screen.getByRole("img", { name: "Mochi, the guardian pet" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Buddy Earned" }));
+    rerender(<PetScene pet={petFixtures.hatchling} celebrate={false} />);
+    expect(screen.getByRole("img", { name: "Mochi, the hatchling pet" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buddy Locked" })).toBeDisabled();
+  });
+
+  it("does not hide missing current artwork behind an earlier earned pet", () => {
+    const { rerender } = render(<PetScene pet={petFixtures.guardian} celebrate={false} />);
+    fireEvent.click(screen.getByRole("button", { name: "Buddy Earned" }));
+    rerender(<PetScene pet={{ ...petFixtures.guardian, artSrc: null }} celebrate={false} />);
+    expect(screen.getByRole("img", { name: "Mochi artwork placeholder" })).toBeInTheDocument();
+    expect(screen.getByText(/Current artwork unavailable/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Hatchling Art unavailable" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Buddy Art unavailable" })).toBeDisabled();
+    expect(screen.getByText("50 growth points")).toBeInTheDocument();
+    rerender(<PetScene pet={petFixtures.guardian} celebrate={false} />);
+    expect(screen.getByRole("img", { name: "Mochi, the guardian pet" })).toBeInTheDocument();
+  });
+
+  it("preserves motion Off through gallery selection", () => {
+    render(<PetScene pet={petFixtures.guardian} celebrate={false} />);
+    fireEvent.click(screen.getByRole("switch", { name: "Animate Mochi" }));
+    fireEvent.click(screen.getByRole("button", { name: "Hatchling Earned" }));
+    expect(screen.getByRole("switch", { name: "Animate Mochi" })).toHaveAttribute("aria-checked", "false");
+    expect(screen.getByRole("button", { name: "Say hello to Mochi, viewing Hatchling" })).toBeDisabled();
+    expect(screen.getByRole("region", { name: "Mochi" })).toHaveAttribute("data-mochi-motion", "off");
+  });
+
+  it("starts at current form when the parent remounts an equal-stage scope", () => {
+    const { rerender } = render(<PetScene key="scope-one" pet={petFixtures.guardian} celebrate={false} />);
+    fireEvent.click(screen.getByRole("button", { name: "Hatchling Earned" }));
+    rerender(<PetScene key="scope-two" pet={petFixtures.guardian} celebrate={false} />);
+    expect(screen.getByRole("img", { name: "Mochi, the guardian pet" })).toBeInTheDocument();
+  });
+
 });

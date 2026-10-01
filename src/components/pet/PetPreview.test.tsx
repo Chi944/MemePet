@@ -38,4 +38,18 @@ describe("PetPreview personality fixtures", () => {
     expect(screen.getByLabelText("Show confirmed-success celebration")).not.toBeChecked();
     expect(screen.getByRole("heading", { name: "Playful" })).toBeInTheDocument();
   });
+  it("keeps care and personality unchanged when viewing earlier artwork", () => {
+    render(<PetPreview />);
+    fireEvent.change(screen.getByLabelText("Pet stage fixture"), { target: { value: "buddy" } });
+    fireEvent.change(screen.getByLabelText("Care-action fixture"), { target: { value: "cooldown" } });
+    const care = screen.getByRole("region", { name: "Care for your pet" });
+    const before = care.textContent;
+    fireEvent.click(screen.getByRole("button", { name: "Hatchling Earned" }));
+    expect(care.textContent).toBe(before);
+    expect(callbackCount("onCare")).toBe("0");
+    expect(callbackCount("onInteract: explore")).toBe("0");
+    expect(screen.getByText("20 growth points")).toBeInTheDocument();
+    expect(screen.getByLabelText("Show confirmed-success celebration")).not.toBeChecked();
+  });
+
 });
