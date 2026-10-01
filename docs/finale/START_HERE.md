@@ -20,8 +20,9 @@ Practise change a browser-local explanation style without changing earned
 growth. Personality integration shipped in #68 (`3cd4b0a`); its live browser
 checks and separate remaining wallet acceptance are recorded in [status](../STATUS.md).
 
-The remaining build is deliberately small: an earlier-earned-form viewer, a
-clearer recap/evidence layout, and combined presentation/recovery QA. Codex owns
+The remaining build is deliberately small: an earlier-earned-form viewer and
+combined presentation/recovery QA. YeeWei's clearer recap/evidence layout is
+delivered in PR #72. Codex owns
 integration, reliability and final release verification. A free OKX.AI service
 can expose the same deterministic recap if authentication, registration and
 invocation succeed; the registration packet is prepared, not an approved listing.
@@ -37,7 +38,7 @@ holders, retention or model-training claims. Standard explanations are labelled.
 |---|---|---|
 | Kym · F5 | View current/earlier earned forms while preserving actual progress | `feat/earned-stage-viewer` · [KYM.md](KYM.md) |
 | Larm · F7 | Initial presentation/runbook merged in #70; recovery and combined QA follow-up | `test/finale-combined-qa` · [LARM.md](LARM.md) |
-| YeeWei · F6 | Concise recap with accessible verified-evidence disclosure | `feat/companion-evidence-layout` · [YEEWEI.md](YEEWEI.md) |
+| YeeWei · F6 follow-up | Recap layout delivered in #72; release/combined QA | `test/companion-release-qa` · [YEEWEI.md](YEEWEI.md) |
 | Codex in Deston's session | Reliability, shared interfaces/data, integration, tests, reviews and release | [CODEX.md](CODEX.md) |
 
 **Deston:** privately handle necessary account setup, genuinely approve wallet
@@ -66,8 +67,10 @@ their own coding session, review its result and return a PR link.
 Each teammate can proceed against the existing stable props and labelled
 fixtures while Codex completes shared integration. Fixtures stay in
 tests/development previews, never as live fallbacks.
-Deston confirmed on 1 October that Kym has not started F5 and YeeWei has not
-started F6. Their first-wave work is complete; these new tasks remain with them.
+Deston's earlier 1 October report that F6 had not started is superseded by
+YeeWei's completed PR #72. Kym's F5 draft PR #73 is now open and under lead
+review; its remaining tests and account-scope integration are pending.
+Do not rebuild either teammate's completed first-wave work.
 Larm's initial F7 PR #70 is merged. Use the updated role sheets from current
 main rather than an old copied prompt; follow-up QA must retain NOT RUN rows.
 Only Codex merges reviewed passing changes. A feature is not release-complete

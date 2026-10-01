@@ -45,7 +45,8 @@
 .recap {
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));
+  /* Leave room for an unbroken UTC date in the narrower live-page column. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
   gap: 0.75rem;
 }
 
@@ -216,6 +217,10 @@
 
 /* At phone widths, stack evidence labels above values so long addresses wrap cleanly. */
 @media (max-width: 30rem) {
+  .recap {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));
+  }
+
   .factsList {
     grid-template-columns: 1fr;
     gap: 0.125rem;

@@ -271,6 +271,42 @@ describe("CompanionPanel F6 recap and evidence layout", () => {
     expect(evidenceValue("Registry")).toBe(registry);
   });
 
+  it("describes already-eligible care at its source block without implying ready now", () => {
+    vi.useFakeTimers();
+    try {
+      const facts = {
+        ...companionFactsFixtures.ready,
+        snapshot: { ...readySnapshot, nextCareAtIso: readySnapshot.blockTimestampIso },
+      };
+      vi.setSystemTime("2000-01-01T00:00:00Z");
+      const { rerender } = render(<CompanionPanel {...baseProps} facts={facts} />);
+      expect(screen.getByText("Care at this read").nextElementSibling).toHaveTextContent(
+        "AvailableCheck Daily care for current status.",
+      );
+      expect(screen.queryByText("Next eligible care")).not.toBeInTheDocument();
+      expect(evidenceValue("Next care time")).toBe(readySnapshot.blockTimestampIso);
+
+      vi.setSystemTime("2040-01-01T00:00:00Z");
+      rerender(<CompanionPanel {...baseProps} facts={facts} />);
+      expect(screen.getByText("Care at this read").nextElementSibling).toHaveTextContent("Available");
+      expect(screen.queryByText(/ready now/i)).not.toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("keeps a snapshot cooldown even after the browser clock passes its deadline", () => {
+    vi.useFakeTimers();
+    try {
+      vi.setSystemTime("2040-01-01T00:00:00Z");
+      render(<CompanionPanel {...baseProps} />);
+      expect(screen.getByText("Next eligible care").nextElementSibling).toHaveTextContent("2030-01-02 00:00 UTC");
+      expect(screen.queryByText("Care at this read")).not.toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it("keeps every supplied evidence field unchanged inside a closed native disclosure", () => {
     render(<CompanionPanel {...baseProps} />);
     const details = evidence();

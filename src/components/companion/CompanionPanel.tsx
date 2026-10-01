@@ -91,6 +91,8 @@ function FactsSection({
 
   // ready: the concise recap. Full source evidence lives in EvidenceDisclosure.
   const s = facts.snapshot;
+  // Eligibility is relative to this verified block, never the browser clock.
+  const careAvailableAtRead = Date.parse(s.nextCareAtIso) <= Date.parse(s.blockTimestampIso);
   return (
     <Card surface="plain" className={styles.factsCard}>
       <h2 className={styles.sectionTitle}>
@@ -126,9 +128,14 @@ function FactsSection({
           <dd>{s.careCount}</dd>
         </div>
         <div className={styles.recapItem}>
-          <dt>Next eligible care</dt>
+          <dt>{careAvailableAtRead ? "Care at this read" : "Next eligible care"}</dt>
           <dd>
-            <ReadableUtc iso={s.nextCareAtIso} />
+            {careAvailableAtRead ? (
+              <>
+                Available
+                <span className={styles.recapNote}>Check Daily care for current status.</span>
+              </>
+            ) : <ReadableUtc iso={s.nextCareAtIso} />}
           </dd>
         </div>
       </dl>

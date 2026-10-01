@@ -1,14 +1,29 @@
 # YeeWei — a recap judges can read quickly
 
-**Current task F6 · branch `feat/companion-evidence-layout` · assigned 1 October 2026.**
-F3/PR #61 is merged and connected to verified facts. Start a fresh branch from
-current reviewed `origin/main`; preserve its fixes and stable props.
+**F6 delivered in PR #72 · follow-up branch `test/companion-release-qa` · updated 1 October 2026.**
+Your F3 and F6 implementation is complete. The lead's F6 review also corrects
+already-available care wording and narrow-card date overflow. Preserve those
+changes. Start any follow-up from current reviewed `origin/main`; do not reuse
+the merged feature branch or build another recap.
 
 **Allowed:** `src/components/companion/**`, `docs/qa/finale/yeewei/**`.
 No routes, hooks, shared schemas/fixtures, API/RPC, persistence, dependencies or
 other owners' files. Reuse installed components and supplied callbacks.
 
-## Build
+## Next: release and combined QA
+
+- Verify the released recap at narrow/desktop widths and with keyboard access.
+  Record the actual release SHA and URL. Use the existing labelled workbench
+  for states you cannot genuinely obtain on the wallet route.
+- Confirm questions and answers remain easy to reach, evidence opens/closes,
+  full addresses remain readable, and care availability is attributed to its
+  recorded block. Do not infer current eligibility from browser time.
+- Help Larm's combined pass after Kym F5 merges. Fix only reproduced companion
+  presentation defects within your area; request shared changes from Codex.
+- No fresh feature, model integration or wallet transaction is assigned here.
+  Preserve unrun screen-reader/cross-browser/zoom checks until actually executed.
+
+## Implemented F6 scope (reference)
 
 - Rework the ready card so its first view answers "Where is my pet now?":
   current stage, growth, personal confirmed cares and next eligible care time.
@@ -35,12 +50,12 @@ unknown/no-pet/failure distinctions and obsolete reply isolation. Inspect
 callback IDs and `CompanionPanelProps` unchanged. Run component tests,
 typecheck/lint and separate automated results from browser observations.
 
-Target PR by **2 October, Singapore**. Open a draft early. Return base/head SHAs,
+Follow-up QA target **3–4 October, Singapore**. Return base/head SHAs,
 screenshots, actual checks, limitations and precise shared integration requests.
 Codex handles review, conflicts, merge and release.
 
 ## Paste into YeeWei's agent
 
 ```text
-Continue MemePet with task F6 in docs/finale/YEEWEI.md. F3/PR #61 is already integrated. Read AGENTS.md, scope, ownership, setup and docs/finale/INTEGRATION.md. Preserve local work, fetch origin and start feat/companion-evidence-layout from current reviewed origin/main; record its SHA. Build a concise ready recap with accessible verified-evidence disclosure, question controls and clear answer provenance only in src/components/companion/** and docs/qa/finale/yeewei/**. Preserve all supplied facts/states, source labels, safe rendering and stale-context protection. Do not add fetching, storage, models, routes, shared props or packages. Run meaningful tests/typecheck/lint and real responsive/keyboard observations. Commit/push, open a draft PR early and return its URL with actual results. Codex reviews/merges/releases. Target 2 October Singapore.
+Continue the F6 QA follow-up in docs/finale/YEEWEI.md. F3 and F6/PR #72 are complete; do not rebuild them. Read AGENTS.md, scope, ownership, setup, docs/finale/INTEGRATION.md and the lead's F6 evidence. Preserve local work, fetch origin and start test/companion-release-qa from current reviewed origin/main; record its SHA. Verify released recap/disclosure/answer readability, keyboard access, source labels and unknown/stale states. After Kym F5 merges, help Larm's combined presentation pass. Fix only reproduced companion defects in src/components/companion/**; record actual observations in docs/qa/finale/yeewei/**. Preserve lead care-at-read wording and date-width fixes. No new fetching/storage/models/routes/shared props/packages or wallet actions. Run relevant checks for fixes, retain NOT RUN cases, and return the PR URL if changes are needed. Codex reviews/merges/releases. Target 3–4 October Singapore.
 ```
