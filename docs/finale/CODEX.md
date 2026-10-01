@@ -13,9 +13,11 @@ Standard explanation updates shipped in #68 (`3cd4b0a`); release and browser
 preference checks are recorded in [status](../STATUS.md).
 F5 earned forms (#73), normalized live/public scene scope keys, and F6's recap
 and focus fixes (#72/#75) are now merged. The approved feature scope is complete.
-Verified product source: `d0fc02057eb9d06350c598220a62c68960cd8ab2`.
-The later #76 main commit `aede952f123e241fb7e8d22a84c495c4807f49ed` changes
-documentation/evidence only and passed CI. Record checkout and deployed revisions
+Kym's pet QA/preview fix #78 is also reviewed and merged. Verified product
+source: `62d487d5d4e1f7c7b26332753f042fcb91a748d8`, Production deployment
+6794766512; current Vercel alias-to-SHA proof and the genuine same-page read-only
+follow-up are in [release evidence](../qa/evidence/PET_QA_RELEASE_2026-10-02.md).
+Exact-head and main CI passed. Record checkout and deployed revisions
 separately using the [common handoff](START_HERE.md#release-identity-and-common-handoff).
 Combined checks pass: 379 app tests, 15 contract tests, 22 read-helper tests,
 typecheck, lint and build. Local browser checks covered the F5 gallery at
@@ -37,18 +39,22 @@ Implemented retry protection does not prove a new genuine care read-back passed.
    need no new feature work. Preserve route scope keys, stage-change resets,
    source-time wording, narrow-card dates and evidence focus. Review incoming
    fixes against their exact heads, keeping the combined suite green.
-3. **Coordinate 3–4 October QA:** Kym checks pet/gallery behavior, YeeWei checks
+3. **Coordinate 3–4 October QA:** Kym's #78 report is handed off; request only
+   focused follow-ups for reproduced pet regressions. YeeWei checks
    recap/disclosure behavior, and Larm checks the integrated presentation and
    read recovery. The [local recovery setup](../qa/READ_RECOVERY.md) is already
    implemented with helper regressions and CI coverage. Preserve its prior real
    local execution as separate evidence, and record each new named-runtime run
    honestly. Keep faults out of production and wallet-write paths. A fixture
    callback or mocked transaction is not genuine read recovery or wallet proof.
-4. **Run one planned final wallet session:** prepare prerequisites and the full
-   checklist first, then request only the necessary private approvals from
-   Deston. Capture rejection/adoption/care where applicable, automatic reads,
+4. **Run the [prepared final wallet session](../qa/FINAL_WALLET_SESSION.md):**
+   refresh prerequisites and the exact deployment first, then request only the
+   necessary private approvals from Deston. Capture rejection/adoption/care where applicable, automatic reads,
    reload and account/network isolation on the final runtime. Preserve NOT RUN
    entries rather than fragmenting work into repeated teammate wallet requests.
+   Account 4 already had Hatchling/10 at the 2 October preflight; all accounts
+   were due at 08:00 Singapore. Recheck before its possible single-care evolution
+   run; do not call it a fresh account or assume eligibility persists.
 5. **Freeze and rehearse:** fix release blockers, preserve the previous good
    deployment, capture a dated backup on 5 October and run the three-minute
    rehearsal with a network fallback on 6 October. No scope expansion or extra
@@ -131,9 +137,13 @@ and the no-model path works. Release only a green integrated revision through
 the existing deployment process. Retain the previous good deployment and record
 the exact runtime used for QA/rollback.
 
-Actual wallet acceptance still needs genuine rejection, adoption/care where due,
-automatic pet/community reads, reload, account/network isolation, recovery and
-disconnect on the new runtime. Skipped steps remain NOT RUN. Human approvals
+Actual wallet acceptance still needs a genuine due care, automatic pet/community
+reads, reload, account/network isolation and disconnect on the new runtime;
+record read recovery separately if required. Retain September's genuine
+adoption/rejection evidence. Do not repeat those transactions solely to change
+their evidence date; repeat only when a changed path or an agreed acceptance
+case requires it, using a genuinely suitable account. Unperformed final-runtime
+rows remain NOT RUN. Human approvals
 stay private; never request secrets or bypass extension restrictions. Tests and
 fixtures cannot replace real wallet evidence.
 

@@ -7,8 +7,9 @@ runbook, judge Q&A and backup shot list. Do not redo them or reuse the merged
 branch. Start the follow-up from current reviewed `origin/main`; preserve the
 lead's counter/retry and block-time corrections.
 This lane improves and proves the existing experience; it does not add a new system.
-F5/#73 and F6/#72/#75 are now merged. The approved feature scope is complete;
-verified product source is `d0fc02057eb9d06350c598220a62c68960cd8ab2`.
+F5/#73, F6/#72/#75 and Kym's completed pet QA/preview fix #78 are merged. The
+approved feature scope is complete; verified product source is
+`62d487d5d4e1f7c7b26332753f042fcb91a748d8`, production deployment `6794766512`.
 Use [status](../STATUS.md) for production verification and the exact release to
 check. Final genuine wallet acceptance remains **NOT RUN**.
 
@@ -24,9 +25,11 @@ or deployment changes. Request shared test harness needs from Codex.
    reviewed main. Never reuse the merged #70 branch, reset local work or force
    a merge conflict. Record the actual checkout/base/head and runtime.
 2. Read the [release identity and handoff](START_HERE.md#release-identity-and-common-handoff)
-   and [combined lead evidence](../qa/evidence/COMBINED_RELEASE_2026-10-02.md).
-   Product `d0fc020` is the verified deployment; `aede952`/#76 is a later
-   docs-only checkpoint. Do not assume current main is the hosted runtime.
+   and [current lead evidence](../qa/evidence/PET_QA_RELEASE_2026-10-02.md).
+   Product `62d487d` is the verified checkpoint, deployment `6794766512`; the
+   evidence records the current alias-to-SHA check. Do not assume current main
+   is the hosted runtime or that a mutable alias still serves that checkpoint.
+   Preserve the earlier combined run as dated historical evidence.
 3. Copy [COMBINED_REGRESSION_CHECKLIST.md](../qa/finale/larm/COMBINED_REGRESSION_CHECKLIST.md)
    to `docs/qa/finale/larm/COMBINED_QA_<actual-run-date>.md`. Start rows as NOT RUN,
    record results there and keep the template reusable. Run hosted no-wallet
@@ -43,9 +46,12 @@ or deployment changes. Request shared test harness needs from Codex.
    [JUDGE_QA_PREP.md](../qa/finale/larm/JUDGE_QA_PREP.md) with the actual UI.
    Update in place instead of making rival scripts. Resolve the specific notes
    below, keeping the live pitch to about three minutes.
-7. Return an evidence/fix PR and coordinate Kym/YeeWei's report links in your
-   combined report. Label external results as cited, never personally rerun.
-   Missing teammate reports do not prevent your own PR; list them as pending.
+7. Return an evidence/fix PR and coordinate teammate report links in your
+   combined report. Kym's [#78 report](../../src/components/pet/qa/PET_RELEASE_QA_2026-10-02.md)
+   is complete and ready to cite, retaining its NOT RUN rows. Cite the separate
+   lead read-only follow-up only for its stated coverage. YeeWei's combined
+   report remains pending until received; do not wait for it to complete your
+   independent work. Label external results as cited, never personally rerun.
 
 ## Checks to cover
 
@@ -111,13 +117,13 @@ in one planned final session, not scattered requests from each lane.
 ```text
 Continue MemePet task F7: combined finale QA and demo readiness. Start now; target completion is 3–4 October, Singapore.
 
-Read AGENTS.md, docs/PROJECT_BRIEF.md, docs/OWNERSHIP.md, docs/DEV_SETUP.md, docs/finale/START_HERE.md, docs/finale/INTEGRATION.md and docs/finale/LARM.md. All approved features and PRs #70/#72/#73/#75/#76 are merged. Preserve local work, fetch origin and safely update your existing unmerged test/finale-combined-qa branch; create it from current reviewed origin/main only if it does not exist. Do not restart finished features or reset/force-push. Record checkout and deployed SHAs separately: d0fc020 is the verified product checkpoint; aede952/#76 is docs-only. Consult current status for later releases.
+Read AGENTS.md, docs/PROJECT_BRIEF.md, docs/OWNERSHIP.md, docs/DEV_SETUP.md, docs/finale/START_HERE.md, docs/finale/INTEGRATION.md and docs/finale/LARM.md. All approved features and PRs #70/#72/#73/#75/#76/#77/#78 are merged. Preserve local work, fetch origin and safely update your existing unmerged test/finale-combined-qa branch; create it from current reviewed origin/main only if it does not exist. Do not restart finished features or reset/force-push. Record checkout and deployed SHAs separately: 62d487d5d4e1f7c7b26332753f042fcb91a748d8 is the verified product checkpoint, production deployment 6794766512. Read docs/qa/evidence/PET_QA_RELEASE_2026-10-02.md for time-bound alias-to-SHA proof and the lead's read-only follow-up; consult current status for later releases.
 
 Copy docs/qa/finale/larm/COMBINED_REGRESSION_CHECKLIST.md into a dated COMBINED_QA_<actual-run-date>.md result file. Run the no-wallet hosted checks, 320/390/1440px layouts, keyboard/focus, garden/reference labels, public earned forms and production dev-route gates. Use clearly labelled local fixtures for unavailable states. Execute docs/qa/READ_RECOVERY.md for a real local failed-read → read-only retry → recovered-read check, record what happened and complete teardown. Do not treat fixtures or prior reports as your own new verification.
 
 Fix only reproduced presentation defects in src/components/landing/** and src/components/community/**. Evidence and demo documentation belong in docs/qa/finale/larm/**; docs/finale/COMMUNITY_CANDIDATE.md is also allowed. Refer pet/recap/shared-data defects to their owners/Codex. No new features, contracts, RPC adapters, dependencies, deployment settings, wallet requests, paid services or OS-setting changes.
 
-Update the existing FINALE_RUNBOOK.md, BACKUP_SHOT_LIST.md and JUDGE_QA_PREP.md to match verified behavior, following the stale-document notes in your role sheet. Keep the pitch around three minutes, show confirmed progress/garden/local personality/Standard explanation with evidence, and prepare a clearly labelled recorded fallback. Keep historical evidence and original media. Coordinate Kym/YeeWei report links without editing their files or claiming unperformed checks passed. Final wallet actions and transaction capture belong to one Codex/Deston session; do not wait for those to finish your independent work.
+Update the existing FINALE_RUNBOOK.md, BACKUP_SHOT_LIST.md and JUDGE_QA_PREP.md to match verified behavior, following the stale-document notes in your role sheet. Keep the pitch around three minutes, show confirmed progress/garden/local personality/Standard explanation with evidence, and prepare a clearly labelled recorded fallback. Keep historical evidence and original media. Cite Kym's completed src/components/pet/qa/PET_RELEASE_QA_2026-10-02.md report and the separate lead follow-up, preserving each record's limits; do not ask her to repeat the finished brief. Add YeeWei's combined report when received. Do not edit their files or claim cited checks as your own. Final wallet actions and transaction capture follow docs/qa/FINAL_WALLET_SESSION.md in one Codex/Deston session; do not wait for those to finish your independent work.
 
 Commit/push your scoped work and return a small draft PR, including an evidence-only PR if no defects are found. Report base/head SHAs, runtime, actual checks/screenshots, FAIL/NOT RUN rows and precise lead requests. Mark ready when your owned work is complete. Codex reviews/merges/releases. Backup target: 5 October; rehearsal: 6 October. No routine coding work is assigned to Deston.
 ```

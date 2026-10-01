@@ -7,24 +7,34 @@ delegation may narrow these paths; shared interface changes require lead review.
 | Owner | Editable area |
 |---|---|
 | Codex integration lead | `contracts/**`, `src/app/**`, `src/hooks/**`, `src/lib/**`, `src/types/**`, `src/fixtures/**`, `src/components/ui/**`, `src/components/share/**`, global styles, configuration, packages/lockfile, CI/deployment, shared specification docs |
-| Kym / pet release QA `test/pet-release-qa` | `src/components/pet/**`, `public/pets/**`, `docs/pet-assets.md` |
+| Kym / pet QA handoff complete in #78; focused regressions only | `src/components/pet/**`, `public/pets/**`, `docs/pet-assets.md` |
 | Larm / F7 follow-up `test/finale-combined-qa` | `src/components/landing/**`, `src/components/community/**`, `docs/qa/finale/larm/**`, `docs/finale/COMMUNITY_CANDIDATE.md` |
 | YeeWei / combined QA `test/companion-combined-qa` | `src/components/companion/**`, `docs/qa/finale/yeewei/**` |
 
 Task-level allowlists can be narrower than this table. Ownership is a coordination agreement, not a technical permission system. Everyone reviews their diff and the lead reviews every merge.
 
-The 2 October role sheets follow the merged F5/#73 and F6/#72/#75 work. Approved
-features are complete; current tasks are combined QA and reproduced-defect fixes.
-Kym's task remains limited to `src/components/pet/**`; broader asset ownership
-above does not authorize new artwork or expand scope. Use fresh assigned QA
-branches; preserve and safely reconcile Larm's existing combined-QA work.
+The 2 October role sheets follow the merged F5/#73, F6/#72/#75 and Kym's pet
+QA/preview fix #78. Approved features are complete; current tasks are combined
+QA and reproduced-defect fixes. Kym's assigned handoff is complete; do not reuse
+her merged `test/pet-release-qa` branch or repeat that full brief. Any requested
+pet regression remains limited to `src/components/pet/**`; broader asset
+ownership above does not authorize new artwork or expand scope. Use a fresh
+branch for a new follow-up; preserve and safely reconcile Larm's existing
+combined-QA work.
 Preserve active unmerged QA work in any lane; fresh branches are for tasks that
 have not started. All four role sheets define deliverables and paste-ready
-continuation prompts. Larm owns the combined result index; Kym/YeeWei keep their
-dated results in their own allowlisted folders and return links for citation.
+continuation prompts. Larm owns the combined result index and cites Kym's
+[completed report](../src/components/pet/qa/PET_RELEASE_QA_2026-10-02.md) with
+its limits; YeeWei returns her remaining recap report from her own folder.
 If there is no defect, an evidence-only PR completes the handoff without adding
 unnecessary code. The shared [handoff](finale/START_HERE.md#release-identity-and-common-handoff)
 defines completion and how to distinguish checkout from deployed revisions.
+
+The verified product checkpoint is `62d487d5d4e1f7c7b26332753f042fcb91a748d8`,
+production deployment `6794766512`. The [current release evidence](qa/evidence/PET_QA_RELEASE_2026-10-02.md)
+records the alias-to-SHA verification and a separate lead read-only follow-up.
+Fetch reviewed current main and record the actual runtime; historical evidence
+does not establish a new wallet pass or permanent deployment identity.
 
 Component folders include co-located tests and CSS modules. Deston is the final
 reviewer and wallet operator; Codex handles his engineering lane. Larm's former

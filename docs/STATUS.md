@@ -2,9 +2,47 @@
 
 Updated 2 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
-separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
+separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Combined F5/F6 release — 2 October, latest checkpoint
+## Pet QA merged; final wallet session prepared — 2 October, latest checkpoint
+
+Kym's **PET-RELEASE-QA PR #78 is complete and merged** at
+`62d487d5d4e1f7c7b26332753f042fcb91a748d8`. It fixes a narrow-screen selector
+inside the development preview and records her pet/gallery/personality checks.
+Exact-head and main CI passed. Production deployment **6794766512** succeeded;
+Vercel independently resolved the public alias to READY deployment
+`dpl_28SRHMBY4m1ojxe8c5zCRpwEXriG` with that exact SHA.
+
+On this release, the lead checked the connected Account 3 page: earned
+Hatchling viewing and Curious personality wording preserved actual Buddy/30,
+the Done today cooldown, community 12 and the recap's verified source/facts.
+Original personality and current-form settings were restored. This is a real
+read-only combined check, not a new wallet transaction or automatic care pass.
+[Release evidence](qa/evidence/PET_QA_RELEASE_2026-10-02.md) separates cited CI,
+Kym's checks, lead observations and outstanding acceptance.
+
+The [final session plan](qa/FINAL_WALLET_SESSION.md) consolidates the remaining
+wallet checks. At the recorded public preflight, all four accounts had testnet
+gas and were in cooldown until **2 October, 08:00 Singapore / 00:00 UTC**.
+Account 4 already had Hatchling/10 points; if still eligible and unchanged, its
+next care can verify automatic read-back and a genuine Buddy evolution together.
+Recheck at session time. No new wallet action or funding was performed here.
+
+| Member | Planning estimate | Next owned work |
+|---|---:|---|
+| Kym | 100% of assigned implementation/pet QA handoff | #78 complete. Available for a focused fix only if combined QA reproduces a pet defect; do not repeat the finished brief. |
+| YeeWei | 98% | Finish her combined recap/evidence/answer accessibility report. |
+| Larm | 85% | Cite Kym's report and lead evidence; finish independent recovery/presentation checks, runbook and backup coordination. |
+| Codex / Deston's engineering lane | 96% | Final genuine wallet acceptance, review incoming findings and freeze. Deston retains private approvals and final review/rehearsal. |
+
+**Overall finale readiness: approximately 92%.** These are planning estimates,
+not measured scores. Remaining: final wallet automatic read-back and context
+changes, remaining combined sign-offs, a real labelled backup and timed rehearsal.
+Unrun specialist browser cases remain explicit; Kym's completed handoff does not
+turn them into passes. Approved features are complete; optional OKX.AI listing
+and invocation stay unverified and outside the working-product completion gate.
+
+## Combined F5/F6 release — 2 October, earlier checkpoint
 
 The four role briefs now contain executable continuation prompts, explicit dated
 QA deliverables and owner handoffs. Larm can start immediately using his existing

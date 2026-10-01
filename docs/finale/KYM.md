@@ -1,31 +1,37 @@
 # Kym — pet release QA
 
-**Task PET-RELEASE-QA · F2 and F5 complete · QA branch `test/pet-release-qa` · updated 2 October 2026.**
-Your personality panel (#67) and earned-form viewer (#73) are merged. Codex's
-live/public account-scope wiring is also merged. Start the QA follow-up from
-current reviewed `origin/main`; do not reuse either merged feature branch.
-If this QA branch already contains unmerged work, continue it safely instead of
-recreating it or discarding changes.
+**Task PET-RELEASE-QA complete · F2/F5 and QA PR #78 merged · updated 2 October 2026.**
+Your personality panel (#67), earned-form viewer (#73), lead account-scope wiring
+and pet QA/preview-selector fix (#78) are merged. No new coding or full repeat
+of the QA brief is assigned. Do not reuse the merged `test/pet-release-qa` branch.
+
+Your [dated report](../../src/components/pet/qa/PET_RELEASE_QA_2026-10-02.md)
+is the completed handoff for Larm. Retain its NOT RUN rows. The lead subsequently
+verified the exact production alias and the live same-page gallery/personality/
+recap/cooldown combination in a separate [read-only follow-up](../qa/evidence/PET_QA_RELEASE_2026-10-02.md).
+Those later observations do not rewrite your historical results or establish
+the final signed-care/account/network session.
 
 **Allowed:** `src/components/pet/**`. Reuse the three approved `/pets/*.png`
 artworks. No new assets, routes, shared types, hooks, storage, RPC, dependencies
 or changes to another owner's files.
 
-**Verified product source, 2 October:** `d0fc02057eb9d06350c598220a62c68960cd8ab2`
-contains F5 and F6. Main subsequently includes the documentation-only #76 merge
-at `aede952`; fetch the latest reviewed main rather than pinning to either SHA.
+**Verified product source, 2 October:** `62d487d5d4e1f7c7b26332753f042fcb91a748d8`
+includes #78. Its exact-head/main CI and production deployment passed. For any
+specifically requested follow-up, fetch current reviewed main and use a fresh
+branch rather than pinning to this historical checkpoint.
 The lead's combined automated checks and local browser
 gallery checks passed; [status](../STATUS.md) records the exact coverage and
 production verification. Final genuine wallet acceptance remains **NOT RUN**.
 Preserve [your original handoff](../../src/components/pet/qa/F5-HANDOFF.md).
 
-## Begin without losing work
+## If a reproduced pet regression needs a follow-up
 
 1. Read the repository instructions, scope, ownership, setup and shared contract.
-   State task `PET-RELEASE-QA` and the intended files before editing. Inspect
+   State the focused regression and intended files before editing. Inspect
    `git status --short`, the current branch and any existing PR first.
-2. Fetch `origin`. If the working tree is clean and no active QA branch exists,
-   create `test/pet-release-qa` from reviewed `origin/main`. If the QA branch is
+2. Fetch `origin`. If the working tree is clean and no active follow-up exists,
+   create a fresh descriptive branch from reviewed `origin/main`. If a follow-up is
    active, preserve its commits and uncommitted work; when clean, merge reviewed
    `origin/main` into it. Do not reset, force-push or overwrite an existing branch.
    Ask Codex to resolve confusing shared-file conflicts while continuing any
@@ -34,7 +40,12 @@ Preserve [your original handoff](../../src/components/pet/qa/F5-HANDOFF.md).
    each run. A production alias does not prove its deployed commit; cite the
    lead's matching deployment evidence or label the revision unverified.
 
-## Next: combined pet QA, 3–4 October
+## Completed scope and remaining team acceptance
+
+The following is the original QA scope, retained to guide targeted regressions.
+Its actual completed checks and limitations are in the dated report, not implied
+by this list. Larm coordinates remaining specialist checks and the lead owns
+the [single final wallet session](../qa/FINAL_WALLET_SESSION.md).
 
 - On the named combined release, check earned/locked forms, return-to-current
   focus, missing art, authoritative progress/care and Animate Mochi at
@@ -70,7 +81,7 @@ No new feature or artwork is assigned. The approved feature scope is complete.
   Use native controls, no hover-only interaction. Other effects still respect
   reduced motion; Mochi's explicit on/off exception stays narrow.
 
-## Acceptance and handoff
+## Validation for any requested follow-up
 
 Test earned/future selection, return to current, stage change, missing art and
 unchanged actual growth/care. Inspect labelled previews at 320/390/1440px and
@@ -91,7 +102,7 @@ observations** and **wallet checks NOT RUN**. No wallet prompts are assigned to
 this lane. For unsupported controls, browser access or states, record the exact
 limitation and continue the independent checks.
 
-Completion checklist:
+Original acceptance checklist (consult the report for actual results):
 
 - [ ] Earned/current/locked forms, return focus, stage changes and missing art
   checked at 320/390/1440px; actual growth and care remain unchanged by browsing.
@@ -115,8 +126,8 @@ rule. Return base/head SHAs, screenshots, commands/results and unrun cases.
 Codex reviews and releases fixes; backup capture is planned for 5 October and
 the timed rehearsal for 6 October. No extra coding work is assigned to Deston.
 
-## Paste into Kym's agent
+## Paste into Kym's agent after the merge
 
 ```text
-Continue task PET-RELEASE-QA in docs/finale/KYM.md. F2/#67, F5/#73, the lead's route scope keys and handoff #76 are merged; do not rebuild them. Read AGENTS.md, scope, ownership, setup and docs/finale/INTEGRATION.md. Inspect local changes, branch and existing PR before fetching origin. Preserve active unmerged QA work; reconcile reviewed origin/main when clean. Only create test/pet-release-qa if no active QA branch exists. Never reset/discard work, force-push or reuse a merged feature branch. Record actual base/head SHAs and runtime details. Verify combined gallery/personality/care presentation at 320/390/1440px and with keyboard access, preserving actual progress, missing-art honesty and Animate Mochi. Fix only reproduced defects in src/components/pet/**. Create its qa/PET_RELEASE_QA_<actual-date>.md report with screenshots, exact checks and NOT RUN cases, separating local fictional previews, production read-only observations and wallet evidence. Do not trigger wallet prompts or change OS settings. Run the documented checks, then open a small draft PR, including an evidence-only PR if no fixes are needed. Return the PR/report link for Larm's combined checklist and precise shared-change requests to Codex; do not edit other lanes. No new assets/features/RPC/storage/shared props/packages, paid services or deployment changes. Codex reviews/merges/releases and runs one final genuine wallet session with Deston. QA target 3–4 October Singapore; backup 5 October, rehearsal 6 October.
+Read the updated docs/finale/KYM.md. PET-RELEASE-QA PR #78 is reviewed, merged and deployed; your assigned implementation and QA handoff are complete. Preserve any unrelated local work and your original dated report, including NOT RUN rows. Do not reuse the merged branch or repeat the entire brief. Provide Larm the #78/report link for his combined checklist. Codex's separately dated live follow-up covers only its stated read-only same-page and alias checks; it does not establish final wallet acceptance. No new feature is assigned. If the lead supplies a reproducible pet regression, use a fresh branch from reviewed origin/main, fix only src/components/pet/**, run relevant checks, add dated evidence and open a small draft PR. Otherwise report that your lane is ready for final review/rehearsal. Do not initiate wallet prompts, change OS settings, edit other lanes, call paid services or merge/deploy yourself.
 ```
