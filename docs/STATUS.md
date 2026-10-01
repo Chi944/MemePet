@@ -6,6 +6,12 @@ separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09
 
 ## Combined F5/F6 release — 2 October, latest checkpoint
 
+The four role briefs now contain executable continuation prompts, explicit dated
+QA deliverables and owner handoffs. Larm can start immediately using his existing
+combined checklist and local recovery setup; no teammate feature is blocking his
+independent work. See [team instructions](finale/START_HERE.md). This is a planning
+update, not new executed QA, and does not change the progress estimates below.
+
 Both open teammate PRs are reviewed and merged: Kym's earned-form viewer **#73**
 and YeeWei's evidence focus repair **#75**. Shared owner/chain/registry isolation
 was already supplied in #74. Combined product source is

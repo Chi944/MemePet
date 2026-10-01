@@ -52,6 +52,13 @@ not necessarily a paid language model. Optional model wording needs separately
 established credentials, budget and public abuse controls. No model credits or
 paid service are assumed to be provided by OKX.
 
+**2 October delivery checkpoint:** the approved garden, reference, read-only
+recap, local personality, earned-form viewer and recap presentation are
+implemented. Follow the [current briefs](finale/START_HERE.md) for combined QA,
+reproduced-defect fixes, final wallet acceptance, backup capture and rehearsal.
+Implementation complete does not mean final acceptance passed. Optional OKX.AI
+registration/invocation remains unverified and does not block this working scope.
+
 ## Architecture boundary
 
 The lead owns contract reads/writes and supplies display-ready values and callbacks. Teammates build components with those inputs. UI preview data must never become a fallback for a failed live read.

@@ -21,7 +21,7 @@ file and fill in that copy; do not edit results into this checklist.
 
 | ID | Check | Expected |
 |---|---|---|
-| G1 | Release | Codex names the SHA; Vercel production deployment for that SHA is `success`. Record both |
+| G1 | Release | Record checkout SHA and deployed product SHA separately, plus the successful production deployment record. Docs-only main commits may be newer than deployed source; cite the lead's tree comparison rather than claiming they were deployed. If the hosted revision cannot be established, record that limit |
 | G2 | Routes | `/`, `/pet`, public page: 200. `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/finale`, `/dev/companion` (and any new `/dev/*`): **404** |
 | G3 | Console | No errors on `/`, `/pet`, the public page |
 | G4 | Chain baseline | `node docs/qa/counter-check.mjs` — note the block and `communityStats(1)` |
@@ -33,9 +33,9 @@ file and fill in that copy; do not edit results into this checklist.
 | O1 | Layout | `/` and `/pet` at 1440, 390 and 320: `scrollWidth = clientWidth`, no element past the right edge |
 | O2 | How it works | Four steps; one row at 1440, 2×2 at ≤1000 px, one column at ≤560 px; step 04 "Ask Mochi" |
 | O3 | Landing artwork ring | Keyboard Tab from "Animate Mochi" to "Say hello to Mochi": ring clear of the switch and stage heading (2 px at 390/320, 4.4 px at 1440 on `7d4144b`) |
-| O4 | Garden | Badge **Live**; count equals G4; below 20, "N more…" equals max(0, 20 − total); at/above 20 show the bloom message; bar caps at 20 |
+| O4 | Garden | Badge **Live**; verify the total against a matching source block where available. If G4 is from a different block, retain both timestamps/counts and investigate a difference before calling it a defect. Below 20, "N more…" equals max(0, 20 − total); at/above 20 show the bloom message; bar caps at 20 |
 | O5 | Network and reference | "Care network: X Layer testnet (chain 1952)… XDOG reference … mainnet (chain 196)"; XDOG address `0x0cc24c51…b48e` (canonical, not `0x0eae…83ca`); link `noopener noreferrer`; disclaimer present |
-| O6 | Motion switch | Default On; Space → Off, saved, reload keeps Off, greeting button disabled; Enter → On. Clear the saved choice afterwards |
+| O6 | Motion switch | In an isolated QA browser with no saved choice, default On; Space → Off, saved, reload keeps Off, greeting button disabled; Enter → On. Restore any pre-existing saved choice afterward; do not change OS settings |
 | O7 | Keyboard | Reference source link reachable with visible focus; no focus trap |
 
 ## F5 — earned forms (Kym)

@@ -77,12 +77,16 @@ Public HTTP verification is not an OKX.AI marketplace invocation.
 ## Completed feature interfaces and QA — 2 October
 
 The approved feature scope is complete. F5/#73 and F6/#72/#75 are merged with
-the lead's live/public scope wiring in combined source candidate
+the lead's live/public scope wiring in verified product source
 `d0fc02057eb9d06350c598220a62c68960cd8ab2`. These interfaces stay stable during
 3–4 October combined QA; [status](../STATUS.md) records exact release verification.
 Final wallet acceptance is **NOT RUN**. Automated state tests and labelled
 fixtures are not genuine wallet proof. Backup capture is planned for 5 October,
 timed rehearsal for 6 October; no new feature or extra Deston coding is assigned.
+The later #76 handoff is docs-only. Follow the
+[release identity and common handoff](START_HERE.md#release-identity-and-common-handoff)
+when recording checkout versus hosted runtime, dated results and owner requests.
+Do not widen these stable interfaces merely to finish a presentation checklist.
 
 - **F5, Kym:** keep `PetSceneProps` unchanged. The selected earlier earned form
   is component-local presentation state; `pet.stage`, growth and care remain
