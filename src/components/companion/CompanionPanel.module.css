@@ -18,6 +18,98 @@
   letter-spacing: 0.05em;
 }
 
+.context {
+  margin: 0 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.context > * {
+  min-width: 0;
+}
+
+.liveLabel {
+  display: inline-block;
+  padding: 0.125rem 0.4rem;
+  border-radius: 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background-color: var(--live-wash);
+  color: var(--live);
+}
+
+.recap {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+  gap: 0.75rem;
+}
+
+.recapItem {
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.recapItem dt {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.recapItem dd {
+  margin: 0.25rem 0 0;
+  font-size: var(--step-1);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.recapNote {
+  display: block;
+  font-size: var(--step--1);
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.askBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.evidence {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.evidenceSummary {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.evidenceBody {
+  padding: 0 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.evidenceBody p {
+  margin: 0;
+}
+
+.subTitle {
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
 .factsList {
   margin: 0;
   display: grid;
@@ -115,4 +207,17 @@
 .errorText {
   color: var(--alert);
   margin: 0;
+}
+
+/* At phone widths, stack evidence labels above values so long addresses wrap cleanly. */
+@media (max-width: 30rem) {
+  .factsList {
+    grid-template-columns: 1fr;
+    gap: 0.125rem;
+  }
+
+  .factRow dt {
+    white-space: normal;
+    margin-top: 0.5rem;
+  }
 }
