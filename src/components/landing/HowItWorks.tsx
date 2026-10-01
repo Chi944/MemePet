@@ -25,6 +25,11 @@ const STEPS = [
     title: "Care once a day",
     body: "Each care adds 10 growth points to your pet, and one to the community's shared garden, which blooms at 20 confirmed care actions. Miss a day and you lose nothing.",
   },
+  {
+    id: "ask",
+    title: "Ask Mochi",
+    body: "Ask how your pet is doing. Each answer explains confirmed activity and shows the block it was read from. Explore or Practise changes how Mochi explains, never the facts or your growth.",
+  },
 ] as const;
 
 export function HowItWorks({ connected }: HowItWorksProps) {
@@ -35,7 +40,7 @@ export function HowItWorks({ connected }: HowItWorksProps) {
           <p className="eyebrow">How it works</p>
           <h2 id="how-it-works">Small actions. Real connection.</h2>
         </div>
-        <p className={styles.stepsSubhead}>Three steps to get started. A reason to come back every day.</p>
+        <p className={styles.stepsSubhead}>Four small steps. A reason to come back every day.</p>
       </div>
 
       <ol className={styles.stepList}>
