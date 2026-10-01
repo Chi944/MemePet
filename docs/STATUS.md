@@ -4,7 +4,41 @@ Updated 1 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [latest-release QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## F7 presentation and read recovery — 1 October, later checkpoint
+## F6 recap delivery — 1 October, latest checkpoint
+
+YeeWei completed F6 in PR #72: the compact recap keeps stage, growth, personal
+cares and care timing in view, places questions/answers nearby, and preserves
+every existing source field in a native **View verified evidence** disclosure.
+Her own automated and human observations remain in her dated QA record.
+
+Lead review corrected two integration issues before release: already-eligible
+care is described as available **at the verified read**, with a reminder to
+check Daily care; narrow cards no longer overflow on the UTC date. The correction
+uses source-block time, never the browser clock. Props, adapters, stale-response
+protection and transaction behavior are unchanged.
+
+The integrated check passed **360 app tests / 37 files, 15 contract tests and
+22 helper regressions**, typecheck and lint (one existing image warning).
+Chrome keyboard and layout checks covered 320/390/600/1440px; an in-app browser
+visual check used labelled fixtures. [Lead evidence](qa/evidence/F6_INTEGRATION_2026-10-01.md)
+records capture limitations and separates these checks from live wallet QA.
+The PR records the exact final CI, merge and deployment results.
+
+| Member | Current completion | Next step |
+|---|---|---|
+| YeeWei | F3 and F6 implementation complete | Verify the released recap and help Larm with the combined QA; no additional feature assigned. |
+| Kym | F2 complete; F5 draft PR #73 now open | Finish the earned-form viewer tests/observations; lead review and account-scope wiring are pending. |
+| Larm | Initial F7 presentation/runbook work merged in #70 | Use the recovery setup; finish combined QA after F5. |
+| Codex / Deston | Shared adapters, recovery and F6 integration complete | Integrate F5, review/release and coordinate one final genuine wallet session. Deston retains private approvals/rehearsal. |
+
+**Planning estimate: about 85% finale-ready.** F6 moves from not started to
+implemented and integrated. Remaining work is F5, final combined browser/wallet
+acceptance, a genuine labelled backup and rehearsal. Optional OKX.AI registration
+and invocation are still unverified and do not block this working-product scope.
+Teammates should use the updated role sheets; their separate agent sessions are
+not automatically notified by these committed instructions.
+
+## F7 presentation and read recovery — 1 October, earlier checkpoint
 
 Larm's PR #70 is reviewed and merged as `9fa6438`. It adds the Ask Mochi landing
 step, visible garden-track boundary, initial presentation checks, timed runbook,

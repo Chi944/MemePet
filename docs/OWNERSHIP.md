@@ -9,7 +9,7 @@ delegation may narrow these paths; shared interface changes require lead review.
 | Codex integration lead | `contracts/**`, `src/app/**`, `src/hooks/**`, `src/lib/**`, `src/types/**`, `src/fixtures/**`, `src/components/ui/**`, `src/components/share/**`, global styles, configuration, packages/lockfile, CI/deployment, shared specification docs |
 | Kym / F5 `feat/earned-stage-viewer` | `src/components/pet/**`, `public/pets/**`, `docs/pet-assets.md` |
 | Larm / F7 follow-up `test/finale-combined-qa` | `src/components/landing/**`, `src/components/community/**`, `docs/qa/finale/larm/**`, `docs/finale/COMMUNITY_CANDIDATE.md` |
-| YeeWei / F6 `feat/companion-evidence-layout` | `src/components/companion/**`, `docs/qa/finale/yeewei/**` |
+| YeeWei / F6 follow-up `test/companion-release-qa` | `src/components/companion/**`, `docs/qa/finale/yeewei/**` |
 
 Task-level allowlists can be narrower than this table. Ownership is a coordination agreement, not a technical permission system. Everyone reviews their diff and the lead reviews every merge.
 

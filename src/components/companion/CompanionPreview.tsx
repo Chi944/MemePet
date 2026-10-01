@@ -24,6 +24,30 @@ const factsKeys = Object.keys(companionFactsFixtures) as FactsKey[];
 const replyKeys = Object.keys(companionReplyFixtures) as ReplyKey[];
 const personalityKeys = Object.keys(personalityFixtures) as PersonalityKey[];
 
+/** Patterned fictional hex strings, only for checking long-address layout. */
+const FICTIONAL_LONG_WALLET = `0x${"F1C7".repeat(10)}`;
+const FICTIONAL_LONG_REGISTRY = `0x${"0FAC".repeat(10)}`;
+
+function withLongAddresses(facts: CompanionFactsState): CompanionFactsState {
+  if (facts.kind !== "ready") return facts;
+  return {
+    ...facts,
+    snapshot: {
+      ...facts.snapshot,
+      walletAddress: FICTIONAL_LONG_WALLET,
+      registryAddress: FICTIONAL_LONG_REGISTRY,
+    },
+  };
+}
+
+const STALE_ANSWER: CompanionReplyState = {
+  kind: "answer",
+  contextKey: "FICTIONAL_OBSOLETE_CONTEXT",
+  question: "progress",
+  source: "standard",
+  text: "FICTIONAL OBSOLETE ANSWER — must never be visible.",
+};
+
 /** YeeWei's development state inspector. No wallet, RPC or model I/O. */
 export function CompanionPreview() {
   const [factsKey, setFactsKey] = useState<FactsKey>("ready");
@@ -31,9 +55,14 @@ export function CompanionPreview() {
   const [personalityKey, setPersonalityKey] = useState<PersonalityKey>("playful");
   const [askLog, setAskLog] = useState<CompanionQuestion[]>([]);
   const [retryCount, setRetryCount] = useState(0);
+  const [longAddresses, setLongAddresses] = useState(false);
+  const [staleReply, setStaleReply] = useState(false);
 
-  const facts = companionFactsFixtures[factsKey] as CompanionFactsState;
-  const reply = companionReplyFixtures[replyKey] as CompanionReplyState;
+  const baseFacts = companionFactsFixtures[factsKey] as CompanionFactsState;
+  const facts = longAddresses ? withLongAddresses(baseFacts) : baseFacts;
+  const reply = staleReply
+    ? STALE_ANSWER
+    : (companionReplyFixtures[replyKey] as CompanionReplyState);
   const personality = personalityFixtures[personalityKey] as PersonalityProfile;
 
   const props: CompanionPanelProps = {
@@ -118,6 +147,27 @@ export function CompanionPreview() {
               </label>
             ))}
           </fieldset>
+        </div>
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem 1.5rem", marginBottom: "1rem" }}>
+          <label style={{ cursor: "pointer" }}>
+            <input
+              type="checkbox"
+              checked={longAddresses}
+              onChange={(e) => setLongAddresses(e.target.checked)}
+              style={{ marginRight: "0.375rem" }}
+            />
+            Long fictional hex addresses
+          </label>
+          <label style={{ cursor: "pointer" }}>
+            <input
+              type="checkbox"
+              checked={staleReply}
+              onChange={(e) => setStaleReply(e.target.checked)}
+              style={{ marginRight: "0.375rem" }}
+            />
+            Obsolete-context answer (should stay hidden)
+          </label>
         </div>
 
         <div style={{ fontSize: "0.875rem", display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>

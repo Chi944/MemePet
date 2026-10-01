@@ -1,5 +1,10 @@
 # Companion UI — viewing steps and QA notes
 
+> **F6 (1 October 2026):** the ready view now leads with a concise recap and a
+> "View verified evidence" disclosure. Current F6 checks, screenshots and NOT RUN
+> items are in [F6_EVIDENCE_LAYOUT.md](F6_EVIDENCE_LAYOUT.md). The F3 records below
+> are historical and unchanged.
+
 **Task F3 UI · branch `feat/finale-companion-ui`**
 **Base SHA:** `8a811516333a99cd7175e4c5d4b3de6e07639454`
 

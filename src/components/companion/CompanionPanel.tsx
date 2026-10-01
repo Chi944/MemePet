@@ -1,9 +1,11 @@
 "use client";
+import type { ReactNode } from "react";
 import type {
   CompanionFactsState,
   CompanionPanelProps,
   CompanionQuestion,
   CompanionReplyState,
+  CompanionSnapshot,
 } from "@/types/companion";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -14,6 +16,22 @@ function displayAddress(addr: string): string {
     return `${addr.slice(0, 6)}…${addr.slice(-4)}`;
   }
   return addr;
+}
+
+/**
+ * Reformats a supplied UTC ISO timestamp for reading. Pure string formatting:
+ * it never compares against the browser clock, so it cannot imply "ready now".
+ * Anything that is not a plain UTC ISO string is shown exactly as supplied.
+ */
+function ReadableUtc({ iso }: { iso: string }) {
+  const match = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})(?::\d{2}(?:\.\d+)?)?Z$/.exec(iso);
+  if (!match) return <>{iso}</>;
+  return (
+    <>
+      <span className={styles.nowrap}>{match[1]}</span>{" "}
+      <span className={styles.nowrap}>{match[2]} UTC</span>
+    </>
+  );
 }
 
 function FactsSection({
@@ -71,80 +89,111 @@ function FactsSection({
     );
   }
 
-  // ready
+  // ready: the concise recap. Full source evidence lives in EvidenceDisclosure.
   const s = facts.snapshot;
-  const communityDisplay =
-    s.communityTotalCares === null ? (
-      <>
-        Unknown <span className={styles.note}>(not zero)</span>
-      </>
-    ) : (
-      <>{s.communityTotalCares}</>
-    );
-
+  // Eligibility is relative to this verified block, never the browser clock.
+  const careAvailableAtRead = Date.parse(s.nextCareAtIso) <= Date.parse(s.blockTimestampIso);
   return (
     <Card surface="plain" className={styles.factsCard}>
-      {modeBadge}
-      <h2 className={styles.sectionTitle}>MemePet activity</h2>
-      <dl className={styles.factsList}>
-        <div className={styles.factRow}>
-          <dt>Network</dt>
-          <dd>Chain {s.chainId}</dd>
-        </div>
-        <div className={styles.factRow}>
-          <dt>Wallet</dt>
-          <dd className={styles.address} title={s.walletAddress}>
-            {displayAddress(s.walletAddress)}
-          </dd>
-        </div>
-        <div className={styles.factRow}>
-          <dt>Registry</dt>
-          <dd className={styles.address} title={s.registryAddress}>
-            {displayAddress(s.registryAddress)}
-          </dd>
-        </div>
-        <div className={styles.factRow}>
-          <dt>Read block</dt>
-          <dd>{s.blockNumber}</dd>
-        </div>
-        <div className={styles.factRow}>
-          <dt>Block time</dt>
-          <dd>{s.blockTimestampIso}</dd>
-        </div>
-        <div className={styles.factRow}>
-          <dt>Observed at</dt>
-          <dd>{s.observedAtIso}</dd>
-        </div>
-        <div className={styles.factRow}>
-          <dt>Care actions</dt>
-          <dd>{s.careCount}</dd>
-        </div>
-        <div className={styles.factRow}>
-          <dt>Growth points</dt>
-          <dd>{s.growthPoints}</dd>
-        </div>
-        <div className={styles.factRow}>
+      <h2 className={styles.sectionTitle}>
+        Where is my pet now?
+      </h2>
+      <p className={styles.context}>
+        {modeBadge ?? <span className={styles.liveLabel}>Live read</span>}
+        <span className={styles.address} title={s.walletAddress}>
+          {displayAddress(s.walletAddress)}
+        </span>
+        <span>Chain {s.chainId}</span>
+        <span>MemePet activity only</span>
+        <span>Confirmed at block {s.blockNumber}</span>
+      </p>
+      <dl className={styles.recap}>
+        <div className={styles.recapItem}>
           <dt>Stage</dt>
           <dd className={styles.capitalize}>{s.stage}</dd>
         </div>
-        <div className={styles.factRow}>
-          <dt>Next stage at</dt>
+        <div className={styles.recapItem}>
+          <dt>Growth</dt>
           <dd>
-            {s.nextStageAt === null
-              ? "Final stage reached"
-              : `${s.nextStageAt} points`}
+            {s.growthPoints} points
+            <span className={styles.recapNote}>
+              {s.nextStageAt === null
+                ? "Final stage reached"
+                : `Next stage at ${s.nextStageAt} points`}
+            </span>
           </dd>
         </div>
-        <div className={styles.factRow}>
-          <dt>Next care time</dt>
-          <dd>{s.nextCareAtIso}</dd>
+        <div className={styles.recapItem}>
+          <dt>Your confirmed cares</dt>
+          <dd>{s.careCount}</dd>
         </div>
-        <div className={styles.factRow}>
-          <dt>Community total</dt>
-          <dd>{communityDisplay}</dd>
+        <div className={styles.recapItem}>
+          <dt>{careAvailableAtRead ? "Care at this read" : "Next eligible care"}</dt>
+          <dd>
+            {careAvailableAtRead ? (
+              <>
+                Available
+                <span className={styles.recapNote}>Check Daily care for current status.</span>
+              </>
+            ) : <ReadableUtc iso={s.nextCareAtIso} />}
+          </dd>
         </div>
       </dl>
     </Card>
+  );
+}
+
+function EvidenceRow({
+  label,
+  children,
+  address = false,
+}: {
+  label: string;
+  children: ReactNode;
+  address?: boolean;
+}) {
+  return (
+    <div className={styles.factRow}>
+      <dt>{label}</dt>
+      <dd className={address ? styles.address : undefined}>{children}</dd>
+    </div>
+  );
+}
+
+/** Native disclosure: keyboard and screen-reader behaviour come from the browser. */
+function EvidenceDisclosure({ snapshot: s }: { snapshot: CompanionSnapshot }) {
+  return (
+    <details className={styles.evidence}>
+      <summary className={styles.evidenceSummary}>View verified evidence</summary>
+      <div className={styles.evidenceBody}>
+        <p className={styles.note}>
+          One confirmed registry read. MemePet activity only — not full wallet history.
+        </p>
+        <dl className={styles.factsList} aria-label="Your pet at this read">
+          <EvidenceRow label="Network">Chain {s.chainId}</EvidenceRow>
+          <EvidenceRow label="Wallet" address>{s.walletAddress}</EvidenceRow>
+          <EvidenceRow label="Registry" address>{s.registryAddress}</EvidenceRow>
+          <EvidenceRow label="Read block">{s.blockNumber}</EvidenceRow>
+          <EvidenceRow label="Block time">{s.blockTimestampIso}</EvidenceRow>
+          <EvidenceRow label="Observed at">{s.observedAtIso}</EvidenceRow>
+          <EvidenceRow label="Your care actions">{s.careCount}</EvidenceRow>
+          <EvidenceRow label="Growth points">{s.growthPoints}</EvidenceRow>
+          <EvidenceRow label="Stage">
+            <span className={styles.capitalize}>{s.stage}</span>
+          </EvidenceRow>
+          <EvidenceRow label="Next stage at">
+            {s.nextStageAt === null ? "Final stage reached" : `${s.nextStageAt} points`}
+          </EvidenceRow>
+          <EvidenceRow label="Next care time">{s.nextCareAtIso}</EvidenceRow>
+        </dl>
+        <h3 className={styles.subTitle}>Shared community</h3>
+        <dl className={styles.factsList} aria-label="Shared community">
+          <EvidenceRow label="Community total (all pets)">
+            {s.communityTotalCares === null ? "Unknown" : s.communityTotalCares}
+          </EvidenceRow>
+        </dl>
+      </div>
+    </details>
   );
 }
 
@@ -225,16 +274,14 @@ export function CompanionPanel({
       (reply.kind === "loading" || reply.kind === "answer") &&
       replyContextKey(reply) === snapshotKey);
 
+  // Order: recap → questions → answer → evidence, so the answer stays close to
+  // the controls and the detailed evidence never pushes them down.
   return (
     <div className={styles.panel}>
       <FactsSection facts={facts} onRetry={onRetry} />
 
       {isReady && (
-        <>
-          <p className={styles.personalityNote}>
-            Mochi&apos;s style:{" "}
-            <span className={styles.capitalize}>{personality.style}</span>
-          </p>
+        <div className={styles.askBlock}>
           <div className={styles.controls} role="group" aria-label="Ask Mochi">
             {QUESTIONS.map(({ id, label }) => (
               <Button
@@ -247,10 +294,16 @@ export function CompanionPanel({
               </Button>
             ))}
           </div>
-        </>
+          <p className={styles.personalityNote}>
+            Mochi&apos;s style:{" "}
+            <span className={styles.capitalize}>{personality.style}</span>
+          </p>
+        </div>
       )}
 
       <ReplySection reply={showReply ? reply : { kind: "idle" }} onRetry={onRetry} />
+
+      {isReady && <EvidenceDisclosure snapshot={facts.snapshot} />}
     </div>
   );
 }

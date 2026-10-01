@@ -26,6 +26,9 @@ Implemented retry protection does not prove a new genuine care read-back passed.
    shared props. For F5, key live and public `PetScene` by displayed owner,
    chain and registry to reset the gallery on same-stage account changes;
    Kym owns stage-change resets. Test the integrated behavior before release.
+   F6 is delivered in #72 using the existing adapter with no shared interface
+   changes. Lead review repaired source-time wording and narrow-card date
+   overflow. Preserve those fixes; F5 remains the outstanding feature.
 3. **Supply F7 recovery setup:** give Larm a bounded, local-only way to produce
    a real failing read and then restore a successful read on a named runtime.
    Keep faults out of production and wallet-write paths. A fixture showing an
