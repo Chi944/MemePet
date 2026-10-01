@@ -42,7 +42,7 @@ can replace the whole demo.
 | 5 | 10 s | Garden after confirmation | Total **one higher** than shot 1 | Same as shot 4: keep any reload or Retry visible |
 | 6 | 10 s | The transaction | Transaction hash from the app or wallet, plus a receipt with status success: the OKX explorer page, or `node docs/qa/counter-check.mjs <before> <after>` showing one `Cared` event from this wallet with that hash | If the explorer asks for a login, do not log in; use the counter-check output |
 | 7 | 5 s | **Daily care** again | "Done today" and "Care is available again at …" | Shows the once-per-UTC-day rule without a second transaction |
-| 8 | 20 s | **Read-only recap** | Ask "Explain progress"; the **"Standard explanation"** label; "Read block" and "Block time" | Recheck these labels against F6 before recording |
+| 8 | 20 s | **Read-only recap** | Ask "Explain progress"; the **"Standard explanation"** label; "Read block" and "Block time" | Recheck these labels against F6 before recording. If "Read block" sits inside "View verified evidence", open it on camera |
 | 9 | 20 s | **Mochi, your way** | With shot 8's answer still visible, press "Explore interactions" (and/or "Practise interactions"); the style line and the counts change; the same answer is reworded with **the same facts and the same Read block** | One take, so the unchanged Read block is visible before and after |
 | 10 | 5 s | Overview card | "Say hello to Mochi" greeting (optional) | Skip if time is short |
 

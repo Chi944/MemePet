@@ -53,7 +53,9 @@ total on stage; this table is a dated observation, not a forecast.
 
 Written for the release at `7d4144b`. Labels in quotes are the app's own text.
 **Recheck the recap labels after YeeWei's F6 merges**, because F6 reworks that
-panel.
+panel. F6 is planned to move "Read block" into a closed "View verified evidence"
+disclosure; if it does, open that disclosure before pointing at the block
+(`COMBINED_REGRESSION_CHECKLIST.md`, row S1).
 
 The care confirmation is the only step whose length we do not control. Its
 slot below is a **buffer**, not a measurement. Time it in the rehearsal, from
