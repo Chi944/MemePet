@@ -35,6 +35,23 @@ function getProgress(growthPoints: number, nextStageAt: number | null) {
 export function PetScene({ pet, celebrate }: PetSceneProps) {
   const { enabled, setEnabled } = useMochiMotion();
   const [greeting, setGreeting] = useState(false);
+  const [form, setForm] = useState({ earnedStage: pet.stage, viewedStage: pet.stage });
+  // Reset before rendering children; never flash another stage's selection.
+  const resetForm = form.earnedStage !== pet.stage || (!pet.artSrc && form.viewedStage !== pet.stage);
+  if (resetForm) {
+    setForm({ earnedStage: pet.stage, viewedStage: pet.stage });
+    if (greeting) setGreeting(false);
+  }
+  const viewedStage = resetForm ? pet.stage : form.viewedStage;
+  const viewingEarlier = viewedStage !== pet.stage;
+  // A missing supplied image stays missing; the gallery is not a live-data fallback.
+  const viewedArt = pet.artSrc
+    ? viewingEarlier ? `/pets/${viewedStage}.png` : pet.artSrc
+    : null;
+  function viewForm(stage: PetStage) {
+    setForm({ earnedStage: pet.stage, viewedStage: stage });
+    setGreeting(false);
+  }
   const canAnimate = enabled && Boolean(pet.artSrc);
   if (!canAnimate && greeting) setGreeting(false);
   useEffect(() => {
@@ -62,13 +79,24 @@ export function PetScene({ pet, celebrate }: PetSceneProps) {
       <div className={styles.motionBar}>
         <MochiMotionControl enabled={enabled} onChange={setEnabled} />
       </div>
+      <div className={styles.formNotice}>
+        <p aria-live="polite" aria-atomic="true">
+          {viewingEarlier
+            ? `Viewing ${STAGE_LABEL[viewedStage]} · Your current stage is ${STAGE_LABEL[pet.stage]}`
+            : `Current form: ${STAGE_LABEL[pet.stage]}`}
+        </p>
+        {viewingEarlier ? (
+          <button type="button" onClick={() => viewForm(pet.stage)}>Return to current form</button>
+        ) : null}
+        {!pet.artSrc ? <p>Current artwork unavailable. Earlier forms cannot be viewed while current artwork is missing.</p> : null}
+      </div>
       <div className={styles.artFrame}>
         {celebrate ? <span className={styles.evolutionGlow} aria-hidden="true" /> : null}
-        {pet.artSrc ? (
+        {viewedArt ? (
           <button
             className={`${styles.artInner} ${styles.artButton}`}
             type="button"
-            aria-label={`Say hello to ${pet.displayName}`}
+            aria-label={viewingEarlier ? `Say hello to ${pet.displayName}, viewing ${STAGE_LABEL[viewedStage]}` : `Say hello to ${pet.displayName}`}
             disabled={!enabled}
             data-greeting={greeting ? "true" : "false"}
             onClick={() => setGreeting(true)}
@@ -79,10 +107,10 @@ export function PetScene({ pet, celebrate }: PetSceneProps) {
             <Image
               className={styles.art}
               data-stage-art={
-                pet.artSrc === `/pets/${pet.stage}.png` ? pet.stage : undefined
+                viewedArt === `/pets/${viewedStage}.png` ? viewedStage : undefined
               }
-              src={pet.artSrc}
-              alt={`${pet.displayName}, the ${pet.stage} pet`}
+              src={viewedArt}
+              alt={viewingEarlier ? `${pet.displayName}, earlier earned ${viewedStage} form; current stage ${STAGE_LABEL[pet.stage]}` : `${pet.displayName}, the ${pet.stage} pet`}
               width={480}
               height={480}
               sizes="(max-width: 760px) 80vw, 28rem"
@@ -128,11 +156,19 @@ export function PetScene({ pet, celebrate }: PetSceneProps) {
                   : styles.stageFuture;
 
             return (
-              <li key={stage} className={state} aria-current={index === currentIndex ? "step" : undefined}>
-                {STAGE_LABEL[stage]}
-                {index === currentIndex ? (
-                  <span className={styles.srOnly}> (current stage)</span>
-                ) : null}
+              <li key={stage} aria-current={index === currentIndex ? "step" : undefined}>
+                <button
+                  type="button"
+                  className={state}
+                  aria-pressed={stage === viewedStage}
+                  disabled={index > currentIndex || (!pet.artSrc && index < currentIndex)}
+                  onClick={() => viewForm(stage)}
+                >
+                  <span>{STAGE_LABEL[stage]}</span>
+                  <span className={styles.formState}>
+                    {index > currentIndex ? "Locked" : index === currentIndex ? "Current" : !pet.artSrc ? "Art unavailable" : "Earned"}
+                  </span>
+                </button>
               </li>
             );
           })}
