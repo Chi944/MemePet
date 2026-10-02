@@ -23,8 +23,16 @@ wallet stay **NOT RUN**; nothing here is wallet evidence. Screenshots are in
 | Checkout | `origin/main` **`5a84e23052ab568ec97740336081926efd99d8ec`** (merge of #83), read from a GitHub source snapshot of that commit. The branch base is `1a2b120ac408b7e243aaede345c19fdf1f3e4fd5`, which adds only YeeWei's docs to `5a84e23` |
 | Hosted runtime | `https://memepet.vercel.app`. GitHub Production deployment **6803705884** for `5a84e23`, state `success` at 2026-10-02T07:40:12Z. A docs-only deployment **6804130471** for `1a2b120` (merge of #84, YeeWei's report; no product source change from `5a84e23`) was created at 08:08:19 UTC, during this run, so hosted rows may have been served by either; the product source is identical |
 | Alias → SHA | **Not independently resolved.** The per-deployment URLs return HTTP 302 to a Vercel login and I have no Vercel API access. The latest lead-verified alias proof is `62d487d` / deployment `6794766512` ([evidence](../../evidence/PET_QA_RELEASE_2026-10-02.md)); later deployments (#81–#83) changed source. Codex: please record the alias resolution for the release you name for the finale |
-| Local runtime | `npm ci` on the same snapshot; Node 24.19.0 (matches `.nvmrc`), npm 11, Next.js 16.3.5 dev server. Fixtures on `127.0.0.1:3463`; recovery on `127.0.0.1:3462` with the doc's process-only overrides |
+| Local runtime (reported; version unresolved) | Larm's run reports `npm ci` on the same snapshot, Node 24.19.0, npm 11 and a Next.js 16.3.5 dev server. The cited commit actually pins Next.js **16.3.8**, so the local dependency/runtime identity is **not verified**. Fixtures used `127.0.0.1:3463`; recovery used `127.0.0.1:3462` with process-only overrides |
 | Browser | Headless Chrome 154.0.8037.59 on Windows 11, driven over CDP with real key/mouse events. A fresh isolated profile per run, so no saved motion choice. OS settings untouched; no reduced-motion emulation |
+
+**Lead review qualification (2 October):** the local version discrepancy above
+cannot be resolved from screenshots. Local fixture/recovery rows below retain
+Larm's reported observations; they are not independently reproduced passes on
+the named checkout's installed dependencies. Recheck those rows on the named
+finale release with its actual installed version recorded. Hosted observations
+also retain G1's alias limitation. Do not turn either gap into a verified release
+identity or wallet pass.
 
 ## Setup
 

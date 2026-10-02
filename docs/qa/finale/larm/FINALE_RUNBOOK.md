@@ -56,8 +56,10 @@ total on stage; this table is a dated observation, not a forecast.
 
 ## Three-minute flow (proposal)
 
-Checked on 2 October against the hosted release built from `5a84e23`
-(Production deployment 6803705884) in [F7 combined QA](COMBINED_QA_2026-10-02.md).
+Checked against hosted observations on 2 October in
+[F7 combined QA](COMBINED_QA_2026-10-02.md). GitHub listed deployment
+6803705884 for `5a84e23`, but that run did not independently resolve the
+public alias to a commit. Its local runtime version also remains unresolved.
 Labels in quotes are the app's own text. F6 is merged: "Read block" now sits
 inside the closed **View verified evidence** disclosure, so **open it before
 pointing at the block** (checklist row S1). The closed recap already shows
@@ -156,7 +158,7 @@ Decide fast. Do not debug on stage.
 | What happens | What to do |
 |---|---|
 | Venue Wi-Fi is down | Switch to the pre-tested hotspot. If it is still down after ~10 s, go to the backup recording |
-| Community total shows **Unknown** or "could not be loaded" | Classified temporary read failures receive up to two automatic retries (#64). Unknown alone does not establish the cause or prove retries ran. Say *"the total is unverified, so the app does not invent a number."* Press **Retry reading** once. (In the 2 October local recovery check, after a genuinely failed read, one Retry press recovered the true total without a reload.) If it stays unavailable, carry on, or go to the backup |
+| Community total shows **Unknown** or "could not be loaded" | Classified temporary read failures receive up to two automatic retries (#64). Unknown alone does not establish the cause or prove retries ran. Say *"the total is unverified, so the app does not invent a number."* Press **Retry reading** once. (Larm's 2 October local report records recovery without a reload; its installed runtime version remains unresolved.) If it stays unavailable, carry on, or go to the backup |
 | Mochi is not moving | Check "Animate Mochi" — it was probably switched off earlier. One press turns it on. It changes only the artwork, never the pet's data |
 | Wallet prompt does not appear | Do not wait more than ~15 s. Move on; show the confirmed part from the backup |
 | Transaction stays pending | Say *"progress appears only after the receipt confirms"* — true, and a feature. Continue the talk and come back; if it has not confirmed by the end, the backup shows a confirmed care |

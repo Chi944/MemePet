@@ -4,8 +4,10 @@ Likely questions after the three-minute demo, each with a short answer the
 team can say as written. Every answer points to its source. Where something is
 not done or not known, the answer says so.
 
-Written against `7d4144b` on 1 October 2026; updated 2 October against the
-hosted release from `5a84e23` ([F7 combined QA](COMBINED_QA_2026-10-02.md)).
+Written against `7d4144b` on 1 October 2026; updated with 2 October hosted
+observations ([F7 combined QA](COMBINED_QA_2026-10-02.md)). That run did not
+independently resolve the public alias to a commit, and its local runtime
+version remains unresolved; the report preserves those limits.
 Dated figures keep their dates. Numbers change: **read live
 numbers off the screen**, not from this sheet. Words to avoid are in
 [`FINALE_RUNBOOK.md`](FINALE_RUNBOOK.md#words-to-use-words-to-avoid).
@@ -129,8 +131,8 @@ note.
 > - There is no security audit.
 
 Source: README "Known limitations"; `COMMUNITY_INITIAL_READ_2026-09-30.md`;
-the 2 October local recovery check in `COMBINED_QA_2026-10-02.md` (a real
-failed read, then one Retry recovered the true total). Say it plainly; it
+the reported 2 October local recovery check in `COMBINED_QA_2026-10-02.md`
+(its installed runtime version remains unresolved). Say it plainly; it
 shows the honesty design.
 
 ## Check it yourself (30 seconds)
