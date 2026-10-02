@@ -1,7 +1,7 @@
 # B0–B5 shared contracts and release gates
 
-**2 October integration checkpoint:** #80–#87 are merged. The current lead
-change supplies the real `/help` route and navigation using B2 + B3. It does
+**2 October integration checkpoint:** #80–#88 are merged. Help/#88 supplies
+the real `/help` route and navigation using B2 + B3. It does
 not connect the recovery panel to persistence. Kym's B1 integration remains
 next; do not duplicate the existing provider picker or pure panel mapper.
 The development-preview description below is historical to #85; `/dev/beta`
@@ -154,6 +154,22 @@ a viem-formatted transaction plus an independently read RPC chain ID. It checks
 hash, sender, registry, zero value and exact `care()` or `adopt(1)` calldata.
 `matched` establishes only request identity, never receipt success or progress;
 missing/unverifiable transactions remain `unverified`, not failed.
+
+`pending-transaction-receipt.ts` adds a pure receipt validator. Supply the
+saved record/current scope, viem-formatted transaction and receipt, a fresh
+block header fetched by the receipt's **block number**, and independently read
+RPC chain ID. It first reuses transaction identity validation, then requires
+matching receipt hash/from/to, transaction/receipt block hash and number,
+transaction index, header hash/number, and explicit success/reverted status.
+Missing, malformed or conflicting evidence remains `unverified`; it cannot
+be classified as dropped, cancelled, or safe to submit again.
+
+A `receipt` result only describes observed inclusion and status. It does not
+prove finality, current session, confirmed pet facts or awarded growth. Future
+runtime must guard the provider/account generation, perform receipt-bound fact
+reads and recheck the header after those reads. Replacement/cancellation,
+storage and refresh recovery are still unimplemented. This helper has no I/O
+or live imports; tests use fictional input only.
 
 These helpers have no live route/hook import. **B5 runtime remains disabled.**
 After final acceptance, the lead still needs storage-failure handling, bounded

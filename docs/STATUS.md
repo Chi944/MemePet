@@ -4,7 +4,21 @@ Updated 2 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Help integration and current assignments — 2 October, latest checkpoint
+## Receipt validation preparation — 2 October, latest checkpoint
+
+After Help/#88, the lead added pure B5 receipt validation and 44 regressions.
+The helper verifies saved transaction identity, receipt ownership/inclusion
+and a matching observed block header. Success is a receipt result, not pet
+progress; missing or contradictory reads remain unverified. No runtime import,
+storage, automatic retry or new wallet action is enabled. The associated PR
+records final test/merge/release results. See [the integration contract](beta/INTEGRATION.md).
+
+Deston confirms **Kym is working on B1 locally**; no pushed handoff is yet
+available to review. Her files remain untouched. Overall remains **73%** under
+the existing weights: this strengthens already-counted B5 preparation and does
+not close runtime or acceptance work. The eight B5 browser cases remain skipped.
+
+## Help integration and current assignments — 2 October, earlier checkpoint
 
 Larm's final QA #86 and B3 content #87 are merged; #87's merge is
 `a92416f`. No open PR remained at that checkpoint. The lead integration connects
@@ -15,8 +29,8 @@ Planned features and the unverified support contact remain explicit.
 record actual checks and release identity. Earlier dated reports below remain
 historical; they are not claims about the latest deployment.
 
-Kym's B1 handoff is not yet visible on a pushed branch/PR; local progress is
-unknown. YeeWei and Larm continue focused release checks from their updated
+Kym's B1 handoff is not yet visible on a pushed branch/PR; she is working
+locally, as confirmed by Deston. YeeWei and Larm continue focused release checks from their updated
 briefs, rather than rebuilding merged work. Codex handles integration and
 merges. Final genuine wallet acceptance is **NOT RUN**, and eight B5 runtime
 browser cases remain skipped. No persisted recovery is enabled.
@@ -33,7 +47,7 @@ use the integration PR for that gate. Unpublished teammate work is not counted.
 |---|---:|---|
 | Existing core and finale feature implementation | 45 / 45 | Final acceptance is a separate row |
 | B0 shared foundation | 10 / 10 | Complete |
-| B1 onboarding/progression | 0 / 12 verified | Kym handoff and integration; local work unknown |
+| B1 onboarding/progression | 0 / 12 verified | Kym is working locally; handoff and integration pending |
 | B2 presentation and regression | 6 / 8 | Final combined integration QA |
 | B3 help copy/verification | 3 / 4 | Rendered release follow-up |
 | B4 provider/retry/Help integration | 7 / 9 | B1 component wiring |
@@ -44,7 +58,7 @@ use the integration PR for that gate. Unpublished teammate work is not counted.
 | Member's assigned lane | Weighted progress | Next action |
 |---|---:|---|
 | Deston / Codex | 39 / 51 — **76%** | Codex integrates B1 and prepares acceptance; Deston reviews/approves privately and rehearses |
-| Kym | 10 / 22 — **45% verified** | Continue B1; preserve local work and open a small draft PR |
+| Kym | 10 / 22 — **45% verified** | B1 in progress locally; open a small draft PR |
 | YeeWei | 14 / 16 — **88%** | Help release QA, then combined B1 panels |
 | Larm | 10 / 11 — **91%** | Verify rendered Help copy/links and update acceptance index |
 
