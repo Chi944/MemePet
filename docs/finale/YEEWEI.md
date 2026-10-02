@@ -2,7 +2,8 @@
 
 **Current assignment:** [B2 recovery, help and browser regression](../beta/YEEWEI.md).
 The 2 October beta brief supplies new work in separate folders. Finish any
-remaining finale QA below without rewriting its history. Deston now merges PRs.
+remaining finale QA below without rewriting its history. B0 is merged in #80,
+so start B2 now. Codex reviews and merges passing PRs; teammates do not merge.
 
 **Task COMPANION-COMBINED-QA · F6 and its release QA fix merged in #72/#75 · branch `test/companion-combined-qa` · updated 2 October 2026.**
 Your F3 and F6 implementation is complete. The lead's F6 review also corrects

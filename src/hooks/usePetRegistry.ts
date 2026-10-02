@@ -32,6 +32,8 @@ type UsePetRegistryArgs = {
   readonly deployment: Deployment;
   readonly address: Address | null;
   readonly wrongChain: boolean;
+  /** A provider change is a new live session even for the same address/chain. */
+  readonly providerSessionKey?: string;
   readonly createWalletClient: () => WalletClient | null;
 };
 
@@ -75,9 +77,10 @@ export function usePetRegistry({
   deployment,
   address,
   wrongChain,
+  providerSessionKey = "",
   createWalletClient,
 }: UsePetRegistryArgs) {
-  const cacheKey = `${address ?? "none"}:${deployment.chainId ?? "none"}:${deployment.registryAddress ?? "none"}:${wrongChain ? "wrong" : "ok"}`;
+  const cacheKey = `${providerSessionKey}:${address ?? "none"}:${deployment.chainId ?? "none"}:${deployment.registryAddress ?? "none"}:${wrongChain ? "wrong" : "ok"}`;
   const [activeKey, setActiveKey] = useState(cacheKey);
   const [snapshot, setSnapshot] = useState<PetSnapshot>(emptySnapshot);
   const [txPhase, setTxPhase] = useState<TxPhase>("idle");
@@ -208,6 +211,7 @@ export function usePetRegistry({
     };
   }, [
     address,
+    cacheKey,
     chain,
     deployment.rpcUrl,
     registryAddress,

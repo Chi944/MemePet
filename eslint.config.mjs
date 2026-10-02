@@ -10,6 +10,10 @@ export default defineConfig([
     "out/**",
     "build/**",
     "coverage/**",
+    // Playwright reports contain generated third-party trace-viewer bundles.
+    // Test source in e2e/ remains linted.
+    "playwright-report/**",
+    "test-results/**",
     "next-env.d.ts",
   ]),
 ]);

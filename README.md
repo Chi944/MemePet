@@ -11,7 +11,7 @@ Growth comes from confirmed care. No MemePet token to buy; network gas applies.
 [![Checks](https://github.com/Chi944/memepet/actions/workflows/checks.yml/badge.svg)](https://github.com/Chi944/memepet/actions/workflows/checks.yml)
 [![OKX Dev Day 2026](https://img.shields.io/badge/OKX_Dev_Day_2026-Finalist-black)](https://www.okx.com/en-sg/learn/okx-dev-day-builder-kit)
 [![X Layer testnet](https://img.shields.io/badge/chain-X_Layer_testnet-c6ff00)](https://web3.okx.com/onchainos/dev-docs/xlayer/developer/build-on-xlayer/network-information)
-[![Next.js 16](https://img.shields.io/badge/Next.js-16.3.5-black)](https://nextjs.org)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16.3.8-black)](https://nextjs.org)
 [![Solidity 0.8.24](https://img.shields.io/badge/Solidity-0.8.24-363636)](https://soliditylang.org)
 
 [Live app](https://memepet.vercel.app)
@@ -45,6 +45,9 @@ Growth comes from confirmed care. No MemePet token to buy; network gas applies.
 3. Inspect a [recorded care transaction](https://www.okx.com/web3/explorer/xlayer-test/tx/0xa340d65b2e59276568c8ff364ea01ec4cf1cc995b6e0ce720ddd1477906e1a55) and its [browser/receipt evidence](docs/qa/evidence/LATEST_RELEASE_QA_2026-09-24.md): one real care added ten points and exactly one community care.
 
 To try adoption and care yourself, use the [wallet walkthrough](docs/qa/BROWSER_WALKTHROUGH.md) with an injected wallet and X Layer testnet gas. Browsing and public sharing require neither.
+If several wallet extensions are available, choose the wallet app on **Your pet**
+before connecting. Changing wallet apps clears this page's connected state;
+connect again with the chosen app. The selection itself requests no permission.
 
 ---
 

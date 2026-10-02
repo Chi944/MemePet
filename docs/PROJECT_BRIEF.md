@@ -73,7 +73,10 @@ garden chapters use 20/50/100. The original 20-care bloom and three pet stages
 stay intact. No reset, missed-day penalty, token reward, new pet or contract
 change is introduced. Shared types/helpers may land before presentation; do
 not describe planned panels as live. Kym and YeeWei own larger UI/test lanes,
-Larm a smaller content/QA lane, and Codex handles integration. Deston merges.
+Larm a smaller content/QA lane, and Codex handles shared engineering, review,
+integration and passing PR merges under the latest 2 October authorization.
+Deston keeps final product checks and private wallet approvals. B0 is merged in
+#80 (`99086a3`), so the three beta lanes can begin from reviewed current main.
 
 ## Architecture boundary
 

@@ -9,6 +9,7 @@ import { PersonalityPanel } from "@/components/pet/PersonalityPanel";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { WalletProviderPicker } from "@/components/ui/WalletProviderPicker";
 import { useCommunityStats } from "@/hooks/useCommunityStats";
 import { usePetRegistry } from "@/hooks/usePetRegistry";
 import { useWallet } from "@/hooks/useWallet";
@@ -25,11 +26,13 @@ export function PetLiveClient() {
     address: wallet.address,
     wrongChain: wallet.wrongChain,
     createWalletClient: wallet.createBrowserWalletClient,
+    providerSessionKey: wallet.providerSessionKey,
   });
   const community = useCommunityStats({
     deployment: wallet.deployment,
     address: wallet.address,
     wrongChain: wallet.wrongChain,
+    providerSessionKey: wallet.providerSessionKey,
   });
   const { companion, personality } = useCompanion({
     deployment: wallet.deployment,
@@ -37,6 +40,7 @@ export function PetLiveClient() {
     wrongChain: wallet.wrongChain,
     confirmedBlockNumber: registry.confirmedBlockNumber,
     isWriting: registry.isSubmitting,
+    providerSessionKey: wallet.providerSessionKey,
   });
 
   const dismissTx = registry.dismissTx;
@@ -179,6 +183,12 @@ export function PetLiveClient() {
             </p>
           </div>
         ) : null}
+        <WalletProviderPicker
+          choices={wallet.choices}
+          selectedId={wallet.selectedId}
+          busy={wallet.selectionBusy || registry.isSubmitting}
+          onSelect={wallet.selectWallet}
+        />
         <div className="pet-gate-actions">
           {community.community.errorMessage && !wallet.wrongChain ? (
             <Button tone="secondary" onClick={community.retry}>
@@ -198,7 +208,7 @@ export function PetLiveClient() {
                   : "Disconnect"}
             </Button>
           ) : (
-            <Button onClick={() => void wallet.connect()} disabled={wallet.connecting}>
+            <Button onClick={() => void wallet.connect()} disabled={wallet.selectionBusy || wallet.selectionRequired}>
               {wallet.connecting ? "Connecting…" : "Connect wallet"}
             </Button>
           )}
@@ -243,7 +253,7 @@ export function PetLiveClient() {
       {registry.hasPet && registry.pet ? (
         <div className="pet-live-grid">
           <PetScene
-            key={`${wallet.deployment.chainId}:${wallet.deployment.registryAddress?.toLowerCase()}:${wallet.address?.toLowerCase()}`}
+            key={`${wallet.providerSessionKey}:${wallet.deployment.chainId}:${wallet.deployment.registryAddress?.toLowerCase()}:${wallet.address?.toLowerCase()}`}
             pet={registry.pet}
             celebrate={celebrate}
           />

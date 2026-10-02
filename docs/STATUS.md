@@ -4,12 +4,48 @@ Updated 2 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
+## Wallet selection and current handoffs — 2 October, latest checkpoint
+
+The only open PR at this run's start, **#80**, was reviewed and merged at
+`99086a3fa2b20b6179183e560f4816ae4d2e47c6`. Its post-merge CI passed and Vercel
+resolved the public alias to READY deployment `dpl_4LEpnMxLAZ2C7HZm1pjwoRB39oom`
+at that exact SHA. Deston reauthorized the lead Codex session to merge reviewed,
+passing PRs; teammates still open PRs without merging.
+
+B4 provider selection is implemented and locally verified: multiple wallets
+require a choice, requests stay with the selected provider, and changing the
+provider invalidates old reads/answers/clients even for the same address.
+The initial picker uses Kym's agreed interface so her full onboarding component
+can replace its presentation without rewriting the wallet adapter.
+
+Checks: **453 app tests, 15 contract tests, 22 helper tests, typecheck, production
+build and 3 simulated browser cases pass**. Lint passes with one existing
+share-image warning. Mobile/desktop screenshots were inspected. These are local
+automated/fixture checks, not real wallet acceptance. See the
+[B4 evidence record](qa/evidence/WALLET_SELECTION_2026-10-02.md); its associated
+PR records the final head, CI and merge/deployment state.
+
+| Member | Current next assignment |
+|---|---|
+| Kym | B1: full wallet chooser, onboarding, local care-time guidance and cosmetic progression. |
+| YeeWei | B2: recovery/help presentation and broader stale-account/read/combined-panel browser cases. |
+| Larm | B3: factual help entries, verified links and a concise acceptance index. |
+| Codex | Review/merge passing PRs and wire the approved panels/routes. |
+| Deston | Private approvals in the coordinated genuine wallet session, final product check and rehearsal; no routine coding. |
+
+All three teammate lanes can start from current reviewed main now. Role briefs
+preserve unpublished work and contain paste-ready prompts. External agents were
+not automatically contacted. Final genuine wallet acceptance remains **NOT RUN**;
+B5 persisted transaction recovery remains gated on that acceptance. Help,
+onboarding and progression panels remain assigned work, not released claims.
+
 ## Beta foundation and parallel assignments — 2 October, new scope
 
 Deston approved the [beta backlog](beta/START_HERE.md) in addition to the finale.
 Kym owns onboarding/progression; YeeWei recovery/help/browser scenarios; Larm
 the smaller support-copy/acceptance-index lane. Codex owns shared engineering.
-**Deston performs PR merges.** Role sheets contain executable prompts; external
+At this earlier checkpoint Deston retained merges; the latest authorization
+above delegates reviewed merges to lead Codex. Role sheets contain executable prompts; external
 teammate sessions have not been automatically notified or started.
 
 B0 prepares bounded pet/public reads, fixed contract tool versions, shared

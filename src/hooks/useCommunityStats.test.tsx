@@ -241,6 +241,57 @@ describe("useCommunityStats read stability", () => {
     expect(readContract).toHaveBeenLastCalledWith(expect.objectContaining({ blockNumber: undefined }));
   });
 
+  it("clears a receipt-bound total immediately and reads latest after a same-account provider change", async () => {
+    const deployment = deploymentFor(1952, "X Layer testnet");
+    const { result, rerender } = renderHook(
+      ({ providerSessionKey }) => useCommunityStats({
+        deployment, address: "0x1111111111111111111111111111111111111111", wrongChain: false, providerSessionKey,
+      }),
+      { initialProps: { providerSessionKey: "metamask" } },
+    );
+    await waitFor(() => expect(result.current.community.totalCareActions).toBe(1));
+    await act(async () => { result.current.refresh(BigInt(120)); });
+    expect(readContract).toHaveBeenLastCalledWith(expect.objectContaining({ blockNumber: BigInt(120) }));
+    let resolveNew!: (total: bigint) => void;
+    readContract.mockReturnValueOnce(new Promise<bigint>((resolve) => { resolveNew = resolve; }));
+
+    rerender({ providerSessionKey: "okx" });
+    expect(result.current.community.totalCareActions).toBeNull();
+    expect(result.current.finale.mission.kind).toBe("loading");
+    expect(readContract).toHaveBeenLastCalledWith(expect.objectContaining({ blockNumber: undefined }));
+    await act(async () => { resolveNew(BigInt(3)); });
+    expect(result.current.community.totalCareActions).toBe(3);
+  });
+
+  it.each(["success", "failure"])("ignores a late receipt read %s after same-account provider A → B → A", async (outcome) => {
+    const deployment = deploymentFor(1952, "X Layer testnet");
+    const { result, rerender } = renderHook(
+      ({ providerSessionKey }) => useCommunityStats({
+        deployment, address: "0x1111111111111111111111111111111111111111", wrongChain: false, providerSessionKey,
+      }),
+      { initialProps: { providerSessionKey: "metamask" } },
+    );
+    await waitFor(() => expect(result.current.community.totalCareActions).toBe(1));
+    let resolveOld!: (total: bigint) => void;
+    let rejectOld!: (error: Error) => void;
+    readContract.mockReturnValueOnce(new Promise<bigint>((resolve, reject) => { resolveOld = resolve; rejectOld = reject; }));
+    await act(async () => { result.current.refresh(BigInt(120)); });
+    readContract.mockResolvedValue(BigInt(4));
+    rerender({ providerSessionKey: "okx" });
+    await waitFor(() => expect(result.current.community.totalCareActions).toBe(4));
+    rerender({ providerSessionKey: "metamask" });
+    await waitFor(() => expect(result.current.community.totalCareActions).toBe(4));
+
+    await act(async () => {
+      if (outcome === "success") resolveOld(BigInt(2));
+      else rejectOld(new Error("Old provider receipt state unavailable"));
+    });
+    expect(result.current.community.totalCareActions).toBe(4);
+    expect(result.current.community.errorMessage).toBeNull();
+    expect(readContract).toHaveBeenCalledTimes(4);
+    for (const [args] of readContract.mock.calls.slice(2)) expect(args.blockNumber).toBeUndefined();
+  });
+
   it("retries a temporarily unavailable community read at the same receipt block", async () => {
     const deployment = deploymentFor(1952, "X Layer testnet");
     const { result } = renderHook(() => useCommunityStats({ deployment, address: null, wrongChain: false }));

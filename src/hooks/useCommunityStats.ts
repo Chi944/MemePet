@@ -22,12 +22,15 @@ type UseCommunityStatsArgs = {
   /** Included in the cache key so account switches drop stale community reads. */
   readonly address: Address | null;
   readonly wrongChain: boolean;
+  /** Drop receipt-bound reads when the selected provider session changes. */
+  readonly providerSessionKey?: string;
 };
 
 export function useCommunityStats({
   deployment,
   address,
   wrongChain,
+  providerSessionKey = "",
 }: UseCommunityStatsArgs) {
   // chainFromDeployment builds a fresh object for any chain id outside X Layer,
   // and this value is an effect dependency: an unstable identity re-fires the
@@ -41,7 +44,7 @@ export function useCommunityStats({
       ? "Community total is unavailable on this network."
       : "Community total is unavailable until a contract and network are configured.",
   }), [canRead, wrongChain]);
-  const cacheKey = `${address ?? "none"}:${deployment.chainId ?? "none"}:${deployment.registryAddress ?? "none"}:${deployment.rpcUrl ?? "none"}:${deployment.networkName ?? "none"}:${deployment.status}:${wrongChain ? "wrong" : "ok"}`;
+  const cacheKey = `${providerSessionKey}:${address ?? "none"}:${deployment.chainId ?? "none"}:${deployment.registryAddress ?? "none"}:${deployment.rpcUrl ?? "none"}:${deployment.networkName ?? "none"}:${deployment.status}:${wrongChain ? "wrong" : "ok"}`;
   const [activeKey, setActiveKey] = useState(cacheKey);
   const [community, setCommunity] = useState<CommunityViewModel>(() => initialCommunity);
   const [refreshToken, setRefreshToken] = useState(0);
@@ -98,6 +101,7 @@ export function useCommunityStats({
     // back into loading on an account switch, and without this dep the effect
     // never re-runs to resolve it.
     address,
+    cacheKey,
     canRead,
     chain,
     deployment.rpcUrl,

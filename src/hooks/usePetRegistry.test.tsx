@@ -56,6 +56,15 @@ function mountRegistry() {
   );
 }
 
+function mountProviderRegistry() {
+  return renderHook(
+    ({ providerSessionKey }) => usePetRegistry({
+      deployment, address: walletA, wrongChain: false, createWalletClient, providerSessionKey,
+    }),
+    { initialProps: { providerSessionKey: "metamask" } },
+  );
+}
+
 describe("usePetRegistry confirmed reads and wallet sessions", () => {
   afterEach(() => vi.useRealTimers());
   beforeEach(() => {
@@ -285,6 +294,113 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     await act(async () => { await result.current.care(); });
     expect(rpc.writeContract).not.toHaveBeenCalled();
     expect(result.current.pet).toBeNull();
+  });
+
+  it("clears the old pet immediately when the provider changes for the same account", async () => {
+    rpc.readContract.mockResolvedValue(caredPet);
+    const { result, rerender } = mountProviderRegistry();
+    await waitFor(() => expect(result.current.pet?.growthPoints).toBe(10));
+    const nextRead = deferred<typeof adoptedPet>();
+    rpc.readContract.mockReturnValueOnce(nextRead.promise);
+
+    rerender({ providerSessionKey: "okx" });
+    expect(result.current.readStatus).toBe("loading");
+    expect(result.current.pet).toBeNull();
+    expect(result.current.cooldownAvailableAtIso).toBeNull();
+    await waitFor(() => expect(rpc.readContract).toHaveBeenCalledTimes(2));
+    await act(async () => { nextRead.resolve(adoptedPet); });
+    expect(result.current.pet?.growthPoints).toBe(0);
+  });
+
+  it.each(["success", "failure"])("discards a late initial read %s after provider A → B → A", async (outcome) => {
+    const firstRead = deferred<typeof caredPet>();
+    rpc.readContract.mockReturnValueOnce(firstRead.promise).mockResolvedValue(adoptedPet);
+    const { result, rerender } = mountProviderRegistry();
+    await waitFor(() => expect(rpc.readContract).toHaveBeenCalledOnce());
+    rerender({ providerSessionKey: "okx" });
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    rerender({ providerSessionKey: "metamask" });
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+
+    await act(async () => {
+      if (outcome === "success") firstRead.resolve(caredPet);
+      else firstRead.reject(new Error("Old provider read failed"));
+    });
+    expect(result.current.pet?.growthPoints).toBe(0);
+    expect(result.current.readStatus).toBe("ready");
+    expect(result.current.readErrorMessage).toBeNull();
+    expect(rpc.readContract).toHaveBeenCalledTimes(3);
+  });
+
+  it("ignores the old provider's signature without releasing the new provider's write lock", async () => {
+    const oldSignature = deferred<string>();
+    const newSignature = deferred<string>();
+    rpc.writeContract.mockReturnValueOnce(oldSignature.promise).mockReturnValueOnce(newSignature.promise);
+    const { result, rerender } = mountProviderRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    let oldWrite!: Promise<void>;
+    act(() => { oldWrite = result.current.adopt(); });
+    rerender({ providerSessionKey: "okx" });
+    expect(result.current.txPhase).toBe("idle");
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    let newWrite!: Promise<void>;
+    act(() => { newWrite = result.current.adopt(); });
+
+    await act(async () => { oldSignature.resolve(hashA); await oldWrite; });
+    expect(result.current.txPhase).toBe("awaiting-signature");
+    expect(result.current.transactionHash).toBeUndefined();
+    expect(rpc.waitForTransactionReceipt).not.toHaveBeenCalled();
+    await act(async () => { await result.current.adopt(); });
+    expect(rpc.writeContract).toHaveBeenCalledTimes(2);
+    await act(async () => { newSignature.reject(new Error("User rejected request")); await newWrite; });
+    expect(result.current.txPhase).toBe("rejected");
+  });
+
+  it.each(["success", "reverted"])("ignores a late %s receipt after provider A → B → A for the same account", async (status) => {
+    const receipt = deferred<{ status: string; blockNumber: bigint }>();
+    rpc.waitForTransactionReceipt.mockReturnValueOnce(receipt.promise);
+    const { result, rerender } = mountProviderRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    let write!: Promise<void>;
+    act(() => { write = result.current.adopt(); });
+    await waitFor(() => expect(result.current.txPhase).toBe("pending"));
+
+    rerender({ providerSessionKey: "okx" });
+    expect(result.current.transactionHash).toBeUndefined();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    rerender({ providerSessionKey: "metamask" });
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    await act(async () => { receipt.resolve({ status, blockNumber: block.number }); await write; });
+
+    expect(result.current.txPhase).toBe("idle");
+    expect(result.current.pet).toBeNull();
+    expect(result.current.confirmedBlockNumber).toBeUndefined();
+    expect(result.current.transactionHash).toBeUndefined();
+    expect(result.current.txErrorMessage).toBeNull();
+    expect(rpc.getBlock.mock.calls.filter(([args]) => args.blockNumber !== undefined)).toHaveLength(0);
+  });
+
+  it("drops a late receipt-bound pet snapshot and celebration after a provider change", async () => {
+    rpc.readContract.mockResolvedValue(caredPet);
+    rpc.getBlock.mockResolvedValue({ ...block, timestamp: block.timestamp + BigInt(86400) });
+    const { result, rerender } = mountProviderRegistry();
+    await waitFor(() => expect(result.current.pet?.growthPoints).toBe(10));
+    const evolved = [true, 1, 2, day + BigInt(1)] as const;
+    const receiptRead = deferred<typeof evolved>();
+    rpc.readContract.mockReturnValueOnce(receiptRead.promise);
+    let write!: Promise<void>;
+    act(() => { write = result.current.care(); });
+    await waitFor(() => expect(result.current.confirmedBlockNumber).toBe(block.number));
+    await waitFor(() => expect(rpc.readContract).toHaveBeenCalledTimes(2));
+
+    rerender({ providerSessionKey: "okx" });
+    expect(result.current.confirmedBlockNumber).toBeUndefined();
+    expect(result.current.pet).toBeNull();
+    await waitFor(() => expect(result.current.pet?.growthPoints).toBe(10));
+    await act(async () => { receiptRead.resolve(evolved); await write; });
+    expect(result.current.pet?.growthPoints).toBe(10);
+    expect(result.current.celebrateStageUp).toBe(false);
+    expect(result.current.txPhase).toBe("idle");
   });
 
   it("ends a stalled initial block read without allowing late pet reads", async () => {

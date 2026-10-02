@@ -14,6 +14,8 @@ export interface UseCompanionArgs {
   readonly deployment: Deployment;
   readonly address: Address | null;
   readonly wrongChain: boolean;
+  /** Live evidence is isolated by provider; local personality remains wallet scoped. */
+  readonly providerSessionKey?: string;
   readonly confirmedBlockNumber?: bigint;
   readonly isWriting?: boolean;
 }
@@ -42,7 +44,7 @@ const loadingFacts: CompanionFactsState = { kind: "loading", dataMode: "live" };
 
 /** Read-only presentation adapter. No wallet provider, signer, or model call. */
 export function useCompanion({
-  deployment, address, wrongChain, confirmedBlockNumber, isWriting = false,
+  deployment, address, wrongChain, providerSessionKey = "", confirmedBlockNumber, isWriting = false,
 }: UseCompanionArgs): { companion: CompanionPanelProps; personality: PersonalityPanelProps } {
   const registry = deployment.registryAddress;
   const chainId = deployment.chainId;
@@ -51,7 +53,7 @@ export function useCompanion({
     typeof chainId === "number" && Number.isSafeInteger(chainId) && chainId > 0 && Boolean(deployment.rpcUrl);
   const validAddress = address !== null && /^0x[\da-f]{40}$/i.test(address);
   const canRead = configured && validAddress && !wrongChain && !isWriting;
-  const scopeKey = `${address?.toLowerCase() ?? "none"}:${chainId}:${registry?.toLowerCase()}:${deployment.rpcUrl}:${deployment.status}:${wrongChain}`;
+  const scopeKey = `${providerSessionKey}:${address?.toLowerCase() ?? "none"}:${chainId}:${registry?.toLowerCase()}:${deployment.rpcUrl}:${deployment.status}:${wrongChain}`;
   const inputKey = `${scopeKey}:${isWriting}:${confirmedBlockNumber?.toString() ?? "latest"}`;
   const [view, setView] = useState<View>(() => ({
     scopeKey, inputKey, generation: 0, facts: loadingFacts, reply: { kind: "idle" },

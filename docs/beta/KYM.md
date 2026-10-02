@@ -1,8 +1,10 @@
 # Kym — B1 onboarding and continued progression
 
 Your larger beta lane has two independent components of the user journey.
-Start after B0 is reviewed and merged by Deston, using current `origin/main`.
+Start now: B0 is reviewed and merged in #80 (`99086a3`). Use current `origin/main`.
 Keep any previous QA work; do not reuse the merged F5 or pet-QA branch.
+If this beta branch already contains work, preserve and continue it instead of
+recreating it. Fetch and inspect before reconciling main; never reset local work.
 
 **Branch:** `feat/beta-onboarding-progression`.
 **Editable:** `src/components/onboarding/**`, `src/components/progression/**`,
@@ -18,6 +20,9 @@ style edits. Request exact shared changes from Codex.
    claim WalletConnect or deep-link support that does not exist. Explain that
    X Layer testnet uses test OKB for gas, never request a seed/key, and link only
    verified official wallet/faucet guidance. Do not promise a faucet allocation.
+   Codex supplies provider discovery and a minimal lead-owned route selector
+   in B4. Your full `WalletChooser` replaces that presentation after review;
+   do not duplicate discovery, alter the hook or edit the route to remove it.
 2. In cooldown, show the given reset time in the visitor's local time zone and
    retain “one care per UTC calendar day.” Do not use the local clock to enable
    care or award anything. Handle unavailable/invalid dates honestly.
@@ -32,11 +37,12 @@ style edits. Request exact shared changes from Codex.
    callback tests are simulated, never real wallet passes.
 
 Return a draft PR early, then mark it ready with actual commands/results,
-screenshots/viewing steps, base/head and limitations. Codex integrates; Deston
-merges. No need to initiate real wallet prompts or redo the old full QA brief.
+screenshots/viewing steps, base/head and limitations. Codex reviews, integrates
+and merges passing work. No need to initiate real wallet prompts or redo the
+old full QA brief. Deston handles final product checks and private approvals.
 
 ## Paste this into Kym's agent
 
 ```text
-Implement MemePet B1 from docs/beta/KYM.md. Read AGENTS.md, docs/PROJECT_BRIEF.md, docs/OWNERSHIP.md, docs/DEV_SETUP.md, docs/beta/START_HERE.md and INTEGRATION.md first. Preserve local work and fetch origin; start feat/beta-onboarding-progression from reviewed main containing B0. If B0 is not merged, inspect its brief but do not invent substitute interfaces. Own only components/onboarding, components/progression and docs/qa/beta/kym. Build the agreed wallet chooser/onboarding and cosmetic lifetime-progression panels with co-located tests, supplied beta types/fixtures and existing MemePet styling. No RPC, wallet client, storage, dependencies, global CSS, routes or contract changes. Keep unknown data honest and new milestones cosmetic. Open a draft PR, verify the agreed visual/keyboard/error cases, then return the ready PR with exact checks and remaining lead integration. Codex supplies adapters; Deston merges. Do not merge or spend money.
+Continue MemePet B1 using docs/beta/KYM.md. Read AGENTS.md, PROJECT_BRIEF, OWNERSHIP, DEV_SETUP and beta START_HERE/INTEGRATION first. B0 is merged in #80 (99086a3); begin now. Preserve local/unpublished work and fetch origin. Continue an existing active B1 branch; otherwise create feat/beta-onboarding-progression from reviewed origin/main. Edit only src/components/onboarding/**, src/components/progression/** and docs/qa/beta/kym/**. Build WalletChooser, OnboardingPanel and ProgressionPanel with the exact shared types/fixtures, local care-time wording, 5/10/20 personal milestones and 20/50/100 garden chapters. Keep unknown data honest and progression cosmetic. Codex owns provider discovery and will replace his initial route controls with your components. Do not edit hooks/routes/storage/shared types/packages/global CSS. Add component tests and narrow-screen/keyboard evidence. Open a draft PR early; finish with actual checks, base/head, viewing steps and limitations. Codex reviews/integrates/merges passing work. No real wallet actions, destructive resets, merges or paid services.
 ```

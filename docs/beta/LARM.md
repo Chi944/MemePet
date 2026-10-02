@@ -4,8 +4,10 @@ This is deliberately smaller than Kym's and YeeWei's feature lanes. Preserve
 and finish any existing finale combined-QA/runbook work; cite prior evidence
 instead of rerunning every teammate's suite.
 
-**New branch:** `docs/beta-help-and-acceptance`, from reviewed current main
-after B0 merges. **Editable:** `src/content/help.ts`, `docs/qa/beta/larm/**`.
+**Branch:** `docs/beta-help-and-acceptance`, from reviewed current main.
+B0 is merged in #80 (`99086a3`), so start now. If this branch already contains
+unpublished work, preserve and continue it; fetch and inspect before reconciling
+main. **Editable:** `src/content/help.ts`, `docs/qa/beta/larm/**`.
 No landing redesign, new feature panel, browser harness or shared hook changes.
 
 ## Deliver
@@ -29,10 +31,11 @@ No landing redesign, new feature panel, browser harness or shared hook changes.
 
 Return a small PR with verified content sources, actual checks and open contact
 questions. Do not take on another person's component or genuine wallet test.
-Codex reviews/integrates, Deston merges. No money or messages to outside parties.
+Codex reviews, integrates and merges passing work. Deston handles final product
+checks and private wallet approvals. No money or messages to outside parties.
 
 ## Paste this into Larm's agent
 
 ```text
-Implement MemePet B3 from docs/beta/LARM.md. Read AGENTS.md, scope, ownership, setup and beta START_HERE/INTEGRATION. Preserve any unfinished finale QA on its own branch. Once B0 is merged, start docs/beta-help-and-acceptance from reviewed main. Own only src/content/help.ts and docs/qa/beta/larm. Supply factual typed FAQ entries and a null support URL until a monitored channel is verified, then a concise evidence index. Research official links, distinguish on-chain/local/cosmetic/planned behavior, and cite other people's tests rather than claiming you ran them. No feature UI, hooks, routes, packages, wallet actions or paid services. Open a small draft PR, finish actual checks, and return it for Codex review and Deston's merge.
+Continue MemePet B3 using docs/beta/LARM.md. Read AGENTS.md, PROJECT_BRIEF, OWNERSHIP, DEV_SETUP and beta START_HERE/INTEGRATION. B0 is merged in #80 (99086a3); start now. Preserve any unfinished finale QA separately. Fetch origin; continue an active B3 branch or create docs/beta-help-and-acceptance from reviewed origin/main without discarding local work. Edit only src/content/help.ts and docs/qa/beta/larm/**. Export typed HELP_ENTRIES and SUPPORT_URL, keeping the latter null until a monitored contact is confirmed. Verify official guidance links and distinguish on-chain, local, cosmetic and planned behavior; transaction recovery is still gated. Create a concise acceptance index attributing other teammates' evidence accurately and preserving FAIL/NOT RUN. This is a smaller content/verification lane: no feature UI, browser harness, hooks/routes/packages or real wallet actions. Open a small draft PR, run actual checks, and return sources, base/head, evidence and remaining questions. Codex reviews/integrates/merges; do not merge, force-push, spend money or contact outsiders.
 ```

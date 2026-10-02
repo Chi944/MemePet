@@ -17,7 +17,8 @@ routes, packages, shared fixtures and CI. Existing finale contracts stay intact.
   no contract reward, unique-user metric, streak reset, invented completion date
   or fourth pet stage. Personal 5/10/20 badges grant no money or extra points.
 
-These interfaces/mappings are prepared in B0. Their presence does not claim
+B0 is merged in #80 (`99086a3`). These interfaces/mappings are available on main;
+all three teammate lanes can begin now. Their presence does not claim
 that new panels, adapters or recovery are already rendered in production.
 
 ## Exact component handoff
@@ -61,6 +62,17 @@ unselected-provider events, same-account provider swap, rejected connect,
 late resolution, provider disappearance, wrong network and failed revoke.
 Genuine MetaMask/OKX browser checks remain separate acceptance rows.
 
+The B4 lead implementation supplies `choices`, `selectedId`, `selectionRequired`,
+`selectionBusy`, `providerSessionKey` and `selectWallet(id)` on `useWallet`.
+Check the reviewed implementation before writing dependent browser assertions;
+this handoff describes the integration target, not a live-release claim. Kym's
+chooser keeps the existing `WalletChooserProps`: the lead maps `selectionBusy`
+to `busy` and `selectWallet` to `onSelect`. The initial lead-owned
+`src/components/ui/WalletProviderPicker.tsx` and `wallet-picker.module.css` are
+temporary integration UI, not a request for Kym to edit the route or hook.
+YeeWei owns browser scenarios after the adapter lands; a same-address provider
+change must still invalidate old answers through the lead session key.
+
 ## B5: recover the transaction, never repeat it automatically
 
 **Runtime integration waits until final wallet acceptance is recorded.** The
@@ -102,16 +114,24 @@ pending refresh as those adapters land. Block unexpected remote requests; tests
 must not need real funded accounts, wallet extensions or live mutable counters.
 Use user-visible assertions, not assertions only on mocked function calls.
 
+B4's focused `e2e/simulated-wallet/provider-selection.spec.ts` remains lead-owned
+until handoff. It covers explicit choice, correct-provider operations and
+ignored unselected-provider events. YeeWei should cite that test, extend the
+broader account/race/combined scenarios in separate specs, and avoid duplicating
+or editing this active lead file without coordination.
+
 Root owns Playwright/package/CI configuration and production preview gates.
 Harness setup or a smoke pass alone does not complete YeeWei's scenario suite.
 
-## Lead review and Deston's merge checklist
+## Lead review and merge checklist
 
 1. Review exact PR head and scope; reconcile changed interfaces centrally.
 2. Run typecheck, lint, app tests, production build/dev-route gate, relevant
    contract/helper tests and simulated browser suite. Report actual outcomes.
 3. Preserve old genuine QA as history. Record current checkout and deployed
    revision separately; a preview/CI build is not proof of the public alias.
-4. Give Deston a concise ready/not-ready report and PR link. **Do not auto-merge.**
-5. After he merges, verify deployment and only the newly required live cases.
+4. Under the latest 2 October authorization, Codex may merge reviewed, passing,
+   in-scope PRs. Leave unfinished or failing PRs open with a concrete blocker;
+   teammate agents never merge. Give Deston a concise result and PR link.
+5. After merge, verify deployment and only the newly required live cases.
    B5 stays gated; unfinished beta features remain off the finale release.

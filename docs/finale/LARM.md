@@ -2,7 +2,8 @@
 
 **Current assignment:** [B3 support copy and focused verification](../beta/LARM.md).
 The 2 October beta brief adds a deliberately smaller lane. Preserve unfinished
-finale QA/runbook work below on its existing branch. Deston now merges PRs.
+finale QA/runbook work below on its existing branch. B0 is merged in #80, so
+start B3 now. Codex reviews and merges passing PRs; teammates do not merge.
 
 **Current task F7 combined QA · branch `test/finale-combined-qa` · updated 2 October 2026.**
 Garden, landing and QA PRs #59/#60/#63/#66/#70 are merged. PR #70 completed the

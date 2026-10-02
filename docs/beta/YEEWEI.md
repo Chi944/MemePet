@@ -1,13 +1,18 @@
 # YeeWei — B2 recovery, help and browser regression
 
 Your larger beta lane combines visible support/recovery work with repeatable
-browser coverage. Use current `origin/main` after Deston merges B0. Preserve
-your prior combined recap QA; do not restart completed F6 work.
+browser coverage. B0 is merged in #80 (`99086a3`); start now from current
+reviewed `origin/main`. Preserve your prior combined recap QA; do not restart
+completed F6 work. If the B2 branch already has unpublished work, continue it
+and safely reconcile main instead of resetting or recreating it.
 
 **Branch:** `feat/beta-recovery-help-regression`.
 **Editable:** `src/components/recovery/**`, `src/components/help/**`,
 `e2e/**`, `docs/qa/beta/yeewei/**`. Codex owns package/config/CI changes and live
 adapters. Larm owns `src/content/help.ts`; do not edit his content file.
+The active B4 `e2e/simulated-wallet/provider-selection.spec.ts` is temporarily
+lead-owned. Cite its results when available and put your broader scenarios in
+separate specs; coordinate before modifying that file.
 
 ## Deliver
 
@@ -29,6 +34,11 @@ adapters. Larm owns `src/content/help.ts`; do not edit his content file.
    visible states. Block unexpected network traffic, not just writes. Add
    wallet-choice and recovery-refresh cases once their adapters are supplied;
    mark these dependent cases NOT RUN/TODO until then, not passing placeholders.
+   B4 supplies explicit provider selection independently of your panel work.
+   Check its reviewed API in [Integration](INTEGRATION.md) and add selection,
+   same-account provider-swap follow-ups once it lands. Cite the lead's focused
+   provider-selection spec instead of duplicating its coverage. Do not modify
+   the lead's hook to make a simulated scenario pass.
 4. Co-located panel tests and narrow-screen/keyboard/focus evidence. Keep the
    existing recap evidence-focus behavior intact. Clearly label every mocked
    test/report **SIMULATED WALLET BROWSER REGRESSION**. No actual wallet prompts.
@@ -39,10 +49,11 @@ account/failure/combined tests. Request exact missing adapter interfaces from
 Codex rather than editing his hook. Keep UI/scenario commits separate for review.
 
 Return PR URL, actual test commands/results, base/head, screenshots or report
-paths, NOT RUN cases and integration needs. Deston merges after Codex review.
+paths, NOT RUN cases and integration needs. Codex reviews, integrates and merges
+passing work; Deston handles final product checks and private wallet approvals.
 
 ## Paste this into YeeWei's agent
 
 ```text
-Implement MemePet B2 from docs/beta/YEEWEI.md. Read AGENTS.md, scope, ownership, setup and all shared beta instructions. Preserve existing work, fetch origin and branch feat/beta-recovery-help-regression from reviewed main containing B0. Own only components/recovery, components/help, e2e and docs/qa/beta/yeewei. Build the exact Recovery and Help components with beta types/fixtures; keep Larm's content separate. Extend the supplied Playwright harness for account changes/races, stale replies, failed reads and combined-panel consistency. Label all mocks SIMULATED WALLET BROWSER REGRESSION. No real wallet action, live RPC dependency, storage or runtime recovery wiring; Codex supplies that after final acceptance. No packages/config/CI/routes/shared hook changes without an exact lead handoff. Open a draft PR, run actual checks and return the ready PR with honest limitations. Deston merges; no paid calls.
+Continue MemePet B2 using docs/beta/YEEWEI.md. Read AGENTS.md, PROJECT_BRIEF, OWNERSHIP, DEV_SETUP and beta START_HERE/INTEGRATION. B0 is merged in #80 (99086a3); begin now. Preserve local work, fetch origin and continue an active B2 branch; otherwise create feat/beta-recovery-help-regression from reviewed origin/main. Edit only src/components/recovery/**, src/components/help/**, e2e/** and docs/qa/beta/yeewei/**. Build TransactionRecoveryPanel and HelpPanel against shared props/fixtures; Larm owns FAQ content. Extend Playwright for account races, stale answers, failed reads and combined-panel consistency. Add provider selection/same-account provider switching after reviewed B4 lands. Label mocks SIMULATED WALLET BROWSER REGRESSION and block unexpected network traffic. Runtime transaction recovery remains gated on genuine final acceptance. No actual wallet actions, live RPC dependencies, storage, hooks/routes/shared types/packages/config changes. Open a draft PR early; return actual checks, base/head, evidence, NOT RUN cases and integration needs. Codex reviews/integrates/merges; do not merge, reset others' work or spend money.
 ```

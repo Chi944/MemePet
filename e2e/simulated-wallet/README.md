@@ -26,6 +26,19 @@ read remaining unknown. It intercepts all external browser requests and local
 API requests before navigation. Local app/assets still load normally; no public
 RPC availability is needed. The existing Next.js build may download fonts.
 
+The lead-owned `provider-selection.spec.ts` adds 390px and 1440px cases with
+two fictional providers. It covers duplicate discovery, no default choice,
+selection without a permission request, provider-specific connect/network/revoke,
+ignored unselected-provider events and narrow-screen layout. It does not test a
+real extension or submit a transaction. Keep that file unchanged during B2;
+add broader scenarios in separate specs.
+
+These fixtures expect the committed X Layer testnet configuration (1952).
+If your local build uses an Anvil override, rebuild with the documented public
+testnet values in process-local environment variables first; preserve private
+local configuration files. A mock network switch must match the actual build's
+declared network, not merely change the expected assertion to hide a mismatch.
+
 ## YeeWei's remaining B2 scenarios
 
 Implement these as separate small tests; they are planned, **not covered yet**:
@@ -33,8 +46,8 @@ Implement these as separate small tests; they are planned, **not covered yet**:
 - Account A → B and A → B → A while old pet/recap answers are still pending.
 - Failed pet, community and recap reads, then read-only retry/recovery.
 - Combined pet, personality, recap and garden panels agree on the active scope.
-- Both wallet providers present; only the selected provider receives requests
-  or changes the active context. Include same address/network in both providers.
+- Extend the lead's two-provider smoke with the same address/network in both
+  providers and pending pet/recap results; verify stale facts never carry across.
 - After lead recovery integration: refresh with a saved public hash; pending,
   confirmed, reverted, malformed, wrong-scope and unavailable-storage cases.
   Retry must check confirmation, never submit another transaction.
