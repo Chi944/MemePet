@@ -54,8 +54,8 @@ test.describe(`${SIMULATED_LABEL}: same address, different provider`, () => {
 
     oldPet.release();
     oldRecap.release();
-    // The late pet answer genuinely reaches the page; the recap fetch may be
-    // aborted by the app instead. Either way it must not be displayed.
+    // The late pet answer must genuinely reach the page. The late recap answer
+    // is recorded as delivered or aborted; either way it must not be displayed.
     expect(await oldPet.settled).toBe("delivered");
     test.info().annotations.push({ type: "late recap answer", description: await oldRecap.settled });
     await settleFrames(page);

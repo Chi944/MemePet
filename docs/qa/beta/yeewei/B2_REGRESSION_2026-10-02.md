@@ -8,7 +8,8 @@
 > [the final wallet session](../../FINAL_WALLET_SESSION.md).
 
 - Branch: `feat/beta-recovery-help-regression`
-- Base: `origin/main` at `6f6a6c4` (contains #80 and #81)
+- Started from `origin/main` at `6f6a6c4` (#80, #81); reconciled by merging
+  `origin/main` at `16da0ba` (#82). Final head: see PR #83.
 - Runtime: macOS, Node v24.21.0 (`.nvmrc` pins 24.19.x), Playwright 1.63.0 from the lockfile
 
 ## Delivered
@@ -29,44 +30,50 @@ Help answers are plain text; a null or non-https `supportUrl` shows
 “Support contact unavailable”. Test FAQ entries are local fictional samples;
 Larm's `src/content/help.ts` was not read into or edited by this lane.
 
-## Automated results (actual)
+## Automated / unit results (actual, final code incl. #82)
 
 | Command | Result |
 |---|---|
 | `npm run typecheck` | Pass |
-| `npm run lint` | Pass (0 errors; 1 existing warning in `ShareImage.tsx`) |
-| `npm test` | Pass — 46 files, 482 tests (includes 29 new panel tests) |
+| `npm run lint` | Pass (0 errors; 1 existing warning in `ShareImage.tsx`, not B2) |
+| `npm test` | Pass — 49 files, 623 tests |
+| `npx vitest run src/components/recovery src/components/help` | Pass — 2 files, 29 tests (new) |
 | `npm run build` | Pass |
 | `node --test docs/qa/counter-check.regression.mjs` | Pass — 8/8 |
 | `node --test docs/qa/rpc-recovery.regression.mjs` | Pass — 14/14 |
-| `npm run test:e2e:simulated` | 15 passed, 8 skipped (fixme / NOT RUN) |
-| `npx playwright test account-races same-address combined failed-reads --repeat-each 3` | 36/36 passed (flakiness check) |
 
-Before the build, local `node_modules` predated #80; `npm ci` from the
-committed lockfile fixed the missing `@playwright/test`. No package changed.
+Local `node_modules` predated #80; `npm ci` from the committed lockfile fixed
+the missing `@playwright/test`. No package changed.
 
-### Browser scenarios (SIMULATED)
+## SIMULATED WALLET BROWSER REGRESSION results (actual)
 
-| Scenario | Result |
+| Command | Result |
 |---|---|
-| A → B: A's held pet answer is delivered after B renders; B's 80 points / 8 cares remain | Pass |
-| A → B → A: original A answer (3 cares) delivered late; newer A read (4 cares) remains | Pass |
-| Account list emptied: previous facts removed, recap asks to connect | Pass |
-| Failed pet/community/recap reads: “Read failed” / “Unknown” / alert; no Adopt button, no zero total, no garden bar | Pass |
-| Genuine no-pet and zero total render as “None yet” / “0”, unlike failures | Pass |
-| Retry recovery: community and recap via their retry buttons; pet via the existing 30 s refresh (page clock advanced) | Pass |
-| Combined agreement A then B: pet growth, recap, recap evidence, community cares and garden match at 390px and 1440px | Pass |
-| Failed community read is “Unknown” in meta, garden and recap evidence (390px, 1440px) | Pass |
-| Same address/chain via second provider: first provider's late answer ignored | Pass |
-| Same address/chain: first provider's failed read not shown after switching | Pass |
-| No unexpected network request (every non-local, non-RPC request blocked and asserted empty) | Pass in every new test |
-| No send/sign/switch/revoke provider call in read and retry flows | Pass |
+| `npm run test:e2e:simulated` | 15 passed, 8 skipped (fixme / NOT RUN), 0 failed |
+| `npx playwright test account-races same-address combined failed-reads --repeat-each 5` | 60/60 expected, 0 unexpected, 0 flaky |
 
-Late recap fetches are aborted by the app on scope change; the pet RPC answer is
-asserted as actually delivered, so those tests do exercise the stale-result guard.
-The lead's `provider-selection.spec.ts` passed unchanged in the same run (390px,
-1440px); its explicit-choice coverage is cited, not duplicated.
+| Scenario | Spec | Result |
+|---|---|---|
+| A → B: A's held pet and recap answers delivered after B renders; B's 80 points / 8 cares remain | `account-races` | Pass |
+| A → B → A: original A answer (3 cares) delivered late; newer A read (4 cares) remains | `account-races` | Pass |
+| Account list emptied: previous facts removed, recap asks to connect | `account-races` | Pass |
+| Failed pet/community/recap reads: “Read failed” / “Unknown” / alert; no Adopt, no zero total, no garden bar | `failed-reads` | Pass |
+| Genuine no-pet and zero total render as “None yet” / “0”, unlike failures | `failed-reads` | Pass |
+| Retry recovery: community and recap via their retry buttons; pet via the existing 30 s refresh (page clock advanced) | `failed-reads` | Pass |
+| Combined agreement A then B: pet growth, recap, recap evidence, community cares and garden match (390px, 1440px) | `combined-panels` | Pass |
+| Failed community read is “Unknown” in meta, garden and recap evidence (390px, 1440px) | `combined-panels` | Pass |
+| Same address/chain via second provider: first provider's late pet and recap answers ignored | `same-address-provider` | Pass |
+| Same address/chain: first provider's failed read not shown after switching | `same-address-provider` | Pass |
+| No unexpected network request (all non-local, non-RPC traffic blocked and asserted empty) | all new specs | Pass |
+| No send/sign/switch/revoke provider call in read and retry flows | all new specs | Pass |
 
+Stale-answer strength: each held late pet answer is asserted as actually
+delivered to the page. The late recap answer is recorded, not asserted; in the
+5× run it was delivered in 15/15 cases, so the recap guard is exercised too.
+The lead's `provider-selection.spec.ts` (unchanged) passed in the same suite
+run at 390px and 1440px; its explicit-choice coverage is cited, not duplicated.
+
+No flaky test or unresolved defect was observed.
 
 ## Evidence
 
