@@ -65,13 +65,30 @@ Genuine MetaMask/OKX browser checks remain separate acceptance rows.
 The B4 lead implementation supplies `choices`, `selectedId`, `selectionRequired`,
 `selectionBusy`, `providerSessionKey` and `selectWallet(id)` on `useWallet`.
 Check the reviewed implementation before writing dependent browser assertions;
-this handoff describes the integration target, not a live-release claim. Kym's
+provider discovery/selection landed in #81 at `6f6a6c4`; its real-extension
+acceptance remains NOT RUN. Kym's
 chooser keeps the existing `WalletChooserProps`: the lead maps `selectionBusy`
 to `busy` and `selectWallet` to `onSelect`. The initial lead-owned
 `src/components/ui/WalletProviderPicker.tsx` and `wallet-picker.module.css` are
 temporary integration UI, not a request for Kym to edit the route or hook.
 YeeWei owns browser scenarios after the adapter lands; a same-address provider
 change must still invalidate old answers through the lead session key.
+
+### Prepared panel adapter
+
+`src/lib/beta-panel-state.ts` supplies pure `mapBetaPanelState({ deployment,
+wallet, registry, community })`. Pass current values from the same live hook
+render/session; do not combine a cached previous owner's pet with a new wallet.
+It returns `onboarding` and `progression.personal/community` using the existing
+component contracts. The lead supplies callbacks separately when integrating
+the reviewed B1 panels; the helper is not yet wired into live routes.
+
+Unknown/failed reads cannot become an adoption prompt or zero-count unlock.
+Pending wallet/write operations suppress ready actions and milestone display.
+The community can be read without connecting. Care availability uses the
+hook's confirmed chain-clock result, never the viewer's clock; Kym formats the
+provided ISO reset in local time without changing eligibility. `isTestnet=false`
+alone does not mean mainnet: local Anvil is identified by its network label.
 
 ## B5: recover the transaction, never repeat it automatically
 
@@ -100,6 +117,23 @@ never persist keys, signatures, balance, credentials or claimed game progress.
 - Test corrupted/oversized/foreign records, storage unavailable, refresh while
   pending, success/revert, replacement, failed read-back and account/network/
   provider changes before a genuine changed-release acceptance.
+
+### Prepared pure recovery validation (not a running journal)
+
+`pending-transaction-record.ts` defines version-1 public records and stable
+chain/registry/account keys, a bounded parser and a strict serializer. It rejects
+extra fields, invalid/foreign records and oversized input. It does not touch
+storage. `pending-transaction-validation.ts` matches a validated record against
+a viem-formatted transaction plus an independently read RPC chain ID. It checks
+hash, sender, registry, zero value and exact `care()` or `adopt(1)` calldata.
+`matched` establishes only request identity, never receipt success or progress;
+missing/unverifiable transactions remain `unverified`, not failed.
+
+These helpers have no live route/hook import. **B5 runtime remains disabled.**
+After final acceptance, the lead still needs storage-failure handling, bounded
+reads, replacement/cancellation semantics, receipt-bound facts, refresh/session
+guards and their separate runtime acceptance. Do not use these helpers as proof
+that transaction recovery already works.
 
 ## B2 browser regression and evidence
 

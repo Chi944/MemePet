@@ -91,6 +91,29 @@ process is not a verified backup; the finished file must exist and play offline.
 
 ## Ordered session
 
+### 0. Record the selected wallet app after B4
+
+PR #81 changed provider selection and session isolation. Its local mock tests
+are not extension acceptance. Recheck the actual deployed commit first, then
+record which wallet extensions are present. If more than one choice appears,
+neither should be selected automatically. Selecting a radio option alone must
+not open a permission/signature request; **Connect wallet** is separate.
+
+Use the existing prepared demo account in the chosen extension. Do not import
+keys or create another wallet merely to fill an acceptance row. Inspect each
+request in that selected wallet; a similarly named discovery label alone does
+not authenticate an extension. A wallet already holding an open prompt may
+still require manual cancellation after a provider change.
+
+If both MetaMask and OKX are already available, check selecting the other app
+clears connected pet/answer/view state, then explicitly connect it and inspect
+its actual site account. Do not perform an extra adoption/care just for this
+switch. Test same-address provider isolation only if that account is already
+available in both apps. Otherwise keep that specific row NOT RUN. Return to the
+intended provider/account before the single care below. The care proves only
+the provider that actually submitted it; do not mark the other brand's write
+flow passed by inference.
+
 ### 1. Connect A and record the baseline
 
 Ask Deston to select A **for MemePet's site connection**. Check that the app
@@ -174,7 +197,10 @@ Never infer a successful browser update from this independent chain evidence.
   is actually earned, mark that specific live check NOT RUN.
 - Perform one **normal reload** and record that exact kind of reload. Verify the
   same owner, confirmed pet, cooldown, fresh reads and saved personality. Do not
-  call it a hard-refresh test.
+  call it a hard-refresh test. With multiple providers, B4 deliberately requires
+  choosing the provider again after a fresh mount; reconnect explicitly before
+  checking the owner's facts. This is separate from persistence of confirmed
+  on-chain state and browser-local personality.
 
 ### 5. Check A → B → A and network away → back
 
@@ -225,6 +251,8 @@ NOT RUN / BLOCKED**. No execution result is supplied by this plan.
 | Check | Final-session result | Evidence / limit |
 |---|---|---|
 | Session runtime, alias and fresh due-care baseline | NOT RUN | Preparation observations above must be rechecked |
+| Multiple installed providers: explicit choice before permissions | NOT RUN | Conditional on both extensions being present; simulated B4 checks are separate |
+| Other provider selection and same-address context isolation | NOT RUN | No key import or extra write solely for this test; record missing coverage |
 | Intended site account/network and connection | NOT RUN | App address must match, not just wallet menu |
 | Genuine care, receipt and event | NOT RUN | One private approval planned |
 | Automatic pet read, +10 and actual evolution | NOT RUN | Keep separate from eventual recovery |
