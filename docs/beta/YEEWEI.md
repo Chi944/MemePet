@@ -1,5 +1,18 @@
 # YeeWei — B2 recovery, help and browser regression
 
+**Current handoff, 2 October:** B2's components and initial regression suite
+are delivered in PR #83. The lead reviewed them, corrected request-delivery
+evidence and care-timing fixtures, and verified the combined suite. Do not
+rebuild these components or repeat the initial assignment below. The PR
+records its final head/release. Preserve local work and fetch the lead repairs
+before continuing; do not force-push over them.
+
+**Next:** once the lead supplies the panel preview or `/help` route, add
+320/390px browser and keyboard/focus evidence for both panels and their real
+integration. Kym's chooser/progression follow-ups wait for her reviewed route
+integration. B5's eight refresh cases stay NOT RUN until genuine acceptance
+and the runtime adapter exist. No new private wallet action is assigned here.
+
 Your larger beta lane combines visible support/recovery work with repeatable
 browser coverage. B0 is merged in #80 (`99086a3`); start now from current
 reviewed `origin/main`. Preserve your prior combined recap QA; do not restart
@@ -14,7 +27,7 @@ The active B4 `e2e/simulated-wallet/provider-selection.spec.ts` is temporarily
 lead-owned. Cite its results when available and put your broader scenarios in
 separate specs; coordinate before modifying that file.
 
-## Deliver
+## Original deliverables (handed off in #83; integration remains separate)
 
 1. `TransactionRecoveryPanel` using [the exact props](INTEGRATION.md), with idle,
    checking, pending, confirmation unknown, confirmed but awaiting facts,
@@ -52,8 +65,8 @@ Return PR URL, actual test commands/results, base/head, screenshots or report
 paths, NOT RUN cases and integration needs. Codex reviews, integrates and merges
 passing work; Deston handles final product checks and private wallet approvals.
 
-## Paste this into YeeWei's agent
+## Continuation prompt after the lead supplies preview/routes
 
 ```text
-Continue MemePet B2 using docs/beta/YEEWEI.md. Read AGENTS.md, PROJECT_BRIEF, OWNERSHIP, DEV_SETUP and beta START_HERE/INTEGRATION. B0 is merged in #80 (99086a3); begin now. Preserve local work, fetch origin and continue an active B2 branch; otherwise create feat/beta-recovery-help-regression from reviewed origin/main. Edit only src/components/recovery/**, src/components/help/**, e2e/** and docs/qa/beta/yeewei/**. Build TransactionRecoveryPanel and HelpPanel against shared props/fixtures; Larm owns FAQ content. Extend Playwright for account races, stale answers, failed reads and combined-panel consistency. Add provider selection/same-account provider switching after reviewed B4 lands. Label mocks SIMULATED WALLET BROWSER REGRESSION and block unexpected network traffic. Runtime transaction recovery remains gated on genuine final acceptance. No actual wallet actions, live RPC dependencies, storage, hooks/routes/shared types/packages/config changes. Open a draft PR early; return actual checks, base/head, evidence, NOT RUN cases and integration needs. Codex reviews/integrates/merges; do not merge, reset others' work or spend money.
+Continue MemePet B2 integration QA using docs/beta/YEEWEI.md and INTEGRATION.md. Preserve local work, fetch origin and inspect PR #83's final reviewed repairs before making changes. Do not rebuild the delivered HelpPanel, TransactionRecoveryPanel or initial account/read suite. Once the lead provides panel preview/routes, add focused 320/390px layout and real-browser keyboard/focus tests, then combined cases for Kym's reviewed chooser/progression integration when available. If those routes are not supplied, report that dependency instead of inventing one or editing lead-owned routes. Held-response delivery must use exact request lifecycle events; a fulfilled route is not proof of delivery, and an aborted recap does not prove a late body reached React. Edit only your assigned components/e2e/evidence paths. Label mocks SIMULATED WALLET BROWSER REGRESSION; keep genuine wallet acceptance and all eight gated B5 cases NOT RUN. No live wallet/RPC actions, storage/runtime recovery, hooks/routes/shared types/packages/config changes, paid services, force-pushes or merges. Return a small PR with actual checks, evidence and remaining dependencies for lead review.
 ```
