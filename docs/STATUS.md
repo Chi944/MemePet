@@ -1,10 +1,26 @@
 # Current delivery status
 
-Updated 2 October 2026 (Singapore). Team **The four musketeers**: Deston,
+Updated 3 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Receipt validation preparation — 2 October, latest checkpoint
+## Live onboarding and progression — 3 October, latest checkpoint
+
+Kym's B1 PR #90 is reviewed and merged at `99050c6`. The lead integration
+replaces the temporary wallet picker, mounts her onboarding and cosmetic
+progression panels on `/pet`, and expands `/dev/beta` for fictional inspection.
+Local reset time formats the same confirmed UTC reset; it never enables care.
+Milestones use confirmed personal/community reads, hide on disconnect/wrong
+network, and clear old earned state during account changes or unavailable reads.
+Read-only retries retain focus and cannot submit a transaction.
+
+[Integration evidence](qa/evidence/B1_INTEGRATION_2026-10-02.md) records actual
+checks and screenshots; the associated PR records merge/deployment identity.
+Kym's implementation is complete. YeeWei now checks the combined release;
+Larm verifies changed Help wording and official links. Codex prepares the final
+genuine session. No new wallet transaction or persisted recovery is enabled.
+
+## Receipt validation preparation — 2 October, earlier checkpoint
 
 After Help/#88, the lead added pure B5 receipt validation and 44 regressions.
 The helper verifies saved transaction identity, receipt ownership/inclusion
@@ -40,30 +56,30 @@ browser cases remain skipped. No persisted recovery is enabled.
 These are **planning estimates for the expanded approved testnet scope**,
 weighted by deliverables, not elapsed time, code quality, readiness or mainnet
 completion. They supersede earlier estimates with smaller denominators.
-The Help contribution counts only once its integration checks and merge pass;
-use the integration PR for that gate. Unpublished teammate work is not counted.
+B1 and B4 integration count once the checked integration PR merges.
+Unpublished work is not counted; genuine acceptance remains a separate gate.
 
 | Deliverable | Completed weight / total | Remaining |
 |---|---:|---|
 | Existing core and finale feature implementation | 45 / 45 | Final acceptance is a separate row |
 | B0 shared foundation | 10 / 10 | Complete |
-| B1 onboarding/progression | 0 / 12 verified | Kym is working locally; handoff and integration pending |
+| B1 onboarding/progression | 12 / 12 | Implementation and integration complete; release QA remains below |
 | B2 presentation and regression | 6 / 8 | Final combined integration QA |
 | B3 help copy/verification | 3 / 4 | Rendered release follow-up |
-| B4 provider/retry/Help integration | 7 / 9 | B1 component wiring |
+| B4 provider/retry/Help integration | 9 / 9 | B1 wired; genuine acceptance separate |
 | B5 recovery | 2 / 8 | Runtime and acceptance; gated |
 | Genuine final acceptance, backup and rehearsal | 0 / 4 | Team session |
-| **Overall after checked Help merge** | **73 / 100 — 73%** | Testnet delivery, not mainnet readiness |
+| **Overall after checked B1 integration merge** | **87 / 100 — 87%** | Testnet delivery, not mainnet readiness |
 
 | Member's assigned lane | Weighted progress | Next action |
 |---|---:|---|
-| Deston / Codex | 39 / 51 — **76%** | Codex integrates B1 and prepares acceptance; Deston reviews/approves privately and rehearses |
-| Kym | 10 / 22 — **45% verified** | B1 in progress locally; open a small draft PR |
-| YeeWei | 14 / 16 — **88%** | Help release QA, then combined B1 panels |
+| Deston / Codex | 41 / 51 — **80%** | Codex prepares acceptance; Deston reviews/approves privately and rehearses |
+| Kym | 22 / 22 — **100% implementation** | Focused released onboarding/progression check; no new feature assignment |
+| YeeWei | 14 / 16 — **88%** | Combined B1/Help release QA |
 | Larm | 10 / 11 — **91%** | Verify rendered Help copy/links and update acceptance index |
 
 The existing finale feature implementation is complete. Added beta engineering
-is 28/51 (about 55%); that does not erase completed finale work. Deston's
+is 42/51 (about 82%); that does not erase completed finale work. Deston's
 percentage includes work delegated to Codex, not a personal coding obligation.
 Use [current role briefs](beta/START_HERE.md) for paste-ready teammate prompts.
 External agent sessions have not automatically received these updates.

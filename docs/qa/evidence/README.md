@@ -5,6 +5,8 @@ passes, and a recovered read does not erase an earlier failed refresh.
 
 ## Current records
 
+- [B1 live integration](B1_INTEGRATION_2026-10-02.md): wallet onboarding/local reset and cosmetic progression; simulated/fictional browser evidence, not genuine wallet acceptance.
+
 - [Public Help integration](BETA_HELP_2026-10-02.md): real B3 content, B2 panel, read-only browser checks and current handoffs; genuine wallet acceptance remains separate.
 
 - [Pet QA release and wallet preflight](PET_QA_RELEASE_2026-10-02.md): #78 review/merge, current alias-to-SHA proof, same-page live gallery/personality/recap check and four public account reads. Final signed acceptance remains NOT RUN; use the [prepared session plan](../FINAL_WALLET_SESSION.md).

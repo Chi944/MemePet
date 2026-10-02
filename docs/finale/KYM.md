@@ -1,5 +1,9 @@
 # Kym — pet release QA
 
+**Latest:** B1/#90 is merged and the lead has prepared live integration.
+Use [current beta tasks](../beta/START_HERE.md) for release QA and acceptance;
+do not restart delivered feature work.
+
 ## Current assignment — 2 October 2026
 
 F2/#67, F5/#73 and the pet QA/preview follow-up/#78 are merged. Continue B1 onboarding, wallet-choice presentation and cosmetic progression. Preserve local work; no pushed B1 handoff is verified. Do not repeat earned forms.

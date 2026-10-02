@@ -1,5 +1,18 @@
 # B0–B5 shared contracts and release gates
 
+## Current handoff after B1 integration
+
+The live B1 integration replaces WalletProviderPicker with WalletChooser
+and mounts OnboardingPanel/ProgressionPanel using mapBetaPanelState from one
+hook render. Failed-read retry is guarded against writes, provider changes and
+loading; it reads only. OnboardingPanel's optional connectDisabled prevents
+connection before a provider is selected. Its loading retry stays focusable
+but inert. Progression hides while disconnected/on a wrong network. The old
+picker and unused setup CSS are removed; its regression cases now target the
+replacement. /dev/beta includes fictional B1 inputs/counters. B5 remains gated.
+
+## Earlier requirements and handoffs
+
 **2 October integration checkpoint:** #80–#88 are merged. Help/#88 supplies
 the real `/help` route and navigation using B2 + B3. It does
 not connect the recovery panel to persistence. Kym's B1 integration remains

@@ -38,7 +38,7 @@ for (const width of [320, 390, 1440]) {
       await page.keyboard.press("Enter");
     }
     await expect(page.getByText(/Planned: a Check status option/)).toBeVisible();
-    await expect(page.getByText(/Planned: cosmetic milestones/)).toBeVisible();
+    await expect(page.getByText(/On Your pet, cosmetic milestones/)).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     const external = await page.locator('a[target="_blank"]').evaluateAll((links) => links.map((link) => ({
       href: (link as HTMLAnchorElement).href, rel: (link as HTMLAnchorElement).rel,

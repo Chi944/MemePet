@@ -134,7 +134,7 @@ Run the development server and open:
 | `/dev/community` | Loading, zero, growing, achieved, unavailable and unknown-target states |
 | `/dev/finale` | Shared fictional companion, personality and garden inputs for parallel finale work |
 | `/dev/companion` | Recap/evidence workbench with fictional ready, unknown, stale-reply and failure states |
-| `/dev/beta` | Nine fictional recovery states, care/adoption labels, sample/empty Help and callback counter; no recovery runtime |
+| `/dev/beta` | Fictional recovery, Help, onboarding, wallet choice and milestone states with callback counters; no recovery runtime |
 
 Previews carry **UI preview — fictional data** labels, never award chain progress,
 and are unavailable in production. Keep them for repeatable visual and error-state QA.

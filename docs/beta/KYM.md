@@ -1,5 +1,21 @@
 # Kym — B1 onboarding and continued progression
 
+## Current handoff after B1 integration
+
+B1/#90 is merged and the lead integration wires all three components.
+Your assigned feature implementation is complete. Preserve your dated harness
+evidence; it is not a live-wallet pass. After the integration merges, inspect
+the released chooser, local reset wording and milestone layout at narrow and
+wide widths. Report only reproduced defects in your component folders, with
+runtime identity and actual evidence. Do not recreate the B1 feature branch.
+
+Paste to your agent:
+```text
+Fetch reviewed main after the lead B1 integration merges. B1/#90 is complete. Preserve local work and use test/beta-onboarding-release for a focused rendered-release check of your components. Follow docs/beta/KYM.md ownership; change only onboarding/progression components and docs/qa/beta/kym. Verify wallet-selection-disabled presentation, UTC/local reset wording, unknown states and milestone layout. Use /dev/beta for fictional boundaries; cite the lead suites. No actual wallet actions, shared hooks/routes/config, paid calls or merges. Return a small evidence/fix PR only for new observations.
+```
+
+## Earlier requirements and handoffs
+
 **Current handoff — 2 October:** your finale personality, earned forms and pet
 QA are merged (#67/#73/#78). No pushed B1 branch or PR was visible at this
 checkpoint. Deston subsequently confirmed that you are working locally.

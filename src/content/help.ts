@@ -35,7 +35,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     question: "How often can I care for my pet?",
     answer: paragraphs(
       "Once per wallet per UTC calendar day. The registry contract enforces this and rejects a second care on the same UTC day.",
-      "The day resets at 00:00 UTC, which is 08:00 in Singapore (UTC+8). After you care, the care panel shows the next available time in UTC.",
+      "The day resets at 00:00 UTC, which is 08:00 in Singapore (UTC+8). After you care, the care panel shows the next available time in UTC. The onboarding panel also shows that same reset in your local time; the UTC rule does not change.",
     ),
   },
   {
@@ -99,7 +99,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     answer: paragraphs(
       "No. MemePet has no token, NFT, marketplace, staking or payouts, and asks for no payment. The only cost is testnet gas, which has no real value.",
       "Stages and the community garden are cosmetic. The garden counts confirmed care actions, not people.",
-      "Planned: cosmetic milestones at 5, 10 and 20 personal cares, and garden chapters at 20, 50 and 100 community cares. They are labels only, carry no money value and are not enabled yet.",
+      "On Your pet, cosmetic milestones mark 5, 10 and 20 personal cares, and garden chapters mark 20, 50 and 100 community cares. They use confirmed lifetime counts without resetting them. They are labels only and carry no money value.",
     ),
   },
   {

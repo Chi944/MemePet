@@ -373,38 +373,6 @@ button, a {
   color: var(--alert);
 }
 
-.wallet-setup {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem 1.25rem;
-  padding: 1rem 1.15rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  background: var(--surface-sunken);
-}
-
-.wallet-setup p {
-  margin: 0;
-}
-
-.wallet-setup > p:first-child {
-  font-size: 0.95rem;
-  font-weight: 600;
-}
-
-.wallet-setup a {
-  min-height: 2.75rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-}
-
-.wallet-setup .status-note {
-  flex-basis: 100%;
-}
-
 .pet-live-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(17rem, 0.85fr);
