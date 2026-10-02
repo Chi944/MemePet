@@ -61,8 +61,10 @@ and unfinished holds, and records aborted recaps separately. An aborted recap
 proves cancellation/isolation; it does not prove an old body reached React.
 Combined-panel cases also compare care eligibility, not only displayed counts.
 
-The pet read has no manual retry; its recovery test advances the page clock to
-the existing 30-second refresh. Kym's `WalletChooser` route integration and a
+Failed pet reads now have a read-only **Retry pet read** action. Its recovery
+test holds the response and verifies loading, retained focus, inert repeated
+activation and no provider write before restoring confirmed facts. The existing
+30-second background refresh remains. Kym's `WalletChooser` route integration and a
 `/help` route are not wired yet, so their browser cases are not written.
 
 Inject fake provider APIs/events with `page.addInitScript` before navigation;

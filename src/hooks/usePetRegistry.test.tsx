@@ -280,6 +280,7 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     );
 
     rpc.writeContract.mockResolvedValue(hashB);
+    rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: BigInt(11) });
     rpc.readContract.mockResolvedValue([true, 1, 2, day + BigInt(1)]);
     await act(async () => { await result.current.care(); });
     expect(rpc.writeContract).toHaveBeenCalledOnce();
@@ -446,6 +447,197 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     expect(result.current.readStatus).toBe("ready");
     expect(result.current.pet?.growthPoints).toBe(0);
     expect(result.current.readErrorMessage).toBeNull();
+  });
+
+  it("coalesces manual retry clicks, shows loading and never asks the wallet", async () => {
+    rpc.getBlock.mockRejectedValueOnce(new Error("Read unavailable"));
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("error"));
+    const retryRead = deferred<typeof adoptedPet>();
+    rpc.readContract.mockReturnValueOnce(retryRead.promise);
+    act(() => { result.current.retryPet(); result.current.retryPet(); });
+    expect(result.current.readStatus).toBe("loading");
+    await waitFor(() => expect(rpc.readContract).toHaveBeenCalledOnce());
+    act(() => { result.current.retryPet(); });
+    await act(async () => { await result.current.adopt(); await result.current.care(); });
+    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+    await act(async () => { retryRead.resolve(adoptedPet); });
+    expect(result.current.readStatus).toBe("ready");
+    expect(result.current.readErrorMessage).toBeNull();
+  });
+
+  it("allows retry again after its deadline and ignores the expired answer", async () => {
+    rpc.getBlock.mockRejectedValueOnce(new Error("Read unavailable"));
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("error"));
+    vi.useFakeTimers();
+    const stalled = deferred<typeof block>();
+    rpc.getBlock.mockReturnValueOnce(stalled.promise);
+    act(() => { result.current.retryPet(); });
+    await act(async () => { await vi.advanceTimersByTimeAsync(RPC_READ_BUDGET_MS); });
+    expect(result.current.readStatus).toBe("error");
+    rpc.readContract.mockResolvedValue(adoptedPet);
+    await act(async () => { result.current.retryPet(); });
+    expect(result.current.readStatus).toBe("ready");
+    await act(async () => { stalled.resolve(block); });
+    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(result.current.pet?.growthPoints).toBe(0);
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+  });
+
+  it("keeps a simulated retry locked across an interval replacement and recovers after its deadline", async () => {
+    vi.useFakeTimers();
+    rpc.getBlock.mockRejectedValueOnce(new Error("Read unavailable"));
+    const { result } = mountRegistry();
+    await act(async () => {});
+    expect(result.current.readStatus).toBe("error");
+    const retryFromError = result.current.retryPet;
+    await act(async () => { await vi.advanceTimersByTimeAsync(29_000); });
+
+    const originalRetry = deferred<typeof caredPet>();
+    const intervalRead = deferred<typeof caredPet>();
+    rpc.readContract.mockReturnValueOnce(originalRetry.promise).mockReturnValueOnce(intervalRead.promise);
+    await act(async () => { retryFromError(); });
+    expect(result.current.readStatus).toBe("loading");
+    expect(rpc.readContract).toHaveBeenCalledOnce();
+
+    // The normal 30-second refresh replaces the manual read while it is pending.
+    await act(async () => { await vi.advanceTimersByTimeAsync(1_000); });
+    expect(rpc.readContract).toHaveBeenCalledTimes(2);
+    await act(async () => { originalRetry.resolve(caredPet); });
+    expect(result.current.readStatus).toBe("loading");
+    expect(result.current.pet).toBeNull();
+    // This saved callback still captured an error state. Only the synchronous
+    // session lock prevents its obsolete click from replacing the interval read.
+    await act(async () => { retryFromError(); });
+    expect(rpc.readContract).toHaveBeenCalledTimes(2);
+
+    await act(async () => { await vi.advanceTimersByTimeAsync(RPC_READ_BUDGET_MS); });
+    expect(result.current.readStatus).toBe("error");
+    rpc.readContract.mockResolvedValue(adoptedPet);
+    await act(async () => { result.current.retryPet(); });
+    expect(result.current.readStatus).toBe("ready");
+    expect(result.current.pet?.growthPoints).toBe(0);
+    expect(rpc.readContract).toHaveBeenCalledTimes(3);
+    await act(async () => { intervalRead.resolve(caredPet); });
+    expect(result.current.pet?.growthPoints).toBe(0);
+    expect(result.current.readStatus).toBe("ready");
+    expect(rpc.readContract).toHaveBeenCalledTimes(3);
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+  });
+
+  it("drops a manual retry and its lock when the provider session changes", async () => {
+    rpc.getBlock.mockRejectedValueOnce(new Error("Read unavailable"));
+    const { result, rerender } = mountProviderRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("error"));
+    const oldRead = deferred<typeof caredPet>();
+    rpc.readContract.mockReturnValueOnce(oldRead.promise);
+    act(() => { result.current.retryPet(); });
+    await waitFor(() => expect(rpc.readContract).toHaveBeenCalledOnce());
+    rpc.getBlock.mockRejectedValueOnce(new Error("New provider unavailable"));
+    rerender({ providerSessionKey: "okx" });
+    await waitFor(() => expect(result.current.readStatus).toBe("error"));
+    rpc.readContract.mockResolvedValue(adoptedPet);
+    await act(async () => { result.current.retryPet(); });
+    expect(result.current.readStatus).toBe("ready");
+    await act(async () => { oldRead.resolve(caredPet); });
+    expect(result.current.pet?.growthPoints).toBe(0);
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+  });
+
+  it("keeps retry reads at least as new as a confirmed receipt after dismissing its notice", async () => {
+    rpc.readContract.mockResolvedValue(adoptedPet);
+    const { result, rerender } = mountProviderRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    const receiptNumber = BigInt(20);
+    rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: receiptNumber });
+    rpc.getBlock.mockRejectedValueOnce(new Error("Receipt snapshot temporarily unavailable"));
+    await act(async () => { await result.current.care(); });
+    expect(result.current.readStatus).toBe("error");
+    act(() => { result.current.dismissTx(); });
+    expect(result.current.confirmedBlockNumber).toBeUndefined();
+    rpc.getBlock.mockImplementation(async ({ blockNumber }) => ({ ...block, number: blockNumber ?? block.number }));
+    rpc.readContract.mockResolvedValue(caredPet);
+    await act(async () => { result.current.retryPet(); });
+    expect(result.current.pet?.growthPoints).toBe(10);
+    expect(rpc.readContract).toHaveBeenLastCalledWith(expect.objectContaining({ blockNumber: receiptNumber }));
+    expect(rpc.writeContract).toHaveBeenCalledOnce();
+
+    // A newer latest block must advance time instead of pinning forever.
+    rpc.getBlock.mockResolvedValue({ ...block, number: BigInt(21), timestamp: block.timestamp + BigInt(86400) });
+    await act(async () => { await result.current.refreshPet(); });
+    expect(rpc.readContract).toHaveBeenLastCalledWith(expect.objectContaining({ blockNumber: BigInt(21) }));
+    expect(result.current.cooldownAvailableAtIso).toBeNull();
+
+    // A new provider session owns its own floor; an old session cannot pin it.
+    rpc.getBlock.mockResolvedValue(block);
+    rpc.readContract.mockResolvedValue(adoptedPet);
+    rerender({ providerSessionKey: "okx" });
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    expect(rpc.readContract).toHaveBeenLastCalledWith(expect.objectContaining({ blockNumber: block.number }));
+  });
+
+  it("does not read an older pet when the known receipt block is unavailable", async () => {
+    rpc.readContract.mockResolvedValue(adoptedPet);
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: BigInt(20) });
+    rpc.getBlock.mockRejectedValueOnce(new Error("Read failed"));
+    await act(async () => { await result.current.care(); });
+    rpc.getBlock.mockImplementation(async ({ blockNumber }) => {
+      if (blockNumber !== undefined) throw new Error("Receipt block unavailable");
+      return block;
+    });
+    await act(async () => { result.current.retryPet(); });
+    expect(result.current.readStatus).toBe("error");
+    expect(result.current.pet).toBeNull();
+    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(rpc.writeContract).toHaveBeenCalledOnce();
+  });
+
+  it.each([null, 10, BigInt(-1)])("rejects an invalid latest block number (%s) before reading a pet", async (number) => {
+    rpc.getBlock.mockResolvedValue({ ...block, number });
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("error"));
+    expect(result.current.pet).toBeNull();
+    expect(rpc.readContract).not.toHaveBeenCalled();
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+  });
+
+  it("keeps receipt success but rejects a mismatched immediate read-back header", async () => {
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: BigInt(20) });
+    // This replica returns block 10 even though block 20 was requested.
+    await act(async () => { await result.current.adopt(); });
+    expect(result.current.txPhase).toBe("success");
+    expect(result.current.confirmedBlockNumber).toBe(BigInt(20));
+    expect(result.current.readStatus).toBe("error");
+    expect(result.current.readErrorMessage).toMatch(/Adoption confirmed on chain/);
+    expect(result.current.pet).toBeNull();
+    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(rpc.writeContract).toHaveBeenCalledOnce();
+  });
+
+  it.each([BigInt(19), BigInt(21)])("rejects a receipt fallback header at the wrong height (%s)", async (number) => {
+    rpc.readContract.mockResolvedValue(adoptedPet);
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: BigInt(20) });
+    rpc.getBlock.mockRejectedValueOnce(new Error("Read failed"));
+    await act(async () => { await result.current.care(); });
+    rpc.getBlock.mockImplementation(async ({ blockNumber }) => ({
+      ...block, number: blockNumber === undefined ? block.number : number,
+    }));
+    await act(async () => { result.current.retryPet(); });
+    expect(rpc.getBlock).toHaveBeenLastCalledWith({ blockNumber: BigInt(20) });
+    expect(result.current.readStatus).toBe("error");
+    expect(result.current.pet).toBeNull();
+    expect(result.current.txPhase).toBe("success");
+    expect(result.current.confirmedBlockNumber).toBe(BigInt(20));
+    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(rpc.writeContract).toHaveBeenCalledOnce();
   });
 
   it("bounds a stalled receipt snapshot while preserving confirmed success", async () => {

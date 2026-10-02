@@ -45,6 +45,15 @@ export const companionFactsFixtures = {
     snapshot: fictionalSnapshot,
     dataMode: "fixture",
   },
+  careAvailable: {
+    kind: "ready",
+    snapshot: {
+      ...fictionalSnapshot,
+      contextKey: "FICTIONAL_CONTEXT_CARE_AVAILABLE",
+      nextCareAtIso: fictionalSnapshot.blockTimestampIso,
+    },
+    dataMode: "fixture",
+  },
   zeroActivity: {
     kind: "ready",
     snapshot: {

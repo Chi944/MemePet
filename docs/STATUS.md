@@ -4,7 +4,36 @@ Updated 2 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## B2 review and integration checks — 2 October, latest checkpoint
+## Direct pet read retry and beta preview — 2 October, latest checkpoint
+
+YeeWei's evidence-only companion QA PR #84 merged at
+`1a2b120ac408b7e243aaede345c19fdf1f3e4fd5`. It records actual fixture and
+disconnected-page observations at its stated earlier revision; it does not
+close genuine wallet acceptance or establish current deployment identity.
+
+The next B4 handoff adds **Retry pet read** on `/pet`, with loading feedback,
+duplicate-click protection and no wallet action. Retry/background reads cannot
+use a block older than this session's confirmed receipt, even after the
+transaction notice is dismissed. The block floor is memory-only; refreshing
+the page still does not resume an unresolved transaction.
+
+`/dev/beta` supplies the requested help/recovery workbench and a separate
+fictional browser suite, while production keeps it hidden. A narrow-screen
+FAQ focus-spacing issue was corrected from actual screenshot review. The
+companion preview now includes `careAvailable` for the remaining wording case.
+See [verification and screenshots](qa/evidence/BETA_PREVIEW_RETRY_2026-10-02.md).
+Local checks: **639 app tests / 50 files**, typecheck, lint, production build,
+**15 simulated wallet cases** and **3 fictional preview cases** passed.
+Eight B5 runtime cases remain explicitly skipped. The associated PR records
+the final source, CI and deployment checks.
+
+YeeWei can continue focused preview QA using her updated brief. Kym continues
+B1; Larm continues B3. The lead integrates their UI/content after reviewed
+handoffs. No routine coding is assigned to Deston; genuine wallet approvals,
+final product review and rehearsal remain his hands-on tasks. No new genuine
+wallet action was performed here, and B5 runtime remains disabled.
+
+## B2 review and integration checks — 2 October, earlier checkpoint
 
 Lead preparation PR #82 merged at `16da0bae3ef54719819222a5550954be217fb16f`.
 Its post-merge CI passed and Vercel resolved the public alias to READY deployment

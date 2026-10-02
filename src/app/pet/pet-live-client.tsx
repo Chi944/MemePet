@@ -190,6 +190,18 @@ export function PetLiveClient() {
           onSelect={wallet.selectWallet}
         />
         <div className="pet-gate-actions">
+          {wallet.address && !wallet.wrongChain &&
+          (registry.readStatus === "error" || registry.readStatus === "loading") ? (
+            <Button
+              tone="secondary"
+              aria-disabled={registry.readStatus === "loading" || registry.isSubmitting || wallet.selectionBusy}
+              onClick={() => {
+                if (!registry.isSubmitting && !wallet.selectionBusy && registry.readStatus === "error") registry.retryPet();
+              }}
+            >
+              {registry.readStatus === "loading" ? "Reading pet…" : "Retry pet read"}
+            </Button>
+          ) : null}
           {community.community.errorMessage && !wallet.wrongChain ? (
             <Button tone="secondary" onClick={community.retry}>
               Retry community total
@@ -229,6 +241,9 @@ export function PetLiveClient() {
             </Button>
           ) : null}
         </div>
+        {wallet.address && !wallet.wrongChain && registry.readStatus === "error" ? (
+          <p className="status-note">Retry pet read only reads the chain. It does not send a transaction.</p>
+        ) : null}
         {wallet.address && registry.hasPet ? (
           <SharePetLink path={publicPetPath(wallet.address)} />
         ) : null}
