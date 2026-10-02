@@ -24,8 +24,11 @@ so the backup can stand in for any single beat or for the whole demo.
 - **Nothing private on screen.** Only the public wallet address may show; no
   balances in other tabs, no recovery words, no notifications, no unrelated
   tabs or bookmarks. Pause and restart a shot rather than blur afterwards.
-- **Legible.** 1920×1080 (or 1440×900) at 100–125% browser zoom, so a projector
-  at the back of a room can read the numbers. "Animate Mochi" On.
+- **Legible.** Match the runbook: 1920×1080 at **150%** browser zoom (125–150%
+  on 1440×900), so a projector at the back of a room can read the numbers.
+  An emulated layout check on 2 October found no overflow at 150%; the
+  smallest text is about 10 px of output at 100%, too small to film. The
+  projector check is still a rehearsal task. "Animate Mochi" On.
 
 ## Shots
 
@@ -42,9 +45,10 @@ can replace the whole demo.
 | 5 | 10 s | Garden after confirmation | Total **one higher** than shot 1 | Same as shot 4: keep any reload or Retry visible |
 | 6 | 10 s | The transaction | Transaction hash from the app or wallet, plus a receipt with status success: the OKX explorer page, or `node docs/qa/counter-check.mjs <before> <after>` showing one `Cared` event from this wallet with that hash | If the explorer asks for a login, do not log in; use the counter-check output |
 | 7 | 5 s | **Daily care** again | "Done today" and "Care is available again at …" | Shows the once-per-UTC-day rule without a second transaction |
-| 8 | 20 s | **Read-only recap** | Ask "Explain progress"; the **"Standard explanation"** label; "Read block" and "Block time" | Recheck these labels against F6 before recording. If "Read block" sits inside "View verified evidence", open it on camera |
+| 8 | 20 s | **Read-only recap** | Ask "Explain progress"; the **"Standard explanation"** label; then **open "View verified evidence"** on camera and show "Read block" and "Block time" | F6 is merged: "Read block" sits inside the disclosure (confirmed 2 October). Open it first, then point. Leave it open for shot 9 |
 | 9 | 20 s | **Mochi, your way** | With shot 8's answer still visible, press "Explore" (and/or "Practise"); the style line and the counts change; the same answer is reworded with **the same facts and the same Read block** | One take, so the unchanged Read block is visible before and after |
 | 10 | 5 s | Overview card | "Say hello to Mochi" greeting (optional) | Skip if time is short |
+| 11 | 10 s | Pet, earned forms (optional) | Select the earned Hatchling: "Viewing Hatchling · Your current stage is Buddy" (for a Buddy), growth unchanged; then "Return to current form" | Optional. Shows earned forms without inventing history. Skip if time is short |
 
 ## After recording
 

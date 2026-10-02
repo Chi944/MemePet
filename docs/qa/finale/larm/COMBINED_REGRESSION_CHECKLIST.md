@@ -73,7 +73,7 @@ rows on `/dev/companion` at the release SHA.
 | R3 | Evidence disclosure | Native `details`, summary "View verified evidence"; Enter/Space toggles; every source field present inside: registry, read block, block time, observed at, care actions, growth, next stage, next care time, community total | Fixture |
 | R4 | Closed-state context | Account, network, "MemePet activity only" scope, and provenance stay visible with the disclosure closed | Fixture |
 | R5 | Provenance | `standard` still reads **"Standard explanation"**; fixture data labelled | Fixture |
-| R6 | Unknown total | Community total unknown shows unknown "(not zero)", distinct from the personal care count | Fixture |
+| R6 | Unknown total | Community total unknown shows **"Unknown"** (never 0), distinct from the personal care count; a supplied 0 shows "0". The Contribution answer, not the label, says "not zero" | Fixture |
 | R7 | States | Needs-wallet, loading, wrong network, no pet, unavailable: all still present and distinct | Fixture + hosted `/pet` (needs-wallet) |
 | R8 | Failed explanation | Valid facts stay visible when the answer fails | Fixture |
 | R9 | Nothing invented | No streaks, retention, transaction hashes, holder status, wallet history | Fixture |
