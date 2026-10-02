@@ -39,18 +39,25 @@ testnet values in process-local environment variables first; preserve private
 local configuration files. A mock network switch must match the actual build's
 declared network, not merely change the expected assertion to hide a mismatch.
 
-## YeeWei's remaining B2 scenarios
+## YeeWei's B2 scenarios
 
-Implement these as separate small tests; they are planned, **not covered yet**:
+Shared fakes live in `support/`: `simulated-chain.ts` answers the configured
+RPC URL and `/api/companion` from fictional state, can hold one answer until
+the test releases it, and blocks and records every other non-local request.
+`simulated-provider.ts` injects fictional EIP-1193 providers; send/sign/switch
+requests are rejected and recorded.
 
-- Account A → B and A → B → A while old pet/recap answers are still pending.
-- Failed pet, community and recap reads, then read-only retry/recovery.
-- Combined pet, personality, recap and garden panels agree on the active scope.
-- Extend the lead's two-provider smoke with the same address/network in both
-  providers and pending pet/recap results; verify stale facts never carry across.
-- After lead recovery integration: refresh with a saved public hash; pending,
-  confirmed, reverted, malformed, wrong-scope and unavailable-storage cases.
-  Retry must check confirmation, never submit another transaction.
+| Spec | Covered (SIMULATED) |
+|---|---|
+| `account-races.spec.ts` | A → B and A → B → A with A's pet/recap answers delivered late; emptied account list |
+| `failed-reads.spec.ts` | Failed pet/community/recap reads stay unknown; genuine no-pet and zero total differ; read-only retry recovery |
+| `combined-panels.spec.ts` | Pet, recap (and its evidence) and garden agree for A then B; failed community read is unknown everywhere; 390px and 1440px |
+| `same-address-provider.spec.ts` | Same address/chain via a second provider: old late answers and old failures do not carry across |
+| `recovery-refresh.spec.ts` | **NOT RUN / fixme** until the lead's gated B5 recovery adapter lands |
+
+The pet read has no manual retry; its recovery test advances the page clock to
+the existing 30-second refresh. Kym's `WalletChooser` route integration and a
+`/help` route are not wired yet, so their browser cases are not written.
 
 Inject fake provider APIs/events with `page.addInitScript` before navigation;
 stub every RPC and `/api/companion` response. Do not add fixture fallbacks to the

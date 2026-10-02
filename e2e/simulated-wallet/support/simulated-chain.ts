@@ -1,0 +1,256 @@
+/**
+ * SIMULATED WALLET BROWSER REGRESSION harness for B2 scenarios.
+ *
+ * Fictional, deterministic RPC and /api/companion answers for a local
+ * production build. Every non-local request is blocked and recorded. Nothing
+ * here signs, submits or reaches a public network.
+ */
+import { expect, type Page, type Route } from "@playwright/test";
+import { decodeFunctionData, encodeFunctionResult, getAddress, type Hex } from "viem";
+import { DEPLOYMENT } from "../../../src/lib/deployment";
+import { petRegistryAbi } from "../../../src/lib/pet-registry-abi";
+import { mapConfirmedPetProgress } from "../../../src/lib/pet-progress";
+
+export const SIMULATED_LABEL = "SIMULATED WALLET BROWSER REGRESSION";
+
+/** Fictional digit-only addresses, so the checksum display equals the input. */
+export const ACCOUNT_A = "0x1000000000000000000000000000000000000001";
+export const ACCOUNT_B = "0x2000000000000000000000000000000000000002";
+
+const CHAIN_ID = DEPLOYMENT.chainId!;
+const REGISTRY = DEPLOYMENT.registryAddress!;
+const RPC_URL = DEPLOYMENT.rpcUrl!;
+const BLOCK_NUMBER = BigInt(4_200_000);
+const BLOCK_TIME_MS = Date.parse("2026-10-02T12:00:00.000Z");
+const BLOCK_DAY = BigInt(Math.floor(BLOCK_TIME_MS / 86_400_000));
+
+/** A pet answer: confirmed care count, a genuine no-pet, or a failed read. */
+export type PetAnswer = number | "no-pet" | "fail";
+export type TotalAnswer = number | "fail";
+
+type RequestKind = "pet" | "community" | "companion";
+export interface SimulatedRequest {
+  readonly kind: RequestKind;
+  /** Lower-case wallet address for pet/companion requests. */
+  readonly address: string | null;
+}
+
+interface Hold {
+  readonly match: (request: SimulatedRequest) => boolean;
+  readonly arrived: Promise<void>;
+  readonly released: Promise<void>;
+  markArrived: () => void;
+  release: () => void;
+  taken: boolean;
+}
+
+export interface HeldAnswer {
+  /** Resolves when the matching request reaches the simulated network. */
+  readonly arrived: Promise<void>;
+  /** Releases the answer captured at request time. */
+  readonly release: () => void;
+  /** Resolves after the browser received (or aborted) the late answer. */
+  readonly settled: Promise<"delivered" | "aborted">;
+}
+
+/**
+ * Mutable fictional chain state. Answers are captured when a request arrives,
+ * so a held request can return an older value after the state has changed.
+ */
+export class SimulatedChain {
+  readonly pets = new Map<string, PetAnswer>();
+  readonly companion = new Map<string, PetAnswer>();
+  communityTotal: TotalAnswer = 42;
+  readonly requests: SimulatedRequest[] = [];
+  readonly blocked: string[] = [];
+  private readonly holds: Hold[] = [];
+  private readonly settledByHold = new Map<Hold, (value: "delivered" | "aborted") => void>();
+
+  setPet(address: string, answer: PetAnswer, options: { companion?: boolean } = {}) {
+    this.pets.set(address.toLowerCase(), answer);
+    if (options.companion !== false) this.companion.set(address.toLowerCase(), answer);
+  }
+
+  count(kind: RequestKind, address?: string) {
+    return this.requests.filter((request) =>
+      request.kind === kind && (address === undefined || request.address === address.toLowerCase())).length;
+  }
+
+  /** Hold the next request that matches until the test releases it. */
+  hold(kind: RequestKind, address?: string): HeldAnswer {
+    let markArrived!: () => void;
+    let release!: () => void;
+    const arrived = new Promise<void>((resolve) => { markArrived = resolve; });
+    const released = new Promise<void>((resolve) => { release = resolve; });
+    const hold: Hold = {
+      match: (request) => request.kind === kind && (address === undefined || request.address === address.toLowerCase()),
+      arrived, released, markArrived, release, taken: false,
+    };
+    const settled = new Promise<"delivered" | "aborted">((resolve) => this.settledByHold.set(hold, resolve));
+    this.holds.push(hold);
+    return { arrived, release, settled };
+  }
+
+  /** Install the network guard and fakes. Call before navigation. */
+  async install(page: Page, baseURL: string) {
+    const localOrigin = new URL(baseURL).origin;
+    await page.route("**/*", async (route) => {
+      const url = new URL(route.request().url());
+      if (route.request().url() === RPC_URL || url.href === new URL(RPC_URL).href) {
+        await this.answerRpc(route);
+      } else if (url.origin === localOrigin && url.pathname === "/api/companion") {
+        await this.answerCompanion(route);
+      } else if (url.origin === localOrigin && !url.pathname.startsWith("/api/")) {
+        await route.continue();
+      } else {
+        // Unexpected traffic of any method is blocked, not only writes.
+        this.blocked.push(`${route.request().method()} ${url.origin}${url.pathname}`);
+        await route.abort("blockedbyclient");
+      }
+    });
+  }
+
+  private async deliver(route: Route, request: SimulatedRequest, respond: () => Promise<void>) {
+    this.requests.push(request);
+    const hold = this.holds.find((entry) => !entry.taken && entry.match(request));
+    if (!hold) {
+      await respond();
+      return;
+    }
+    hold.taken = true;
+    hold.markArrived();
+    await hold.released;
+    try {
+      await respond();
+      this.settledByHold.get(hold)?.("delivered");
+    } catch {
+      // The page may abort a superseded fetch; that is a valid stale-reply guard.
+      this.settledByHold.get(hold)?.("aborted");
+    }
+  }
+
+  private async answerRpc(route: Route) {
+    const body = route.request().postDataJSON() as { id: number; method: string; params: unknown[] };
+    const reply = (result: unknown) => route.fulfill({
+      status: 200, contentType: "application/json", body: JSON.stringify({ jsonrpc: "2.0", id: body.id, result }),
+    });
+    const unavailable = () => route.fulfill({
+      status: 503, contentType: "application/json", body: '{"error":"SIMULATED RPC unavailable"}',
+    });
+
+    if (body.method === "eth_chainId") return reply(`0x${CHAIN_ID.toString(16)}`);
+    if (body.method === "eth_blockNumber") return reply(`0x${BLOCK_NUMBER.toString(16)}`);
+    if (body.method === "eth_getBlockByNumber") return reply(simulatedBlock());
+    if (body.method !== "eth_call") {
+      this.blocked.push(`RPC ${body.method}`);
+      return route.fulfill({ status: 200, contentType: "application/json",
+        body: JSON.stringify({ jsonrpc: "2.0", id: body.id, error: { code: -32601, message: "SIMULATED: method not allowed" } }) });
+    }
+
+    const call = body.params[0] as { to: string; data: Hex };
+    if (call.to.toLowerCase() !== REGISTRY.toLowerCase()) {
+      this.blocked.push(`RPC eth_call ${call.to}`);
+      return unavailable();
+    }
+    const decoded = decodeFunctionData({ abi: petRegistryAbi, data: call.data });
+    if (decoded.functionName === "petOf") {
+      const address = (decoded.args[0] as string).toLowerCase();
+      const answer = this.pets.get(address) ?? "no-pet";
+      return this.deliver(route, { kind: "pet", address }, () => {
+        if (answer === "fail") return unavailable();
+        const exists = answer !== "no-pet";
+        const careCount = exists ? answer : 0;
+        return reply(encodeFunctionResult({
+          abi: petRegistryAbi, functionName: "petOf",
+          // Last care was the previous UTC day, so care is not on cooldown.
+          result: [exists, exists ? 1 : 0, careCount, exists && careCount > 0 ? BLOCK_DAY - BigInt(1) : BigInt(0)],
+        }));
+      });
+    }
+    if (decoded.functionName === "communityStats") {
+      const answer = this.communityTotal;
+      return this.deliver(route, { kind: "community", address: null }, () => answer === "fail"
+        ? unavailable()
+        : reply(encodeFunctionResult({ abi: petRegistryAbi, functionName: "communityStats", result: BigInt(answer) })));
+    }
+    this.blocked.push(`RPC eth_call ${decoded.functionName}`);
+    return unavailable();
+  }
+
+  private async answerCompanion(route: Route) {
+    if (route.request().method() !== "POST") {
+      this.blocked.push(`${route.request().method()} /api/companion`);
+      return route.abort("blockedbyclient");
+    }
+    const { address } = route.request().postDataJSON() as { address: string };
+    const key = address.toLowerCase();
+    const answer = this.companion.get(key) ?? "no-pet";
+    const total = this.communityTotal;
+    return this.deliver(route, { kind: "companion", address: key }, () => answer === "fail"
+      ? route.fulfill({ status: 503, contentType: "application/json", body: '{"error":"SIMULATED unavailable"}' })
+      : route.fulfill({ status: 200, contentType: "application/json",
+        body: JSON.stringify(companionBody(address, answer, total === "fail" ? null : total)) }));
+  }
+
+  /** Assert that nothing unexpected left the browser. */
+  expectNoUnexpectedTraffic() {
+    expect(this.blocked, "unexpected requests were blocked").toEqual([]);
+  }
+}
+
+function simulatedBlock() {
+  const hex = (value: bigint | number) => `0x${value.toString(16)}`;
+  const zero32 = `0x${"0".repeat(64)}`;
+  return {
+    number: hex(BLOCK_NUMBER), hash: `0x${"ab".repeat(32)}`, parentHash: zero32,
+    timestamp: hex(BLOCK_TIME_MS / 1000), nonce: "0x0000000000000000", difficulty: "0x0", totalDifficulty: "0x0",
+    gasLimit: "0x1c9c380", gasUsed: "0x0", miner: `0x${"0".repeat(40)}`, extraData: "0x",
+    logsBloom: `0x${"0".repeat(512)}`, transactionsRoot: zero32, stateRoot: zero32, receiptsRoot: zero32,
+    sha3Uncles: zero32, mixHash: zero32, size: "0x200", baseFeePerGas: "0x7", transactions: [], uncles: [],
+  };
+}
+
+function companionBody(address: string, answer: Exclude<PetAnswer, "fail">, communityTotal: number | null) {
+  const scope = { chainId: CHAIN_ID, walletAddress: getAddress(address), registryAddress: REGISTRY };
+  if (answer === "no-pet") return { schemaVersion: 1, scope, facts: { kind: "no-pet", dataMode: "live" } };
+  const blockIso = new Date(BLOCK_TIME_MS).toISOString();
+  const nextCareAtIso = answer === 0 ? blockIso
+    : new Date((Math.floor(BLOCK_TIME_MS / 86_400_000) + 1) * 86_400_000).toISOString();
+  return {
+    schemaVersion: 1,
+    scope,
+    facts: {
+      kind: "ready",
+      dataMode: "live",
+      snapshot: {
+        contextKey: `simulated:${address.toLowerCase()}:${answer}:${communityTotal}`,
+        walletAddress: getAddress(address), chainId: CHAIN_ID, registryAddress: REGISTRY,
+        blockNumber: BLOCK_NUMBER.toString(), blockTimestampIso: blockIso, observedAtIso: blockIso,
+        careCount: answer, ...mapConfirmedPetProgress(answer), nextCareAtIso,
+        communityTotalCares: communityTotal === null ? null : Math.max(communityTotal, answer),
+      },
+    },
+  };
+}
+
+/** Wait until React has had a chance to commit a just-delivered late answer. */
+export async function settleFrames(page: Page) {
+  await page.evaluate(() => new Promise<void>((resolve) =>
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 150)))));
+}
+
+/** Visible-state locators on the live /pet route. */
+export function petPage(page: Page) {
+  const meta = page.locator("dl.pet-live-meta");
+  const metaValue = (label: string) => meta.getByText(label, { exact: true }).locator("..").locator("dd");
+  const recap = page.getByRole("region", { name: "Ask Mochi about your progress" });
+  return {
+    wallet: metaValue("Wallet"),
+    pet: metaValue("Pet"),
+    communityCares: metaValue("Community cares"),
+    growth: page.getByText(/^\d+ growth points$/),
+    recap,
+    recapCares: recap.getByText("Your confirmed cares", { exact: true }).locator("..").locator("dd"),
+    garden: page.getByRole("progressbar", { name: "Mochi garden progress" }),
+  };
+}
