@@ -59,6 +59,22 @@ reproduced-defect fixes, final wallet acceptance, backup capture and rehearsal.
 Implementation complete does not mean final acceptance passed. Optional OKX.AI
 registration/invocation remains unverified and does not block this working scope.
 
+## Approved testnet beta extension — 2 October 2026
+
+The user approved [B0–B5](beta/START_HERE.md): easier onboarding and explicit
+wallet choice, continued cosmetic progression, help/support, bounded reads,
+pinned contract tools, automated simulated browser regression, and public-hash
+transaction recovery **after final genuine wallet acceptance**. This approval
+supersedes earlier feature-freeze wording for work on these separate branches;
+it does not change the final-acceptance gate or authorize a mainnet launch.
+
+Personal cosmetic milestones use 5/10/20 lifetime confirmed cares; shared
+garden chapters use 20/50/100. The original 20-care bloom and three pet stages
+stay intact. No reset, missed-day penalty, token reward, new pet or contract
+change is introduced. Shared types/helpers may land before presentation; do
+not describe planned panels as live. Kym and YeeWei own larger UI/test lanes,
+Larm a smaller content/QA lane, and Codex handles integration. Deston merges.
+
 ## Architecture boundary
 
 The lead owns contract reads/writes and supplies display-ready values and callbacks. Teammates build components with those inputs. UI preview data must never become a fallback for a failed live read.

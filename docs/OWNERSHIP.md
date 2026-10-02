@@ -1,5 +1,28 @@
 # File ownership and integration contract
 
+## Current beta delegation — 2 October 2026
+
+The latest user instruction adds the [testnet beta](beta/START_HERE.md) and
+makes **Deston the merger**. Codex prepares/reviews/fixes PRs and handles shared
+engineering; no routine coding is assigned to Deston. This overrides earlier
+Codex-merge permission and finale-only assignment language below.
+
+| Owner | New task-level editable paths |
+|---|---|
+| Kym / B1 | `src/components/onboarding/**`, `src/components/progression/**`, `docs/qa/beta/kym/**` |
+| YeeWei / B2 | `src/components/recovery/**`, `src/components/help/**`, `e2e/**`, `docs/qa/beta/yeewei/**` |
+| Larm / B3 | `src/content/help.ts`, `docs/qa/beta/larm/**` |
+| Codex / B0, B4, B5 | Shared types/fixtures/helpers/hooks, routes, shell/navigation, config/dependencies/CI, integrations and shared docs |
+
+Beta task allowlists are exclusive: these assignments do not grant permission
+to redesign the earlier pet/community/recap components. Existing scoped finale
+QA can finish independently on its own branch. Use [exact beta interfaces](beta/INTEGRATION.md),
+separate clones/worktrees, and branch from reviewed main containing B0 after
+Deston merges it. Pending-transaction runtime integration waits for final
+genuine wallet acceptance. All paid services stay inactive.
+
+## Finale ownership and historical handoff
+
 The user approved the [finale extension](finale/START_HERE.md) on 29 September
 2026. Named ownership below replaces the old Teammate A/B labels. Task-level
 delegation may narrow these paths; shared interface changes require lead review.
@@ -96,11 +119,10 @@ branch. Record the actual base SHA in your PR; do not start from an unreviewed
 sibling branch or the old downloaded proposal. Use separate clones or worktrees
 for simultaneous sessions. Open a small draft PR early.
 
-The user authorizes the lead Codex session to review and merge passing work,
-resolve integration conflicts and handle release checks. This does not
-authorize teammate agents to merge themselves or change deployment settings.
-Codex reviews exact PR heads and integrates one PR at a time. Do not work
-directly on main, force-push or bypass failing checks.
+Codex reviews passing work, resolves integration conflicts and prepares release
+checks. Deston merges the reviewed PRs one at a time. Teammate agents cannot
+merge themselves or change deployment settings. Review exact PR heads. Do not
+work directly on main, force-push or bypass failing checks.
 
 Check for a clean working tree before updating from main. Do not let an agent discard local work or force-resolve conflicts. The lead handles confusing conflicts and reviews the result.
 

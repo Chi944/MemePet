@@ -5,7 +5,7 @@ Current setup for the existing Next.js app. Historical scaffolding tasks are com
 ## Requirements
 
 - Node **24.19.x** (`.nvmrc`) and npm **11.19.x** (`packageManager`).
-- Foundry for contract tests and local-chain work; the application can run without it.
+- Foundry **v1.8.3** for contract tests and local-chain work; the application can run without it.
 - Network access for live RPC reads and build-time Google Fonts downloads.
 
 ## Install and run
@@ -34,19 +34,57 @@ node --test docs/qa/counter-check.regression.mjs
 node --test docs/qa/rpc-recovery.regression.mjs
 ```
 
-With Foundry installed:
+Contract checks use Foundry **v1.8.3** (commit
+`cae51ad458f6abb64852b7709eb784352429825d`) and forge-std **v1.16.2**
+(commit `bf647bd6046f2f7da30d0c2bf435e5c76a780c1b`). CI pins both;
+Solidity is already pinned to **0.8.24** in `contracts/foundry.toml`.
+Install/select the same Foundry release with `foundryup --install v1.8.3`
+using your installed Foundry manager, or use the matching official release binary.
+Check `forge --version` before running the tests; it should report 1.8.3.
+
+Then, from the repository root:
 
 ```bash
 cd contracts
-forge install foundry-rs/forge-std --no-git
+forge install foundry-rs/forge-std@rev=bf647bd6046f2f7da30d0c2bf435e5c76a780c1b --no-git
 cd ..
 npm run test:contracts
 ```
+
+The library stays unvendored in the ignored `contracts/lib/` directory. If that
+directory already contains a different/local copy, preserve any local work and
+use a fresh checkout with the pinned install command for reproducible checks.
+Do not use an unqualified install or a moving `stable`/`nightly` toolchain.
+To upgrade, change the CI install (including its retry) and this setup together,
+then rerun contract checks. The Foundry installer action is also pinned to its
+v1.9.1 commit, rather than the moving `v1` tag.
+
+Upstream references: [Foundry v1.8.3](https://github.com/foundry-rs/foundry/releases/tag/v1.8.3),
+[forge-std v1.16.2](https://github.com/foundry-rs/forge-std/releases/tag/v1.16.2),
+[toolchain version inputs](https://github.com/foundry-rs/foundry-toolchain#inputs).
 
 `npm test` is a non-interactive Vitest run. CI also starts the production build
 and asserts `/` returns 200 and `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/finale`, `/dev/companion`
 return 404. For local production inspection, use `npm run start` after building.
 A test pass does not establish a real wallet transaction.
+
+### Simulated browser regression
+
+```bash
+npx playwright install chromium
+npm run build
+npm run test:e2e:simulated
+```
+
+Playwright **1.63.0** is pinned in the lockfile. The harness starts/stops its own
+local production server on `127.0.0.1:3417`; leave that port free. CI installs
+Chromium with `--with-deps` and runs the same script after the build. Vitest
+excludes `e2e/**` because Playwright owns those specs. Browser output is labelled
+**SIMULATED WALLET BROWSER REGRESSION**. It uses controlled inputs without a
+wallet extension or signing and cannot establish genuine acceptance. See
+[the scenario handoff](../e2e/simulated-wallet/README.md) for implemented versus
+remaining coverage. Reports/traces are local ignored output.
+
 The separate Node regressions check the read-only counter evidence helper's
 block selection, interval boundaries and validation; they never sign or write.
 The recovery regressions use a mocked upstream to test a local read-only fault

@@ -1,5 +1,11 @@
 # Finale: four lanes, one working product
 
+**New assignment override, 2 October:** the user added the
+[testnet beta lanes](../beta/START_HERE.md). Use those role prompts for new
+features and retain this folder for finale acceptance/history. Deston now merges
+PRs; older Codex-merge wording below is superseded. Final wallet acceptance is
+still separate and unrun, and live transaction recovery must wait for it.
+
 **Approved 29 September 2026.** The team reports selection for the 7 October
 finale and permission from OKX developers to continue building. This folder is
 the current assignment set. It supersedes the earlier downloaded proposal where

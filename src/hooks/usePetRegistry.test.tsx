@@ -1,7 +1,8 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { BlockNotFoundError, ResourceUnavailableRpcError, type Address, type WalletClient } from "viem";
 import type { Deployment } from "@/lib/deployment";
+import { RPC_READ_BUDGET_MS } from "@/lib/read-budget";
 
 const rpc = vi.hoisted(() => ({
   readContract: vi.fn(),
@@ -56,6 +57,7 @@ function mountRegistry() {
 }
 
 describe("usePetRegistry confirmed reads and wallet sessions", () => {
+  afterEach(() => vi.useRealTimers());
   beforeEach(() => {
     vi.resetAllMocks();
     rpc.getBlock.mockResolvedValue(block);
@@ -283,5 +285,98 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     await act(async () => { await result.current.care(); });
     expect(rpc.writeContract).not.toHaveBeenCalled();
     expect(result.current.pet).toBeNull();
+  });
+
+  it("ends a stalled initial block read without allowing late pet reads", async () => {
+    vi.useFakeTimers();
+    const stalled = deferred<typeof block>();
+    rpc.getBlock.mockReturnValue(stalled.promise);
+    const { result } = mountRegistry();
+
+    await act(async () => { await vi.advanceTimersByTimeAsync(RPC_READ_BUDGET_MS); });
+    expect(result.current.readStatus).toBe("error");
+    expect(result.current.pet).toBeNull();
+    await act(async () => { stalled.resolve(block); });
+    expect(rpc.readContract).not.toHaveBeenCalled();
+    expect(result.current.readStatus).toBe("error");
+  });
+
+  it("allows a manual read-only recovery after the initial retry budget is exhausted", async () => {
+    vi.useFakeTimers();
+    rpc.getBlock.mockRejectedValue({ name: "TimeoutError" });
+    const { result } = mountRegistry();
+    await act(async () => { await vi.advanceTimersByTimeAsync(1_500); });
+    expect(rpc.getBlock).toHaveBeenCalledTimes(3);
+    expect(result.current.readStatus).toBe("error");
+    expect(rpc.readContract).not.toHaveBeenCalled();
+
+    rpc.getBlock.mockResolvedValue(block);
+    rpc.readContract.mockResolvedValue(adoptedPet);
+    await act(async () => { await result.current.refreshPet(); });
+    expect(result.current.readStatus).toBe("ready");
+    expect(result.current.pet?.growthPoints).toBe(0);
+    expect(result.current.readErrorMessage).toBeNull();
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+  });
+
+  it("ignores an initial read failure from the old account after switching", async () => {
+    const oldRead = deferred<typeof emptyPet>();
+    rpc.readContract.mockReturnValueOnce(oldRead.promise).mockResolvedValue(adoptedPet);
+    const { result, rerender } = mountRegistry();
+    await waitFor(() => expect(rpc.readContract).toHaveBeenCalledOnce());
+    rerender({ address: walletB });
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    await act(async () => { oldRead.reject(new Error("Old account read failed")); });
+    expect(result.current.readStatus).toBe("ready");
+    expect(result.current.pet?.growthPoints).toBe(0);
+    expect(result.current.readErrorMessage).toBeNull();
+  });
+
+  it("bounds a stalled receipt snapshot while preserving confirmed success", async () => {
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    vi.useFakeTimers();
+    const stalled = deferred<typeof block>();
+    rpc.getBlock.mockReturnValue(stalled.promise);
+    let write!: Promise<void>;
+    await act(async () => { write = result.current.adopt(); });
+    expect(result.current.txPhase).toBe("pending");
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(RPC_READ_BUDGET_MS);
+      await write;
+    });
+    expect(result.current.txPhase).toBe("success");
+    expect(result.current.readStatus).toBe("error");
+    expect(result.current.readErrorMessage).toMatch(/Adoption confirmed on chain/);
+    expect(result.current.confirmedBlockNumber).toBe(block.number);
+    await act(async () => { stalled.resolve(block); });
+    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(rpc.writeContract).toHaveBeenCalledOnce();
+    expect(result.current.pet).toBeNull();
+  });
+
+  it("does not apply the short read deadline to signatures or receipt confirmation", async () => {
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    vi.useFakeTimers();
+    const signature = deferred<string>();
+    const receipt = deferred<{ status: string; blockNumber: bigint }>();
+    rpc.writeContract.mockReturnValue(signature.promise);
+    rpc.waitForTransactionReceipt.mockReturnValue(receipt.promise);
+    let write!: Promise<void>;
+    act(() => { write = result.current.adopt(); });
+    await act(async () => { await vi.advanceTimersByTimeAsync(RPC_READ_BUDGET_MS + 1); });
+    expect(result.current.txPhase).toBe("awaiting-signature");
+    await act(async () => { signature.resolve(hashA); });
+    await act(async () => { await vi.advanceTimersByTimeAsync(RPC_READ_BUDGET_MS + 1); });
+    expect(result.current.txPhase).toBe("pending");
+    expect(result.current.pet).toBeNull();
+    rpc.readContract.mockResolvedValue(adoptedPet);
+    await act(async () => {
+      receipt.resolve({ status: "success", blockNumber: block.number });
+      await write;
+    });
+    expect(result.current.txPhase).toBe("success");
+    expect(rpc.writeContract).toHaveBeenCalledOnce();
   });
 });

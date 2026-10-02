@@ -14,7 +14,7 @@ import { mapPetOfToViewModel } from "@/lib/map-pet";
 import { petRegistryAbi, type PetOfResult } from "@/lib/pet-registry-abi";
 import type { Deployment } from "@/lib/deployment";
 import { chainFromDeployment } from "@/lib/chains";
-import { readReceiptWithRetry } from "@/lib/receipt-read-retry";
+import { readWithBudget, RPC_READ_HTTP_OPTIONS } from "@/lib/read-budget";
 import type { PetViewModel } from "@/types/view-models";
 
 export type PetReadStatus = "idle" | "loading" | "ready" | "error";
@@ -149,21 +149,26 @@ export function usePetRegistry({
       try {
         const publicClient = createPublicClient({
           chain,
-          transport: http(deployment.rpcUrl ?? undefined),
+          transport: http(deployment.rpcUrl ?? undefined, RPC_READ_HTTP_OPTIONS),
         });
 
-        const block = await publicClient.getBlock({ blockTag: "latest" });
-        const result = await publicClient.readContract({
-          address: registryAddress,
-          abi: petRegistryAbi,
-          functionName: "petOf",
-          args: [address],
-          blockNumber: block.number,
-        });
+        const confirmed = await readWithBudget(async (canRead) => {
+          const block = await publicClient.getBlock({ blockTag: "latest" });
+          if (!canRead()) return;
+          const result = await publicClient.readContract({
+            address: registryAddress,
+            abi: petRegistryAbi,
+            functionName: "petOf",
+            args: [address],
+            blockNumber: block.number,
+          });
+          return { block, result };
+        }, isCurrentRead);
 
-        if (!isCurrentRead()) {
+        if (!confirmed || !isCurrentRead()) {
           return;
         }
+        const { block, result } = confirmed;
 
         const mappedRaw: PetOfResult = {
           exists: result[0],
@@ -343,16 +348,20 @@ export function usePetRegistry({
         let result;
         let chainTimeMs;
         try {
+          const readClient = createPublicClient({
+            chain,
+            transport: http(deployment.rpcUrl ?? undefined, RPC_READ_HTTP_OPTIONS),
+          });
           // RPC replicas can expose a receipt before its state is readable.
           // Retry only reads, at the same confirmed block, with a bounded wait.
-          const confirmed = await readReceiptWithRetry(
-            receipt.blockNumber,
-            async (blockNumber) => {
-              const block = await publicClient.getBlock({
+          const confirmed = await readWithBudget(
+            async (canRead) => {
+              const blockNumber = receipt.blockNumber;
+              const block = await readClient.getBlock({
                 blockNumber,
               });
-              if (!isCurrentOperation()) return;
-              const petResult = await publicClient.readContract({
+              if (!canRead()) return;
+              const petResult = await readClient.readContract({
                 address: registryAddress,
                 abi: petRegistryAbi,
                 functionName: "petOf",

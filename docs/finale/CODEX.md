@@ -1,5 +1,11 @@
 # Codex — engineering, integration and release
 
+**Current engineering lane:** [B0/B4/B5](../beta/INTEGRATION.md).
+The 2 October beta instruction adds shared engineering and team integration.
+Deston now performs merges; this supersedes earlier auto-merge permission below.
+Prepare reviewed PRs and keep his routine coding workload near zero. Complete
+the existing final wallet acceptance before runtime pending-transaction recovery.
+
 Deston delegates routine engineering to this lane. Do not hand him a list of
 coding commands. Teammates own their three presentation branches; Codex owns
 their shared contract, verified adapters, wiring, PR review and release.
