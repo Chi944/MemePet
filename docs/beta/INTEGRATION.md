@@ -42,6 +42,15 @@ Teammates can develop with component tests and fictional fixtures immediately.
 Request a preview route from the lead if needed; do not add production preview
 routes. Root will wire `/help`, shell links and combined live panels once reviewed.
 
+The lead now supplies `/dev/beta` for the merged Help/recovery components:
+all nine recovery states, care/adoption labels, fictional FAQ/empty content,
+callback counter and reset. It uses no wallet, RPC or storage and returns 404
+in production. Run `npm run test:e2e:previews` for separate fictional Chromium
+checks at 320/390/1440px. This preview unblocks B2 visual/keyboard review;
+it does not enable B5 or the live Help route. `/dev/companion` also has the
+requested `careAvailable` fixture. The lead owns preview server/CI config;
+YeeWei may extend scenarios under `e2e/dev-preview/`.
+
 ## B4: selected wallet must remain selected
 
 Use [EIP-6963 discovery](https://eips.ethereum.org/EIPS/eip-6963) with bounded
@@ -89,6 +98,15 @@ The community can be read without connecting. Care availability uses the
 hook's confirmed chain-clock result, never the viewer's clock; Kym formats the
 provided ISO reset in local time without changing eligibility. `isTestnet=false`
 alone does not mean mainnet: local Anvil is identified by its network label.
+
+`usePetRegistry.retryPet()` supplies explicit failed-read recovery for B1's
+future retry callback. It only runs from the current valid session's error
+state, locks duplicate activations and exposes loading through `readStatus`.
+It never asks a wallet or resets transaction state. `/pet` already uses this
+callback for **Retry pet read**. Background refresh remains separate. An
+in-memory receipt-block floor prevents retry/background reads from using a
+lagging state older than this session's confirmed transaction; it is neither
+a persistent journal nor recovery after refresh.
 
 ## B5: recover the transaction, never repeat it automatically
 

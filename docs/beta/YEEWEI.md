@@ -7,9 +7,12 @@ rebuild these components or repeat the initial assignment below. The PR
 records its final head/release. Preserve local work and fetch the lead repairs
 before continuing; do not force-push over them.
 
-**Next:** once the lead supplies the panel preview or `/help` route, add
-320/390px browser and keyboard/focus evidence for both panels and their real
-integration. Kym's chooser/progression follow-ups wait for her reviewed route
+**Next:** the lead supplies `/dev/beta` and `npm run test:e2e:previews`, with
+320/390/1440px automated keyboard/layout coverage. Sync the reviewed lead PR,
+then inspect the functioning preview and cite its existing checks. Extend only
+uncovered cases or reproduced defects; do not repeat all earlier unit work.
+Live `/help` acceptance waits for Larm's content and lead routing.
+Kym's chooser/progression follow-ups wait for her reviewed route
 integration. B5's eight refresh cases stay NOT RUN until genuine acceptance
 and the runtime adapter exist. No new private wallet action is assigned here.
 
@@ -65,8 +68,8 @@ Return PR URL, actual test commands/results, base/head, screenshots or report
 paths, NOT RUN cases and integration needs. Codex reviews, integrates and merges
 passing work; Deston handles final product checks and private wallet approvals.
 
-## Continuation prompt after the lead supplies preview/routes
+## Continuation prompt after syncing the reviewed preview PR
 
 ```text
-Continue MemePet B2 integration QA using docs/beta/YEEWEI.md and INTEGRATION.md. Preserve local work, fetch origin and inspect PR #83's final reviewed repairs before making changes. Do not rebuild the delivered HelpPanel, TransactionRecoveryPanel or initial account/read suite. Once the lead provides panel preview/routes, add focused 320/390px layout and real-browser keyboard/focus tests, then combined cases for Kym's reviewed chooser/progression integration when available. If those routes are not supplied, report that dependency instead of inventing one or editing lead-owned routes. Held-response delivery must use exact request lifecycle events; a fulfilled route is not proof of delivery, and an aborted recap does not prove a late body reached React. Edit only your assigned components/e2e/evidence paths. Label mocks SIMULATED WALLET BROWSER REGRESSION; keep genuine wallet acceptance and all eight gated B5 cases NOT RUN. No live wallet/RPC actions, storage/runtime recovery, hooks/routes/shared types/packages/config changes, paid services, force-pushes or merges. Return a small PR with actual checks, evidence and remaining dependencies for lead review.
+Continue MemePet B2 integration QA using docs/beta/YEEWEI.md and INTEGRATION.md. Preserve local work, fetch reviewed origin/main including the lead preview/read-retry PR, and inspect #83's final repairs. Do not rebuild delivered components or initial race/read tests. Run npm run dev and inspect /dev/beta; npm run test:e2e:previews covers 320/390/1440px, all nine states, inert checking, native FAQ keyboard behavior, focus clearance and reset. Cite those checks and add only uncovered scenarios or reproduced fixes in your allowed component/e2e/evidence paths. /dev/companion now includes careAvailable. Live /help waits for Larm content and lead routing; Kym's chooser/progression checks wait for her reviewed integration. Use a fresh branch after preserving any unpublished work; do not reuse a merged branch or overwrite lead repairs. Keep exact-request lifecycle evidence and distinguish FICTIONAL UI PREVIEW from SIMULATED WALLET BROWSER REGRESSION. Genuine wallet acceptance and eight B5 runtime cases remain NOT RUN. No live wallet/RPC actions, storage/runtime recovery, hooks/routes/shared types/packages/config changes, paid services, force-pushes or merges. Return a small PR with actual checks, evidence and remaining dependencies for lead review.
 ```

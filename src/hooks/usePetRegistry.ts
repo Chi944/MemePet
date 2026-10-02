@@ -60,6 +60,9 @@ type WalletSession = {
   active: boolean;
   operation: object | null;
   revision: number;
+  retryingRead: boolean;
+  /** Never let a lagging replica undo this session's confirmed transaction. */
+  minimumBlockNumber?: bigint;
 };
 
 function isUserRejection(error: unknown): boolean {
@@ -117,6 +120,7 @@ export function usePetRegistry({
       active: true,
       operation: null,
       revision: 0,
+      retryingRead: false,
     };
     sessionRef.current = session;
     return () => {
@@ -156,7 +160,19 @@ export function usePetRegistry({
         });
 
         const confirmed = await readWithBudget(async (canRead) => {
-          const block = await publicClient.getBlock({ blockTag: "latest" });
+          let block = await publicClient.getBlock({ blockTag: "latest" });
+          if (!canRead()) return;
+          if (typeof block.number !== "bigint" || block.number < BigInt(0)) {
+            throw new Error("Invalid latest block number");
+          }
+          if (session.minimumBlockNumber !== undefined && block.number < session.minimumBlockNumber) {
+            const minimumBlockNumber = session.minimumBlockNumber;
+            block = await publicClient.getBlock({ blockNumber: minimumBlockNumber });
+            if (!canRead()) return;
+            if (block.number !== minimumBlockNumber) {
+              throw new Error("Receipt block does not match the requested block");
+            }
+          }
           if (!canRead()) return;
           const result = await publicClient.readContract({
             address: registryAddress,
@@ -203,6 +219,8 @@ export function usePetRegistry({
           rawPet: null,
           chainTimeMs: null,
         });
+      } finally {
+        if (isCurrentRead()) session.retryingRead = false;
       }
     })();
 
@@ -231,6 +249,19 @@ export function usePetRegistry({
   const refreshPet = useCallback(async () => {
     setRefreshToken((value) => value + 1);
   }, []);
+
+  const retryPet = useCallback(() => {
+    const session = sessionRef.current;
+    if (!address || !registryAddress || !chain || wrongChain ||
+      !session?.active || session.key !== cacheKey || session.operation ||
+      session.retryingRead || snapshot.readStatus !== "error") return;
+
+    // Lock immediately: repeated clicks in the same render still start one read.
+    session.retryingRead = true;
+    session.revision += 1;
+    setSnapshot({ ...emptySnapshot, readStatus: "loading" });
+    setRefreshToken((value) => value + 1);
+  }, [address, cacheKey, chain, registryAddress, snapshot.readStatus, wrongChain]);
 
   const dismissTx = useCallback(() => {
     setTxPhase("idle");
@@ -346,6 +377,7 @@ export function usePetRegistry({
 
         // Related reads must use the receipt's state, not an independently
         // cached or lagging "latest" response from the RPC service.
+        session.minimumBlockNumber = receipt.blockNumber;
         setConfirmedBlockNumber(receipt.blockNumber);
 
         // Re-read before treating the write as success. A hash alone is not enough.
@@ -365,6 +397,9 @@ export function usePetRegistry({
                 blockNumber,
               });
               if (!canRead()) return;
+              if (block.number !== blockNumber) {
+                throw new Error("Receipt block does not match the requested block");
+              }
               const petResult = await readClient.readContract({
                 address: registryAddress,
                 abi: petRegistryAbi,
@@ -509,6 +544,7 @@ export function usePetRegistry({
     care,
     dismissTx,
     refreshPet,
+    retryPet,
     isSubmitting,
     adoptPhase: txPhase,
   };

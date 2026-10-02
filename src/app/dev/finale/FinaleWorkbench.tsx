@@ -62,6 +62,8 @@ export function FinaleWorkbench() {
           <Link href="/dev/pet">Pet preview</Link>
           <Link href="/dev/community">Community preview</Link>
           <Link href="/dev/landing">Landing preview</Link>
+          <Link href="/dev/companion">Companion preview</Link>
+          <Link href="/dev/beta">Beta recovery and help preview</Link>
         </nav>
       </header>
       <div className={styles.grid}>
