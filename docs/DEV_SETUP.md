@@ -140,6 +140,11 @@ CI also checks that `/dev/beta` returns 404 in a production build. In
 `/dev/companion`, `careAvailable` supplies the requested available-at-read
 example; the viewer's computer clock does not establish eligibility.
 
+Run the simulated suite before previews when retaining both reports. Preview
+artifacts use `test-results/dev-preview` and `playwright-report/dev-preview`,
+so they preserve the preceding simulated run. Rerunning the simulated suite
+clears those parent output folders; copy any evidence you need first.
+
 ## Separate local Anvil setup
 
 Use this only for an isolated local test. Local state is not X Layer evidence.

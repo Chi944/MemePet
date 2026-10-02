@@ -162,8 +162,16 @@ export function usePetRegistry({
         const confirmed = await readWithBudget(async (canRead) => {
           let block = await publicClient.getBlock({ blockTag: "latest" });
           if (!canRead()) return;
+          if (typeof block.number !== "bigint" || block.number < BigInt(0)) {
+            throw new Error("Invalid latest block number");
+          }
           if (session.minimumBlockNumber !== undefined && block.number < session.minimumBlockNumber) {
-            block = await publicClient.getBlock({ blockNumber: session.minimumBlockNumber });
+            const minimumBlockNumber = session.minimumBlockNumber;
+            block = await publicClient.getBlock({ blockNumber: minimumBlockNumber });
+            if (!canRead()) return;
+            if (block.number !== minimumBlockNumber) {
+              throw new Error("Receipt block does not match the requested block");
+            }
           }
           if (!canRead()) return;
           const result = await publicClient.readContract({
@@ -389,6 +397,9 @@ export function usePetRegistry({
                 blockNumber,
               });
               if (!canRead()) return;
+              if (block.number !== blockNumber) {
+                throw new Error("Receipt block does not match the requested block");
+              }
               const petResult = await readClient.readContract({
                 address: registryAddress,
                 abi: petRegistryAbi,

@@ -280,6 +280,7 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     );
 
     rpc.writeContract.mockResolvedValue(hashB);
+    rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: BigInt(11) });
     rpc.readContract.mockResolvedValue([true, 1, 2, day + BigInt(1)]);
     await act(async () => { await result.current.care(); });
     expect(rpc.writeContract).toHaveBeenCalledOnce();
@@ -591,6 +592,50 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     await act(async () => { result.current.retryPet(); });
     expect(result.current.readStatus).toBe("error");
     expect(result.current.pet).toBeNull();
+    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(rpc.writeContract).toHaveBeenCalledOnce();
+  });
+
+  it.each([null, 10, BigInt(-1)])("rejects an invalid latest block number (%s) before reading a pet", async (number) => {
+    rpc.getBlock.mockResolvedValue({ ...block, number });
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("error"));
+    expect(result.current.pet).toBeNull();
+    expect(rpc.readContract).not.toHaveBeenCalled();
+    expect(rpc.writeContract).not.toHaveBeenCalled();
+  });
+
+  it("keeps receipt success but rejects a mismatched immediate read-back header", async () => {
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: BigInt(20) });
+    // This replica returns block 10 even though block 20 was requested.
+    await act(async () => { await result.current.adopt(); });
+    expect(result.current.txPhase).toBe("success");
+    expect(result.current.confirmedBlockNumber).toBe(BigInt(20));
+    expect(result.current.readStatus).toBe("error");
+    expect(result.current.readErrorMessage).toMatch(/Adoption confirmed on chain/);
+    expect(result.current.pet).toBeNull();
+    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(rpc.writeContract).toHaveBeenCalledOnce();
+  });
+
+  it.each([BigInt(19), BigInt(21)])("rejects a receipt fallback header at the wrong height (%s)", async (number) => {
+    rpc.readContract.mockResolvedValue(adoptedPet);
+    const { result } = mountRegistry();
+    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: BigInt(20) });
+    rpc.getBlock.mockRejectedValueOnce(new Error("Read failed"));
+    await act(async () => { await result.current.care(); });
+    rpc.getBlock.mockImplementation(async ({ blockNumber }) => ({
+      ...block, number: blockNumber === undefined ? block.number : number,
+    }));
+    await act(async () => { result.current.retryPet(); });
+    expect(rpc.getBlock).toHaveBeenLastCalledWith({ blockNumber: BigInt(20) });
+    expect(result.current.readStatus).toBe("error");
+    expect(result.current.pet).toBeNull();
+    expect(result.current.txPhase).toBe("success");
+    expect(result.current.confirmedBlockNumber).toBe(BigInt(20));
     expect(rpc.readContract).toHaveBeenCalledOnce();
     expect(rpc.writeContract).toHaveBeenCalledOnce();
   });

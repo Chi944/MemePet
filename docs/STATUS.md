@@ -22,7 +22,7 @@ fictional browser suite, while production keeps it hidden. A narrow-screen
 FAQ focus-spacing issue was corrected from actual screenshot review. The
 companion preview now includes `careAvailable` for the remaining wording case.
 See [verification and screenshots](qa/evidence/BETA_PREVIEW_RETRY_2026-10-02.md).
-Local checks: **633 app tests / 50 files**, typecheck, lint, production build,
+Local checks: **639 app tests / 50 files**, typecheck, lint, production build,
 **15 simulated wallet cases** and **3 fictional preview cases** passed.
 Eight B5 runtime cases remain explicitly skipped. The associated PR records
 the final source, CI and deployment checks.
