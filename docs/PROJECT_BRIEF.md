@@ -1,5 +1,13 @@
 # MemePet product scope
 
+**Current handoff — 2 October, after #87:** reviewed main includes B0,
+provider selection, retry/preview preparation, B2 presentation/regressions,
+finale QA and B3 support copy. Use [current beta roles](beta/START_HERE.md)
+and [weighted progress](STATUS.md#progress-measurement). Kym continues B1;
+YeeWei/Larm now have focused integration/release checks. Codex owns `/help`
+and shared integration; Deston has final review/private approvals/rehearsal.
+B5 runtime and genuine final acceptance remain outstanding.
+
 ## Product
 
 A meme-community companion app on X Layer. A user adopts a wallet-linked pet, completes a daily care action, sees its progress and helps a shared habitat grow.

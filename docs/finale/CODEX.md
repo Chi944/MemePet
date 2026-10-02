@@ -1,5 +1,15 @@
 # Codex — engineering, integration and release
 
+## Current assignment — 2 October 2026
+
+Finale features and beta foundation/provider/retry/presentation/content handoffs through #87 are merged. Finish Help release checks, integrate Kym B1 when available, and prepare one genuine final wallet session. B5 runtime waits for that acceptance; helpers alone do not enable it.
+
+Use [the current beta brief](../beta/INTEGRATION.md)
+for new work and [current progress](../STATUS.md#progress-measurement).
+The older task instructions below are retained as finale requirements/history;
+do not recreate merged branches. Genuine wallet acceptance, backup capture
+and rehearsal remain separate from implementation and simulated checks.
+
 **Current engineering lane:** [B0/B4/B5](../beta/INTEGRATION.md).
 The 2 October beta instruction adds shared engineering and team integration.
 The latest same-day user request authorizes lead review and merge of passing

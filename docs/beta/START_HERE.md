@@ -18,11 +18,22 @@ simulated-browser harness are available on main. B1/B2/B3 are independent and
 do not need to wait for B4 wallet integration. B4 is the current lead task;
 its implementation, merge and live acceptance are separate checkpoints.
 
-**Current checkpoint:** B4 provider selection merged in #81 and pure panel/
-recovery validation preparation in #82. YeeWei's B2 handoff is reviewed in
-#83; her brief now identifies integration QA as the next task, so she should
-not restart completed components. Kym continues B1 and Larm B3. The PRs record
-exact merge/release states; Help/recovery panels are not live routes yet.
+**Current checkpoint — after #87:** B0/#80, B4 provider selection/#81,
+pure adapter/recovery preparation/#82, YeeWei B2/#83 and recap QA/#84,
+lead retry/preview integration/#85, Larm finale QA/#86 and B3/#87 are merged.
+The next lead integration connects Larm's real content to YeeWei's HelpPanel
+at `/help`. Follow the integration PR for its exact checks/release. Kym's B1
+has no pushed handoff verified at this checkpoint; local work is unknown.
+Recovery presentation exists, but B5 persistence/runtime remains gated.
+
+**Current tasks:** Kym continues B1; YeeWei reviews the integrated Help page
+and later B1 combined panels; Larm verifies rendered copy/links and updates his
+acceptance index. Codex integrates, tests and merges. Deston has only final
+review, private wallet approvals and rehearsal: [his brief](DESTON.md).
+Use [the weighted progress table](../STATUS.md#progress-measurement) rather
+than comparing old finale percentages with this larger beta scope.
+The start-branch table below records original lanes; named role sheets take
+precedence for completed branches and their follow-up work.
 
 ## Work split
 
@@ -97,7 +108,7 @@ The additions above make a better beta; mainnet requires these separate gates:
 | Gate | Present status / owner |
 |---|---|
 | Final genuine wallet acceptance; new provider/recovery acceptance | NOT RUN / Codex prepares, Deston privately approves |
-| Beta lanes integrated and regression suite green | B0 merged in #80; B1/B2/B3 assigned, B4 lead work in progress, B5 gated |
+| Beta lanes integrated and regression suite green | B0/B2/B3 merged; B1 handoff unverified; B4 integration in progress; B5 gated |
 | Small real-user pilot with repeat use and support feedback | Not started / team recruits consented testers; no fabricated retention metrics |
 | Focused independent contract/security review; material findings resolved | Not completed / coordinate review, no automatic paid commission |
 | Decide fresh mainnet start versus testnet migration | Undecided / team decision; migration is separate contract/product scope |

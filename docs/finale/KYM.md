@@ -1,5 +1,15 @@
 # Kym — pet release QA
 
+## Current assignment — 2 October 2026
+
+F2/#67, F5/#73 and the pet QA/preview follow-up/#78 are merged. Continue B1 onboarding, wallet-choice presentation and cosmetic progression. Preserve local work; no pushed B1 handoff is verified. Do not repeat earned forms.
+
+Use [the current beta brief](../beta/KYM.md)
+for new work and [current progress](../STATUS.md#progress-measurement).
+The older task instructions below are retained as finale requirements/history;
+do not recreate merged branches. Genuine wallet acceptance, backup capture
+and rehearsal remain separate from implementation and simulated checks.
+
 **Current assignment:** [B1 onboarding and progression](../beta/KYM.md).
 The 2 October beta brief supersedes the old next-work assignment below. Preserve
 the completed finale reports. B0 is merged in #80, so start B1 now. The lead

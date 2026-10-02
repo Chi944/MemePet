@@ -14,7 +14,7 @@ Growth comes from confirmed care. No MemePet token to buy; network gas applies.
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.3.8-black)](https://nextjs.org)
 [![Solidity 0.8.24](https://img.shields.io/badge/Solidity-0.8.24-363636)](https://soliditylang.org)
 
-[Live app](https://memepet.vercel.app)
+[Live app](https://memepet.vercel.app) · [Help](https://memepet.vercel.app/help)
 
 <img src="docs/images/home-desktop.jpg" alt="MemePet's current black and lime homepage with the Mochi stage-art showcase" width="820">
 
@@ -48,6 +48,9 @@ To try adoption and care yourself, use the [wallet walkthrough](docs/qa/BROWSER_
 If several wallet extensions are available, choose the wallet app on **Your pet**
 before connecting. Changing wallet apps clears this page's connected state;
 connect again with the chosen app. The selection itself requests no permission.
+The [Help page](https://memepet.vercel.app/help) explains test gas, UTC care,
+confirmed versus local progress and read recovery without connecting a wallet.
+Planned features are labelled; no monitored support contact is claimed.
 
 ---
 

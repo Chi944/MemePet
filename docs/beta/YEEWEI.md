@@ -1,28 +1,24 @@
 # YeeWei — B2 recovery, help and browser regression
 
-**Current handoff, 2 October:** B2's components and initial regression suite
-are delivered in PR #83. The lead reviewed them, corrected request-delivery
-evidence and care-timing fixtures, and verified the combined suite. Do not
-rebuild these components or repeat the initial assignment below. The PR
-records its final head/release. Preserve local work and fetch the lead repairs
-before continuing; do not force-push over them.
+**Current handoff — 2 October:** #83 (B2), #84 (finale recap QA) and the lead's
+#85 preview/read-retry integration are merged. Do not restart those branches or
+repeat delivered components. The current Help integration adds `/help` with
+Larm's reviewed #87 content. Start the next check only after its lead PR merges;
+record the actual checkout and deployment rather than assuming this document
+names the running version. See [progress](../STATUS.md#progress-measurement).
 
-**Next:** the lead supplies `/dev/beta` and `npm run test:e2e:previews`, with
-320/390/1440px automated keyboard/layout coverage. Sync the reviewed lead PR,
-then inspect the functioning preview and cite its existing checks. Extend only
-uncovered cases or reproduced defects; do not repeat all earlier unit work.
-Live `/help` acceptance waits for Larm's content and lead routing.
-Kym's chooser/progression follow-ups wait for her reviewed route
-integration. B5's eight refresh cases stay NOT RUN until genuine acceptance
-and the runtime adapter exist. No new private wallet action is assigned here.
+**Next deliverable:** focused production Help/keyboard/narrow-width review and
+only uncovered browser scenarios. The lead's `help.spec.ts` already covers
+320/390/1440px, all real FAQ entries, inert wallet access and no RPC/API requests;
+cite that coverage instead of duplicating it. `/dev/beta` remains fictional.
+Kym's combined onboarding/progression checks await her integration. Eight B5
+refresh cases stay NOT RUN until final genuine acceptance and the runtime exist.
 
-Your larger beta lane combines visible support/recovery work with repeatable
-browser coverage. B0 is merged in #80 (`99086a3`); start now from current
-reviewed `origin/main`. Preserve your prior combined recap QA; do not restart
-completed F6 work. If the B2 branch already has unpublished work, continue it
-and safely reconcile main instead of resetting or recreating it.
+Your original B2 feature work is delivered. Preserve any unpublished work,
+then create `test/beta-help-integration` from reviewed main for the follow-up.
+Do not repeat the merged recovery/help implementation. The original deliverables
+below are reference requirements, not a fresh assignment.
 
-**Branch:** `feat/beta-recovery-help-regression`.
 **Editable:** `src/components/recovery/**`, `src/components/help/**`,
 `e2e/**`, `docs/qa/beta/yeewei/**`. Codex owns package/config/CI changes and live
 adapters. Larm owns `src/content/help.ts`; do not edit his content file.
@@ -71,5 +67,5 @@ passing work; Deston handles final product checks and private wallet approvals.
 ## Continuation prompt after syncing the reviewed preview PR
 
 ```text
-Continue MemePet B2 integration QA using docs/beta/YEEWEI.md and INTEGRATION.md. Preserve local work, fetch reviewed origin/main including the lead preview/read-retry PR, and inspect #83's final repairs. Do not rebuild delivered components or initial race/read tests. Run npm run dev and inspect /dev/beta; npm run test:e2e:previews covers 320/390/1440px, all nine states, inert checking, native FAQ keyboard behavior, focus clearance and reset. Cite those checks and add only uncovered scenarios or reproduced fixes in your allowed component/e2e/evidence paths. /dev/companion now includes careAvailable. Live /help waits for Larm content and lead routing; Kym's chooser/progression checks wait for her reviewed integration. Use a fresh branch after preserving any unpublished work; do not reuse a merged branch or overwrite lead repairs. Keep exact-request lifecycle evidence and distinguish FICTIONAL UI PREVIEW from SIMULATED WALLET BROWSER REGRESSION. Genuine wallet acceptance and eight B5 runtime cases remain NOT RUN. No live wallet/RPC actions, storage/runtime recovery, hooks/routes/shared types/packages/config changes, paid services, force-pushes or merges. Return a small PR with actual checks, evidence and remaining dependencies for lead review.
+Continue MemePet B2 integration QA from docs/beta/YEEWEI.md and INTEGRATION.md. Preserve local work, then use a fresh test/beta-help-integration branch from reviewed main after the lead Help integration merges. #83/#84/#85 are delivered: do not rebuild them. Inspect actual /help content at 320/390/1440px and keyboard access; cite the existing help.spec.ts and preview suite, adding only uncovered scenarios or reproduced fixes in your allowed components/e2e/evidence paths. Record checkout and runtime identity separately. Kym combined checks await B1 integration. Keep simulated and fictional tests distinct from genuine wallet acceptance; eight B5 cases remain NOT RUN. No hooks/routes/config/dependencies, real wallet actions, paid calls, force-pushes or merges.
 ```

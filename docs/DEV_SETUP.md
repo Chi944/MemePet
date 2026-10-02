@@ -1,5 +1,12 @@
 # MemePet development setup
 
+**Help integration checks:** after a production build, run
+`npm run test:e2e:simulated` for the existing simulated-wallet cases plus
+three explicitly READ-ONLY Help cases at 320/390/1440px. Help uses real copy,
+blocks unexpected API/external requests and must not inspect a wallet.
+Run `npm run test:e2e:previews` separately for fictional development panels.
+Skipped B5 tests do not count as passes or genuine wallet acceptance.
+
 Current setup for the existing Next.js app. Historical scaffolding tasks are complete.
 
 ## Requirements

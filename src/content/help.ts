@@ -25,7 +25,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     question: "What do I need to adopt and care for a pet?",
     answer: paragraphs(
       "A browser wallet extension, such as OKX Wallet or MetaMask, installed and unlocked in the same browser profile as MemePet. If more than one wallet is installed, choose the one you want before connecting. MemePet does not offer QR code or WalletConnect pairing.",
-      "MemePet runs only on X Layer testnet (chain ID 1952). Adopting and caring are transactions, so your wallet needs a small amount of testnet OKB for gas. Testnet OKB has no real value. You can request it from the official X Layer testnet faucet.",
+      "The public MemePet app runs on X Layer testnet (chain ID 1952). Adopting and caring are transactions, so your wallet needs a small amount of testnet OKB for gas. Testnet OKB has no real value. You can request it from the official X Layer testnet faucet.",
       "MemePet will never ask for your seed phrase, private key or wallet password.",
     ),
     links: [OKX_WALLET, METAMASK, FAUCET, NETWORK],
@@ -60,7 +60,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     question: "Why does MemePet say Unknown, and what does Retry do?",
     answer: paragraphs(
       "When the app cannot read X Layer testnet, it shows Unknown instead of guessing or showing 0.",
-      "Retry pet read and Retry community total only read the chain again. They never send a transaction or ask your wallet to sign.",
+      "Retry pet read, Retry community total and the garden's Retry reading button only read the chain again. They never send a transaction or ask your wallet to sign.",
       "If reads keep failing, the testnet connection may be busy. Wait a moment and try again; your pet's confirmed progress is unaffected.",
     ),
   },

@@ -1,0 +1,23 @@
+.content {
+  width: 100%;
+  max-width: 60rem;
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3rem);
+}
+
+.intro {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+}
+
+.intro h1 {
+  margin: 0;
+  font-size: clamp(2.25rem, 6vw, 4.75rem);
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+
+.intro p { margin: 0; }
+.note { color: var(--ink-soft); font-size: 0.875rem; }

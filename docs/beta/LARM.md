@@ -1,16 +1,24 @@
 # Larm — B3 support copy and focused verification
 
-This is deliberately smaller than Kym's and YeeWei's feature lanes. Preserve
-and finish any existing finale combined-QA/runbook work; cite prior evidence
-instead of rerunning every teammate's suite.
+**Current handoff — 2 October:** finale QA/demo-doc PR #86 and B3 content PR
+#87 are merged. Do not recreate their merged branches or rebuild the FAQ.
+The lead preserved the #86 runtime-version discrepancy and the two screenshot
+limitations; those historical observations must not become new verified passes.
+See [progress](../STATUS.md#progress-measurement).
 
-**Branch:** `docs/beta-help-and-acceptance`, from reviewed current main.
-B0 is merged in #80 (`99086a3`), so start now. If this branch already contains
-unpublished work, preserve and continue it; fetch and inspect before reconciling
-main. **Editable:** `src/content/help.ts`, `docs/qa/beta/larm/**`.
+**Next deliverable:** after the lead Help integration merges, inspect `/help`
+on the named release and update only your acceptance index with actual wording
+and link observations. Keep `SUPPORT_URL = null` until a monitored contact is
+explicitly confirmed. Keep UTC as the care rule; describe Kym's local-time label
+only after it ships. Keep planned recovery/milestone paragraphs until the
+corresponding runtime is released, then update them against real behavior.
+Use a fresh `docs/beta-help-release-check` branch after preserving local work.
+
+**Original delivered branch:** `docs/beta-help-and-acceptance` (#87). Do not reuse it.
+Preserve unpublished work before starting the follow-up branch. **Editable:** `src/content/help.ts`, `docs/qa/beta/larm/**`.
 No landing redesign, new feature panel, browser harness or shared hook changes.
 
-## Deliver
+## Original deliverables (completed in #87)
 
 1. Export typed `HELP_ENTRIES` and `SUPPORT_URL` for YeeWei's generic HelpPanel.
    Cover: testnet wallet/gas; one care per UTC day; no missed-day penalty;
@@ -37,5 +45,5 @@ checks and private wallet approvals. No money or messages to outside parties.
 ## Paste this into Larm's agent
 
 ```text
-Continue MemePet B3 using docs/beta/LARM.md. Read AGENTS.md, PROJECT_BRIEF, OWNERSHIP, DEV_SETUP and beta START_HERE/INTEGRATION. B0 is merged in #80 (99086a3); start now. Preserve any unfinished finale QA separately. Fetch origin; continue an active B3 branch or create docs/beta-help-and-acceptance from reviewed origin/main without discarding local work. Edit only src/content/help.ts and docs/qa/beta/larm/**. Export typed HELP_ENTRIES and SUPPORT_URL, keeping the latter null until a monitored contact is confirmed. Verify official guidance links and distinguish on-chain, local, cosmetic and planned behavior; transaction recovery is still gated. Create a concise acceptance index attributing other teammates' evidence accurately and preserving FAIL/NOT RUN. This is a smaller content/verification lane: no feature UI, browser harness, hooks/routes/packages or real wallet actions. Open a small draft PR, run actual checks, and return sources, base/head, evidence and remaining questions. Codex reviews/integrates/merges; do not merge, force-push, spend money or contact outsiders.
+Continue MemePet B3 from docs/beta/LARM.md. #86 and #87 are merged; do not repeat them or reuse those branches. Preserve local work, fetch reviewed main after the lead Help integration merges, and start docs/beta-help-release-check. Inspect /help on its named release; verify rendered wording/official links and update docs/qa/beta/larm/ACCEPTANCE_INDEX.md with actual evidence. Keep SUPPORT_URL null until a monitored contact is confirmed. UTC remains the care rule; local-time labels and planned milestone/recovery copy change only when those features ship. Preserve #86 local-runtime/screenshot limitations and all NOT RUN wallet rows. Edit only src/content/help.ts and docs/qa/beta/larm/**; no UI/hooks/routes/config, wallet actions, paid calls, outside messages, force-pushes or merges. Return a small PR with checked SHA, viewing evidence and remaining gaps.
 ```

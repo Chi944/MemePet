@@ -4,7 +4,57 @@ Updated 2 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Direct pet read retry and beta preview — 2 October, latest checkpoint
+## Help integration and current assignments — 2 October, latest checkpoint
+
+Larm's final QA #86 and B3 content #87 are merged; #87's merge is
+`a92416f`. No open PR remained at that checkpoint. The lead integration connects
+his ten real FAQ entries to YeeWei's HelpPanel at `/help`, adds navigation,
+and preserves narrow-screen layout. Help needs no wallet or chain read.
+Planned features and the unverified support contact remain explicit.
+[Integration evidence](qa/evidence/BETA_HELP_2026-10-02.md) and its linked PR
+record actual checks and release identity. Earlier dated reports below remain
+historical; they are not claims about the latest deployment.
+
+Kym's B1 handoff is not yet visible on a pushed branch/PR; local progress is
+unknown. YeeWei and Larm continue focused release checks from their updated
+briefs, rather than rebuilding merged work. Codex handles integration and
+merges. Final genuine wallet acceptance is **NOT RUN**, and eight B5 runtime
+browser cases remain skipped. No persisted recovery is enabled.
+
+## Progress measurement
+
+These are **planning estimates for the expanded approved testnet scope**,
+weighted by deliverables, not elapsed time, code quality, readiness or mainnet
+completion. They supersede earlier estimates with smaller denominators.
+The Help contribution counts only once its integration checks and merge pass;
+use the integration PR for that gate. Unpublished teammate work is not counted.
+
+| Deliverable | Completed weight / total | Remaining |
+|---|---:|---|
+| Existing core and finale feature implementation | 45 / 45 | Final acceptance is a separate row |
+| B0 shared foundation | 10 / 10 | Complete |
+| B1 onboarding/progression | 0 / 12 verified | Kym handoff and integration; local work unknown |
+| B2 presentation and regression | 6 / 8 | Final combined integration QA |
+| B3 help copy/verification | 3 / 4 | Rendered release follow-up |
+| B4 provider/retry/Help integration | 7 / 9 | B1 component wiring |
+| B5 recovery | 2 / 8 | Runtime and acceptance; gated |
+| Genuine final acceptance, backup and rehearsal | 0 / 4 | Team session |
+| **Overall after checked Help merge** | **73 / 100 — 73%** | Testnet delivery, not mainnet readiness |
+
+| Member's assigned lane | Weighted progress | Next action |
+|---|---:|---|
+| Deston / Codex | 39 / 51 — **76%** | Codex integrates B1 and prepares acceptance; Deston reviews/approves privately and rehearses |
+| Kym | 10 / 22 — **45% verified** | Continue B1; preserve local work and open a small draft PR |
+| YeeWei | 14 / 16 — **88%** | Help release QA, then combined B1 panels |
+| Larm | 10 / 11 — **91%** | Verify rendered Help copy/links and update acceptance index |
+
+The existing finale feature implementation is complete. Added beta engineering
+is 28/51 (about 55%); that does not erase completed finale work. Deston's
+percentage includes work delegated to Codex, not a personal coding obligation.
+Use [current role briefs](beta/START_HERE.md) for paste-ready teammate prompts.
+External agent sessions have not automatically received these updates.
+
+## Direct pet read retry and beta preview — 2 October, earlier checkpoint
 
 YeeWei's evidence-only companion QA PR #84 merged at
 `1a2b120ac408b7e243aaede345c19fdf1f3e4fd5`. It records actual fixture and
@@ -92,7 +142,7 @@ session after the release prerequisites are ready. The
 [session plan](qa/FINAL_WALLET_SESSION.md) now includes explicit provider choice
 and distinguishes reload/reconnection from on-chain pet persistence.
 
-## Wallet selection and current handoffs — 2 October, latest checkpoint
+## Wallet selection and current handoffs — 2 October, earlier checkpoint
 
 The only open PR at this run's start, **#80**, was reviewed and merged at
 `99086a3fa2b20b6179183e560f4816ae4d2e47c6`. Its post-merge CI passed and Vercel
