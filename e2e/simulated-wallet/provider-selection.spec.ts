@@ -89,6 +89,7 @@ for (const width of [390, 1440]) {
     await expect(page.getByRole("radio", { name: "OKX Wallet", exact: true })).toBeEnabled();
     const connect = page.getByRole("button", { name: "Connect wallet", exact: true }).first();
     await expect(connect).toBeDisabled();
+    await expect(page.getByRole("button", { name: "Connect chosen wallet", exact: true })).toBeDisabled();
     await page.screenshot({ path: test.info().outputPath(`wallet-choice-${width}.png`), fullPage: true });
     const calls = () => page.evaluate(() => (window as Window & { __simulatedWallets?: SimulatedControls }).__simulatedWallets!.calls);
     expect(await calls()).toEqual([]);

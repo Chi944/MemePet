@@ -9,7 +9,10 @@ import { PersonalityPanel } from "@/components/pet/PersonalityPanel";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { WalletProviderPicker } from "@/components/ui/WalletProviderPicker";
+import { WalletChooser } from "@/components/onboarding/WalletChooser";
+import { OnboardingPanel } from "@/components/onboarding/OnboardingPanel";
+import { ProgressionPanel } from "@/components/progression/ProgressionPanel";
+import { mapBetaPanelState } from "@/lib/beta-panel-state";
 import { useCommunityStats } from "@/hooks/useCommunityStats";
 import { usePetRegistry } from "@/hooks/usePetRegistry";
 import { useWallet } from "@/hooks/useWallet";
@@ -101,6 +104,16 @@ export function PetLiveClient() {
     ],
   );
 
+  const beta = mapBetaPanelState({ deployment: wallet.deployment, wallet, registry, community: community.community });
+  function retryPetRead() {
+    if (!registry.isSubmitting && !wallet.selectionBusy && !wallet.wrongChain && wallet.address && registry.readStatus === "error") registry.retryPet();
+  }
+  function retryProgression() {
+    if (registry.isSubmitting || wallet.selectionBusy || wallet.wrongChain) return;
+    retryPetRead();
+    if (!community.community.isLoading && community.community.errorMessage) community.retry();
+  }
+
   const celebrate = registry.celebrateStageUp;
 
   return (
@@ -171,37 +184,13 @@ export function PetLiveClient() {
             {community.community.errorMessage} Retry only reads the chain; it does not send a transaction.
           </p>
         ) : null}
-        {!wallet.installed ? (
-          <div className="wallet-setup">
-            <p>Connect with a browser wallet.</p>
-            <a href="https://web3.okx.com/download" target="_blank" rel="noreferrer">
-              Get OKX Wallet <span aria-hidden="true">↗</span>
-            </a>
-            <p className="status-note">
-              Install the extension in this browser, set up and unlock your wallet, then reload this page.
-              Already have one? Check that you are using the same browser profile.
-            </p>
-          </div>
-        ) : null}
-        <WalletProviderPicker
+        <WalletChooser
           choices={wallet.choices}
           selectedId={wallet.selectedId}
           busy={wallet.selectionBusy || registry.isSubmitting}
           onSelect={wallet.selectWallet}
         />
         <div className="pet-gate-actions">
-          {wallet.address && !wallet.wrongChain &&
-          (registry.readStatus === "error" || registry.readStatus === "loading") ? (
-            <Button
-              tone="secondary"
-              aria-disabled={registry.readStatus === "loading" || registry.isSubmitting || wallet.selectionBusy}
-              onClick={() => {
-                if (!registry.isSubmitting && !wallet.selectionBusy && registry.readStatus === "error") registry.retryPet();
-              }}
-            >
-              {registry.readStatus === "loading" ? "Reading pet…" : "Retry pet read"}
-            </Button>
-          ) : null}
           {community.community.errorMessage && !wallet.wrongChain ? (
             <Button tone="secondary" onClick={community.retry}>
               Retry community total
@@ -299,6 +288,17 @@ export function PetLiveClient() {
           />
         </div>
       )}
+      <OnboardingPanel
+        state={beta.onboarding}
+        connectDisabled={wallet.selectionRequired || wallet.selectionBusy || registry.isSubmitting}
+        onConnect={() => {
+          if (!wallet.selectionRequired && !wallet.selectionBusy && !registry.isSubmitting) void wallet.connect();
+        }}
+        onSwitchNetwork={() => {
+          if (!wallet.selectionBusy && !registry.isSubmitting) void wallet.switchNetwork();
+        }}
+        onRetry={retryPetRead}
+      />
       <div className="pet-finale-grid">
         <section className="pet-recap" aria-labelledby="pet-recap-title">
           <div>
@@ -314,6 +314,9 @@ export function PetLiveClient() {
         </section>
         <FinaleCommunitySection {...community.finale} deployment={wallet.deployment} />
       </div>
+      {wallet.address && !wallet.wrongChain ? (
+        <ProgressionPanel {...beta.progression} onRetry={retryProgression} />
+      ) : null}
     </div>
   );
 }

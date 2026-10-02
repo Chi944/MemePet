@@ -1,5 +1,16 @@
 # YeeWei — B2 recovery, help and browser regression
 
+## Current handoff after B1 integration
+
+B1/#90 is merged; the lead integration adds live panels and three new
+simulated account/failure/retry cases plus three fictional preview cases.
+After integration merges, continue `test/beta-help-integration` with a focused
+combined B1/Help release check. Preserve local work and cite existing coverage.
+Do not duplicate the lead's `beta-integration.spec.ts` or `onboarding.spec.ts`.
+Record actual release identity, scope and NOT RUN gaps. B5 remains disabled.
+
+## Earlier requirements and handoffs
+
 **Current handoff — 2 October:** #83 (B2), #84 (finale recap QA) and the lead's
 #85 preview/read-retry integration are merged. Do not restart those branches or
 repeat delivered components. The current Help integration adds `/help` with

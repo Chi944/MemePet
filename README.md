@@ -86,11 +86,11 @@ retention or demand through community testing.
 ## 💡 What MemePet does
 
 - **Adopt** a pet linked to your wallet. One pet per wallet; network gas applies.
-- **Care** once per UTC calendar day through an explicit wallet transaction.
+- **Care** once per UTC calendar day through an explicit wallet transaction, with the next reset also shown in your local time.
 - **Grow** by ten points per confirmed care: Hatchling → Buddy → Guardian.
 - **Revisit earned forms** without changing current growth, stage or care eligibility.
 - **Contribute** one care action to the community total with every confirmed care.
-- **Grow a shared garden** that blooms at 20 lifetime confirmed care actions; a cosmetic app goal.
+- **Grow a shared garden** that blooms at 20 lifetime confirmed care actions, with cosmetic chapters at 20/50/100 and personal milestones at 5/10/20 cares. Totals never reset.
 - **Ask Mochi** for a read-only standard explanation of your progress, next care time or contribution, with the source block displayed and full evidence one click away.
 - **Choose an explanation style** through browser-local Explore/Practise interactions; these never award growth or train a model.
 - **Share** a read-only public pet page with a generated stage-aware share image.

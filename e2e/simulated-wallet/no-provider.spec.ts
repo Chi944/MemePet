@@ -29,7 +29,7 @@ test("SIMULATED: no provider gives setup guidance and failed reads stay unknown"
   await page.goto("/pet");
   await expect(page.getByRole("heading", { name: "Your pet", exact: true })).toBeVisible();
   await expect(page.getByText("Not installed", { exact: true })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Get OKX Wallet" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Official OKX Wallet download" })).toBeVisible();
 
   await page.getByRole("button", { name: "Connect wallet", exact: true }).first().click();
   await expect(page.getByText("No injected wallet was found.", { exact: true })).toBeVisible();

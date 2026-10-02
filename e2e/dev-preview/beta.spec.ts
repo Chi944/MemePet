@@ -63,7 +63,7 @@ for (const width of [320, 390, 1440]) {
           await expect(page.getByText("FICTIONAL_TRANSACTION_NOT_A_HASH", { exact: true })).toHaveCount(0);
         } else {
           await expect(page.getByText("FICTIONAL_TRANSACTION_NOT_A_HASH", { exact: true })).toBeVisible();
-          await expect(page.getByText("Preview data", { exact: true })).toBeVisible();
+          await expect(page.getByText("Fictional recovery example", { exact: true }).locator("..").getByText("Preview data", { exact: true })).toBeVisible();
         }
         if (["idle", "confirmed", "reverted", "cancelled"].includes(value)) {
           await expect(page.getByRole("button", { name: /^(Check status|Checking…)$/ })).toHaveCount(0);
@@ -126,7 +126,7 @@ for (const width of [320, 390, 1440]) {
       await expect(help).toHaveValue("examples");
       await expect(question).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-      await expect(page.locator('a[href^="https:"]')).toHaveCount(0);
+      await expect(page.locator('a[href^="https:"]')).toHaveCount(3);
     });
   });
 }

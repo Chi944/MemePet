@@ -1,5 +1,9 @@
 # YeeWei — a recap judges can read quickly
 
+**Latest:** B1/#90 is merged and the lead has prepared live integration.
+Use [current beta tasks](../beta/START_HERE.md) for release QA and acceptance;
+do not restart delivered feature work.
+
 ## Current assignment — 2 October 2026
 
 F6/#72, evidence-focus/#75, B2/#83 and recap QA/#84 are merged. Review the integrated Help release, then the combined B1 panels after Kym hands them off. Cite existing regression coverage rather than duplicating it.

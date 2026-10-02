@@ -32,7 +32,27 @@ describe("OnboardingPanel", () => {
     expect(screen.queryByText(/Use the adoption action/)).not.toBeInTheDocument();
     expect(screen.getAllByRole("button")).toHaveLength(1);
   });
-  it.each(["connecting", "loading", "adopt", "ready"] as const)("does not duplicate primary actions in %s", (fixture) => {
+  it("keeps retry focus while loading and refuses another activation", () => {
+    const props = callbacks();
+    const { rerender } = render(<OnboardingPanel state={onboardingFixtures.unavailable} {...props} />);
+    const retry = screen.getByRole("button", { name: "Retry pet read" });
+    retry.focus();
+    rerender(<OnboardingPanel state={onboardingFixtures.loading} {...props} />);
+    expect(retry).toHaveFocus();
+    expect(retry).toHaveTextContent("Reading pet…");
+    expect(retry).toHaveAttribute("aria-disabled", "true");
+    fireEvent.click(retry);
+    expect(props.onRetry).not.toHaveBeenCalled();
+  });
+  it("does not connect before an explicit provider choice is available", () => {
+    const props = callbacks();
+    render(<OnboardingPanel state={onboardingFixtures.connect} connectDisabled {...props} />);
+    const connect = screen.getByRole("button", { name: "Connect chosen wallet" });
+    expect(connect).toBeDisabled();
+    fireEvent.click(connect);
+    expect(props.onConnect).not.toHaveBeenCalled();
+  });
+  it.each(["connecting", "adopt", "ready"] as const)("does not duplicate primary actions in %s", (fixture) => {
     render(<OnboardingPanel state={onboardingFixtures[fixture]} {...callbacks()} />);
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });

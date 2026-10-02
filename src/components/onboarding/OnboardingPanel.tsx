@@ -53,7 +53,7 @@ function LocalCareReset({ iso }: { readonly iso: string }) {
   </p>;
 }
 
-export function OnboardingPanel({ state, onConnect, onSwitchNetwork, onRetry }: OnboardingPanelProps) {
+export function OnboardingPanel({ state, onConnect, onSwitchNetwork, onRetry, connectDisabled = false }: OnboardingPanelProps) {
   const id = useId();
   const copy = COPY[state.kind];
   const xLayerTestnet = state.isTestnet && /x layer/i.test(state.networkLabel) && state.gasSymbol === "OKB";
@@ -65,9 +65,9 @@ export function OnboardingPanel({ state, onConnect, onSwitchNetwork, onRetry }: 
       {state.kind === "unavailable" && <p className={styles.message} role="status">{state.message}</p>}
       {state.kind === "cooldown" && <LocalCareReset iso={state.availableAtIso} />}
       <div className={styles.actions}>
-        {state.kind === "needs-connection" && <Button onClick={() => onConnect()}>Connect chosen wallet</Button>}
+        {state.kind === "needs-connection" && <Button disabled={connectDisabled} onClick={() => { if (!connectDisabled) onConnect(); }}>Connect chosen wallet</Button>}
         {state.kind === "wrong-network" && <Button onClick={() => onSwitchNetwork()}>Switch to {state.networkLabel}</Button>}
-        {state.kind === "unavailable" && <Button tone="secondary" onClick={() => onRetry()}>Retry pet read</Button>}
+        {(state.kind === "unavailable" || state.kind === "loading") && <Button tone="secondary" aria-disabled={state.kind === "loading"} onClick={() => { if (state.kind === "unavailable") onRetry(); }}>{state.kind === "loading" ? "Reading pet…" : "Retry pet read"}</Button>}
       </div>
       <p className={styles.note}>One care per UTC calendar day. Local time is a guide; confirmed network state determines when you can care. No missed-day loss.</p>
       <details className={styles.guidance} open={state.kind === "needs-wallet" ? true : undefined}>

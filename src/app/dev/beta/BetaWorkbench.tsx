@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { recoveryFixtures } from "@/fixtures/beta-fixtures";
 import styles from "./beta.module.css";
+import { OnboardingWorkbench } from "./OnboardingWorkbench";
 
 type RecoveryKey = keyof typeof recoveryFixtures;
 type HelpKey = "examples" | "empty";
@@ -120,6 +121,7 @@ export function BetaWorkbench() {
           <HelpPanel key={resetVersion} entries={helpKey === "examples" ? helpExamples : []} supportUrl={null} />
         </div>
       </div>
+      <OnboardingWorkbench key={resetVersion} />
     </main>
   );
 }

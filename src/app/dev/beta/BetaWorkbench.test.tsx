@@ -1,9 +1,9 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { BetaWorkbench } from "./BetaWorkbench";
 
 describe("beta development preview (fictional inputs only)", () => {
-  it("labels the preview and provides all recovery examples without an external link", () => {
+  it("labels the preview and provides all recovery examples without a transaction explorer link", () => {
     render(<BetaWorkbench />);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByText("UI preview — fictional data")).toBeInTheDocument();
@@ -11,7 +11,8 @@ describe("beta development preview (fictional inputs only)", () => {
     expect(select.querySelectorAll("option")).toHaveLength(9);
     expect(select).toHaveValue("pending");
     expect(screen.getByRole("heading", { name: "Waiting for confirmation" })).toBeInTheDocument();
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    expect(within(screen.getByRole("region", { name: "Waiting for confirmation" })).queryByRole("link")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("link")).toHaveLength(3);
   });
 
   it("counts callback inspections without changing the simulated transaction outcome", () => {

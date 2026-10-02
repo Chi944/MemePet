@@ -32,6 +32,8 @@ export type OnboardingState = {
 );
 
 export interface OnboardingPanelProps {
+  /** Discovery must resolve an explicit provider before a connection is offered. */
+  readonly connectDisabled?: boolean;
   readonly state: OnboardingState;
   readonly onConnect: () => void;
   readonly onSwitchNetwork: () => void;

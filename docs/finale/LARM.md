@@ -1,5 +1,9 @@
 # Larm — finale presentation and recovery readiness
 
+**Latest:** B1/#90 is merged and the lead has prepared live integration.
+Use [current beta tasks](../beta/START_HERE.md) for release QA and acceptance;
+do not restart delivered feature work.
+
 ## Current assignment — 2 October 2026
 
 F7/#70, finale QA/#86 and B3 help content/#87 are merged. Verify real Help wording/links after integration and maintain the acceptance index. Preserve the runtime-version discrepancy and screenshot limits in dated finale evidence.

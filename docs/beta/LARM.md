@@ -1,5 +1,15 @@
 # Larm — B3 support copy and focused verification
 
+## Current handoff after B1 integration
+
+B1/#90 is merged; the lead integration updates Help from planned milestones
+to actual cosmetic milestones and explains the local reset label. After that
+release merges, continue `docs/beta-help-release-check` and verify these exact
+rendered claims, official links and the acceptance index. Recovery still says
+planned; support stays unavailable. Preserve all genuine-wallet NOT RUN rows.
+
+## Earlier requirements and handoffs
+
 **Current handoff — 2 October:** finale QA/demo-doc PR #86 and B3 content PR
 #87 are merged. Do not recreate their merged branches or rebuild the FAQ.
 The lead preserved the #86 runtime-version discrepancy and the two screenshot

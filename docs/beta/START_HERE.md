@@ -1,5 +1,15 @@
 # Testnet beta: four people, independent build lanes
 
+## Current handoff after B1 integration
+
+Kym B1/#90 is merged. The lead integration completes B4's live chooser,
+onboarding/local reset and progression wiring. Kym has a focused release check,
+YeeWei combined-panel QA, and Larm rendered copy/link verification. Use the
+named role briefs; completed feature branches should not be rebuilt. Remaining
+work is acceptance/release QA and B5 after its gate, then backup/rehearsal.
+
+## Earlier requirements and handoffs
+
 Approved by Deston on **2 October 2026**, after the finale feature handoff.
 This is additional scope, not unfinished work retroactively assigned to the
 finale. Preserve the existing release and its dated evidence. Final genuine
