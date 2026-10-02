@@ -4,7 +4,33 @@ Updated 2 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Beta integration preparation — 2 October, latest checkpoint
+## B2 review and integration checks — 2 October, latest checkpoint
+
+Lead preparation PR #82 merged at `16da0bae3ef54719819222a5550954be217fb16f`.
+Its post-merge CI passed and Vercel resolved the public alias to READY deployment
+`dpl_8VvjipqmA6hYFokhqNQVZtafAtPC` at that SHA.
+
+YeeWei delivered B2 in PR #83: recovery/help presentation and broader simulated
+browser regressions. Lead review corrected two test issues: fulfillment was
+being mistaken for browser delivery, and pet/recap fixtures disagreed about
+care eligibility. New assertions cover visible eligibility and read-only
+provider calls. The final PR records the reviewed head and merge/deployment.
+
+Combined verification: **623 app tests / 49 files, 22 helper checks,
+typecheck, lint and production build passed**. The simulated browser suite
+passed **15 cases**, with **8 explicitly unrun B5 cases**. Real wallet
+acceptance remains **NOT RUN**. See the
+[B2 report](qa/beta/yeewei/B2_REGRESSION_2026-10-02.md) for corrected evidence.
+The new Help/recovery panels are not routed yet; their component tests do not
+establish live integration or transaction recovery after refresh.
+
+Kym continues B1; Larm continues B3. YeeWei can retain her B2 handoff and wait
+for the lead's panel preview/live adapters before the next browser extension
+of her suite. Deston has no routine coding task: forward the existing briefs
+if needed, then perform private wallet approvals and final checks in the
+coordinated session. B5 runtime stays disabled until that acceptance.
+
+## Beta integration preparation — 2 October, earlier checkpoint
 
 PR #81 is merged at `6f6a6c47e2dd2e304cb9dcaf53a9b145281d7332`; exact-head
 and main CI passed. Vercel resolved the public alias to READY deployment

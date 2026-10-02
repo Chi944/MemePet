@@ -73,7 +73,7 @@ test.describe(`${SIMULATED_LABEL}: same address, different provider`, () => {
   });
 
   test("SIMULATED: a failed read under one provider is not shown after switching", async ({ page }) => {
-    await twoWallets(page);
+    const wallets = await twoWallets(page);
     const ui = petPage(page);
     chain.setPet(ACCOUNT_A, "fail");
 
@@ -87,5 +87,6 @@ test.describe(`${SIMULATED_LABEL}: same address, different provider`, () => {
     await expect(ui.pet).toHaveText("Adopted");
     await expect(ui.growth).toHaveText("30 growth points");
     await expect(page.getByText("Pet data could not be loaded. No preview data is shown.")).toHaveCount(0);
+    expect((await wallets.calls()).filter(({ method }) => WRITE_OR_SIGN.test(method))).toEqual([]);
   });
 });

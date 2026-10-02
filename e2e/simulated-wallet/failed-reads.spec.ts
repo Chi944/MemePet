@@ -22,7 +22,7 @@ test.describe(`${SIMULATED_LABEL}: failed reads and read-only retry`, () => {
   }
 
   test("SIMULATED: failed pet, community and recap reads stay unknown, not zero or no-pet", async ({ page }) => {
-    await walletA(page);
+    const wallets = await walletA(page);
     chain.setPet(ACCOUNT_A, "fail");
     chain.communityTotal = "fail";
     const ui = petPage(page);
@@ -42,10 +42,11 @@ test.describe(`${SIMULATED_LABEL}: failed reads and read-only retry`, () => {
     await expect(ui.garden).toHaveCount(0);
     await expect(page.getByText(/^0 confirmed care actions$/)).toHaveCount(0);
     await page.screenshot({ path: test.info().outputPath("failed-reads-1280.png"), fullPage: true });
+    expect((await wallets.calls()).filter(({ method }) => WRITE_OR_SIGN.test(method))).toEqual([]);
   });
 
   test("SIMULATED: a genuine no-pet and a zero total render differently from failures", async ({ page }) => {
-    await walletA(page);
+    const wallets = await walletA(page);
     chain.setPet(ACCOUNT_A, "no-pet");
     chain.communityTotal = 0;
     const ui = petPage(page);
@@ -56,6 +57,7 @@ test.describe(`${SIMULATED_LABEL}: failed reads and read-only retry`, () => {
     await expect(ui.communityCares).toHaveText("0");
     await expect(page.getByText("0 confirmed care actions", { exact: true })).toBeVisible();
     await expect(ui.recap.getByText("No pet found in this wallet at the checked registry.")).toBeVisible();
+    expect((await wallets.calls()).filter(({ method }) => WRITE_OR_SIGN.test(method))).toEqual([]);
   });
 
   test("SIMULATED: retry recovers each panel by reading only", async ({ page }) => {

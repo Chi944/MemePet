@@ -5,7 +5,7 @@
  * production build. Every non-local request is blocked and recorded. Nothing
  * here signs, submits or reaches a public network.
  */
-import { expect, type Page, type Route } from "@playwright/test";
+import { expect, type Page, type Request, type Route } from "@playwright/test";
 import { decodeFunctionData, encodeFunctionResult, getAddress, type Hex } from "viem";
 import { DEPLOYMENT } from "../../../src/lib/deployment";
 import { petRegistryAbi } from "../../../src/lib/pet-registry-abi";
@@ -64,7 +64,12 @@ export class SimulatedChain {
   readonly requests: SimulatedRequest[] = [];
   readonly blocked: string[] = [];
   private readonly holds: Hold[] = [];
-  private readonly settledByHold = new Map<Hold, (value: "delivered" | "aborted") => void>();
+  private readonly pendingDeliveries = new Set<Hold>();
+  private readonly deliveryErrors: string[] = [];
+  private readonly settledByHold = new Map<Hold, {
+    resolve: (value: "delivered" | "aborted") => void;
+    reject: (error: Error) => void;
+  }>();
 
   setPet(address: string, answer: PetAnswer, options: { companion?: boolean } = {}) {
     this.pets.set(address.toLowerCase(), answer);
@@ -86,7 +91,10 @@ export class SimulatedChain {
       match: (request) => request.kind === kind && (address === undefined || request.address === address.toLowerCase()),
       arrived, released, markArrived, release, taken: false,
     };
-    const settled = new Promise<"delivered" | "aborted">((resolve) => this.settledByHold.set(hold, resolve));
+    const settled = new Promise<"delivered" | "aborted">((resolve, reject) => this.settledByHold.set(hold, { resolve, reject }));
+    // A held request can fail before the scenario awaits it. Keep the original
+    // promise rejecting for that assertion without an unhandled-rejection race.
+    void settled.catch(() => {});
     this.holds.push(hold);
     return { arrived, release, settled };
   }
@@ -118,14 +126,58 @@ export class SimulatedChain {
       return;
     }
     hold.taken = true;
+    const transportRequest = route.request();
+    const page = transportRequest.frame().page();
+    const completion = this.settledByHold.get(hold)!;
+    this.pendingDeliveries.add(hold);
+    let complete = false;
+    const cleanup = () => {
+      if (timer !== undefined) clearTimeout(timer);
+      page.off("requestfinished", onFinished);
+      page.off("requestfailed", onFailed);
+      page.off("close", onClose);
+      this.pendingDeliveries.delete(hold);
+      this.settledByHold.delete(hold);
+    };
+    const finish = (result: "delivered" | "aborted") => {
+      if (complete) return;
+      complete = true;
+      cleanup();
+      completion.resolve(result);
+    };
+    const fail = (error: unknown) => {
+      const failure = error instanceof Error ? error : new Error(String(error));
+      this.deliveryErrors.push(failure.message);
+      if (complete) return;
+      complete = true;
+      cleanup();
+      completion.reject(failure);
+    };
+    const onFinished = (candidate: Request) => {
+      if (candidate === transportRequest) finish("delivered");
+    };
+    const onFailed = (candidate: Request) => {
+      if (candidate !== transportRequest) return;
+      const failure = candidate.failure()?.errorText ?? "Unknown request failure";
+      if (/abort|cancel/i.test(failure)) finish("aborted");
+      else fail(new Error(`SIMULATED held ${request.kind} request failed unexpectedly: ${failure}`));
+    };
+    const onClose = () => fail(new Error(`SIMULATED page closed before held ${request.kind} request settled`));
+    // Register before the test can change account and abort the request.
+    // route.fulfill() may resolve even after browser cancellation; only the
+    // exact Request's network events establish delivery versus abortion.
+    page.on("requestfinished", onFinished);
+    page.on("requestfailed", onFailed);
+    page.on("close", onClose);
+    const timer = setTimeout(() => fail(new Error(`SIMULATED held ${request.kind} request did not settle within 10 seconds`)), 10_000);
     hold.markArrived();
     await hold.released;
     try {
       await respond();
-      this.settledByHold.get(hold)?.("delivered");
-    } catch {
-      // The page may abort a superseded fetch; that is a valid stale-reply guard.
-      this.settledByHold.get(hold)?.("aborted");
+    } catch (error) {
+      // A fulfilment/harness error is not evidence of a valid app abort.
+      fail(error);
+      throw error;
     }
   }
 
@@ -195,6 +247,8 @@ export class SimulatedChain {
   /** Assert that nothing unexpected left the browser. */
   expectNoUnexpectedTraffic() {
     expect(this.blocked, "unexpected requests were blocked").toEqual([]);
+    expect(this.deliveryErrors, "held response delivery must be observed without harness failures").toEqual([]);
+    expect(this.pendingDeliveries.size, "every arrived held response must finish or abort").toBe(0);
   }
 }
 
@@ -214,8 +268,8 @@ function companionBody(address: string, answer: Exclude<PetAnswer, "fail">, comm
   const scope = { chainId: CHAIN_ID, walletAddress: getAddress(address), registryAddress: REGISTRY };
   if (answer === "no-pet") return { schemaVersion: 1, scope, facts: { kind: "no-pet", dataMode: "live" } };
   const blockIso = new Date(BLOCK_TIME_MS).toISOString();
-  const nextCareAtIso = answer === 0 ? blockIso
-    : new Date((Math.floor(BLOCK_TIME_MS / 86_400_000) + 1) * 86_400_000).toISOString();
+  // Match the RPC fixture: an existing pet last cared yesterday (or never).
+  const nextCareAtIso = blockIso;
   return {
     schemaVersion: 1,
     scope,
@@ -227,7 +281,7 @@ function companionBody(address: string, answer: Exclude<PetAnswer, "fail">, comm
         walletAddress: getAddress(address), chainId: CHAIN_ID, registryAddress: REGISTRY,
         blockNumber: BLOCK_NUMBER.toString(), blockTimestampIso: blockIso, observedAtIso: blockIso,
         careCount: answer, ...mapConfirmedPetProgress(answer), nextCareAtIso,
-        communityTotalCares: communityTotal === null ? null : Math.max(communityTotal, answer),
+        communityTotalCares: communityTotal,
       },
     },
   };

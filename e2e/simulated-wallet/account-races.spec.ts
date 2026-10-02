@@ -100,5 +100,6 @@ test.describe(`${SIMULATED_LABEL}: account changes and stale answers`, () => {
     await expect(ui.pet).toHaveText("Connect to view");
     await expect(ui.growth).toHaveCount(0);
     await expect(ui.recap.getByText("Connect a wallet to read MemePet activity.")).toBeVisible();
+    expect((await wallets.calls()).filter(({ method }) => WRITE_OR_SIGN.test(method))).toEqual([]);
   });
 });

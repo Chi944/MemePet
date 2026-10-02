@@ -49,11 +49,17 @@ requests are rejected and recorded.
 
 | Spec | Covered (SIMULATED) |
 |---|---|
-| `account-races.spec.ts` | A → B and A → B → A with A's pet/recap answers delivered late; emptied account list |
+| `account-races.spec.ts` | A → B and A → B → A with held old answers; pet delivery and recap delivery/abort observed from exact request events; emptied account list |
 | `failed-reads.spec.ts` | Failed pet/community/recap reads stay unknown; genuine no-pet and zero total differ; read-only retry recovery |
 | `combined-panels.spec.ts` | Pet, recap (and its evidence) and garden agree for A then B; failed community read is unknown everywhere; 390px and 1440px |
 | `same-address-provider.spec.ts` | Same address/chain via a second provider: old late answers and old failures do not carry across |
 | `recovery-refresh.spec.ts` | **NOT RUN / fixme** until the lead's gated B5 recovery adapter lands |
+
+Held-response fulfillment is not evidence of browser delivery. The harness
+observes the exact request's finished/failed events, fails unexpected errors
+and unfinished holds, and records aborted recaps separately. An aborted recap
+proves cancellation/isolation; it does not prove an old body reached React.
+Combined-panel cases also compare care eligibility, not only displayed counts.
 
 The pet read has no manual retry; its recovery test advances the page clock to
 the existing 30-second refresh. Kym's `WalletChooser` route integration and a
