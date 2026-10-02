@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useWallet } from "@/hooks/useWallet";
 
 type Handler = (args: { method: string; params?: unknown }) => Promise<unknown>;
@@ -17,7 +17,7 @@ function Probe() {
   return (
     <div>
       <button onClick={() => void wallet.switchNetwork()}>switch</button>
-      <span data-testid="installed">{String(wallet.installed)}</span>
+      <span data-testid="chain">{wallet.chainId ?? ""}</span>
       <span data-testid="error">{wallet.errorMessage ?? ""}</span>
     </div>
   );
@@ -58,10 +58,10 @@ describe("useWallet.switchNetwork add-chain rejection", () => {
     // Let the mount-time wallet snapshot settle first; otherwise it resolves
     // after the click and overwrites the error state under test.
     await waitFor(() => {
-      expect(screen.getByTestId("installed").textContent).toBe("true");
+      expect(screen.getByTestId("chain").textContent).toBe("1");
     });
 
-    screen.getByRole("button", { name: "switch" }).click();
+    fireEvent.click(screen.getByRole("button", { name: "switch" }));
 
     await waitFor(() => {
       expect(screen.getByTestId("error").textContent).toMatch(/rejected|could not be added/i);
