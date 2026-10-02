@@ -4,7 +4,11 @@ Likely questions after the three-minute demo, each with a short answer the
 team can say as written. Every answer points to its source. Where something is
 not done or not known, the answer says so.
 
-Written against `7d4144b` on 1 October 2026. Numbers change: **read live
+Written against `7d4144b` on 1 October 2026; updated with 2 October hosted
+observations ([F7 combined QA](COMBINED_QA_2026-10-02.md)). That run did not
+independently resolve the public alias to a commit, and its local runtime
+version remains unresolved; the report preserves those limits.
+Dated figures keep their dates. Numbers change: **read live
 numbers off the screen**, not from this sheet. Words to avoid are in
 [`FINALE_RUNBOOK.md`](FINALE_RUNBOOK.md#words-to-use-words-to-avoid).
 
@@ -19,6 +23,12 @@ Source: `docs/STATUS.md`, `INTEGRATED_QA_2026-09-30.md`. The three demo
 accounts have cared twice each, so they account for at least six of the
 seven on 1 October. The other one is not attributed in our records. If asked,
 say exactly that.
+
+Later reading: on 2 October at 08:07 UTC the counter read **12** (block
+42 469 608). Of the five care actions since the reading of 7, one is the
+stage pet's care on 1 October at 16:34 UTC (block 42 413 656); the others are
+not attributed in our records. Do not call them team or community cares.
+On stage, read the live number off the screen.
 
 **"Isn't the garden easy to fake with lots of wallets?"**
 > Yes. Anyone can make many wallets, and that's why we call it care actions
@@ -47,7 +57,8 @@ Source: README "Product scope", "Roadmap". Do not improvise revenue numbers.
 
 **"Where's the AI? Does Mochi learn?"**
 > Mochi's answers are standard explanations built from your confirmed
-> on-chain activity, and each shows the block it was read from. Explore and
+> on-chain activity, and each shows the block it was read from (open
+> "View verified evidence"). Explore and
 > Practise only change the explanation style. Nothing is trained, and no model
 > writes the answer.
 
@@ -114,13 +125,15 @@ note.
 >
 > - Automatic refresh of the shared total has returned Unknown before. The
 >   app shows Unknown instead of a number. Retry recovered it in our recorded
->   test; persistent failures remain unknown.
+>   tests; persistent failures remain unknown.
 > - We haven't yet seen, on this release, the page update by itself after a
 >   new care.
 > - There is no security audit.
 
-Source: README "Known limitations"; `COMMUNITY_INITIAL_READ_2026-09-30.md`. Say
-it plainly; it shows the honesty design.
+Source: README "Known limitations"; `COMMUNITY_INITIAL_READ_2026-09-30.md`;
+the reported 2 October local recovery check in `COMBINED_QA_2026-10-02.md`
+(its installed runtime version remains unresolved). Say it plainly; it
+shows the honesty design.
 
 ## Check it yourself (30 seconds)
 
@@ -135,7 +148,9 @@ For "how do we know these numbers are real?":
    ```
 
    Checked on 1 October: returned `careCount 2` and `communityTotalCares 7` at
-   block 42 359 328.
+   block 42 359 328. Checked on 2 October at 08:07 UTC: `careCount 3`,
+   `growthPoints 30`, `stage buddy` and `communityTotalCares 12` at block
+   42 469 610, with `source: standard`.
 3. **The registry on the explorer:** `0xe844152262D243a7B90F6e07FF7A67F1d7FeD216`
    on X Layer testnet. If the explorer shows a login page, reload; don't log in
    on stage.

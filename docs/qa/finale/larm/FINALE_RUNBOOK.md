@@ -33,9 +33,10 @@ the 7th fall on the previous UTC day and do not block the pitch.
 |---|---|---|
 | 2026-09-30 02:59:56 UTC, block 42 278 359 | **4** | `node docs/qa/counter-check.mjs` |
 | 2026-09-30 17:45:35 UTC, block 42 331 498 | **7** | `node docs/qa/counter-check.mjs` |
+| 2026-10-02 08:07:25 UTC, block 42 469 608 | **12** | `node docs/qa/counter-check.mjs` ([F7 combined QA](COMBINED_QA_2026-10-02.md)) |
 
-Blooming needs 20. At the recorded total of 7, 13 more genuine confirmed
-cares remain. Each wallet can care at most once per UTC day. Use the actual
+Blooming needs 20. At the latest recorded total of 12 (2 October), 8 more
+genuine confirmed cares remain. Each wallet can care at most once per UTC day. Use the actual
 total on stage; this table is a dated observation, not a forecast.
 
 - **Show the garden as it really is** — the true total, sprouting, with how
@@ -46,16 +47,24 @@ total on stage; this table is a dated observation, not a forecast.
   Chain evidence is in `INTEGRATED_QA_2026-09-30.md`; Deston's prior account
   attribution is recorded in [the lead's read-recovery evidence](../../evidence/COMMUNITY_INITIAL_READ_2026-09-30.md).
   These are team cares, not evidence of outside-user adoption.
+- The later rise from 7 to 12 is **not attributed** in our records, apart
+  from one care by the stage pet `0xb7E6…7B3a` on 1 October at 16:34 UTC
+  (block 42 413 656). Do not call the rest team or community cares without
+  event evidence; say "care actions".
 - The fictional preview at `/dev/community` shows a bloom, but it is a labelled
   fixture and `/dev/*` is 404 in production. Never present it as live.
 
 ## Three-minute flow (proposal)
 
-Written for the release at `7d4144b`. Labels in quotes are the app's own text.
-**Recheck the recap labels after YeeWei's F6 merges**, because F6 reworks that
-panel. F6 is planned to move "Read block" into a closed "View verified evidence"
-disclosure; if it does, open that disclosure before pointing at the block
-(`COMBINED_REGRESSION_CHECKLIST.md`, row S1).
+Checked against hosted observations on 2 October in
+[F7 combined QA](COMBINED_QA_2026-10-02.md). GitHub listed deployment
+6803705884 for `5a84e23`, but that run did not independently resolve the
+public alias to a commit. Its local runtime version also remains unresolved.
+Labels in quotes are the app's own text. F6 is merged: "Read block" now sits
+inside the closed **View verified evidence** disclosure, so **open it before
+pointing at the block** (checklist row S1). The closed recap already shows
+"Confirmed at block N". Recheck these labels on the release Codex names for
+the finale if it differs.
 
 The care confirmation is the only step whose length we do not control. Its
 slot below is a **buffer**, not a measurement. Time it in the rehearsal, from
@@ -68,9 +77,14 @@ testnet produced roughly one block per second; that is not a receipt time.
 | 0:20–0:40 | Pet home `/pet`, connected | The real pet: stage, growth points, "Ready" in **Daily care**. *"Care history comes from the X Layer testnet registry; growth is derived from confirmed cares."* |
 | 0:40–1:30 | **Daily care** | Press care. In the wallet: approve (Deston only). The badge moves "In your wallet" → "Pending" → "Confirmed". **This is the buffer.** While it is pending, say: *"No progress is awarded until the receipt confirms."* When it confirms: "Care is confirmed. Your pet's progress is up to date." Expected: growth **+10** (automatic read-back on this release is still NOT RUN; check in rehearsal) |
 | 1:30–1:55 | Garden (same page) | Expected: the garden total is one higher. **The automatic garden update after a new care has not been observed live yet** (QA row X3), so check it in the rehearsal. If it has not moved, press **Retry reading** once. *"Every confirmed care adds one here. It counts care actions, not people. At 20 the garden blooms. It's a goal inside the app: no token, no reward. We're at [read it off the screen]."* One line for the reference: *"Themed around XDOG, an X Layer meme community. A reference, not a partnership."* |
-| 1:55–2:20 | **Read-only recap** | Ask "Explain progress". Point at the label **"Standard explanation"** and at "Read block" / "Block time". *"Every answer is a standard explanation of confirmed activity, and it shows the block it was read from."* |
-| 2:20–2:50 | **Mochi, your way** | With that answer still on screen, press "Explore" or "Practise". The style line changes (curious when Explore leads, focused when Practise leads, playful when balanced) and the same answer is reworded, with the same facts and the same Read block. *"This changes how Mochi explains, not the facts. It is stored only in this browser, earns no growth and trains no model."* |
+| 1:55–2:20 | **Read-only recap** | Ask "Explain progress". Point at the label **"Standard explanation"**. Open **View verified evidence** (click, or Enter on the summary), then point at "Read block" / "Block time". *"Every answer is a standard explanation of confirmed activity, and it shows the block it was read from."* Leave the evidence open for the next beat |
+| 2:20–2:50 | **Mochi, your way** | With that answer still on screen, press "Explore" or "Practise". The style line changes (curious when Explore leads, focused when Practise leads, playful when balanced) and the same answer is reworded, with the same facts and the same Read block (still visible in the open evidence). *"This changes how Mochi explains, not the facts. It is stored only in this browser, earns no growth and trains no model."* |
 | 2:50–3:00 | — | Close. If the care did not confirm, say so and use the backup (below) |
+
+Optional, only if ahead of time (about 10 s): on the pet, select the earned
+Hatchling form. The notice reads "Viewing Hatchling · Your current stage is
+Buddy" (for a Buddy) while growth stays unchanged; "Return to current form"
+restores it. It shows earned forms without inventing history.
 
 If the care is still pending at 1:30, go on to the garden and the explanation
 style, then come back to **Daily care** at the end. Whether the page shows the
@@ -106,6 +120,9 @@ reload while the care is pending.
 - [ ] Browser zoom and font size are legible from the back of a room. Start
       from **150% browser zoom on a 1920×1080 output** (125–150% on 1440×900);
       layout was checked at these zooms in `READABILITY_QA_2026-10-01.md`.
+      On 2 October an emulated 150% layout check on 1920×1080 found no
+      overflow and smallest text about 15 px of output (about 10 px at
+      100%); the projector check remains a rehearsal task.
       Set it with Ctrl +/−, not the OS display settings.
 - [ ] Pitch wording reflects the documented team demo cares. Attribute any
       later increase separately; the counter counts actions, not people.
@@ -114,9 +131,9 @@ reload while the care is pending.
       and set the 0:40–1:30 buffer from it. Also note whether growth and the
       garden total updated **without a reload** (QA row X3); if not, plan the
       Retry press into the script.
-- [ ] Recap labels rechecked after F6 merges ("Explain progress",
-      "Standard explanation", "Read block"); this runbook updated if they
-      changed.
+- [ ] Recap labels rechecked on the named release. Verified on 2 October
+      (fixture): "Explain progress", "Next care time", "Contribution",
+      "Standard explanation", "View verified evidence" → "Read block".
 
 ### Morning of 7 October
 
@@ -141,7 +158,7 @@ Decide fast. Do not debug on stage.
 | What happens | What to do |
 |---|---|
 | Venue Wi-Fi is down | Switch to the pre-tested hotspot. If it is still down after ~10 s, go to the backup recording |
-| Community total shows **Unknown** or "could not be loaded" | Classified temporary read failures receive up to two automatic retries (#64). Unknown alone does not establish the cause or prove retries ran. Say *"the total is unverified, so the app does not invent a number."* Press **Retry reading** once. If it stays unavailable, carry on, or go to the backup |
+| Community total shows **Unknown** or "could not be loaded" | Classified temporary read failures receive up to two automatic retries (#64). Unknown alone does not establish the cause or prove retries ran. Say *"the total is unverified, so the app does not invent a number."* Press **Retry reading** once. (Larm's 2 October local report records recovery without a reload; its installed runtime version remains unresolved.) If it stays unavailable, carry on, or go to the backup |
 | Mochi is not moving | Check "Animate Mochi" — it was probably switched off earlier. One press turns it on. It changes only the artwork, never the pet's data |
 | Wallet prompt does not appear | Do not wait more than ~15 s. Move on; show the confirmed part from the backup |
 | Transaction stays pending | Say *"progress appears only after the receipt confirms"* — true, and a feature. Continue the talk and come back; if it has not confirmed by the end, the backup shows a confirmed care |
