@@ -6,7 +6,7 @@ const root = fileURLToPath(new URL("../../../../", import.meta.url));
 const server = await createServer({
   root, configFile: false,
   resolve: { alias: { "@": `${root}src` } },
-  server: { host: "127.0.0.1", port: 3421, strictPort: true },
+  server: { host: "127.0.0.1", port: 3421, strictPort: true, watch: { ignored: ["**/.next/**"] } },
   optimizeDeps: { entries: ["docs/qa/beta/kym/preview.html"] },
 });
 await server.listen();
