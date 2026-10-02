@@ -9,6 +9,7 @@ import { chainFromDeployment } from "./chains";
 import { getActiveDeployment, isRegistryConfigured } from "./deployment";
 import { mapPetOfToViewModel } from "./map-pet";
 import { petRegistryAbi, type PetOfResult } from "./pet-registry-abi";
+import { readWithBudget, RPC_READ_HTTP_OPTIONS } from "./read-budget";
 import type { PetViewModel } from "@/types/view-models";
 
 export type PublicPetSnapshot =
@@ -111,17 +112,20 @@ export async function readPublicPet(owner: Address): Promise<PublicPetSnapshot> 
   }
 
   try {
+    const registryAddress = getAddress(deployment.registryAddress);
     const publicClient = createPublicClient({
       chain,
-      transport: http(deployment.rpcUrl),
+      transport: http(deployment.rpcUrl, RPC_READ_HTTP_OPTIONS),
     });
 
-    const result = await publicClient.readContract({
-      address: getAddress(deployment.registryAddress),
+    const result = await readWithBudget(() => publicClient.readContract({
+      address: registryAddress,
       abi: petRegistryAbi,
       functionName: "petOf",
       args: [owner],
-    });
+    }));
+
+    if (!result) return toPublicPetSnapshot(owner, { ok: false });
 
     const mappedRaw: PetOfResult = {
       exists: result[0],

@@ -4,6 +4,12 @@ Read `docs/PROJECT_BRIEF.md`, `docs/OWNERSHIP.md`, `docs/DEV_SETUP.md` and the a
 
 For the approved finale extension, start at `docs/finale/START_HERE.md` and your named role sheet. This scope supersedes the old blanket chatbot exclusion only for the bounded, read-only MemePet companion described there.
 
+**Current assignment override — 2 October 2026:** new beta work starts at
+`docs/beta/START_HERE.md` and the named beta brief. Kym/YeeWei have larger feature
+lanes; Larm has the smaller content/QA lane. Keep outstanding finale acceptance
+separate. Persisted transaction recovery ships only after that acceptance.
+**Deston now merges PRs**; this overrides older documents saying Codex merges.
+
 ## Working rules
 
 - Work on exactly one assigned task and feature branch. State the task ID and intended files before editing.
@@ -12,7 +18,7 @@ For the approved finale extension, start at `docs/finale/START_HERE.md` and your
 - Do not create another application, backend, database, token, NFT system or authentication service. The lead may implement a bounded read-only companion endpoint inside this existing Next.js application; paid providers or additional infrastructure are not implicitly approved.
 - Reuse installed libraries and shared UI. Do not add packages without the lead's approval.
 - Do not read secret files, print environment values, request seed phrases/private keys, or place credentials in code, logs, screenshots or prompts. Public addresses are not signing credentials.
-- For the user-approved finale plan, the lead Codex session is authorized to commit, push, review teammate PRs, resolve integration conflicts and merge reviewed passing changes. Teammate agents may commit/push their assigned branches and open PRs; they may not merge or change release settings. Wallet signatures, purchases, force-pushes and destructive operations are not authorized by this engineering delegation. Preserve unrelated uncommitted work. Follow `docs/finale/CODEX.md` for release checks and rollback.
+- The lead Codex session may commit, push, review teammate PRs, resolve integration conflicts and prepare reviewed passing changes. Deston performs merges; no agent auto-merges. Teammate agents may commit/push their assigned branches and open PRs; they may not merge or change release settings. Wallet signatures, purchases, force-pushes and destructive operations are not authorized by this engineering delegation. Preserve unrelated uncommitted work. Follow the beta integration gates and finale release checks/rollback.
 - UI components accept the agreed props and callbacks. They do not import wallet libraries, call RPC/API endpoints, award progress, or persist confirmed game state.
 - Fixtures are fictional and belong only in clearly labeled development previews/tests. Never silently replace failed live reads with fixtures.
 - Run the checks documented in DEV_SETUP. Never remove tests, weaken types or disable lint/build checks to manufacture a pass.

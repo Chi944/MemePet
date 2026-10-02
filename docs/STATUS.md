@@ -4,7 +4,24 @@ Updated 2 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Pet QA merged; final wallet session prepared — 2 October, latest checkpoint
+## Beta foundation and parallel assignments — 2 October, new scope
+
+Deston approved the [beta backlog](beta/START_HERE.md) in addition to the finale.
+Kym owns onboarding/progression; YeeWei recovery/help/browser scenarios; Larm
+the smaller support-copy/acceptance-index lane. Codex owns shared engineering.
+**Deston performs PR merges.** Role sheets contain executable prompts; external
+teammate sessions have not been automatically notified or started.
+
+B0 prepares bounded pet/public reads, fixed contract tool versions, shared
+beta interfaces/fixtures/cosmetic mappings and a simulated browser-test harness.
+See the [B0 verification record](qa/evidence/BETA_FOUNDATION_2026-10-02.md) for
+actual check outcomes. New panels/provider selection/recovery are assigned
+follow-up work, not claimed live features. Recovery runtime explicitly waits
+for [final genuine wallet acceptance](qa/FINAL_WALLET_SESSION.md), still NOT RUN.
+The earlier approximately 92% was finale readiness, **not mainnet readiness**;
+the beta has its own gates and does not inherit a completion percentage.
+
+## Pet QA merged; final wallet session prepared — 2 October, earlier checkpoint
 
 Kym's **PET-RELEASE-QA PR #78 is complete and merged** at
 `62d487d5d4e1f7c7b26332753f042fcb91a748d8`. It fixes a narrow-screen selector
