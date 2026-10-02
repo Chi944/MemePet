@@ -61,7 +61,6 @@ test.describe(`${SIMULATED_LABEL}: failed reads and read-only retry`, () => {
   });
 
   test("SIMULATED: retry recovers each panel by reading only", async ({ page }) => {
-    await page.clock.install();
     const wallets = await walletA(page);
     chain.setPet(ACCOUNT_A, "fail");
     chain.communityTotal = "fail";
@@ -85,9 +84,22 @@ test.describe(`${SIMULATED_LABEL}: failed reads and read-only retry`, () => {
     await ui.recap.getByRole("button", { name: "Retry read", exact: true }).click();
     await expect(ui.recapCares).toHaveText("3");
 
-    // The pet read has no manual retry; it re-reads on its 30-second refresh.
+    // Retry the pet directly; no clock jump or repeated transaction is needed.
     await expect(ui.pet).toHaveText("Read failed");
-    await page.clock.fastForward(31_000);
+    const petReads = chain.count("pet", ACCOUNT_A);
+    const heldPet = chain.hold("pet", ACCOUNT_A);
+    const retryPet = page.getByRole("button", { name: "Retry pet read", exact: true });
+    await retryPet.click();
+    await heldPet.arrived;
+    const readingPet = page.getByRole("button", { name: "Reading pet…", exact: true });
+    await expect(readingPet).toHaveAttribute("aria-disabled", "true");
+    await expect(readingPet).toBeFocused();
+    await expect(ui.pet).toHaveText("Reading…");
+    await expect(page.getByRole("button", { name: "Adopt pet", exact: true })).toHaveCount(0);
+    await readingPet.press("Enter");
+    expect(chain.count("pet", ACCOUNT_A)).toBe(petReads + 1);
+    heldPet.release();
+    expect(await heldPet.settled).toBe("delivered");
     await expect(ui.pet).toHaveText("Adopted");
     await expect(ui.growth).toHaveText("30 growth points");
 

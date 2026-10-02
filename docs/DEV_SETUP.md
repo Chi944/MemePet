@@ -64,7 +64,7 @@ Upstream references: [Foundry v1.8.3](https://github.com/foundry-rs/foundry/rele
 [toolchain version inputs](https://github.com/foundry-rs/foundry-toolchain#inputs).
 
 `npm test` is a non-interactive Vitest run. CI also starts the production build
-and asserts `/` returns 200 and `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/finale`, `/dev/companion`
+and asserts `/` returns 200 and `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/finale`, `/dev/companion`, `/dev/beta`
 return 404. For local production inspection, use `npm run start` after building.
 A test pass does not establish a real wallet transaction.
 
@@ -127,9 +127,18 @@ Run the development server and open:
 | `/dev/community` | Loading, zero, growing, achieved, unavailable and unknown-target states |
 | `/dev/finale` | Shared fictional companion, personality and garden inputs for parallel finale work |
 | `/dev/companion` | Recap/evidence workbench with fictional ready, unknown, stale-reply and failure states |
+| `/dev/beta` | Nine fictional recovery states, care/adoption labels, sample/empty Help and callback counter; no recovery runtime |
 
 Previews carry **UI preview — fictional data** labels, never award chain progress,
 and are unavailable in production. Keep them for repeatable visual and error-state QA.
+
+`npm run test:e2e:previews` starts a separate local development server on
+`127.0.0.1:3418` and tests `/dev/beta` in Chromium at 320/390/1440px.
+Leave that port free. These are **FICTIONAL UI PREVIEW** checks: no network
+reads, wallet or signing is involved. The production suite remains separate;
+CI also checks that `/dev/beta` returns 404 in a production build. In
+`/dev/companion`, `careAvailable` supplies the requested available-at-read
+example; the viewer's computer clock does not establish eligibility.
 
 ## Separate local Anvil setup
 

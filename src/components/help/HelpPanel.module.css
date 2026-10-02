@@ -41,7 +41,8 @@
 }
 
 .answer {
-  padding: 0 0.75rem 0.75rem;
+  /* Leave room for the open summary's outward keyboard-focus outline. */
+  padding: 0.5rem 0.75rem 0.75rem;
   color: var(--ink-soft);
 }
 

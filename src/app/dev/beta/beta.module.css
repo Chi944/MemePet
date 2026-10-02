@@ -1,0 +1,120 @@
+.page {
+  width: min(100% - 2rem, 76rem);
+  margin: 0 auto;
+  padding: 2.5rem 0 5rem;
+  overflow-wrap: anywhere;
+}
+
+.header {
+  max-width: 52rem;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow,
+.previewLabel {
+  color: var(--action);
+  font-family: var(--font-mono-stack);
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  margin: 0.75rem 0 1rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+}
+
+.header > p:last-child,
+.note {
+  color: var(--ink-soft);
+}
+
+.controls {
+  margin-bottom: 2rem;
+  min-width: 0;
+}
+
+.controls h2 {
+  font-size: var(--step-2);
+  margin-bottom: 1.25rem;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.field label {
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0.5rem;
+  border: 1px solid var(--ink-faint);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: var(--ground);
+}
+
+.field select:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.note {
+  margin: 1rem 0;
+  font-size: var(--step--1);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.counter {
+  margin: 0;
+  font-size: var(--step--1);
+}
+
+.counter output {
+  color: var(--action);
+  font-family: var(--font-mono-stack);
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.preview {
+  min-width: 0;
+}
+
+.previewLabel {
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 56rem) {
+  .panels,
+  .fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

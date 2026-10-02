@@ -55,6 +55,9 @@ jobs:
       - name: SIMULATED wallet browser regression (not genuine wallet acceptance)
         run: npm run test:e2e:simulated
 
+      - name: FICTIONAL development preview browser checks (no wallet actions)
+        run: npm run test:e2e:previews
+
       - name: Verify /dev previews are absent from the production build
         run: |
           npm run start -- --hostname 127.0.0.1 --port 3000 &
@@ -63,7 +66,7 @@ jobs:
             sleep 2
           done
           fail=0
-          for path in /dev/pet /dev/landing /dev/community /dev/finale /dev/companion; do
+          for path in /dev/pet /dev/landing /dev/community /dev/finale /dev/companion /dev/beta; do
             code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:3000$path")
             echo "$path -> $code"
             if [ "$code" != "404" ]; then

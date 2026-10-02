@@ -13,6 +13,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:e2e:simulated": "playwright test",
+    "test:e2e:previews": "playwright test --config playwright.preview.config.ts",
     "test:contracts": "forge test --root contracts",
     "build": "next build",
     "start": "next start"
