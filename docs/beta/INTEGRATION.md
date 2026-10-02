@@ -1,5 +1,13 @@
 # B0–B5 shared contracts and release gates
 
+**2 October integration checkpoint:** #80–#87 are merged. The current lead
+change supplies the real `/help` route and navigation using B2 + B3. It does
+not connect the recovery panel to persistence. Kym's B1 integration remains
+next; do not duplicate the existing provider picker or pure panel mapper.
+The development-preview description below is historical to #85; `/dev/beta`
+remains fictional and production-hidden. Current checks belong in the lead
+Help evidence, not in earlier teammate reports.
+
 Read [scope and order](START_HERE.md), [ownership](../OWNERSHIP.md) and
 [setup](../DEV_SETUP.md). The lead owns adapters, storage, wallet/RPC clients,
 routes, packages, shared fixtures and CI. Existing finale contracts stay intact.

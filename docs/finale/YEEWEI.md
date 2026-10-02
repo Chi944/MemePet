@@ -1,5 +1,15 @@
 # YeeWei — a recap judges can read quickly
 
+## Current assignment — 2 October 2026
+
+F6/#72, evidence-focus/#75, B2/#83 and recap QA/#84 are merged. Review the integrated Help release, then the combined B1 panels after Kym hands them off. Cite existing regression coverage rather than duplicating it.
+
+Use [the current beta brief](../beta/YEEWEI.md)
+for new work and [current progress](../STATUS.md#progress-measurement).
+The older task instructions below are retained as finale requirements/history;
+do not recreate merged branches. Genuine wallet acceptance, backup capture
+and rehearsal remain separate from implementation and simulated checks.
+
 **Current assignment:** [B2 recovery, help and browser regression](../beta/YEEWEI.md).
 The 2 October beta brief supplies new work in separate folders. Finish any
 remaining finale QA below without rewriting its history. B0 is merged in #80,

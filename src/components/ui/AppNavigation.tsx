@@ -11,6 +11,7 @@ export function AppNavigation() {
       <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>Overview</Link>
       <Link href="/pet" aria-current={pathname === "/pet" ? "page" : undefined}>Your pet</Link>
       <Link href="/#community">Community</Link>
+      <Link href="/help" aria-current={pathname === "/help" ? "page" : undefined}>Help</Link>
     </nav>
   );
 }

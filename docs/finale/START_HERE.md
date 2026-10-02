@@ -1,5 +1,12 @@
 # Finale: four lanes, one working product
 
+**Latest handoff, after #87:** finale feature code is complete; YeeWei's
+recap QA/#84 and Larm's combined QA/#86 are merged with their stated evidence
+limits. New assignments are in the beta briefs: Kym B1, YeeWei integration QA,
+Larm Help release verification, Codex shared integration. The older checkpoint
+SHA below identifies its historical release, not today's production. Final
+genuine acceptance, a new labelled backup and rehearsal remain outstanding.
+
 **New assignment override, 2 October:** the user added the
 [testnet beta lanes](../beta/START_HERE.md). Use those role prompts for new
 features and retain this folder for finale acceptance/history. B0 is merged in

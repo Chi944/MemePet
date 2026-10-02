@@ -655,7 +655,7 @@ button, a {
     order: 3;
     width: 100%;
     min-height: 3.2rem;
-    gap: 1.5rem;
+    gap: clamp(0.8rem, 3vw, 1.5rem);
   }
   .app-main {
     padding-top: 1.5rem;

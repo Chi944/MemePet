@@ -1,5 +1,18 @@
 # Kym — B1 onboarding and continued progression
 
+**Current handoff — 2 October:** your finale personality, earned forms and pet
+QA are merged (#67/#73/#78). No pushed B1 branch or PR was visible at this
+checkpoint; unpublished work is unknown, not assumed absent. Preserve and
+continue it if it exists. The lead has shipped provider selection, panel-state
+mapping and read-only pet retry (#81/#82/#85), so B1 can use the agreed inputs.
+See [the weighted progress snapshot](../STATUS.md#progress-measurement).
+
+**Next deliverable:** open a small B1 draft with WalletChooser/OnboardingPanel
+first, then ProgressionPanel. Keep the components callback-only; do not rebuild
+wallet discovery or change hooks. Ask the lead to extend `/dev/beta` after the
+component handoff. Local reset time is explanatory; eligibility still comes
+from confirmed chain time. Your existing detailed deliverables below remain.
+
 Your larger beta lane has two independent components of the user journey.
 Start now: B0 is reviewed and merged in #80 (`99086a3`). Use current `origin/main`.
 Keep any previous QA work; do not reuse the merged F5 or pet-QA branch.
@@ -44,5 +57,5 @@ old full QA brief. Deston handles final product checks and private approvals.
 ## Paste this into Kym's agent
 
 ```text
-Continue MemePet B1 using docs/beta/KYM.md. Read AGENTS.md, PROJECT_BRIEF, OWNERSHIP, DEV_SETUP and beta START_HERE/INTEGRATION first. B0 is merged in #80 (99086a3); begin now. Preserve local/unpublished work and fetch origin. Continue an existing active B1 branch; otherwise create feat/beta-onboarding-progression from reviewed origin/main. Edit only src/components/onboarding/**, src/components/progression/** and docs/qa/beta/kym/**. Build WalletChooser, OnboardingPanel and ProgressionPanel with the exact shared types/fixtures, local care-time wording, 5/10/20 personal milestones and 20/50/100 garden chapters. Keep unknown data honest and progression cosmetic. Codex owns provider discovery and will replace his initial route controls with your components. Do not edit hooks/routes/storage/shared types/packages/global CSS. Add component tests and narrow-screen/keyboard evidence. Open a draft PR early; finish with actual checks, base/head, viewing steps and limitations. Codex reviews/integrates/merges passing work. No real wallet actions, destructive resets, merges or paid services.
+Continue MemePet B1 from docs/beta/KYM.md and INTEGRATION.md. Preserve existing local work; fetch reviewed main with #81/#82/#85 and the Help integration before reconciling. Your finale work is complete. Build only src/components/onboarding/** and src/components/progression/** with the shared beta props and fictional fixtures; put evidence in docs/qa/beta/kym/**. Start with WalletChooser and OnboardingPanel, then ProgressionPanel. Provider discovery, state mapping and retry callbacks already exist; the lead owns route wiring and /dev/beta expansion. Open a small draft early and report actual checks, screenshots, base/head and limitations. Do not alter hooks, shared types, routes, packages, contract rules or other lanes. No paid services, wallet actions, force-pushes or merges.
 ```

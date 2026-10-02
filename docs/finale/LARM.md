@@ -1,5 +1,15 @@
 # Larm — finale presentation and recovery readiness
 
+## Current assignment — 2 October 2026
+
+F7/#70, finale QA/#86 and B3 help content/#87 are merged. Verify real Help wording/links after integration and maintain the acceptance index. Preserve the runtime-version discrepancy and screenshot limits in dated finale evidence.
+
+Use [the current beta brief](../beta/LARM.md)
+for new work and [current progress](../STATUS.md#progress-measurement).
+The older task instructions below are retained as finale requirements/history;
+do not recreate merged branches. Genuine wallet acceptance, backup capture
+and rehearsal remain separate from implementation and simulated checks.
+
 **Current assignment:** [B3 support copy and focused verification](../beta/LARM.md).
 The 2 October beta brief adds a deliberately smaller lane. Preserve unfinished
 finale QA/runbook work below on its existing branch. B0 is merged in #80, so
