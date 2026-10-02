@@ -18,6 +18,12 @@ simulated-browser harness are available on main. B1/B2/B3 are independent and
 do not need to wait for B4 wallet integration. B4 is the current lead task;
 its implementation, merge and live acceptance are separate checkpoints.
 
+**Current checkpoint:** B4 provider selection merged in #81 and pure panel/
+recovery validation preparation in #82. YeeWei's B2 handoff is reviewed in
+#83; her brief now identifies integration QA as the next task, so she should
+not restart completed components. Kym continues B1 and Larm B3. The PRs record
+exact merge/release states; Help/recovery panels are not live routes yet.
+
 ## Work split
 
 | Lane | Deliverables | Start branch | Brief |
