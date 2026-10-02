@@ -1,0 +1,25 @@
+.panel { min-width: 0; padding: clamp(1rem, 3vw, 1.75rem); overflow-wrap: anywhere; }
+.panel h2 { margin: 0.5rem 0 0.75rem; font-size: clamp(1.4rem, 3vw, 2rem); }
+.panel p { line-height: 1.65; }
+.header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.header > * { min-width: 0; max-width: 100%; white-space: normal; }
+.eyebrow { margin: 0; color: var(--action); font-family: var(--font-mono-stack); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.note { color: var(--ink-soft); font-size: 0.9rem; }
+.chooser { min-width: 0; padding: 0; border: 0; margin: 1.25rem 0; }
+.chooser legend { margin-bottom: 0.75rem; font-weight: 700; }
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 0.75rem; }
+.choice { display: flex; gap: 0.75rem; align-items: center; min-width: 0; min-height: 3.5rem; padding: 0.85rem; border: 1px solid var(--line-strong); border-radius: var(--radius-sm); cursor: pointer; }
+.choice:has(input:checked) { border-color: var(--action); background: var(--surface-raised); box-shadow: inset 0 0 0 1px var(--action); }
+.choice:has(input:focus-visible) { outline: 2px solid var(--action); outline-offset: 3px; }
+.choice:has(input:disabled) { cursor: default; color: var(--ink-soft); }
+.choice input { flex-shrink: 0; width: 1.1rem; height: 1.1rem; accent-color: var(--action); }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.actions button { max-width: 100%; white-space: normal; }
+.message, .resetTime { padding: 0.85rem; border-left: 3px solid var(--action); background: var(--surface-sunken); }
+.guidance { border-top: 1px solid var(--line); margin-top: 1.25rem; padding-top: 0.75rem; }
+.guidance summary { cursor: pointer; min-height: 2.75rem; padding: 0.75rem 0.5rem; font-weight: 700; }
+.guidance summary:focus-visible { outline: 2px solid var(--action); outline-offset: -2px; }
+.links { padding-left: 1.25rem; }
+.links li + li { margin-top: 0.75rem; }
+.panel a { color: var(--action); text-underline-offset: 0.2em; }
+.panel a:focus-visible { outline: 2px solid var(--action); outline-offset: 3px; }
