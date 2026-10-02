@@ -1,0 +1,12 @@
+/* Only the standalone fictional QA harness; the product global CSS is imported unchanged. */
+:root { --font-body: Arial; --font-mono: monospace; }
+.b1-preview { max-width: 76rem; margin: 0 auto; padding: 1rem; }
+.b1-preview > * + * { margin-top: 2rem; }
+.b1-label { color: #fff; background: #8b293a; padding: 0.65rem; font-weight: bold; }
+.b1-controls { display: flex; flex-wrap: wrap; gap: 1rem; padding: 1rem; border: 1px solid var(--line-strong); }
+.b1-controls label { display: grid; flex: 1 1 13rem; min-width: 0; gap: 0.5rem; }
+.b1-controls select { width: 100%; min-width: 0; min-height: 44px; padding: 0.5rem; background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); }
+.b1-controls .b1-check { display: flex; align-items: center; }
+.b1-onboarding { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr)); align-items: start; gap: 1rem; }
+.b1-preview dl { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.b1-preview dd { margin: 0; }

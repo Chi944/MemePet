@@ -38,7 +38,7 @@ describe("OnboardingPanel", () => {
   });
   it("formats the provided instant in the visitor timezone, retaining UTC rules", () => {
     const NativeFormatter = Intl.DateTimeFormat;
-    vi.spyOn(Intl, "DateTimeFormat").mockImplementation((locale, options) => new NativeFormatter(locale, { ...options, timeZone: "Asia/Singapore" }));
+    vi.spyOn(Intl, "DateTimeFormat").mockImplementation(function (locale, options) { return new NativeFormatter(locale, { ...options, timeZone: "Asia/Singapore" }); });
     const { container, rerender } = render(<OnboardingPanel state={onboardingFixtures.cooldown} {...callbacks()} />);
     expect(container.querySelector("time")).toHaveAttribute("datetime", "2030-01-02T00:00:00.000Z");
     expect(container.querySelector("time")).toHaveTextContent(/8:00/);
@@ -55,6 +55,14 @@ describe("OnboardingPanel", () => {
   });
   it("has a deterministic server-rendered placeholder rather than server-local time", () => {
     expect(renderToString(<OnboardingPanel state={onboardingFixtures.cooldown} {...callbacks()} />)).toContain("Preparing your local reset time");
+  });
+  it("removes the previous reset if the supplied time becomes unavailable", () => {
+    const { container, rerender } = render(<OnboardingPanel state={onboardingFixtures.cooldown} {...callbacks()} />);
+    expect(container.querySelector("time")).not.toBeNull();
+    rerender(<OnboardingPanel state={{ ...onboardingFixtures.cooldown, availableAtIso: "" }} {...callbacks()} />);
+    expect(container.querySelector("time")).toBeNull();
+    expect(screen.getByRole("status")).toHaveTextContent("Reset time unavailable");
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
   it("shows official setup links, test gas and no seed request", () => {
     render(<OnboardingPanel state={onboardingFixtures.install} {...callbacks()} />);

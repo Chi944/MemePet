@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useId, useSyncExternalStore } from "react";
 import type { OnboardingPanelProps, OnboardingState } from "@/types/beta";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -37,14 +37,18 @@ function localReset(iso: string): string | null {
   }
 }
 
+const subscribe = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
+
 function LocalCareReset({ iso }: { readonly iso: string }) {
-  const [formatted, setFormatted] = useState<{ iso: string; label: string | null } | null>(null);
-  // Format after hydration so server and browser timezones cannot disagree.
-  useEffect(() => { setFormatted({ iso, label: localReset(iso) }); }, [iso]);
-  const label = formatted?.iso === iso ? formatted.label : undefined;
+  // React's hydration snapshot keeps server timezone text out of the initial UI.
+  // No timer, storage or eligibility calculation is involved.
+  const isClient = useSyncExternalStore(subscribe, clientSnapshot, serverSnapshot);
+  const label = isClient ? localReset(iso) : undefined;
   return <p className={styles.resetTime} role="status">
     {label === undefined ? "Preparing your local reset time…" : label === null
-      ? "Reset time unavailable. Retry the read for an updated time."
+      ? "Reset time unavailable. Care availability still follows confirmed network state."
       : <>Next reset in your local time: <time dateTime={iso}>{label}</time>.</>}
   </p>;
 }
@@ -61,9 +65,9 @@ export function OnboardingPanel({ state, onConnect, onSwitchNetwork, onRetry }: 
       {state.kind === "unavailable" && <p className={styles.message} role="status">{state.message}</p>}
       {state.kind === "cooldown" && <LocalCareReset iso={state.availableAtIso} />}
       <div className={styles.actions}>
-        {state.kind === "needs-connection" && <Button onClick={onConnect}>Connect chosen wallet</Button>}
-        {state.kind === "wrong-network" && <Button onClick={onSwitchNetwork}>Switch to {state.networkLabel}</Button>}
-        {(state.kind === "unavailable" || state.kind === "cooldown") && <Button tone="secondary" onClick={onRetry}>Retry pet read</Button>}
+        {state.kind === "needs-connection" && <Button onClick={() => onConnect()}>Connect chosen wallet</Button>}
+        {state.kind === "wrong-network" && <Button onClick={() => onSwitchNetwork()}>Switch to {state.networkLabel}</Button>}
+        {state.kind === "unavailable" && <Button tone="secondary" onClick={() => onRetry()}>Retry pet read</Button>}
       </div>
       <p className={styles.note}>One care per UTC calendar day. Local time is a guide; confirmed network state determines when you can care. No missed-day loss.</p>
       <details className={styles.guidance} open={state.kind === "needs-wallet" ? true : undefined}>
