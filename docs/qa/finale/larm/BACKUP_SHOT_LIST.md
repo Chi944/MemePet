@@ -1,8 +1,13 @@
 # Backup recording — shot list
 
 A plan for the labelled backup that the finale runbook falls back on. **This is
-a plan, not footage.** Nothing here has been recorded. Until Deston captures it
-on the final release, there is no backup.
+a plan, not footage.** The genuine care recording (shots 0–9) has not been made.
+Until Deston captures it on the final release, there is no backup for the care.
+
+**Prepared 3 October (read-only, no wallet):** four labelled clips of release
+`3148238`: overview → garden, shot 10 (greeting), shot 11 (earned forms) and
+`/help`. See [BACKUP_READONLY_2026-10-03.md](BACKUP_READONLY_2026-10-03.md).
+They do not replace any wallet shot.
 
 The shots follow the three-minute flow in [`FINALE_RUNBOOK.md`](FINALE_RUNBOOK.md),
 so the backup can stand in for any single beat or for the whole demo.
