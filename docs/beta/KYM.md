@@ -2,9 +2,9 @@
 
 **Current handoff — 2 October:** your finale personality, earned forms and pet
 QA are merged (#67/#73/#78). No pushed B1 branch or PR was visible at this
-checkpoint; unpublished work is unknown, not assumed absent. Preserve and
-continue it if it exists. The lead has shipped provider selection, panel-state
-mapping and read-only pet retry (#81/#82/#85), so B1 can use the agreed inputs.
+checkpoint. Deston subsequently confirmed that you are working locally.
+Preserve and continue that work; its implementation is not yet reviewed.
+The lead has shipped provider selection, panel-state mapping and read-only pet retry (#81/#82/#85), so B1 can use the agreed inputs.
 See [the weighted progress snapshot](../STATUS.md#progress-measurement).
 
 **Next deliverable:** open a small B1 draft with WalletChooser/OnboardingPanel

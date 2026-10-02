@@ -18,12 +18,13 @@ simulated-browser harness are available on main. B1/B2/B3 are independent and
 do not need to wait for B4 wallet integration. B4 is the current lead task;
 its implementation, merge and live acceptance are separate checkpoints.
 
-**Current checkpoint — after #87:** B0/#80, B4 provider selection/#81,
+**Current checkpoint — after #88:** B0/#80, B4 provider selection/#81,
 pure adapter/recovery preparation/#82, YeeWei B2/#83 and recap QA/#84,
 lead retry/preview integration/#85, Larm finale QA/#86 and B3/#87 are merged.
-The next lead integration connects Larm's real content to YeeWei's HelpPanel
-at `/help`. Follow the integration PR for its exact checks/release. Kym's B1
-has no pushed handoff verified at this checkpoint; local work is unknown.
+Help integration #88 is merged and live at `/help`, connecting Larm's real
+content to YeeWei's HelpPanel. Its main CI and deployment checks passed. Kym's B1
+has no pushed handoff verified at this checkpoint; Deston confirms she is
+working locally. Keep her lane intact.
 Recovery presentation exists, but B5 persistence/runtime remains gated.
 
 **Current tasks:** Kym continues B1; YeeWei reviews the integrated Help page
