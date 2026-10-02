@@ -4,6 +4,39 @@ Updated 2 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
+## Beta integration preparation — 2 October, latest checkpoint
+
+PR #81 is merged at `6f6a6c47e2dd2e304cb9dcaf53a9b145281d7332`; exact-head
+and main CI passed. Vercel resolved the public alias to READY deployment
+`dpl_BRybjNyXYsxuYDGPTfkbFdCtor6v` at that SHA. `/` and `/pet` returned 200;
+all five `/dev/` preview routes returned 404. These are release checks, not a
+real-wallet acceptance result.
+
+The next lead preparation adds `mapBetaPanelState` for the agreed B1 inputs,
+and strict pure B5 record/transaction identity validators. The panel mapper
+rejects unavailable/stale facts and derives cosmetic goals only from confirmed
+care counts. It preserves chain-derived cooldowns rather than using the
+computer clock. Recovery helpers validate bounded public records and match
+network, hash, sender, registry, zero value and exact care/adoption calldata.
+A match is request identity, **not confirmation or awarded progress**.
+
+These helpers are **not imported by live routes/hooks**. No storage journal,
+automatic recovery or new UI panel is enabled. The latest integration PR
+records the final source/release identifiers. Local verification on the
+preparation branch based on `6f6a6c4`: **594 app tests / 47 files, typecheck,
+lint, production build and 3 simulated Chromium cases passed**. Lint retains
+the existing share-image warning. The new cases comprise 32 panel-state,
+48 record-validation and 61 transaction-identity tests. No wallet action was
+performed, and B5 runtime remains gated on genuine final acceptance.
+
+The three teammates continue their existing B1/B2/B3 briefs. They can read the
+updated [adapter contract](beta/INTEGRATION.md) without changing interfaces or
+taking over lead-owned helpers. Deston's immediate task is to forward those
+prompts if not already done; the lead will coordinate the private wallet
+session after the release prerequisites are ready. The
+[session plan](qa/FINAL_WALLET_SESSION.md) now includes explicit provider choice
+and distinguishes reload/reconnection from on-chain pet persistence.
+
 ## Wallet selection and current handoffs — 2 October, latest checkpoint
 
 The only open PR at this run's start, **#80**, was reviewed and merged at
