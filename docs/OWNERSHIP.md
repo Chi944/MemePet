@@ -2,10 +2,12 @@
 
 ## Current beta delegation — 2 October 2026
 
-The latest user instruction adds the [testnet beta](beta/START_HERE.md) and
-makes **Deston the merger**. Codex prepares/reviews/fixes PRs and handles shared
-engineering; no routine coding is assigned to Deston. This overrides earlier
-Codex-merge permission and finale-only assignment language below.
+The latest user instruction delegates the [testnet beta](beta/START_HERE.md)
+and merges to **the lead Codex session**. Codex builds shared engineering,
+reviews exact PR heads, repairs conflicts and merges passing, in-scope work.
+Deston handles final product checks and private wallet approvals, with no routine
+coding assigned. This supersedes the earlier same-day Deston-only merge rule;
+teammate agents still cannot merge.
 
 | Owner | New task-level editable paths |
 |---|---|
@@ -14,12 +16,20 @@ Codex-merge permission and finale-only assignment language below.
 | Larm / B3 | `src/content/help.ts`, `docs/qa/beta/larm/**` |
 | Codex / B0, B4, B5 | Shared types/fixtures/helpers/hooks, routes, shell/navigation, config/dependencies/CI, integrations and shared docs |
 
+B4's focused `e2e/simulated-wallet/provider-selection.spec.ts` is a lead-owned
+exception to YeeWei's E2E lane until handoff. She may cite its evidence and add
+broader scenarios in other files; coordinate before changing this active spec.
+The lead also owns the initial `src/components/ui/WalletProviderPicker.tsx`
+and `wallet-picker.module.css`. Kym builds her assigned `WalletChooser`; the
+lead handles its eventual replacement in the route.
+
 Beta task allowlists are exclusive: these assignments do not grant permission
 to redesign the earlier pet/community/recap components. Existing scoped finale
 QA can finish independently on its own branch. Use [exact beta interfaces](beta/INTEGRATION.md),
-separate clones/worktrees, and branch from reviewed main containing B0 after
-Deston merges it. Pending-transaction runtime integration waits for final
-genuine wallet acceptance. All paid services stay inactive.
+separate clones/worktrees, and branch from reviewed main. B0 is merged in
+PR #80 at `99086a3`; all three beta lanes can start now. Pending-transaction
+runtime integration waits for final genuine wallet acceptance. All paid
+services stay inactive.
 
 ## Finale ownership and historical handoff
 
@@ -119,8 +129,8 @@ branch. Record the actual base SHA in your PR; do not start from an unreviewed
 sibling branch or the old downloaded proposal. Use separate clones or worktrees
 for simultaneous sessions. Open a small draft PR early.
 
-Codex reviews passing work, resolves integration conflicts and prepares release
-checks. Deston merges the reviewed PRs one at a time. Teammate agents cannot
+Codex reviews passing work, resolves integration conflicts, prepares release
+checks and merges the reviewed PRs one at a time. Teammate agents cannot
 merge themselves or change deployment settings. Review exact PR heads. Do not
 work directly on main, force-push or bypass failing checks.
 

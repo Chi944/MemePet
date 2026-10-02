@@ -53,10 +53,12 @@ const registryA = `0x${"c".repeat(40)}`;
 const registryB = `0x${"d".repeat(40)}`;
 let deployment: Deployment;
 let owner: Address;
+let providerSessionKey: string;
 
 beforeEach(() => {
   vi.clearAllMocks();
   owner = ownerA;
+  providerSessionKey = "wallet:1";
   deployment = {
     status: "local", networkName: "Anvil", chainId: 31337,
     registryAddress: registryA, rpcUrl: "http://127.0.0.1:8545",
@@ -67,6 +69,8 @@ beforeEach(() => {
     installed: true, address: owner, chainId: deployment.chainId,
     deployment, wrongChain: false, connecting: false,
     disconnectStatus: null, errorMessage: null,
+    choices: [], selectedId: null, selectionRequired: false, selectionBusy: false,
+    providerSessionKey, selectWallet: vi.fn(),
   }));
   adapters.usePetRegistry.mockReturnValue({
     hasPet: true, pet: petFixtures.buddy, readStatus: "ready",
@@ -91,6 +95,17 @@ for (const surface of ["live", "public"] as const) {
   }
 
   describe(`${surface} earned-form selection scope`, () => {
+    if (surface === "live") {
+      it("resets viewing when the provider changes with the same wallet address", async () => {
+        const view = render(await page());
+        const earlier = screen.getByRole("button", { name: "View earlier form" });
+        fireEvent.click(earlier);
+        providerSessionKey = "wallet:2";
+        view.rerender(await page());
+        expect(screen.getByRole("button", { name: "View earlier form" })).not.toBe(earlier);
+        expect(screen.getByRole("button", { name: "View earlier form" })).toHaveAttribute("aria-pressed", "false");
+      });
+    }
     it.each(["owner", "chain", "registry"] as const)(
       "resets an earlier selection when the %s changes at the same earned stage",
       async (changed) => {

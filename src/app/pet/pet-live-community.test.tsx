@@ -93,6 +93,12 @@ describe("live care refreshes the community counter", () => {
     });
     wallet.useWallet.mockReturnValue({
       installed: true,
+      choices: [{ id: "fixture-provider", label: "Fixture wallet" }],
+      selectedId: "fixture-provider",
+      selectionRequired: false,
+      selectionBusy: false,
+      providerSessionKey: "fixture-provider:1",
+      selectWallet: vi.fn(),
       address,
       chainId: 31337,
       connecting: false,

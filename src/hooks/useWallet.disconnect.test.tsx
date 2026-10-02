@@ -145,7 +145,7 @@ describe("wallet permission revocation", () => {
     expect(result.current.address).toBeNull();
   });
 
-  it("rechecks a saved revocation on remount and never restores an exposed account", async () => {
+  it("restores saved disconnection conservatively without claiming a past wallet revocation is current", async () => {
     const { result, overrides, unmount, request } = await connectedWallet();
     await act(async () => { await result.current.disconnect(); });
     expect(result.current.disconnectStatus).toBe("revoked");
@@ -155,7 +155,7 @@ describe("wallet permission revocation", () => {
     const next = renderHook(() => useWallet());
     await waitFor(() => expect(next.result.current.disconnectStatus).toBe("manual"));
     expect(next.result.current.address).toBeNull();
-    expect(request).toHaveBeenCalledWith({ method: "eth_accounts" });
+    expect(request).not.toHaveBeenCalled();
   });
 
   it("drops the revocation claim when another tab reconnects but stays locally disconnected", async () => {
@@ -185,6 +185,7 @@ describe("disconnect race protection", () => {
     const read = deferred<unknown>();
     overrides.set("eth_accounts", () => read.promise);
     const { result } = renderHook(() => useWallet());
+    await waitFor(() => expect(result.current.selectedId).not.toBeNull());
     overrides.delete("eth_accounts");
     await act(async () => { await result.current.disconnect(); });
     await act(async () => { read.resolve([account]); });
@@ -282,5 +283,67 @@ describe("disconnect race protection", () => {
     });
     expect(result.current.address).toBeNull();
     expect(result.current.disconnectStatus).toBe("manual");
+  });
+
+  it("allows a new connect after another tab invalidates an older pending connection", async () => {
+    const { overrides, request } = providerFixture([]);
+    const old = deferred<unknown>();
+    overrides.set("eth_requestAccounts", () => old.promise);
+    const { result } = renderHook(() => useWallet());
+    await waitFor(() => expect(result.current.selectedId).not.toBeNull());
+    let pending!: Promise<void>;
+    act(() => { pending = result.current.connect(); });
+    act(() => {
+      window.localStorage.setItem(storageKey, "manual");
+      window.dispatchEvent(new StorageEvent("storage", { key: storageKey, newValue: "manual" }));
+    });
+    expect(result.current.connecting).toBe(false);
+    overrides.delete("eth_requestAccounts");
+    await act(async () => { await result.current.connect(); });
+    expect(result.current.address).toBe(account);
+    const requestCount = request.mock.calls.length;
+    await act(async () => { old.resolve([account]); await pending; });
+    expect(result.current.address).toBe(account);
+    expect(request.mock.calls).toHaveLength(requestCount);
+  });
+
+  it.each(["disconnect", "accountsChanged"])("allows reconnect after %s invalidates a pending revocation", async (event) => {
+    const { result, overrides, emit, request } = await connectedWallet();
+    const revoke = deferred<unknown>();
+    overrides.set("wallet_revokePermissions", () => revoke.promise);
+    let pending!: Promise<void>;
+    act(() => { pending = result.current.disconnect(); });
+    act(() => { emit(event, [account]); });
+    await act(async () => { await result.current.connect(); });
+    expect(result.current.address).toBe(account);
+    const requestCount = request.mock.calls.length;
+    await act(async () => { revoke.resolve(null); await pending; });
+    expect(result.current.address).toBe(account);
+    expect(request.mock.calls).toHaveLength(requestCount);
+    expect(window.localStorage.getItem(storageKey)).toBeNull();
+  });
+
+  it("releases a stalled network switch on disconnect without letting its completion release a newer switch", async () => {
+    const { result, overrides } = await connectedWallet();
+    const oldNetwork = deferred<unknown>();
+    const newNetwork = deferred<unknown>();
+    overrides.set("wallet_switchEthereumChain", () => oldNetwork.promise);
+    let oldPending!: Promise<void>;
+    act(() => { oldPending = result.current.switchNetwork(); });
+    expect(result.current.selectionBusy).toBe(true);
+    await act(async () => { await result.current.disconnect(); });
+    expect(result.current.selectionBusy).toBe(false);
+    expect(result.current.disconnectStatus).toBe("revoked");
+    await act(async () => { await result.current.connect(); });
+    expect(result.current.address).toBe(account);
+
+    overrides.set("wallet_switchEthereumChain", () => newNetwork.promise);
+    let newPending!: Promise<void>;
+    act(() => { newPending = result.current.switchNetwork(); });
+    await act(async () => { oldNetwork.resolve(null); await oldPending; });
+    expect(result.current.selectionBusy).toBe(true);
+    await act(async () => { newNetwork.resolve(null); await newPending; });
+    expect(result.current.selectionBusy).toBe(false);
+    expect(result.current.address).toBe(account);
   });
 });

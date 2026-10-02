@@ -30,6 +30,7 @@ function LiveHomeCommunity() {
     deployment: wallet.deployment,
     address: wallet.address,
     wrongChain: wallet.wrongChain,
+    providerSessionKey: wallet.providerSessionKey,
   });
 
   return <FinaleCommunitySection {...finale} deployment={wallet.deployment} />;

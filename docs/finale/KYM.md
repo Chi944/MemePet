@@ -2,7 +2,8 @@
 
 **Current assignment:** [B1 onboarding and progression](../beta/KYM.md).
 The 2 October beta brief supersedes the old next-work assignment below. Preserve
-the completed finale reports. Deston now merges reviewed PRs; no agent merges.
+the completed finale reports. B0 is merged in #80, so start B1 now. The lead
+Codex session reviews and merges passing PRs; teammate agents do not merge.
 
 **Task PET-RELEASE-QA complete · F2/F5 and QA PR #78 merged · updated 2 October 2026.**
 Your personality panel (#67), earned-form viewer (#73), lead account-scope wiring

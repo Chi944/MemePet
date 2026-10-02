@@ -167,6 +167,62 @@ describe("useCompanion read-only session adapter", () => {
     expect(JSON.parse(String(fetchMock.mock.calls[1][1]?.body))).toEqual({ address: walletB });
   });
 
+  it("clears facts and replies on a same-account provider change without replacing personality", async () => {
+    const selected: UseCompanionArgs = { ...initial, providerSessionKey: "metamask" };
+    const { result, rerender } = renderHook((args: UseCompanionArgs) => useCompanion(args), { initialProps: selected });
+    await waitFor(() => expect(result.current.companion.facts.kind).toBe("ready"));
+    personality.style = "curious";
+    rerender(selected);
+    act(() => { result.current.companion.onAsk("progress"); });
+    expect(result.current.companion.reply.kind).toBe("answer");
+    const next = deferred<Response>();
+    fetchMock.mockReturnValueOnce(next.promise);
+
+    rerender({ ...selected, providerSessionKey: "okx" });
+    expect(result.current.companion.facts.kind).toBe("loading");
+    expect(result.current.companion.reply.kind).toBe("idle");
+    expect(result.current.personality.profile.style).toBe("curious");
+    await act(async () => { next.resolve(json(payload(walletA, 120, 2))); });
+    expect(result.current.companion.facts.kind).toBe("ready");
+    expect(result.current.companion.reply.kind).toBe("idle");
+    expect(result.current.personality.profile.style).toBe("curious");
+  });
+
+  it("rejects late replies and saved callbacks after same-account provider A → B → A", async () => {
+    const firstA = deferred<Response>();
+    const firstB = deferred<Response>();
+    const secondA = deferred<Response>();
+    fetchMock.mockReturnValueOnce(firstA.promise).mockReturnValueOnce(firstB.promise).mockReturnValueOnce(secondA.promise);
+    const selected: UseCompanionArgs = { ...initial, providerSessionKey: "metamask" };
+    const { result, rerender } = renderHook((args: UseCompanionArgs) => useCompanion(args), { initialProps: selected });
+    const stale = result.current.companion;
+    rerender({ ...selected, providerSessionKey: "okx" });
+    rerender(selected);
+    await act(async () => { secondA.resolve(json(payload(walletA, 120, 2))); });
+    await act(async () => {
+      firstA.resolve(json(payload(walletA, 100, 1)));
+      firstB.resolve(json(payload(walletA, 110, 1)));
+    });
+    act(() => { stale.onAsk("progress"); stale.onRetry(); });
+    expect(result.current.companion.facts).toMatchObject({ kind: "ready", snapshot: { blockNumber: "120", growthPoints: 20 } });
+    expect(result.current.companion.reply.kind).toBe("idle");
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+    expect(fetchMock.mock.calls[0][1]?.signal?.aborted).toBe(true);
+    expect(fetchMock.mock.calls[1][1]?.signal?.aborted).toBe(true);
+  });
+
+  it("does not carry a receipt floor or known-pet assumption into the new provider session", async () => {
+    fetchMock.mockResolvedValueOnce(json(payload(walletA, 120, 2)));
+    const selected: UseCompanionArgs = { ...initial, providerSessionKey: "metamask", confirmedBlockNumber: BigInt(120) };
+    const { result, rerender } = renderHook((args: UseCompanionArgs) => useCompanion(args), { initialProps: selected });
+    await waitFor(() => expect(result.current.companion.facts.kind).toBe("ready"));
+    fetchMock.mockResolvedValueOnce(json(envelope({ kind: "no-pet", dataMode: "live" })));
+    rerender({ ...initial, providerSessionKey: "okx" });
+    expect(result.current.companion.facts.kind).toBe("loading");
+    await waitFor(() => expect(result.current.companion.facts.kind).toBe("no-pet"));
+    expect(JSON.parse(String(fetchMock.mock.calls[1][1]?.body))).toEqual({ address: walletA });
+  });
+
   it("aborts an old read during a write and rejects its late result", async () => {
     const old = deferred<Response>();
     fetchMock.mockReturnValueOnce(old.promise);
