@@ -26,6 +26,7 @@ wallet session are **NOT RUN**.
 |---|---|
 | Checkout | `main` **`3148238f5a0d216fa704ad6176135d2e25555cda`** (#92), from a GitHub source snapshot |
 | Hosted runtime | GitHub Production deployment **6812922873** for `3148238`, state `success` at 2026-10-02T16:16:38Z. No newer Production deployment was listed during the run |
+| Later deployment (3 Oct) | After this run, GitHub lists Production deployments for `4e48f94` (#93/#95) and then **6824015621** for `a83f342` (#94), `success` at 2026-10-03T06:00:17Z. `3148238...a83f342` changes 45 files, all under `docs/qa/`, and no app code, config or content, so the checked app source is unchanged. These remain historical results, not a browser rerun or independent verification of the current alias. Not rerun on `a83f342` |
 | Alias → SHA | **Not independently resolved.** The per-deployment URL redirects to a Vercel login, which I did not pass. The lead records `dpl_E5nmo41hachVjySMn7Q6AfPMMQ7g` behind the alias at `3148238` (#91/#92 release notes). Supporting content evidence: live `/help` matches `src/content/help.ts` at `3148238` word for word (49/49 strings, B3 follow-up #93) |
 | Local runtime (fixtures) | **Recorded this time:** Node **v24.19.0**, Next.js **16.3.8** (dev server banner "▲ Next.js 16.3.8 (Turbopack)" and `node_modules/next/package.json`), matching the pinned `next` 16.3.8. Dependencies are an install from the unchanged committed lockfile. Server `127.0.0.1:3463`, no environment overrides |
 | Browser | Headless Chrome 154 on Windows 11 over CDP with real key/mouse events; fresh isolated profiles; OS settings untouched |
@@ -36,7 +37,7 @@ wallet session are **NOT RUN**.
 |---|---|---|
 | G2 | **PASS** — HOSTED | 16:42 UTC: `/`, `/pet`, `/help`, public page → 200. `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/finale`, `/dev/companion`, `/dev/beta` → **404**. These six are all the `/dev` routes in the source |
 | G3 | **PASS** — HOSTED | No console errors, exceptions or warnings on `/`, `/pet`, the public page or `/help` at 1440, 390 and 320 |
-| G4 | **PASS** — CHAIN | `node docs/qa/counter-check.mjs`: chain 1952, block **42 500 495** (16:42:12 UTC), `communityStats(1)` = **12** |
+| G4 | **PASS** — CHAIN | `node docs/qa/counter-check.mjs`: chain 1952, block **42 500 495** (16:42:12 UTC), `communityStats(1)` = **12**. Later reading: still **12** at block 42 548 305 (3 October 05:59:02 UTC) |
 
 ## Overview and community (hosted)
 

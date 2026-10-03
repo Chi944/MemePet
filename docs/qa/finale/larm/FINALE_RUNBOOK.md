@@ -35,8 +35,9 @@ the 7th fall on the previous UTC day and do not block the pitch.
 | 2026-09-30 17:45:35 UTC, block 42 331 498 | **7** | `node docs/qa/counter-check.mjs` |
 | 2026-10-02 08:07:25 UTC, block 42 469 608 | **12** | `node docs/qa/counter-check.mjs` ([F7 combined QA](COMBINED_QA_2026-10-02.md)) |
 | 2026-10-02 16:42:12 UTC, block 42 500 495 | **12** | `node docs/qa/counter-check.mjs` ([3 October rerun](COMBINED_QA_2026-10-03.md)) |
+| 2026-10-03 05:59:02 UTC, block 42 548 305 | **12** | `node docs/qa/counter-check.mjs` |
 
-Blooming needs 20. At the latest recorded total of 12 (2 October, 16:42 UTC),
+Blooming needs 20. At the latest recorded total of 12 (3 October, 05:59 UTC),
 8 more genuine confirmed cares remain. Each wallet can care at most once per UTC day. Use the actual
 total on stage; this table is a dated observation, not a forecast.
 
@@ -61,7 +62,8 @@ Rechecked on 3 October against release `3148238` (GitHub Production
 deployment 6812922873) in [the 3 October rerun](COMBINED_QA_2026-10-03.md);
 the [2 October run](COMBINED_QA_2026-10-02.md) is kept as history. The alias
 was not independently resolved to a commit (the lead's release notes record
-it). Labels in quotes are the app's own text. F6 is merged: "Read block" now sits
+it). Production has since moved to `a83f342` (deployment 6824015621, 3 October
+06:00 UTC); everything since `3148238` is QA documents only, with no app code. Labels in quotes are the app's own text. F6 is merged: "Read block" now sits
 inside the closed **View verified evidence** disclosure, so **open it before
 pointing at the block** (checklist row S1). The closed recap already shows
 "Confirmed at block N". Recheck these labels on the release Codex names for
@@ -139,8 +141,10 @@ reload while the care is pending.
       overflow and smallest text about 15 px of output (about 10 px at
       100%); the projector check remains a rehearsal task.
       Set it with Ctrl +/−, not the OS display settings.
-- [ ] Pitch wording reflects the documented team demo cares. Attribute any
-      later increase separately; the counter counts actions, not people.
+- [ ] Pitch wording says "care actions". Say "team demo cares" only for
+      actions attributed to team wallets (six of the first seven, plus the
+      stage pet's care on 1 October); the rest is not attributed. The counter
+      counts actions, not people.
 - [ ] Timed rehearsal done on the demo release, with the **rehearsal**
       wallet. Write down how long the care took from approval to "Confirmed",
       and set the 0:40–1:30 buffer from it. Also note whether growth and the
