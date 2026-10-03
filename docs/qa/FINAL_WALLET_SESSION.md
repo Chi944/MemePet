@@ -5,10 +5,17 @@ The [completed first run](evidence/FINAL_WALLET_2026-10-03.md) records a genuine
 confirmed care but failed automatic pet/community reads on `988ed94`.
 The [repaired-release retest](evidence/READ_REPAIR_2026-10-03.md) records scoped
 wallet acceptance PASS for `fa07032`, preserving that earlier failure and all
-observation limits. B5 runtime is now merged in #102 and its production identity
-is recorded in [B5 recovery evidence](evidence/B5_RECOVERY_2026-10-03.md).
-Genuine changed-release recovery acceptance remains NOT RUN. Backup
-delivery/playback and rehearsal remain unfinished and do not block engineering.
+observation limits. B5 shipped in #102; latest reviewed #104 at `4a40275` is
+production verified, with 822 app tests, 30 simulated browser cases and six
+fictional previews passed in CI. [B5 recovery evidence](evidence/B5_RECOVERY_2026-10-03.md)
+records Account 2's automatic care updates and ordinary reload on that release.
+No saved hash was restored; genuine B5 recovery acceptance remains NOT RUN.
+The lead's [silent 2:14 backup](evidence/FINALE_BACKUP_2026-10-03.md) is delivered
+locally and passed full playback with its recording gap disclosed. Timed team
+rehearsal is **USER-REPORTED PASS (2026-10-03)**, not independently observed by the
+lead. Venue-equipment playback remains NOT RUN. Genuine B5 recovery is the only
+remaining scored deliverable. Larm's clips remain separate and undelivered;
+the lead's backup pass does not establish their receipt or genuine B5 recovery.
 A direct, corroborated retest can establish acceptance without a video; a video
 is required only for the separate recorded-backup deliverable. The template
 table below is not the latest result index. Historical network/adoption/rejection
@@ -23,12 +30,12 @@ and failures in [the browser walkthrough](BROWSER_WALKTHROUGH.md),
 [Account 3's dated wallet run](evidence/LATEST_RELEASE_QA_2026-09-24.md) and
 [Account 2's recording evidence](evidence/FINAL_CAPTURE_2026-09-24.md).
 
-## Named release and prerequisites
+## Historical preparation baseline and session prerequisites
 
-The current product implementation is #91/#92, with #93–#95 adding reviewed
+The original preparation baseline was #91/#92, with #93–#95 adding reviewed
 QA evidence and judge-answer corrections. The lead verified production
-`3148238f5a0d216fa704ad6176135d2e25555cda` at the #92 checkpoint; the current
-lead PR records the subsequent release identity. Source paths (`src/`,
+`3148238f5a0d216fa704ad6176135d2e25555cda` at the #92 checkpoint; the latest
+release is identified at the top of this document. Source paths (`src/`,
 `public/`, contracts and dependency/build configuration) must be compared if
 using an earlier recording. Documentation-only merges are not new wallet runs.
 

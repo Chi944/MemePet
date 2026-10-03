@@ -4,7 +4,68 @@ Updated 3 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## B5 runtime released — 3 October, genuine recovery check pending
+## Wallet discovery release — 3 October, latest checkpoint
+
+[PR #104](https://github.com/Chi944/MemePet/pull/104) merged at **09:57:05 UTC**
+as `4a40275ceed86438e527bac8bba26a86493e06f7`; its tree matches reviewed runtime
+head `824e964f59ccc1299ccade9c68f49aedef684a2d`. Wallet discovery now uses the
+EIP-6963 announced list when available, with legacy injection only as fallback.
+This removes duplicate compatibility wrappers without guessing provider identity
+from wallet names. Late discovery cannot silently replace a selected signer.
+
+[PR CI 37114597414](https://github.com/Chi944/MemePet/actions/runs/37114597414)
+passed **822 app tests, 30 simulated browser cases, six fictional preview cases
+and the contract checks**. The local browser run passed 29 cases; its no-provider
+case failed because a Next.js chunk could not load (`ERR_NO_BUFFER_SPACE`). That
+isolated case passed unchanged on rerun. This was not a passed 30-case local run.
+
+The production alias resolved to READY deployment
+`dpl_5zM3ByeCVAyYQtRWzTUsHBzr9hdG` from merge `4a40275`. The hosted picker showed
+one **OKX Wallet** choice and one **MetaMask** choice. Selecting MetaMask and
+connecting restored Account 2 on chain 1952, Buddy/30 points and community 15.
+Deston then approved one genuine Account 2 care. Before any refresh or Retry,
+the hosted page showed the confirmed transaction, Buddy **30 to 40 points**,
+**three to four cares**, community **15 to 16**, cooldown until **4 October
+00:00 UTC (08:00 Singapore)** and recap block `42562986`. Main CI
+[37114761697](https://github.com/Chi944/MemePet/actions/runs/37114761697) passed.
+
+Confirmation finished before the planned reload. After reload and MetaMask
+reconnection, Account 2 retained 40 points/four cares, cooldown and community 16;
+recap block was `42563043`. No transaction panel was restored. This verifies
+ordinary pet persistence, **not genuine B5 hash recovery**. A bounded counter
+check found exactly one matching Account 2 care event at block `42562983`.
+Independent public transaction/receipt reads verified the same zero-value care,
+correct sender/registry, chain 1952 and successful receipt at 10:03:40 UTC.
+
+The original care recording failed to finalize and is not playable (`moov` atom
+missing). A locally salvaged segment retains approval through pending only;
+its timing was reconstructed at nominal 30 fps and it does not show confirmation
+or reload. A labelled 134.333-second backup edit combines that segment with later
+40-point footage and explicitly identifies the gap. Export, all-frame decode and
+full local playback passed; the player reached the end at 10:35 UTC without
+seeking or interruption, reporting four dropped frames out of 4,030 (about 0.1%).
+The [backup record](qa/evidence/FINALE_BACKUP_2026-10-03.md) identifies the exact
+artifact, playback proof and recording limits. This earns one delivered-backup
+point; it does not establish venue playback or human rehearsal. Direct UI observations and
+public receipt evidence remain separate from the incomplete recording.
+No additional care was planned at that checkpoint.
+
+Deston subsequently confirmed on **3 October 2026** that the timed team rehearsal
+was finished: **USER-REPORTED PASS**. No exact duration, time or venue playback is
+claimed. That closes the separate rehearsal point; no repeat video or rehearsal
+is required by the remaining gate.
+
+**Overall is 98/100; lead 49/51 (about 96%); B5 remains 6/8.** One genuine B5
+recovery acceptance check accounts for the remaining two points. See the
+[updated B5 evidence](qa/evidence/B5_RECOVERY_2026-10-03.md).
+
+The [later Imported Account 1 attempt](qa/evidence/B5_RECOVERY_2026-10-03.md#later-imported-account-1-care-attempt--3-october-1044-utc)
+confirmed successfully at 10:44:50 UTC with automatic 30-point/three-care display
+and community 17. The next observed state was already confirmed, so the pending
+guard prevented a reload. Genuine recovery was **NOT OBSERVED**, not an
+application failure; the score remains **98/100**.
+
+## B5 runtime released — 3 October, earlier checkpoint
 
 B5 transaction recovery was reviewed and merged in [PR #102](https://github.com/Chi944/MemePet/pull/102)
 at **`36b9ba8d9b93c84e2036c121a377fb0837a24b10`**, from runtime head
@@ -137,7 +198,10 @@ weighted by deliverables, not elapsed time, code quality, readiness or mainnet
 completion. They supersede earlier estimates with smaller denominators.
 B1/B4 are merged; B2/B3 QA credit follows reviewed #93/#95. B5 implementation
 credit follows reviewed merge #102 and the verified production deployment;
-genuine changed-release acceptance remains a separate gate.
+genuine changed-release acceptance remains a separate gate. The delivered backup
+and completed local playback earn one additional point. Deston's 3 October
+confirmation that the timed team rehearsal finished earns its separate point
+as **USER-REPORTED PASS**, without claiming an observed duration or venue playback.
 
 | Deliverable | Completed weight / total | Remaining |
 |---|---:|---|
@@ -148,15 +212,15 @@ genuine changed-release acceptance remains a separate gate.
 | B3 help copy/verification | 4 / 4 | Released wording/link review complete |
 | B4 provider/retry/Help integration | 9 / 9 | B1 wired; genuine acceptance separate |
 | B5 recovery | 6 / 8 | Reviewed implementation merged in #102; genuine B5 acceptance remains 2 points |
-| Genuine final acceptance, backup and rehearsal | 2 / 4 | Wallet acceptance: 2 complete; delivered/playable backup: 1 pending; rehearsal: 1 pending |
-| **Overall after reviewed B5 merge** | **96 / 100 — 96%** | Genuine B5, backup and rehearsal remain; not mainnet readiness |
+| Genuine final acceptance, backup and rehearsal | 4 / 4 | Wallet acceptance: 2 complete; delivered/playable backup: 1 complete; timed team rehearsal: 1 complete (USER-REPORTED PASS, 3 October) |
+| **Overall after team rehearsal confirmation** | **98 / 100 — 98%** | One genuine B5 recovery acceptance check remains, worth 2 points; not mainnet readiness |
 
 | Member's assigned lane | Weighted progress | Next action |
 |---|---:|---|
-| Deston / Codex | 47 / 51 — **about 92%** | Codex coordinates genuine B5 acceptance on the verified deployment; Deston reviews private prompts only when needed and rehearses |
+| Deston / Codex | 49 / 51 — **about 96%** | Codex coordinates the remaining genuine B5 acceptance check; Deston reviews private prompts only when needed |
 | Kym | 22 / 22 — **100% implementation** | Focused released onboarding/progression check; no new feature assignment |
 | YeeWei | 16 / 16 — **100% assigned implementation/QA** | Retain #95; cite the lead's eight passing B5 scenarios and report only new scoped defects |
-| Larm | 11 / 11 — **100% assigned implementation/QA** | Deliver actual read-only clips and rehearse accurate judge answers |
+| Larm | 11 / 11 — **100% assigned implementation/QA** | Keep the delivered labelled backup and accurate judge answers ready; no repeat rehearsal required |
 
 The existing finale feature implementation is complete. Recorded beta engineering
 is 49/51 (about 96%) after reviewed B5 merge #102; that does not erase completed

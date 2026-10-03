@@ -9,16 +9,22 @@ is needed. B5 production is verified; its new genuine acceptance remains lead-co
 The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
 scoped wallet acceptance and clears the prerequisite for Codex's B5 integration.
 Keep the original read-back failure and both genuine reports separate from your
-simulated suite. The lead has now implemented the runtime and replaced all eight
-B5 placeholders with passing simulated cases; the full simulated suite passed
-all 29 cases. Cite [the lead's B5 evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md)
-rather than rerunning or claiming those checks as your own. Reviewed PR #102
-merged at `36b9ba8` from runtime head `4477df2`, with PR CI and Vercel preview
-passing. Main CI and production identity are also verified; genuine B5 recovery
-remains NOT RUN.
+simulated suite. The lead implemented B5 in #102 with eight passing recovery cases.
+Latest reviewed [PR #104](https://github.com/Chi944/MemePet/pull/104), `4a40275`,
+fixes duplicate wallet wrappers and is production verified. Its CI passed 822 app
+tests, 30 simulated browser cases and six fictional previews; main CI also passed.
+Cite [the lead's B5 evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md) rather than
+rerunning or claiming those checks as your own. Account 2's genuine care and
+ordinary reload did not restore a saved hash; genuine B5 recovery remains NOT RUN.
+The lead's [labelled backup](../qa/evidence/FINALE_BACKUP_2026-10-03.md) passed full
+local playback with its recording gap disclosed; it does not close B5 acceptance
+or establish venue-equipment playback. Timed team rehearsal is separately
+**USER-REPORTED PASS (2026-10-03)**, not independently observed by the lead.
+Only genuine B5 recovery remains open in the scored scope. No additional browser
+suite or repeat rehearsal is assigned to you.
 
 ```text
-Fetch reviewed main, preserving local work. Read docs/beta/YEEWEI.md. B2 and #95 are complete. Keep existing evidence. The lead's B5 runtime and eight passing recovery scenarios are merged in reviewed PR #102 at 36b9ba8; main CI and production identity are verified. Cite that evidence, do not rebuild the adapter or duplicate completed tests. Report only new reproducible defects within your assigned paths; no new feature, wallet action, paid call or merge. Genuine changed-release B5 recovery remains NOT RUN and lead-coordinated.
+Fetch reviewed main, preserving local work. Read docs/beta/YEEWEI.md. B2 and #95 are complete. Keep existing evidence. The lead's B5 runtime shipped in #102; latest wallet-discovery release #104 at 4a40275 is production verified, with 822 app tests, 30 simulated browser cases and six fictional previews passed in CI. Cite the B5 evidence; do not rebuild the adapter or duplicate completed tests. Account 2's genuine care and ordinary reload are not saved-hash recovery. Report only new reproducible defects within your assigned paths; no new feature, wallet action, paid call or merge. Genuine changed-release B5 recovery remains NOT RUN and lead-coordinated.
 ```
 
 ## Earlier requirements and handoffs

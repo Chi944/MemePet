@@ -7,26 +7,31 @@ The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
 integration prerequisite. The [earlier Account 4 read-back failure](../qa/evidence/FINAL_WALLET_2026-10-03.md)
 remains historical FAIL. Initial OKX connection failures and observation limits
 remain explicit; the pass covers the observed final paths, not every wallet path.
-Reviewed B5 [PR #102](https://github.com/Chi944/MemePet/pull/102) merged at
-`36b9ba8` from runtime head `4477df2`, after all PR CI and the Vercel preview
-passed. Main CI also passed, and the production alias was independently
-resolved to a READY deployment built from `36b9ba8`.
-[B5 evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md) records 815 passing app
-tests, eight passing recovery browser cases and all 29 passing simulated browser
-cases. Genuine changed-release B5 recovery remains **NOT RUN**. This does not
-reopen completed teammate implementation or inherit the earlier wallet pass.
+B5 shipped in #102. The latest reviewed release, [PR #104](https://github.com/Chi944/MemePet/pull/104)
+at `4a40275`, fixes duplicate legacy/announced wallet wrappers and is verified on
+production. Its CI passed **822 app tests, 30 simulated browser cases and six
+fictional preview cases**; main CI also passed. The hosted picker showed one OKX
+Wallet and one MetaMask choice. [B5 evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md)
+records Account 2's automatic care updates and ordinary reload persistence.
+No saved transaction hash was restored, so genuine B5 recovery remains **NOT RUN**.
+This does not reopen completed teammate implementation or inherit the earlier wallet pass.
 
 B0–B4 are integrated through #92. Reviewed #93/#95 complete Larm's released
 Help verification and YeeWei's combined B1/Help QA. Kym's implementation is
 complete. Do not restart their completed feature or QA branches.
 
-The reviewed merge earns the four implementation points: **96/100 overall,
-47/51 lead (about 92%), B5 6/8**. Remaining: genuine B5 recovery acceptance (2 points),
-a delivered and independently playable backup (1), and rehearsal (1). The earlier
-scoped wallet acceptance retains its 2 points. Backup and rehearsal do not gate
-B5 engineering.
-Codex handles acceptance preparation; Deston retains private approvals,
-product review and rehearsal, with no routine coding assigned.
+The reviewed implementation, verified backup and completed rehearsal earn
+**98/100 overall, 49/51 lead (about 96%), B5 6/8**. The only remaining scored
+deliverable is genuine B5 recovery acceptance (2 points). Timed team rehearsal is
+**USER-REPORTED PASS (2026-10-03)**; the lead did not independently observe it.
+The earlier scoped wallet acceptance retains its 2 points.
+The lead's [silent 2:14 backup](../qa/evidence/FINALE_BACKUP_2026-10-03.md) is
+delivered locally and passed full start-to-end playback. It discloses the gap
+between salvaged pending footage and later confirmed-state footage. Venue-equipment
+playback remains NOT RUN. Larm's four read-only clips remain separate
+and undelivered.
+Codex handles B5 acceptance; Deston retains private approvals and product review,
+with no routine coding or repeat rehearsal assigned.
 
 - Kym: finish the focused released B1 visual check if not already done; report
   only new reproducible findings. No extra features or repeated full QA sweep.
@@ -34,8 +39,9 @@ product review and rehearsal, with no routine coding assigned.
   scenarios. Do not rebuild the adapter or repeat completed QA; report only new
   scoped defects. Genuine B5 acceptance remains lead-coordinated.
 - Larm: deliver the actual four documented read-only clips to Deston outside
-  Git, then rehearse the updated runbook/Q&A. Clip filenames/checksums alone
-  do not establish delivery or offline playback.
+  Git and retain the accurate runbook/Q&A. Clip filenames/checksums alone
+  do not establish delivery or offline playback, and the lead's backup edit
+  does not establish receipt of those separate clips.
 
 Use each named brief for the paste-ready continuation. External sessions have
 not automatically received these changes. Mainnet and paid services remain out
