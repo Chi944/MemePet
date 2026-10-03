@@ -48,10 +48,22 @@ The [backup record](qa/evidence/FINALE_BACKUP_2026-10-03.md) identifies the exac
 artifact, playback proof and recording limits. This earns one delivered-backup
 point; it does not establish venue playback or human rehearsal. Direct UI observations and
 public receipt evidence remain separate from the incomplete recording.
-No additional care is planned today.
+No additional care was planned at that checkpoint.
 
-**Overall is 97/100; lead 48/51 (about 94%); B5 remains 6/8.** Genuine B5
-refresh recovery and human rehearsal remain open. See the [updated B5 evidence](qa/evidence/B5_RECOVERY_2026-10-03.md).
+Deston subsequently confirmed on **3 October 2026** that the timed team rehearsal
+was finished: **USER-REPORTED PASS**. No exact duration, time or venue playback is
+claimed. That closes the separate rehearsal point; no repeat video or rehearsal
+is required by the remaining gate.
+
+**Overall is 98/100; lead 49/51 (about 96%); B5 remains 6/8.** One genuine B5
+recovery acceptance check accounts for the remaining two points. See the
+[updated B5 evidence](qa/evidence/B5_RECOVERY_2026-10-03.md).
+
+The [later Imported Account 1 attempt](qa/evidence/B5_RECOVERY_2026-10-03.md#later-imported-account-1-care-attempt--3-october-1044-utc)
+confirmed successfully at 10:44:50 UTC with automatic 30-point/three-care display
+and community 17. The next observed state was already confirmed, so the pending
+guard prevented a reload. Genuine recovery was **NOT OBSERVED**, not an
+application failure; the score remains **98/100**.
 
 ## B5 runtime released — 3 October, earlier checkpoint
 
@@ -187,8 +199,9 @@ completion. They supersede earlier estimates with smaller denominators.
 B1/B4 are merged; B2/B3 QA credit follows reviewed #93/#95. B5 implementation
 credit follows reviewed merge #102 and the verified production deployment;
 genuine changed-release acceptance remains a separate gate. The delivered backup
-and completed local playback earn one additional point, without counting human
-rehearsal or venue playback.
+and completed local playback earn one additional point. Deston's 3 October
+confirmation that the timed team rehearsal finished earns its separate point
+as **USER-REPORTED PASS**, without claiming an observed duration or venue playback.
 
 | Deliverable | Completed weight / total | Remaining |
 |---|---:|---|
@@ -199,15 +212,15 @@ rehearsal or venue playback.
 | B3 help copy/verification | 4 / 4 | Released wording/link review complete |
 | B4 provider/retry/Help integration | 9 / 9 | B1 wired; genuine acceptance separate |
 | B5 recovery | 6 / 8 | Reviewed implementation merged in #102; genuine B5 acceptance remains 2 points |
-| Genuine final acceptance, backup and rehearsal | 3 / 4 | Wallet acceptance: 2 complete; delivered/playable backup: 1 complete; human rehearsal: 1 pending |
-| **Overall after backup delivery/playback** | **97 / 100 — 97%** | Genuine B5 refresh recovery and human rehearsal remain; not mainnet readiness |
+| Genuine final acceptance, backup and rehearsal | 4 / 4 | Wallet acceptance: 2 complete; delivered/playable backup: 1 complete; timed team rehearsal: 1 complete (USER-REPORTED PASS, 3 October) |
+| **Overall after team rehearsal confirmation** | **98 / 100 — 98%** | One genuine B5 recovery acceptance check remains, worth 2 points; not mainnet readiness |
 
 | Member's assigned lane | Weighted progress | Next action |
 |---|---:|---|
-| Deston / Codex | 48 / 51 — **about 94%** | Codex coordinates genuine B5 acceptance on the verified deployment; Deston reviews private prompts only when needed and rehearses |
+| Deston / Codex | 49 / 51 — **about 96%** | Codex coordinates the remaining genuine B5 acceptance check; Deston reviews private prompts only when needed |
 | Kym | 22 / 22 — **100% implementation** | Focused released onboarding/progression check; no new feature assignment |
 | YeeWei | 16 / 16 — **100% assigned implementation/QA** | Retain #95; cite the lead's eight passing B5 scenarios and report only new scoped defects |
-| Larm | 11 / 11 — **100% assigned implementation/QA** | Use the delivered labelled backup and rehearse accurate judge answers |
+| Larm | 11 / 11 — **100% assigned implementation/QA** | Keep the delivered labelled backup and accurate judge answers ready; no repeat rehearsal required |
 
 The existing finale feature implementation is complete. Recorded beta engineering
 is 49/51 (about 96%) after reviewed B5 merge #102; that does not erase completed

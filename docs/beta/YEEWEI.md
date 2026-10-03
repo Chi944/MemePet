@@ -18,7 +18,10 @@ rerunning or claiming those checks as your own. Account 2's genuine care and
 ordinary reload did not restore a saved hash; genuine B5 recovery remains NOT RUN.
 The lead's [labelled backup](../qa/evidence/FINALE_BACKUP_2026-10-03.md) passed full
 local playback with its recording gap disclosed; it does not close B5 acceptance
-or human rehearsal. No additional browser suite is assigned to you.
+or establish venue-equipment playback. Timed team rehearsal is separately
+**USER-REPORTED PASS (2026-10-03)**, not independently observed by the lead.
+Only genuine B5 recovery remains open in the scored scope. No additional browser
+suite or repeat rehearsal is assigned to you.
 
 ```text
 Fetch reviewed main, preserving local work. Read docs/beta/YEEWEI.md. B2 and #95 are complete. Keep existing evidence. The lead's B5 runtime shipped in #102; latest wallet-discovery release #104 at 4a40275 is production verified, with 822 app tests, 30 simulated browser cases and six fictional previews passed in CI. Cite the B5 evidence; do not rebuild the adapter or duplicate completed tests. Account 2's genuine care and ordinary reload are not saved-hash recovery. Report only new reproducible defects within your assigned paths; no new feature, wallet action, paid call or merge. Genuine changed-release B5 recovery remains NOT RUN and lead-coordinated.

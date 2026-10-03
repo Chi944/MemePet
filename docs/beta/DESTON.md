@@ -13,8 +13,8 @@ approved one care: the page automatically showed Buddy/40 points, four cares,
 community 16 and the next reset at 4 October 00:00 UTC (08:00 Singapore).
 Confirmation finished before the planned reload. Reloading and reconnecting
 retained those facts without another care, but no transaction panel was restored;
-this proves pet persistence, not B5 hash recovery. No additional care is planned
-today. Independent public reads verified the successful zero-value care receipt.
+this proves pet persistence, not B5 hash recovery. No additional care was planned
+at that checkpoint. Independent public reads verified the successful zero-value care receipt.
 The original recording could not be finalized; its salvaged segment stops at
 pending, before confirmation or reload. The completed labelled backup uses later
 footage with an explicit gap notice. Export, decode and start-to-end local playback
@@ -31,11 +31,11 @@ also passed.
    `36b9ba8`; the latest wallet-discovery release is `4a40275`. B5's separate
    genuine recovery acceptance remains open because the care confirmed before
    the planned refresh. Codex will coordinate that check. Only
-   review a private wallet prompt when that exact request is ready; no further
-   care is planned today.
-4. Use the delivered MP4 and cue card to rehearse the three-minute pitch.
-   Full local backup playback is complete; your human rehearsal and venue
-   playback are not recorded as passed.
+   review a private wallet prompt when that exact request is ready.
+4. Timed team rehearsal is **USER-REPORTED PASS**, confirmed by you on
+   **3 October 2026**. Keep the delivered MP4 and cue card ready; no repeat
+   video or rehearsal is required. No exact rehearsal duration, time or venue
+   playback is claimed.
 
 Help/B1 integration, assigned B2/B3 release QA and the scoped wallet prerequisite
 are complete. B5 implementation is reviewed, merged and production verified;
@@ -43,12 +43,12 @@ genuine B5 recovery is **NOT RUN**.
 Codex owns the remaining engineering and coordination. Mainnet, paid APIs and
 purchases are outside the current authorization.
 
-Reviewed B5 implementation plus the delivered/playable backup earn **97/100
-overall, 48/51 lead (about 94%)**, with three points still open: genuine B5
-refresh recovery acceptance (2) and human rehearsal (1). The final-acceptance,
-backup and rehearsal row is **3/4**. B5 stays **6/8** until its genuine
-changed-release recovery acceptance passes. This does
-not assign coding work to you.
+Reviewed B5 implementation, the delivered/playable backup and your rehearsal
+confirmation earn **98/100 overall, 49/51 lead (about 96%)**. One genuine B5
+recovery acceptance check accounts for the remaining two points. The
+final-acceptance, backup and rehearsal row is **4/4**. B5 stays **6/8** until
+its genuine changed-release recovery acceptance passes. This does not assign
+coding work to you.
 
 See [weighted progress](../STATUS.md#progress-measurement). Your lead-lane
 percentage includes engineering delegated to Codex, not personal coding work.

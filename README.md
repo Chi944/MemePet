@@ -33,7 +33,7 @@ Growth comes from confirmed care. No MemePet token to buy; network gas applies.
 | **Intended track** | Build a Market — meme application; deployed on X Layer testnet |
 | **Team** | **The four musketeers** — Deston, Kym, Larm and YeeWei |
 | **Live demo** | [memepet.vercel.app](https://memepet.vercel.app) |
-| **Demo video** | [Watch the 3:05 demo](https://youtu.be/ofPOony4nys) · Larm's 1 October signed-out check found it public and playable; [access evidence](docs/qa/finale/larm/LINKS_AND_RECAP_QA_2026-10-01.md) |
+| **Submission video** | [Watch the original 3:05 demo](https://youtu.be/ofPOony4nys) · Larm's 1 October signed-out check found it public and playable; [access evidence](docs/qa/finale/larm/LINKS_AND_RECAP_QA_2026-10-01.md). Later finale features are described below. |
 | **Contract** | [`0xe844152262D243a7B90F6e07FF7A67F1d7FeD216`](https://www.okx.com/web3/explorer/xlayer-test/address/0xe844152262D243a7B90F6e07FF7A67F1d7FeD216) |
 | **Network** | X Layer testnet · chain **1952** · gas currency **OKB** |
 | **Repository** | [github.com/Chi944/memepet](https://github.com/Chi944/memepet) |
@@ -290,12 +290,14 @@ network access. Production builds also download Google Fonts.
 | `/` | Overview, stage artwork and community progress |
 | `/pet` | Connect, adopt, care, inspect the shared garden and ask for a verified activity recap |
 | `/pet/<wallet-address>` | Read-only public pet page and generated share image |
+| `/help` | Wallet setup, test gas, daily care, recovery and support guidance |
 | `/api/companion` | Read-only, block-sourced MemePet facts and standard explanations; GET describes the API, POST reads a public address |
 | `/dev/pet` | Fictional pet stages and care-state previews |
 | `/dev/landing` | Fictional landing preview |
 | `/dev/community` | Loading, zero, growing, unavailable and other community previews |
 | `/dev/finale` | Fictional shared inputs for the finale companion, personality and mission work |
 | `/dev/companion` | Fictional recap facts, explanations and failure states |
+| `/dev/beta` | Fictional onboarding, wallet-choice, recovery, Help and milestone states |
 
 The `/dev/*` routes return **404 in production**. CI checks that gate.
 For local Anvil setup, use [development setup](docs/DEV_SETUP.md) and
@@ -319,7 +321,12 @@ npm test
 npm run build
 node --test docs/qa/counter-check.regression.mjs
 node --test docs/qa/rpc-recovery.regression.mjs
+node --test docs/qa/wallet-preflight.regression.mjs
 ```
+
+The [development guide](docs/DEV_SETUP.md#simulated-browser-regression) also
+documents `npm run test:e2e:simulated` and `npm run test:e2e:previews`. Simulated
+wallets and fictional previews are explicitly separate from real-wallet evidence.
 
 Use Foundry **v1.8.3** and the pinned test library before running contract checks
 ([full setup](docs/DEV_SETUP.md#checks)):
@@ -395,12 +402,15 @@ use the same existing adapter; preferences change explanation style, not earned
 growth. [Dated verification](docs/qa/evidence/PERSONALITY_INTEGRATION_2026-10-01.md)
 separates automated and read-only browser checks from genuine wallet actions.
 
-The core/finale features and B0–B4 beta scope are integrated. Scoped wallet
-acceptance is recorded; B5 recovery has separate runtime and wallet checks.
+The core/finale features and B0–B5 beta implementation are integrated. Scoped
+wallet acceptance is recorded; recovery across refresh has a separate genuine
+wallet check.
 A labelled 2:14 silent finale backup is delivered and has passed full local
 playback; its [recording and verification limits](docs/qa/evidence/FINALE_BACKUP_2026-10-03.md)
-remain explicit. Genuine pending-refresh recovery and a timed team rehearsal
-remain outstanding.
+remain explicit. The team confirmed its timed rehearsal complete on 3 October;
+this is a team-reported result, not a venue-equipment check. Genuine
+pending-refresh recovery remains the last open acceptance item in the agreed
+finale/testnet checklist.
 The free [OKX.AI service packet](docs/finale/OKX_AI_SERVICE.md) is prepared;
 registration and a genuine call through OKX.AI remain pending. No included model
 credits or deployed AI chat are claimed. The [parallel build plan](docs/finale/START_HERE.md) assigns
@@ -415,9 +425,9 @@ refresh limitation stay explicit in [current status](docs/STATUS.md).
 | Contributor | Project contribution |
 |---|---|
 | **Deston — lead** | Contract, wallet/data integration, routes, shared UI, CI, deployment and release checks |
-| **Kym — pet experience** | Pet presentation, stage artwork and evolution presentation |
-| **Larm — community experience** | Landing/community UI, QA and demo materials |
-| **YeeWei — activity experience** | Finale activity recap interface, bounded questions, evidence and response states |
+| **Kym — pet experience** | Pet and earned-form presentation, artwork finishing, personality controls, onboarding and cosmetic milestones |
+| **Larm — community experience** | Landing/community UI, Help copy, QA and finale runbook |
+| **YeeWei — activity experience** | Verified recap and evidence interface, recovery/Help presentation and browser regression scenarios |
 
 Responsibilities are documented in [file ownership](docs/OWNERSHIP.md).
 Built with [Next.js](https://nextjs.org), [React](https://react.dev),

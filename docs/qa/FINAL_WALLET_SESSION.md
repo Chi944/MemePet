@@ -11,8 +11,10 @@ fictional previews passed in CI. [B5 recovery evidence](evidence/B5_RECOVERY_202
 records Account 2's automatic care updates and ordinary reload on that release.
 No saved hash was restored; genuine B5 recovery acceptance remains NOT RUN.
 The lead's [silent 2:14 backup](evidence/FINALE_BACKUP_2026-10-03.md) is delivered
-locally and passed full playback with its recording gap disclosed. Venue playback
-and human rehearsal remain NOT RUN. Larm's clips remain separate and undelivered;
+locally and passed full playback with its recording gap disclosed. Timed team
+rehearsal is **USER-REPORTED PASS (2026-10-03)**, not independently observed by the
+lead. Venue-equipment playback remains NOT RUN. Genuine B5 recovery is the only
+remaining scored deliverable. Larm's clips remain separate and undelivered;
 the lead's backup pass does not establish their receipt or genuine B5 recovery.
 A direct, corroborated retest can establish acceptance without a video; a video
 is required only for the separate recorded-backup deliverable. The template

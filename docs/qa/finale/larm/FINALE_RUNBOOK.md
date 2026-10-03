@@ -30,9 +30,11 @@ The lead's [silent 2:14 (134.333-second) backup](../../evidence/FINALE_BACKUP_20
 is delivered locally and passed full start-to-end playback at 10:35 UTC. It combines
 salvaged approval/pending footage with later confirmed-state footage and explicitly
 discloses the missing confirmation/reload segment. This edit is separate from
-Larm's four read-only clips, which remain undelivered. Venue playback, human
-rehearsal and genuine B5 recovery remain NOT RUN. Deston retains the private cue
-card and final pitch timing.
+Larm's four read-only clips, which remain undelivered. Timed team rehearsal is
+**USER-REPORTED PASS (2026-10-03)**, not independently observed by the lead;
+venue-equipment playback remains NOT RUN. Genuine B5 recovery is the only
+remaining scored deliverable. No repeat rehearsal is required. Deston retains
+the private cue card and final pitch timing.
 
 ## Earlier checkpoint — 3 October, B5 genuine acceptance pending
 

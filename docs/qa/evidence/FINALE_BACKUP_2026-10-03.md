@@ -3,8 +3,9 @@
 ## Artifact and purpose
 
 The silent recorded backup supports a live narrated finale demonstration of
-MemePet on X Layer testnet. It is not a new submission video with a voice track,
-proof of genuine B5 recovery, or a completed human pitch rehearsal.
+MemePet on X Layer testnet. It is not a new submission video with a voice track
+or proof of genuine B5 recovery. Team rehearsal completion is separately recorded
+from the user's report below.
 
 | Artifact field | Recorded value |
 |---|---|
@@ -52,7 +53,7 @@ was sent to manufacture missing footage.
 | Browser frame counter | 4,030 total video frames; 4 dropped (about 0.1%), not zero |
 | Playback source | Local-only server at `127.0.0.1:3430`; no external media dependencies |
 | Venue playback | NOT RUN |
-| Human pitch rehearsal | NOT RUN |
+| Timed team rehearsal | USER-REPORTED PASS: Deston confirmed completion on 3 October 2026; exact duration, time and venue not recorded |
 
 The lead started actual playback once at the beginning and observed the player
 reach **“Playback completed — 134.33 / 134.33 seconds”** at **10:35 UTC**. Playback
@@ -63,9 +64,13 @@ The browser reported four dropped frames out of 4,030; the record does not claim
 zero dropped frames or continuous human visual review of every frame.
 
 The exported artifact and completed local playback satisfy **one delivered-backup
-point**. Overall is now **97/100**, lead **48/51 (about 94%)**, while B5 remains
-**6/8**. The combined final-acceptance/backup/rehearsal row is **3/4**: wallet
-acceptance and delivered/playable backup complete; human rehearsal still pending.
-Genuine B5 refresh recovery remains NOT RUN and earns no additional credit.
-The MP4 and accompanying cue-card links are the delivery handoff; venue playback
-and a human pitch rehearsal are not claimed.
+point**. Deston subsequently confirmed that timed team rehearsal was finished on
+**3 October 2026**: **USER-REPORTED PASS**, earning its separate point. This is a
+user report, not an agent-observed timed run; no exact duration, time or venue
+playback is claimed.
+
+Overall is now **98/100**, lead **49/51 (about 96%)**, while B5 remains **6/8**.
+The combined final-acceptance/backup/rehearsal row is **4/4**. One genuine B5
+recovery acceptance check remains NOT RUN, worth two points. The MP4 and
+accompanying cue-card links are the delivery handoff; no repeat video or rehearsal
+is required by that remaining check. Venue playback remains unrun.
