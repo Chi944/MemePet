@@ -4,7 +4,28 @@ Updated 3 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Scoped wallet acceptance — 3 October, latest checkpoint
+## B5 runtime implemented — 3 October, release review in progress
+
+B5 transaction recovery is implemented and tested on
+`feat/beta-pending-recovery`; review and release work are in progress. This
+checkpoint does **not** claim it is merged or deployed. The [B5 evidence](qa/evidence/B5_RECOVERY_2026-10-03.md)
+records the public-hash journal, bounded read-only recovery, receipt-bound facts,
+stale-context protection and storage-failure behavior. **815 app tests, eight
+focused recovery browser cases and all 29 simulated browser cases passed.**
+These automated checks do not establish genuine changed-release recovery.
+
+The earlier scoped `fa07032` wallet acceptance remains PASS and satisfied the
+prerequisite for this implementation. **Genuine B5 recovery acceptance is NOT RUN**
+and must use the identified released B5 source. Backup delivery/playback and
+rehearsal remain separate unfinished deliverables, not engineering gates.
+
+**Conditional on passing review and merge**, B5 implementation adds four points:
+**B5 6/8, overall 96/100, lead 47/51 (about 92%)**. The remaining four points are
+genuine B5 acceptance (2), a delivered/playable backup (1), and rehearsal (1).
+Until that merge is recorded, completed credit remains **92/100 overall, 43/51
+lead, B5 2/8**. Completed teammate scores are unchanged.
+
+## Scoped wallet acceptance — 3 October, earlier checkpoint
 
 The [repaired-release retest](qa/evidence/READ_REPAIR_2026-10-03.md) records
 **scoped genuine wallet acceptance PASS on `fa07032`**. Account 3's care changed
@@ -112,7 +133,8 @@ These are **planning estimates for the expanded approved testnet scope**,
 weighted by deliverables, not elapsed time, code quality, readiness or mainnet
 completion. They supersede earlier estimates with smaller denominators.
 B1/B4 are merged; B2/B3 QA credit follows reviewed #93/#95.
-Unpublished work is not counted; genuine acceptance remains a separate gate.
+Unmerged B5 implementation is shown conditionally below, not counted as merged
+delivery. Genuine changed-release acceptance remains a separate gate.
 
 | Deliverable | Completed weight / total | Remaining |
 |---|---:|---|
@@ -122,19 +144,21 @@ Unpublished work is not counted; genuine acceptance remains a separate gate.
 | B2 presentation and regression | 8 / 8 | Assigned combined QA complete; genuine acceptance separate |
 | B3 help copy/verification | 4 / 4 | Released wording/link review complete |
 | B4 provider/retry/Help integration | 9 / 9 | B1 wired; genuine acceptance separate |
-| B5 recovery | 2 / 8 | Integration prerequisite satisfied; runtime and its own acceptance remain |
+| B5 recovery | 2 / 8 recorded; **6 / 8 after passing review/merge** | Runtime implemented/tested on branch; genuine B5 acceptance remains 2 points |
 | Genuine final acceptance, backup and rehearsal | 2 / 4 | Wallet acceptance: 2 complete; delivered/playable backup: 1 pending; rehearsal: 1 pending |
-| **Overall after scoped wallet acceptance** | **92 / 100 — 92%** | Testnet delivery, not mainnet readiness |
+| **Recorded overall after scoped wallet acceptance** | **92 / 100 — 92%** | Testnet delivery, not mainnet readiness |
+| **Conditional overall after B5 review/merge** | **96 / 100 — 96%** | Not yet earned at this branch checkpoint; genuine B5, backup and rehearsal remain |
 
 | Member's assigned lane | Weighted progress | Next action |
 |---|---:|---|
-| Deston / Codex | 43 / 51 — **about 84%** | Codex integrates B5 and coordinates its changed-release acceptance; Deston reviews private prompts only when needed and rehearses |
+| Deston / Codex | 43 / 51 recorded — **about 84%**; 47 / 51 after B5 review/merge — **about 92%** | Codex finishes review/release checks and coordinates genuine B5 acceptance; Deston reviews private prompts only when needed and rehearses |
 | Kym | 22 / 22 — **100% implementation** | Focused released onboarding/progression check; no new feature assignment |
-| YeeWei | 16 / 16 — **100% assigned implementation/QA** | Await the lead's B5 adapter/scenario handoff; no duplicate completed QA |
+| YeeWei | 16 / 16 — **100% assigned implementation/QA** | Retain #95; cite the lead's eight passing B5 scenarios and report only new scoped defects |
 | Larm | 11 / 11 — **100% assigned implementation/QA** | Deliver actual read-only clips and rehearse accurate judge answers |
 
-The existing finale feature implementation is complete. Added beta engineering
-is 45/51 (about 88%); that does not erase completed finale work. Deston's
+The existing finale feature implementation is complete. Recorded beta engineering
+is 45/51 (about 88%), conditionally 49/51 after passing B5 review/merge; that does
+not erase completed finale work. Deston's
 percentage includes work delegated to Codex, not a personal coding obligation.
 Use [current role briefs](beta/START_HERE.md) for paste-ready teammate prompts.
 External agent sessions have not automatically received these updates.

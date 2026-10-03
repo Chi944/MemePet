@@ -45,7 +45,9 @@ Shared fakes live in `support/`: `simulated-chain.ts` answers the configured
 RPC URL and `/api/companion` from fictional state, can hold one answer until
 the test releases it, and blocks and records every other non-local request.
 `simulated-provider.ts` injects fictional EIP-1193 providers; send/sign/switch
-requests are rejected and recorded.
+requests are recorded and rejected by default. Recovery cases can explicitly
+return a fictional hash from `eth_sendTransaction`; no signing or public-network
+request occurs. Read-only recovery must not request another simulated send.
 
 | Spec | Covered (SIMULATED) |
 |---|---|
@@ -53,7 +55,7 @@ requests are rejected and recorded.
 | `failed-reads.spec.ts` | Failed pet/community/recap reads stay unknown; genuine no-pet and zero total differ; read-only retry recovery |
 | `combined-panels.spec.ts` | Pet, recap (and its evidence) and garden agree for A then B; failed community read is unknown everywhere; 390px and 1440px |
 | `same-address-provider.spec.ts` | Same address/chain via a second provider: old late answers and old failures do not carry across |
-| `recovery-refresh.spec.ts` | **NOT RUN / fixme** until the lead's gated B5 recovery adapter lands |
+| `recovery-refresh.spec.ts` | Saved-hash refresh, verified success/failed facts/revert, unresolved replacement, invalid records, storage failure, context changes and read-only Check status; fictional transactions, never genuine wallet acceptance |
 
 Held-response fulfillment is not evidence of browser delivery. The harness
 observes the exact request's finished/failed events, fails unexpected errors
@@ -64,8 +66,10 @@ Combined-panel cases also compare care eligibility, not only displayed counts.
 Failed pet reads now have a read-only **Retry pet read** action. Its recovery
 test holds the response and verifies loading, retained focus, inert repeated
 activation and no provider write before restoring confirmed facts. The existing
-30-second background refresh remains. Kym's `WalletChooser` route integration and a
-`/help` route are not wired yet, so their browser cases are not written.
+30-second background refresh remains. `provider-selection.spec.ts` covers the
+integrated chooser; `help.spec.ts` checks the read-only Help route at
+320/390/1440px. Recovery blocks ordinary pet polling while the journal is
+unresolved and verifies the saved transaction before publishing recovered facts.
 
 Inject fake provider APIs/events with `page.addInitScript` before navigation;
 stub every RPC and `/api/companion` response. Do not add fixture fallbacks to the

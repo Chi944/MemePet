@@ -13,7 +13,9 @@ export interface BetaPanelInputs {
   readonly wallet: Pick<ReturnType<typeof useWallet>,
     "installed" | "address" | "chainId" | "connecting" | "wrongChain" | "selectionBusy">;
   readonly registry: Pick<ReturnType<typeof usePetRegistry>,
-    "readStatus" | "rawPet" | "cooldownAvailableAtIso" | "isSubmitting">;
+    "readStatus" | "rawPet" | "cooldownAvailableAtIso" | "isSubmitting"> & {
+      readonly recoveryBlocksWrites?: boolean;
+    };
   readonly community: CommunityViewModel;
 }
 
@@ -49,7 +51,7 @@ export function mapBetaPanelState({ deployment, wallet, registry, community }: B
   const personalScopeReady = matchingChain && wallet.address !== null && wallet.installed && !wallet.connecting;
   const personal = !personalScopeReady
     ? mapPersonalMilestones(null, "live")
-    : wallet.selectionBusy || registry.isSubmitting || registry.readStatus === "idle" || registry.readStatus === "loading"
+    : wallet.selectionBusy || registry.isSubmitting || registry.recoveryBlocksWrites || registry.readStatus === "idle" || registry.readStatus === "loading"
       ? { kind: "loading" as const, dataMode: "live" as const }
       : registry.readStatus !== "ready" || !validPet(registry.rawPet)
         ? mapPersonalMilestones(null, "live")
@@ -78,6 +80,8 @@ export function mapBetaPanelState({ deployment, wallet, registry, community }: B
     onboarding = { ...network, kind: "needs-connection" };
   } else if (wallet.wrongChain || (wallet.chainId !== null && !matchingChain)) {
     onboarding = { ...network, kind: "wrong-network" };
+  } else if (registry.recoveryBlocksWrites) {
+    onboarding = { ...network, kind: "unavailable", message: "A submitted transaction still needs verification. Use Check status in its transaction panel before another adoption or care." };
   } else if (wallet.chainId === null || registry.isSubmitting || registry.readStatus === "idle" || registry.readStatus === "loading") {
     onboarding = { ...network, kind: "loading" };
   } else if (registry.readStatus !== "ready" || !validPet(registry.rawPet)) {

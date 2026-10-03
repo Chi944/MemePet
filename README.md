@@ -110,9 +110,16 @@ allowances or token transfers; wallet approval and network gas are still require
 <a id="honest-status"></a>
 ## 🚦 Honest status
 
-Browser evidence below was verified **25 September 2026 (Singapore)** on product
-runtime `af886a75`. Finale work is tracked separately in the
-[four-person build plan](docs/finale/START_HERE.md); planned features are not live claims.
+**3 October:** [scoped genuine wallet acceptance](docs/qa/evidence/READ_REPAIR_2026-10-03.md)
+passed on `fa07032`. A real care settled automatically at 40 personal points and
+14 community cares; receipt/state verification, same-chain account isolation,
+actual OKX connection, same-address provider isolation and disconnect checks are
+documented with their limits. The earlier failed run remains in the evidence.
+This is testnet acceptance for the observed paths, not an independent security audit.
+
+The dated September table below belongs to product runtime `af886a75`.
+Current implementation and remaining delivery work are tracked in
+[project status](docs/STATUS.md).
 
 **30 September finale integration:** the shared garden and block-sourced recap
 are implemented on the overview/pet routes. A sourced, text-only XDOG reference
@@ -121,15 +128,21 @@ check or affiliation. [Integration evidence](docs/qa/evidence/FINALE_INTEGRATION
 records release checks and limits. **1 October:** Kym's Explore/Practise controls
 are integrated with wallet-scoped browser preferences, reset and immediate
 answer rewording. [Personality verification](docs/qa/evidence/PERSONALITY_INTEGRATION_2026-10-01.md)
-records automated checks and the separate hosted-browser checkpoint. Fresh final
-wallet acceptance remains pending. Recap wording is a **Standard explanation**,
+records automated checks and the separate hosted-browser checkpoint. Recap wording is a **Standard explanation**,
 not a model-generated response.
 
 **2 October combined release:** the earned-form gallery and concise recap with
 keyboard-accessible evidence are integrated. Live public/connected-page reads
 and gallery interactions were checked on `d0fc020`; no new transaction was
 performed. [Combined release evidence](docs/qa/evidence/COMBINED_RELEASE_2026-10-02.md)
-separates those observations from the final wallet session still to run.
+separates those observations from the later genuine wallet session linked above.
+
+**Recovery after refresh:** this source adds a browser-local public-hash journal
+and read-only **Check status** panel. It validates transaction identity, receipt
+inclusion and receipt-block pet facts before showing recovered progress. Unresolved
+transactions block another submission; wallet/account changes clear the old view.
+Storage failures retain the returned hash on screen with a warning. Its separate
+changed-release wallet acceptance remains required; the `fa07032` pass predates it.
 
 | Area | Verified result |
 |---|---|
@@ -343,9 +356,9 @@ and a read-only holder indicator remain optional future work.
 ## ⚠️ Known limitations
 
 - **Testnet prototype:** one community, one mascot; no mainnet deployment or organic usage metrics are claimed. Finale selection does not establish approval of every planned integration.
-- **Community reads:** automatic refresh can return Unknown. A real read-only Retry recovered the confirmed total; automatic refresh itself did not pass that run.
-- **Finale retry repair:** a reproduced viem error-classification gap is covered by 14 new regressions; [fresh live verification remains pending](docs/qa/evidence/FINALE_RECEIPT_RETRY_2026-09-29.md).
-- **Unrun browser checks:** network away/back and normal-motion foreground playback remain **NOT RUN**. The user kept reduced motion enabled. Real later-day evolution is also unverified; stage artwork is illustrative.
+- **Public RPC reliability:** failed reads remain Unknown and expose read-only retry. Automatic settled updates passed the [3 October focused retest](docs/qa/evidence/READ_REPAIR_2026-10-03.md); earlier failures remain documented. This is not a guarantee of RPC uptime or latency.
+- **Wallet coverage:** the final observed MetaMask/OKX paths passed; initial OKX connection failures remain unexplained. Every duplicate-labelled provider path is not claimed verified. B5 recovery requires its own changed-release wallet acceptance.
+- **Evidence boundaries:** network mismatch and the real Hatchling-to-Buddy transition were observed in the [first October session](docs/qa/evidence/FINAL_WALLET_2026-10-03.md), with read-back failure/recovery preserved. Normal-motion foreground playback and the copied-link clipboard contents are not established by the final wallet retest.
 - **Wallet warnings:** a fresh approval was reported without a warning; automation did not inspect the extension prompt. Leave any warning unapproved and follow [wallet setup](docs/qa/WALLET_SETUP.md).
 - **Security:** no independent security audit. A dated dependency scan cannot establish zero risk.
 - **Rights:** no repository-wide licence has been selected; artwork-input permissions still need confirmation. See [asset provenance](docs/pet-assets.md).
@@ -367,8 +380,9 @@ use the same existing adapter; preferences change explanation style, not earned
 growth. [Dated verification](docs/qa/evidence/PERSONALITY_INTEGRATION_2026-10-01.md)
 separates automated and read-only browser checks from genuine wallet actions.
 
-The approved feature scope is implemented. The remaining finale work is combined
-acceptance, one genuine wallet session, a labelled backup and a timed rehearsal.
+The core/finale features and B0–B4 beta scope are integrated. Scoped wallet
+acceptance is recorded; B5 recovery has separate runtime and wallet checks.
+A delivered, playable finale backup and a timed rehearsal remain outstanding.
 The free [OKX.AI service packet](docs/finale/OKX_AI_SERVICE.md) is prepared;
 registration and a genuine call through OKX.AI remain pending. No included model
 credits or deployed AI chat are claimed. The [parallel build plan](docs/finale/START_HERE.md) assigns

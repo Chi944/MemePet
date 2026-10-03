@@ -36,7 +36,7 @@ const PHASE_COPY: Record<Phase, { title: string; body: string; tone: "live" | "u
   },
   "confirmed-awaiting-facts": {
     title: "Confirmed — pet details not read yet",
-    body: "The network confirmed this transaction, but your pet and community details could not be read yet. Updated progress is not shown until they are.",
+    body: "The network confirmed this transaction, but your pet details could not be read yet. Updated pet progress is not shown until they are. Community progress is read separately.",
     tone: "unknown",
   },
   confirmed: {

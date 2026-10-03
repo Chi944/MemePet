@@ -13,6 +13,19 @@ const baseInput = {
 } as const;
 
 describe("live pet surface never fabricates progress", () => {
+  it.each(["idle", "error", "success", "pending"] as const)("does not offer Care for an unresolved hash with phase %s", (txPhase) => {
+    const onCare = vi.fn();
+    const action = resolveCareActionState({
+      ...baseInput, hasPet: true, readStatus: "idle", txPhase,
+      transactionUnresolved: true,
+    });
+    render(<CarePanel pet={null} action={action} onCare={onCare} onConnect={vi.fn()} onSwitchNetwork={vi.fn()} />);
+    expect(action.kind).toBe("unavailable");
+    expect(screen.getByText(/submitted transaction still needs verification/)).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /care/i })).not.toBeInTheDocument();
+    expect(onCare).not.toHaveBeenCalled();
+  });
+
   // Regression: PLACEHOLDER_PET was a hand-written pet with growthPoints 0,
   // nextStageAt 20 and dataMode "live", rendered whenever the chain read
   // returned no pet. A failed read therefore showed "0 growth points" while

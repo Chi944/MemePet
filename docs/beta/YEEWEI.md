@@ -4,16 +4,19 @@
 
 Your B2 implementation and assigned combined release QA are complete in #95.
 Keep that report; no duplicate browser suite or repeat disconnected-page sweep
-is needed. B5 runtime work and its new acceptance remain lead-coordinated.
+is needed. B5 release review and its new genuine acceptance remain lead-coordinated.
 
 The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
 scoped wallet acceptance and clears the prerequisite for Codex's B5 integration.
 Keep the original read-back failure and both genuine reports separate from your
-simulated suite. The eight B5 scenarios still await a working runtime adapter
-and the lead's exact handoff; they are not already passing.
+simulated suite. The lead has now implemented the runtime and replaced all eight
+B5 placeholders with passing simulated cases; the full simulated suite passed
+all 29 cases. Cite [the lead's B5 evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md)
+rather than rerunning or claiming those checks as your own. Review/release work
+is in progress; no B5 merge, deployment or genuine recovery pass is claimed here.
 
 ```text
-Fetch reviewed main, preserving local work. Read docs/beta/YEEWEI.md. B2 and #95 are complete. Keep existing evidence; scoped fa07032 wallet acceptance now permits lead B5 integration, but simulated tests do not establish genuine rows. Wait for the lead's working B5 adapter and exact scenario handoff before enabling the eight recovery cases. Report only new reproducible defects within your assigned paths; no new feature, wallet action, paid call or merge. B5 will require its own changed-release acceptance.
+Fetch reviewed main, preserving local work. Read docs/beta/YEEWEI.md. B2 and #95 are complete. Keep existing evidence. The lead's B5 runtime and eight recovery scenarios are implemented and passing on the feature branch; review/release checks are in progress. Cite that evidence, do not rebuild the adapter or duplicate completed tests, and do not claim it is merged/deployed until the release is identified. Report only new reproducible defects within your assigned paths; no new feature, wallet action, paid call or merge. Genuine changed-release B5 recovery remains NOT RUN and lead-coordinated.
 ```
 
 ## Earlier requirements and handoffs

@@ -71,6 +71,14 @@ describe("B4 beta panel preparation — simulated inputs, not wallet acceptance"
     expect(state.progression.community.kind).toBe("loading");
   });
 
+  it("never suggests another care or personal milestone while a saved hash is unresolved", () => {
+    const state = map({ registry: { recoveryBlocksWrites: true } });
+    expect(state.onboarding).toMatchObject({ kind: "unavailable", message: expect.stringContaining("Check status") });
+    expect(state.progression.personal.kind).toBe("loading");
+    // Independent, confirmed community reads remain honest and usable.
+    expect(state.progression.community).toMatchObject({ kind: "ready", confirmedCareCount: 50 });
+  });
+
   it("does not suggest care while a connected wallet's network request is unresolved", () => {
     const state = map({ wallet: { selectionBusy: true } });
     expect(state.onboarding.kind).toBe("loading");

@@ -2,9 +2,8 @@ import type { HelpEntry } from "@/types/beta";
 
 /**
  * Beta FAQ copy for the generic HelpPanel. Plain text only: blank lines become
- * paragraphs. Every statement was checked against main at b4e9b85; sources are
- * listed in docs/qa/beta/larm/HELP_SOURCES.md. Recovery after a refresh and
- * milestones are described as planned until the lead enables them.
+ * paragraphs. Original sources are listed in docs/qa/beta/larm/HELP_SOURCES.md.
+ * The lead updates feature wording alongside the corresponding runtime.
  */
 
 /** null until an actual monitored support contact has been verified. */
@@ -70,8 +69,9 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     answer: paragraphs(
       "Pending means the care was submitted but is not confirmed yet. No progress is awarded until it confirms. Keep the page open; when it confirms, the care panel says so.",
       "The hash is public. You can look it up on the X Layer testnet explorer. Looking up a hash is read-only and never resubmits or repeats the care.",
-      "Do not press care again while the first care is pending. If you reload the page, MemePet does not yet resume watching that hash; check it on the explorer instead. A care that confirms appears the next time MemePet reads your pet.",
-      "Planned: a Check status option to resume a pending care after a reload. It will only read the existing hash. It is not enabled yet.",
+      "MemePet saves the public transaction hash for this browser, account and care network. After a reload, choose and connect the same wallet account on the same network to check the saved transaction. If browser storage is unavailable, keep the hash yourself; recovery after closing or reloading the page cannot be guaranteed.",
+      "Check status only reads the existing transaction; it never sends it again or opens your wallet. Another adoption or care is blocked while the saved transaction is unresolved. Missing or slow network responses are not proof that a transaction failed.",
+      "A confirmed transaction still needs its pet details read back before updated progress appears. Community progress is read separately. A replacement is not automatically a success; MemePet verifies its identity and receipt before using it.",
     ),
     links: [EXPLORER],
   },
