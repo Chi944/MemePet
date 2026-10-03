@@ -1,14 +1,16 @@
 # Testnet beta: four people, independent build lanes
 
-## Current handoff — 3 October, B5 release review in progress
+## Current handoff — 3 October, B5 released; genuine recovery check pending
 
 The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
 **scoped genuine wallet acceptance PASS for `fa07032`** and satisfies the B5
 integration prerequisite. The [earlier Account 4 read-back failure](../qa/evidence/FINAL_WALLET_2026-10-03.md)
 remains historical FAIL. Initial OKX connection failures and observation limits
 remain explicit; the pass covers the observed final paths, not every wallet path.
-Codex has implemented and tested B5 on `feat/beta-pending-recovery`; review and
-release checks are in progress, with no merge or deployment claimed here.
+Reviewed B5 [PR #102](https://github.com/Chi944/MemePet/pull/102) merged at
+`36b9ba8` from runtime head `4477df2`, after all PR CI and the Vercel preview
+passed. Main CI also passed, and the production alias was independently
+resolved to a READY deployment built from `36b9ba8`.
 [B5 evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md) records 815 passing app
 tests, eight passing recovery browser cases and all 29 passing simulated browser
 cases. Genuine changed-release B5 recovery remains **NOT RUN**. This does not
@@ -18,14 +20,12 @@ B0–B4 are integrated through #92. Reviewed #93/#95 complete Larm's released
 Help verification and YeeWei's combined B1/Help QA. Kym's implementation is
 complete. Do not restart their completed feature or QA branches.
 
-Recorded credit remains **92/100 overall, 43/51 lead (about 84%), B5 2/8** until
-the implementation passes review and merges. **Conditionally after that merge**,
-the four implementation points bring progress to **96/100 overall, 47/51 lead
-(about 92%), B5 6/8**. Remaining then: genuine B5 recovery acceptance (2 points),
+The reviewed merge earns the four implementation points: **96/100 overall,
+47/51 lead (about 92%), B5 6/8**. Remaining: genuine B5 recovery acceptance (2 points),
 a delivered and independently playable backup (1), and rehearsal (1). The earlier
 scoped wallet acceptance retains its 2 points. Backup and rehearsal do not gate
 B5 engineering.
-Codex handles implementation and preparation; Deston retains private approvals,
+Codex handles acceptance preparation; Deston retains private approvals,
 product review and rehearsal, with no routine coding assigned.
 
 - Kym: finish the focused released B1 visual check if not already done; report
@@ -152,7 +152,7 @@ The additions above make a better beta; mainnet requires these separate gates:
 | Gate | Present status / owner |
 |---|---|
 | Final genuine wallet acceptance; new provider/recovery acceptance | Scoped `fa07032` wallet acceptance PASS; genuine changed-release B5 recovery NOT RUN |
-| Beta lanes integrated and regression suite green | B0–B4 merged and checked; B5 implemented/tested on branch, review and release checks in progress; merge/deployment not claimed |
+| Beta lanes integrated and regression suite green | B0–B5 implementation merged, checked and production verified through #102; genuine B5 recovery NOT RUN |
 | Small real-user pilot with repeat use and support feedback | Not started / team recruits consented testers; no fabricated retention metrics |
 | Focused independent contract/security review; material findings resolved | Not completed / coordinate review, no automatic paid commission |
 | Decide fresh mainnet start versus testnet migration | Undecided / team decision; migration is separate contract/product scope |

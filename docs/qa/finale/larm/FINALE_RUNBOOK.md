@@ -12,7 +12,48 @@ honest answers for the questions afterwards are in [`JUDGE_QA_PREP.md`](JUDGE_QA
 The final script and timing are Deston's call; this is a proposal the whole
 team can rehearse against.
 
-**Deston is the only signer.** Nobody else connects, approves, adopts or cares.
+**Deston privately approves wallet connections and transactions.** Codex prepares
+the page, recording and public verification; nobody signs on Deston's behalf.
+
+## Current handoff — 3 October, B5 genuine acceptance pending
+
+- [Scoped genuine wallet acceptance](../../evidence/READ_REPAIR_2026-10-03.md)
+  passed on `fa07032`. Account 3's care settled at Buddy/40/four cares and
+  community 14 without Retry or refresh, corroborated by Deston. The pending
+  transition was not continuously observed; this is not a latency measurement.
+  **That successful care was not recorded.**
+- [PR #102](https://github.com/Chi944/memepet/pull/102), runtime source
+  `4477df2377c49038db7be8dda146c0b617ce3ca4`, is merged at
+  `36b9ba8d9b93c84e2036c121a377fb0837a24b10`; PR checks passed, including
+  [CI 37112343616](https://github.com/Chi944/memepet/actions/runs/37112343616).
+  The production alias was verified READY at
+  `dpl_ABJum39qAz9ebj8GL9u12Q31YdBG`, built from `36b9ba8`; its runtime tree
+  matches `4477df2`. **Genuine changed-release B5 recovery is NOT RUN.**
+  Recheck the hosted identity before capture; these are dated release facts.
+- The earlier Account 4 recording on `988ed94` preserves a successful care
+  followed by failed automatic pet/community reads and manual recovery. It is
+  **diagnostic evidence, not a passing finale backup**. Larm's dated
+  [read-only clips](BACKUP_READONLY_2026-10-03.md) still need delivery and local
+  playback; they do not cover the successful care or B5.
+- The current backup is **not ready**. Follow the separate
+  [continuous care/refresh capture plan](BACKUP_SHOT_LIST.md), then verify the
+  delivered file plays offline. Keep the live pitch simple: no deliberate
+  refresh or forced network failure is required on stage.
+
+Lead read-only preflight at **09:10:54 UTC / 17:10:54 SGT on 3 October**, block
+**42559817**, returned community **15** and these account states:
+
+| Account | Dated state | Recording use |
+|---|---|---|
+| Account 1 (`0x3876…5774`) | Buddy/40, in cooldown | Read-only feature footage |
+| Account 2 (`0x86F7…3CE9`) | Buddy/30, care due | Candidate for the single B5 care/refresh take; recheck immediately before use |
+| Account 3 (`0xb7E6…7B3a`) | Buddy/40, in cooldown | Read-only feature footage |
+| Account 4 (`0x0A93…203e6`) | Buddy/20, in cooldown | Read-only feature footage |
+
+These are dated observations, not current availability or funding guarantees.
+Recheck account, chain 1952, registry, gas and due state before requesting one
+care. A due Account 2 care would ordinarily change 30 to 40 points, **not** evolve
+Buddy to Guardian. Attribute any garden increase using the actual event interval.
 
 ## Two traps to know before the day
 
@@ -36,9 +77,10 @@ the 7th fall on the previous UTC day and do not block the pitch.
 | 2026-10-02 08:07:25 UTC, block 42 469 608 | **12** | `node docs/qa/counter-check.mjs` ([F7 combined QA](COMBINED_QA_2026-10-02.md)) |
 | 2026-10-02 16:42:12 UTC, block 42 500 495 | **12** | `node docs/qa/counter-check.mjs` ([3 October rerun](COMBINED_QA_2026-10-03.md)) |
 | 2026-10-03 05:59:02 UTC, block 42 548 305 | **12** | `node docs/qa/counter-check.mjs` |
+| 2026-10-03 09:10:54 UTC preflight, block 42 559 817 | **15** | Lead read-only wallet preflight; recheck before capture |
 
-Blooming needs 20. At the latest recorded total of 12 (3 October, 05:59 UTC),
-8 more genuine confirmed cares remain. Each wallet can care at most once per UTC day. Use the actual
+Blooming needs 20. At the latest dated preflight total of 15,
+5 more genuine confirmed cares remain. Each wallet can care at most once per UTC day. Use the actual
 total on stage; this table is a dated observation, not a forecast.
 
 - **Show the garden as it really is** — the true total, sprouting, with how
@@ -53,21 +95,28 @@ total on stage; this table is a dated observation, not a forecast.
   from one care by the stage pet `0xb7E6…7B3a` on 1 October at 16:34 UTC
   (block 42 413 656). Do not call the rest team or community cares without
   event evidence; say "care actions".
+- The later 12→13 Account 4 care and 13→14 Account 3 / 14→15 Account 1 cares
+  have separate public receipt/event evidence in the
+  [first October session](../../evidence/FINAL_WALLET_2026-10-03.md) and
+  [repair retest](../../evidence/READ_REPAIR_2026-10-03.md). They are attributed
+  demo-account actions; they do not establish organic adoption.
 - The fictional preview at `/dev/community` shows a bloom, but it is a labelled
   fixture and `/dev/*` is 404 in production. Never present it as live.
 
 ## Three-minute flow (proposal)
 
-Rechecked on 3 October against release `3148238` (GitHub Production
+Historical presentation check: on 3 October against release `3148238` (GitHub Production
 deployment 6812922873) in [the 3 October rerun](COMBINED_QA_2026-10-03.md);
 the [2 October run](COMBINED_QA_2026-10-02.md) is kept as history. The alias
 was not independently resolved to a commit (the lead's release notes record
-it). Production has since moved to `a83f342` (deployment 6824015621, 3 October
-06:00 UTC); everything since `3148238` is QA documents only, with no app code. Labels in quotes are the app's own text. F6 is merged: "Read block" now sits
+it). The subsequent `a83f342` deployment (6824015621, 3 October
+06:00 UTC) changed QA documents only relative to that check. Later runtime
+repairs and the B5 candidate are separate, as recorded above. "Read block" sits
 inside the closed **View verified evidence** disclosure, so **open it before
 pointing at the block** (checklist row S1). The closed recap already shows
 "Confirmed at block N". Recheck these labels on the release Codex names for
-the finale if it differs.
+the finale. B5 moves submitted-transaction status into its own panel;
+do not promise the old Daily care badge sequence on the changed release.
 
 The care confirmation is the only step whose length we do not control. Its
 slot below is a **buffer**, not a measurement. Time it in the rehearsal, from
@@ -78,29 +127,29 @@ testnet produced roughly one block per second; that is not a receipt time.
 |---|---|---|
 | 0:00–0:20 | Overview `/` | The idea in one line: *"Adopt a meme-community mascot. A little daily care grows your pet and the community's garden."* No token to buy |
 | 0:20–0:40 | Pet home `/pet`, connected | The real pet: stage, growth points, "Ready" in **Daily care**. *"Care history comes from the X Layer testnet registry; growth is derived from confirmed cares."* Below Daily care, the **Getting started** card should read "Ready for a little care"; no need to mention it |
-| 0:40–1:30 | **Daily care** | Press care. In the wallet: approve (Deston only). The badge moves "In your wallet" → "Pending" → "Confirmed". **This is the buffer.** While it is pending, say: *"No progress is awarded until the receipt confirms."* When it confirms: "Care is confirmed. Your pet's progress is up to date." Expected: growth **+10** (automatic read-back on this release is still NOT RUN; check in rehearsal). Optional, if the Getting started card has switched to "Your next little care": *"And the next care opens tomorrow; the app shows it in your local time, the rule is UTC."* |
-| 1:30–1:55 | Garden (same page) | Expected: the garden total is one higher. **The automatic garden update after a new care has not been observed live yet** (QA row X3), so check it in the rehearsal. If it has not moved, press **Retry reading** once. *"Every confirmed care adds one here. It counts care actions, not people. At 20 the garden blooms. It's a goal inside the app: no token, no reward. We're at [read it off the screen]."* One line for the reference: *"Themed around XDOG, an X Layer meme community. A reference, not a partnership."* |
+| 0:40–1:30 | **Daily care** | Press care once; Deston approves only the expected zero-value testnet care. **This is a buffer, not a promised confirmation time.** On B5, the transaction panel may show "Waiting for confirmation", "Checking transaction status…" or "Confirmed"; report what is visible. Say *"We show updated progress after confirmation and a verified pet read."* Expected growth is **+10**; only call it updated when the page actually shows it. Do not refresh to demonstrate recovery during the live pitch. |
+| 1:30–1:55 | Garden (same page) | Read the actual total. The expected contribution is one care; the event check distinguishes ours from concurrent activity. Settled automatic updates passed on `fa07032`, but B5 requires its own check. If unavailable, use **Retry reading** once without submitting again. *"Every confirmed care adds one here. It counts care actions, not people. At 20 the garden blooms. It's a goal inside the app: no token, no reward. We're at [read it off the screen]."* One line for the reference: *"Themed around XDOG, an X Layer meme community. A reference, not a partnership."* |
 | 1:55–2:20 | **Read-only recap** | Ask "Explain progress". Point at the label **"Standard explanation"**. Open **View verified evidence** (click, or Enter on the summary), then point at "Read block" / "Block time". *"Every answer is a standard explanation of confirmed activity, and it shows the block it was read from."* Leave the evidence open for the next beat |
 | 2:20–2:50 | **Mochi, your way** | With that answer still on screen, press "Explore" or "Practise". The style line changes (curious when Explore leads, focused when Practise leads, playful when balanced) and the same answer is reworded, with the same facts and the same Read block (still visible in the open evidence). *"This changes how Mochi explains, not the facts. It is stored only in this browser, earns no growth and trains no model."* |
-| 2:50–3:00 | — | Close. If the care did not confirm, say so and use the backup (below) |
+| 2:50–3:00 | — | Close. If the result remains unknown, say so. Switch only to the labelled backup once its delivery/playback check is complete; otherwise describe the confirmed read-only state without pretending a successful care was filmed. |
 
 Optional, only if ahead of time (about 10 s): scroll to **Keep growing
 together** (shown only while connected). *"Milestones are cosmetic labels from
-confirmed cares: no money, no tokens, no extra growth."* The stage pet had 3
-cares on 2 October, so after a fourth the first personal milestone (5) is not
-yet earned; read what the panel actually says. It has only been seen in the
-lead's and Kym's simulated runs, never with a real wallet, so check it in the
-rehearsal before using this line.
+confirmed cares: no money, no tokens, no extra growth."* The first personal
+milestone needs five confirmed cares. Read the current panel rather than
+reusing a historical account count; check this optional beat in the rehearsal.
 
 Optional, only if ahead of time (about 10 s): on the pet, select the earned
 Hatchling form. The notice reads "Viewing Hatchling · Your current stage is
 Buddy" (for a Buddy) while growth stays unchanged; "Return to current form"
 restores it. It shows earned forms without inventing history.
 
-If the care is still pending at 1:30, go on to the garden and the explanation
-style, then come back to **Daily care** at the end. Whether the page shows the
-confirmation without a reload is a rehearsal check, not a promise. Do not
-reload while the care is pending.
+If the care is unresolved at 1:30, show the independently read garden or explain
+the product while waiting. Recap/personality intentionally pause while that
+transaction needs verification; do not promise those controls are available.
+Return to the transaction panel and use **Check status** once if offered: it
+only reads the existing hash. Do not click Care again. A deliberate refresh
+belongs in the prepared backup/acceptance take, not this three-minute pitch.
 
 ### Words to use, words to avoid
 
@@ -122,18 +171,19 @@ reload while the care is pending.
       a deployment built from it.
 - [ ] `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/finale`,
       `/dev/companion` and `/dev/beta` all return 404 on the hosted site.
-- [ ] **Stage browser profile has only the pitch wallet extension enabled.**
-      Code reading (not yet seen live): the wallet choice is not saved. With one
-      wallet installed, the app picks it on load and can restore an earlier
-      connection; with MetaMask and OKX both enabled, **every reload asks you
-      to choose the wallet and press Connect again**. Confirm this in the
-      rehearsal.
+- [ ] Choose the intended provider explicitly when multiple wallets are
+      offered, then connect the expected public account on chain 1952. After
+      a reload, selection/connection may be needed again; rehearse that real
+      flow. **Do not disable another extension as a requirement.** Account
+      state must clear when changing provider; never sign through an unexpected
+      prompt just to continue the pitch.
 - [ ] Phone hotspot tested with the demo laptop: the site loads and the
       registry reads succeed over it.
 - [ ] A **genuine** backup recording exists (see below), made on the release
       being demoed, and plays offline from the laptop.
-- [ ] Reduced motion checked on the release with the OS setting on — QA matrix
-      row A3. Deston's machine is the natural test.
+- [ ] Check the app's animation preference with the user's existing OS setting;
+      no OS setting change is required. The later explicit Mochi override is
+      separate from the historical reduced-motion check; record actual behavior.
 - [ ] Browser zoom and font size are legible from the back of a room. Start
       from **150% browser zoom on a 1920×1080 output** (125–150% on 1440×900);
       layout was checked at these zooms in `READABILITY_QA_2026-10-01.md`.
@@ -142,14 +192,18 @@ reload while the care is pending.
       100%); the projector check remains a rehearsal task.
       Set it with Ctrl +/−, not the OS display settings.
 - [ ] Pitch wording says "care actions". Say "team demo cares" only for
-      actions attributed to team wallets (six of the first seven, plus the
-      stage pet's care on 1 October); the rest is not attributed. The counter
+      actions attributed by the dated event evidence above; the rest is not
+      attributed. The counter
       counts actions, not people.
 - [ ] Timed rehearsal done on the demo release, with the **rehearsal**
       wallet. Write down how long the care took from approval to "Confirmed",
       and set the 0:40–1:30 buffer from it. Also note whether growth and the
       garden total updated **without a reload** (QA row X3); if not, plan the
       Retry press into the script.
+- [ ] B5's separate genuine care/refresh check is recorded against the changed
+      release. A fast care that completes before refresh is **not** evidence of
+      recovering a pending journal; keep that row NOT RUN and do not create
+      delays, force a failure or submit an extra care for the camera.
 - [ ] Recap labels rechecked on the named release. Verified on 2 and 3 October
       (fixture, `3148238` on 3 October): "Explain progress", "Next care time",
       "Contribution", "Standard explanation", "View verified evidence" →
@@ -181,14 +235,16 @@ Decide fast. Do not debug on stage.
 | Community total shows **Unknown** or "could not be loaded" | Classified temporary read failures receive up to two automatic retries (#64). Unknown alone does not establish the cause or prove retries ran. Say *"the total is unverified, so the app does not invent a number."* Press **Retry reading** once. (Larm's 2 October local report records recovery without a reload; its installed runtime version remains unresolved.) If it stays unavailable, carry on, or go to the backup |
 | Mochi is not moving | Check "Animate Mochi" — it was probably switched off earlier. One press turns it on. It changes only the artwork, never the pet's data |
 | Wallet prompt does not appear | Do not wait more than ~15 s. Move on; show the confirmed part from the backup |
-| Transaction stays pending | Say *"progress appears only after the receipt confirms"* — true, and a feature. Continue the talk and come back; if it has not confirmed by the end, the backup shows a confirmed care |
+| Transaction stays pending or status is unknown | Say *"We show updated progress after confirmation and a verified pet read."* Use **Check status** once if offered; it reads the existing hash. Do not send another care. Continue the talk and use only a delivered, checked backup; do not claim the existing diagnostic clip is a passing take |
+| "Confirmed — pet details not read yet" | The transaction is confirmed but updated pet facts are unavailable. Use **Check status** once; community progress is read separately. Do not repeat the care or claim the displayed old pet is the new result |
 | Wrong network | Use **Switch network** in the app (the Getting started card also offers "Switch to X Layer testnet") |
-| "Choose your wallet" appears after a reload | Choose the pitch wallet, then **Connect chosen wallet**. Approve only the expected connection in the wallet |
+| Wallet choice appears after a reload | Choose the intended provider, use **Connect wallet**, then select the same account on chain 1952. Approve only the expected connection. B5's saved public hash is checked separately; reconnecting is not another care |
 | Wallet or browser shows a **security warning** | **Do not approve it.** Go to the backup. Never bypass a warning on stage |
 | Care is refused as already cared today | The cooldown trap above has been hit. Show the cooldown message — it demonstrates the once-a-day rule — and use the backup for the care itself |
 | Garden total is lower than expected | Show it as it is. Never switch to the preview to make it look further along |
-| **Mochi, your way** is missing | It is shown only for a connected, adopted pet on the right network, and it hides while a care is being written. Wait for "Confirmed", or skip this beat |
+| **Mochi, your way** is missing | It is shown only for a connected, adopted pet on the right network, and it hides during a write or unresolved recovery. Wait for verified pet facts, or skip this beat |
 | "Browser saving is unavailable" appears | Say: *"Preferences aren't saved in this browser right now; the facts are unaffected."* Carry on |
+| Transaction recovery reports that browser storage is unavailable | Keep the returned public hash. Recovery after closing/reloading is not guaranteed in that browser. Do not confuse this with personality saving, clear storage, or resubmit the care |
 | The recap says activity is unavailable | Same as Unknown: the app will not make an answer up. Retry once, then move on |
 | An explorer link opens an OKX login page | Do not log in on stage. Reload once; if it persists, skip it. The app's own "Read block" and the receipt are the evidence (see `LINKS_AND_RECAP_QA_2026-10-01.md`) |
 
@@ -203,7 +259,12 @@ The full plan is in [`BACKUP_SHOT_LIST.md`](BACKUP_SHOT_LIST.md). The rules:
 - Say out loud when switching to it: *"This is a recording from [date]."*
 - Never present a recording, a fixture or the preview as live. A labelled
   backup is fine; one passed off as live is not.
-- The plan is not footage. Until it is captured, the backup does not exist.
+- A B5 refresh take must retain the same original public hash and expose any
+  provider selection/reconnection and read-only **Check status**. If confirmation
+  beats the refresh, label it a completed-care reload, not pending recovery.
+- The plan is not footage. No ready finale backup is established at this
+  handoff. The `988ed94` diagnostic and old September submission remain separate;
+  they do not become current passing evidence through editing.
 
 ## After the pitch
 

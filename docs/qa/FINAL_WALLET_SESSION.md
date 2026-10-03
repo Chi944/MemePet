@@ -5,8 +5,9 @@ The [completed first run](evidence/FINAL_WALLET_2026-10-03.md) records a genuine
 confirmed care but failed automatic pet/community reads on `988ed94`.
 The [repaired-release retest](evidence/READ_REPAIR_2026-10-03.md) records scoped
 wallet acceptance PASS for `fa07032`, preserving that earlier failure and all
-observation limits. The B5 integration prerequisite is satisfied; B5 runtime
-still requires its own implementation and changed-release acceptance. Backup
+observation limits. B5 runtime is now merged in #102 and its production identity
+is recorded in [B5 recovery evidence](evidence/B5_RECOVERY_2026-10-03.md).
+Genuine changed-release recovery acceptance remains NOT RUN. Backup
 delivery/playback and rehearsal remain unfinished and do not block engineering.
 A direct, corroborated retest can establish acceptance without a video; a video
 is required only for the separate recorded-backup deliverable. The template
