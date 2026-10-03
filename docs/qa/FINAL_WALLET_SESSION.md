@@ -28,12 +28,12 @@ and failures in [the browser walkthrough](BROWSER_WALKTHROUGH.md),
 [Account 3's dated wallet run](evidence/LATEST_RELEASE_QA_2026-09-24.md) and
 [Account 2's recording evidence](evidence/FINAL_CAPTURE_2026-09-24.md).
 
-## Named release and prerequisites
+## Historical preparation baseline and session prerequisites
 
-The current product implementation is #91/#92, with #93–#95 adding reviewed
+The original preparation baseline was #91/#92, with #93–#95 adding reviewed
 QA evidence and judge-answer corrections. The lead verified production
-`3148238f5a0d216fa704ad6176135d2e25555cda` at the #92 checkpoint; the current
-lead PR records the subsequent release identity. Source paths (`src/`,
+`3148238f5a0d216fa704ad6176135d2e25555cda` at the #92 checkpoint; the latest
+release is identified at the top of this document. Source paths (`src/`,
 `public/`, contracts and dependency/build configuration) must be compared if
 using an earlier recording. Documentation-only merges are not new wallet runs.
 
