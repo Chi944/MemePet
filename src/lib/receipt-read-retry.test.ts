@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { createPublicClient, custom, encodeErrorResult, encodeFunctionResult, parseAbi, type Hex } from "viem";
+import { createPublicClient, custom, encodeErrorResult, encodeFunctionResult, http, parseAbi, type Hex } from "viem";
 import { petRegistryAbi } from "./pet-registry-abi";
 import { readReceiptWithRetry, readWithRetry } from "./receipt-read-retry";
 
@@ -28,6 +28,127 @@ function expectPinnedCalls(request: ReturnType<typeof setupRead>["request"]) {
     expect(call).toMatchObject({ method: "eth_call", params: [expect.any(Object), "0xb"] });
   }
 }
+
+/** Match the public RPC's observed HTTP 400 JSON-RPC envelope without network I/O. */
+function setupHttpRead(respond: () => { status: number; error?: { code: number; message: string; data?: Hex }; result?: Hex }) {
+  const requests: { id: number; method: string; params: unknown[] }[] = [];
+  const fetchFn = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+    const body = JSON.parse(init?.body as string) as typeof requests[number];
+    requests.push(body);
+    const { status, ...response } = respond();
+    return new Response(JSON.stringify({ jsonrpc: "2.0", id: body.id, ...response }), {
+      status, headers: { "Content-Type": "application/json" },
+    });
+  });
+  const client = createPublicClient({
+    transport: http("https://rpc.invalid", { fetchFn, retryCount: 0 }),
+  });
+  const read = (blockNumber: bigint) => client.readContract({
+    address: registryAddress, abi: petRegistryAbi, functionName: "communityStats",
+    args: [1], blockNumber,
+  });
+  return { client, requests, read };
+}
+
+describe("X Layer block visibility retry with real viem HTTP errors", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  const outOfRange = { code: -32019, message: "block is out of range" };
+
+  it("recovers a temporarily invisible block from HTTP 400 without changing its height", async () => {
+    const respond = vi.fn()
+      .mockReturnValueOnce({ status: 400, error: outOfRange })
+      .mockReturnValue({ status: 200, result: encodedTotal });
+    const { requests, read } = setupHttpRead(respond);
+    const outcome = readReceiptWithRetry(confirmedBlock, read, () => true);
+    // Attach rejection handling before advancing timers so a regression is not
+    // reported as an unrelated unhandled promise rejection.
+    const settled = outcome.catch((error: unknown) => error);
+    await vi.runAllTimersAsync();
+
+    expect(await settled).toBe(BigInt(4));
+    expect(requests).toHaveLength(2);
+    for (const request of requests) {
+      expect(request).toMatchObject({ method: "eth_call", params: [expect.any(Object), "0xb"] });
+    }
+  });
+
+  it("stops after three physical reads when the block remains unavailable", async () => {
+    const { requests, read } = setupHttpRead(() => ({ status: 400, error: outOfRange }));
+    const outcome = readReceiptWithRetry(confirmedBlock, read, () => true);
+    const rejected = expect(outcome).rejects.toMatchObject({
+      name: "ContractFunctionExecutionError", details: "block is out of range",
+    });
+    await vi.runAllTimersAsync();
+    await rejected;
+
+    expect(requests).toHaveLength(3);
+    for (const request of requests) expect(request.params[1]).toBe("0xb");
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("also bounds the plain RPC error from a header read at the same block", async () => {
+    const { client, requests } = setupHttpRead(() => ({ status: 400, error: outOfRange }));
+    const outcome = readReceiptWithRetry(confirmedBlock,
+      (blockNumber) => client.getBlock({ blockNumber }), () => true);
+    const rejected = expect(outcome).rejects.toMatchObject({ name: "RpcRequestError", code: -32019 });
+    await vi.runAllTimersAsync();
+    await rejected;
+
+    expect(requests).toHaveLength(3);
+    for (const request of requests) {
+      expect(request).toMatchObject({ method: "eth_getBlockByNumber", params: ["0xb", false] });
+    }
+  });
+
+  it("does not retry an HTTP 400 without the recognized RPC error", async () => {
+    const { requests, read } = setupHttpRead(() => ({ status: 400 }));
+    const rejected = expect(readReceiptWithRetry(confirmedBlock, read, () => true))
+      .rejects.toMatchObject({ name: "ContractFunctionExecutionError" });
+    await vi.runAllTimersAsync();
+    await rejected;
+    expect(requests).toHaveLength(1);
+  });
+
+  it.each([
+    { label: "unrelated -32019 message", error: { code: -32019, message: "invalid block argument" } },
+    { label: "wrong RPC code", error: { code: -32602, message: "block is out of range" } },
+    { label: "explicit revert code", error: { code: 3, message: "block is out of range" } },
+    { label: "encoded contract revert", error: { ...outOfRange, data: encodeErrorResult({ abi: petRegistryAbi, errorName: "InvalidCommunity" }) } },
+    { label: "empty revert data", error: { ...outOfRange, data: "0x" as Hex } },
+    { label: "message containing the phrase", error: { code: -32019, message: "execution reverted: block is out of range" } },
+  ])("does not retry $label", async ({ error }) => {
+    const { requests, read } = setupHttpRead(() => ({ status: 400, error }));
+    const rejected = expect(readReceiptWithRetry(confirmedBlock, read, () => true))
+      .rejects.toMatchObject({ name: "ContractFunctionExecutionError" });
+    await vi.runAllTimersAsync();
+    await rejected;
+    expect(requests).toHaveLength(1);
+  });
+
+  it("stops a visibility retry when the wallet context changes", async () => {
+    let current = true;
+    const { requests, read } = setupHttpRead(() => ({ status: 400, error: outOfRange }));
+    const outcome = readReceiptWithRetry(confirmedBlock, read, () => current);
+    const settled = outcome.catch((error: unknown) => error);
+    await vi.advanceTimersByTimeAsync(1);
+    current = false;
+    await vi.runAllTimersAsync();
+
+    expect(await settled).toBeUndefined();
+    expect(requests).toHaveLength(1);
+  });
+
+  it("does not let an UnknownRpcError wrapper bypass the -32019 message check", async () => {
+    const { request, read } = setupRead(async () => { throw { code: -32019, message: "invalid block argument" }; });
+    const rejected = expect(readReceiptWithRetry(confirmedBlock, read, () => true))
+      .rejects.toMatchObject({ name: "ContractFunctionExecutionError" });
+    await vi.runAllTimersAsync();
+    await rejected;
+    expect(request).toHaveBeenCalledOnce();
+  });
+});
 
 describe("latest read retry with real viem error classification", () => {
   beforeEach(() => vi.useFakeTimers());
