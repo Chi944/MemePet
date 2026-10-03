@@ -54,6 +54,9 @@ before use.
 - Recorded from a headless browser, not Deston's machine. Projector legibility
   is still a rehearsal check.
 - If the release changes before 7 October, re-record or say on stage that
-  these are from release `3148238`.
+  these are from release `3148238`. Production moved to `a83f342` on
+  3 October (deployment 6824015621); `3148238...a83f342` touches only
+  `docs/qa/`, so the app in the clips is unchanged. Re-record only if a
+  later release changes app code.
 - The garden number is a dated observation (12 at 17:10 UTC on 2 October). On
   stage, read the live number.

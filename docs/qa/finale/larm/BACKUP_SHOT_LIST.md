@@ -22,7 +22,8 @@ so the backup can stand in for any single beat or for the whole demo.
   edited numbers, no cut that hides a failure inside a shot.
 - **Final release.** Record on the SHA Codex names for the finale. On
   3 October that is expected to be `3148238` or later
-  ([rerun](COMBINED_QA_2026-10-03.md)); confirm with Codex before recording. Put the SHA
+  ([rerun](COMBINED_QA_2026-10-03.md)). Production moved to `a83f342` on
+  3 October; it changes QA documents only. Confirm with Codex before recording. Put the SHA
   and the date in the file name, e.g. `memepet-backup-<sha7>-2026-10-0X.mp4`.
 - **Wallet and timing.** Deston signs. Use the **rehearsal wallet**, or the
   pitch wallet **before 08:00 SGT on 7 October**; a later pitch-wallet care

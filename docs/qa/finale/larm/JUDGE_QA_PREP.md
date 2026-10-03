@@ -31,7 +31,8 @@ stage pet's care on 1 October at 16:34 UTC (block 42 413 656); the others are
 not attributed in our records. Do not call them team or community cares.
 On stage, read the live number off the screen.
 
-Still **12** at 16:42 UTC on 2 October (block 42 500 495).
+Still **12** at 16:42 UTC on 2 October (block 42 500 495) and at 05:59 UTC on
+3 October (block 42 548 305).
 
 **"Isn't the garden easy to fake with lots of wallets?"**
 > Yes. Anyone can make many wallets, and that's why we call it care actions
