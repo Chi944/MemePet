@@ -43,7 +43,9 @@ This is public read evidence, not a transaction or browser pass.
    disabled care through the absence of an available care action. Pet artwork
    was a labelled mascot invitation; old pet, recap/personality and progression
    were absent. This was an actual network mismatch, not a mocked scenario.
-3. Clicking the app's Switch network restored **1952**. Reading/loading states
+3. Clicking the app's Switch network restored **1952** through the existing
+   permitted wallet call, without an observed wallet approval prompt. The
+   network approval-prompt UI was not exercised. Reading/loading states
    appeared before A's actual Hatchling/10 and one care returned. Community
    returned to 12. No financial transaction or signature was submitted.
 4. A's initial personality was Playful, Explore 0 / Practise 0. Explain progress
