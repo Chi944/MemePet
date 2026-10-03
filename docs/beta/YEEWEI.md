@@ -1,13 +1,14 @@
 # YeeWei — B2 recovery, help and browser regression
 
-## Current handoff after B1 integration
+## Current handoff — 3 October
 
-B1/#90 is merged; the lead integration adds live panels and three new
-simulated account/failure/retry cases plus three fictional preview cases.
-After integration merges, continue `test/beta-help-integration` with a focused
-combined B1/Help release check. Preserve local work and cite existing coverage.
-Do not duplicate the lead's `beta-integration.spec.ts` or `onboarding.spec.ts`.
-Record actual release identity, scope and NOT RUN gaps. B5 remains disabled.
+Your B2 implementation and assigned combined release QA are complete in #95.
+Keep that report; no duplicate browser suite or repeat disconnected-page sweep
+is needed. Remaining genuine-wallet/B5 gaps are explicit and lead-coordinated.
+
+```text
+Fetch reviewed main, preserving local work. Read docs/beta/YEEWEI.md. B2 and #95 are complete. Keep existing evidence and help the team follow the final acceptance checklist; do not claim its genuine rows from simulated tests. Do not enable the eight recovery cases until the lead ships the gated B5 adapter. Report only new reproducible defects within your assigned paths; no new feature, wallet action, paid call or merge. After acceptance, await the lead's exact changed-release recovery handoff.
+```
 
 ## Earlier requirements and handoffs
 

@@ -45,6 +45,9 @@ jobs:
       - name: Verify local read-recovery harness
         run: node --test docs/qa/rpc-recovery.regression.mjs
 
+      - name: Verify read-only wallet preflight
+        run: node --test docs/qa/wallet-preflight.regression.mjs
+
       # next/font downloads faces at build time, so this step needs network.
       - name: Build
         run: npm run build

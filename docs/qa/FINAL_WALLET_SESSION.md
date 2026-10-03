@@ -1,6 +1,6 @@
 # Final wallet acceptance — one planned session
 
-**Prepared 2 October 2026 (Singapore). This is a plan, not a completed run.**
+**Updated 3 October 2026 (Singapore). This is a plan, not a completed run.**
 All results in the final table remain **NOT RUN** until their actual steps are
 observed on the named runtime. Codex prepares and operates the app; Deston
 privately reviews wallet prompts. No keys, passwords or recovery words are
@@ -15,14 +15,19 @@ and failures in [the browser walkthrough](BROWSER_WALKTHROUGH.md),
 
 ## Named release and prerequisites
 
-The lead verified these release records during preparation:
+The current product implementation is #91/#92, with #93–#95 adding reviewed
+QA evidence and judge-answer corrections. The lead verified production
+`3148238f5a0d216fa704ad6176135d2e25555cda` at the #92 checkpoint; the current
+lead PR records the subsequent release identity. Source paths (`src/`,
+`public/`, contracts and dependency/build configuration) must be compared if
+using an earlier recording. Documentation-only merges are not new wallet runs.
 
-| Item | Verified preparation value |
+| Item | Verified preparation value / session requirement |
 |---|---|
-| Product source after PR #78 | `62d487d5d4e1f7c7b26332753f042fcb91a748d8` |
-| Main CI | [36923513503](https://github.com/Chi944/MemePet/actions/runs/36923513503), passed |
-| Successful production deployment | `6794766512` |
-| Production alias | `memepet.vercel.app` points to READY `dpl_28SRHMBY4m1ojxe8c5zCRpwEXriG`, with the same source SHA; verified through Vercel metadata |
+| Product source after #92 | `3148238f5a0d216fa704ad6176135d2e25555cda` |
+| That main CI | [37032767176](https://github.com/Chi944/MemePet/actions/runs/37032767176), passed |
+| That production deployment | READY `dpl_E5nmo41hachVjySMn7Q6AfPMMQ7g`, alias-to-SHA verified in #91/#92 release notes |
+| Session runtime | Recheck current alias and record the exact SHA before approval; never infer it from this plan |
 | App | `https://memepet.vercel.app/pet` |
 | Chain / native test gas | X Layer testnet **1952** / **OKB** |
 | Registry | `0xe844152262D243a7B90F6e07FF7A67F1d7FeD216` |
@@ -33,6 +38,22 @@ only, document the product-tree comparison; do not invent a fresh browser run
 for those commits. Reload the app before starting, and record which runtime
 the session actually exercises. If source changes, name and verify that release
 instead. Keep the previous good deployment available for rollback.
+
+### Repeatable preflight before private approvals
+
+Codex runs this free read-only command from the repository with pinned Node 24:
+
+```powershell
+node docs/qa/wallet-preflight.mjs
+```
+
+See [preflight behavior and limits](WALLET_PREFLIGHT.md). It reads the four
+existing public demo accounts, fixed testnet registry and balances at one block;
+chain time determines due/cooldown. It rechecks the block before printing any
+snapshot. A failed required read yields a failure, never a zero balance or pet.
+It cannot fund, connect, sign, claim enough gas, or establish browser acceptance.
+Keep the JSON with the session evidence outside Git, and rerun immediately
+before the actual session rather than treating a dated result as current.
 
 ### Read-only account preflight — historical, recheck before use
 
@@ -70,7 +91,7 @@ observations do not establish a new care or a genuine account/network switch.
 
 1. Complete independent release checks and collect teammate findings. Freeze
    the runtime for this session; do not deploy midway through it.
-2. Recheck A/B's actual state with block-pinned public reads: owner, chain,
+2. Run the read-only preflight above and recheck A/B's actual state: owner, chain,
    registry, pet, care count, last-care UTC day, block time, balance and total.
    Determine eligibility from chain time, not only the computer's clock.
 3. Prepare the evidence destination and a short recording probe. Keep raw
@@ -183,6 +204,13 @@ Never infer a successful browser update from this independent chain evidence.
 
 - Verify cooldown and the actual next eligible UTC time; do not send a duplicate
   care merely to test the disabled control.
+- Check the B1 local reset label represents the same confirmed next UTC instant
+  in the browser's timezone. It must not independently enable care.
+- Compare personal 5/10/20 milestones and community 20/50/100 chapters with the
+  independently read confirmed counts. Record actual earned/unearned states;
+  do not manufacture enough cares to unlock all levels. Unavailable reads must
+  hide earned state rather than substitute zero. A conditional failure branch
+  not encountered remains covered by simulated tests, not this genuine run.
 - Obtain a fresh **Explain progress** answer. Open **View verified evidence**;
   its snapshot must be at the receipt block or later and match the confirmed
   pet. If a read is unavailable, record that honestly. A manual question refresh
@@ -215,12 +243,14 @@ the old pet, viewed form and answer clear before B's actual state/preferences
 appear. Do not adopt or care as B. Return to A and verify A's saved preference
 and current form are restored without B's answer or state leaking across.
 Both B and returning A must start at their actual current form, not A's earlier
-Hatchling selection.
+Hatchling selection. B1 personal badges must clear while the account changes
+and then match the selected account's confirmed counts; no old earned state
+may leak into the next account.
 
 With A selected, ask Deston to switch to an already-configured alternative
 network, without signing or sending. Verify the app actually changes chain,
-disables writes and does not retain an actionable old-context recap/personality
-panel. Return to X Layer testnet 1952 and verify A's correct state. Merely opening
+disables writes, hides B1 progression, and does not retain an actionable
+old-context recap/personality panel. Return to X Layer testnet 1952 and verify A's correct state. Merely opening
 network settings, or seeing a configured network, does not pass this test.
 If protected extension controls cannot be operated, record NOT RUN/BLOCKED;
 do not substitute automated isolation tests for the genuine transition.
@@ -261,6 +291,7 @@ NOT RUN / BLOCKED**. No execution result is supplied by this plan.
 | Independent receipt-block reads/counter attribution | NOT RUN | Helper alone does not validate receipt |
 | Read-only retry if needed | NOT RUN | Conditional; do not manufacture a production failure |
 | Cooldown, fresh recap/evidence and same-snapshot style | NOT RUN | No extra care required |
+| B1 local reset, confirmed milestones and account/network clearing | NOT RUN | Compare actual counts and UTC instant; no synthetic unlocks |
 | Connected earned forms and return to Current | NOT RUN | Actual earned state only |
 | Normal reload and preference persistence | NOT RUN | No hard-refresh claim |
 | Site account A → B → A isolation | NOT RUN | Genuine provider transition required |

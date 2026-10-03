@@ -1,12 +1,11 @@
 # MemePet product scope
 
-**Current handoff — 2 October, after #87:** reviewed main includes B0,
-provider selection, retry/preview preparation, B2 presentation/regressions,
-finale QA and B3 support copy. Use [current beta roles](beta/START_HERE.md)
-and [weighted progress](STATUS.md#progress-measurement). Kym continues B1;
-YeeWei/Larm now have focused integration/release checks. Codex owns `/help`
-and shared integration; Deston has final review/private approvals/rehearsal.
-B5 runtime and genuine final acceptance remain outstanding.
+**Current handoff — 3 October:** B0–B4 feature integration is merged through
+#92. Reviewed #93/#95 complete the assigned B3/B2 release QA; Kym's B1
+implementation is complete. Use [current beta roles](beta/START_HERE.md)
+and [weighted progress](STATUS.md#progress-measurement). Codex prepares the
+final genuine wallet session; Deston has private approvals, product review
+and rehearsal only. B5 runtime remains gated on that session.
 
 ## Product
 

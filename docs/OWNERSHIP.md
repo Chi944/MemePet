@@ -1,12 +1,11 @@
 # File ownership and integration contract
 
-**Current handoff — 2 October, after #87:** reviewed main includes B0,
-provider selection, retry/preview preparation, B2 presentation/regressions,
-finale QA and B3 support copy. Use [current beta roles](beta/START_HERE.md)
-and [weighted progress](STATUS.md#progress-measurement). Kym continues B1;
-YeeWei/Larm now have focused integration/release checks. Codex owns `/help`
-and shared integration; Deston has final review/private approvals/rehearsal.
-B5 runtime and genuine final acceptance remain outstanding.
+**Current handoff — 3 October:** B0–B4 feature integration is merged through
+#92. Reviewed #93/#95 complete the assigned B3/B2 release QA; Kym's B1
+implementation is complete. Use [current beta roles](beta/START_HERE.md)
+and [weighted progress](STATUS.md#progress-measurement). Codex prepares the
+final genuine wallet session; Deston has private approvals, product review
+and rehearsal only. B5 runtime remains gated on that session.
 
 ## Current beta delegation — 2 October 2026
 
@@ -27,9 +26,8 @@ teammate agents still cannot merge.
 B4's focused `e2e/simulated-wallet/provider-selection.spec.ts` is a lead-owned
 exception to YeeWei's E2E lane until handoff. She may cite its evidence and add
 broader scenarios in other files; coordinate before changing this active spec.
-The lead also owns the initial `src/components/ui/WalletProviderPicker.tsx`
-and `wallet-picker.module.css`. Kym builds her assigned `WalletChooser`; the
-lead handles its eventual replacement in the route.
+Kym's `WalletChooser` replaced the temporary picker in #91. The lead owns
+its route integration; Kym retains the presentation component lane.
 
 Beta task allowlists are exclusive: these assignments do not grant permission
 to redesign the earlier pet/community/recap components. Existing scoped finale

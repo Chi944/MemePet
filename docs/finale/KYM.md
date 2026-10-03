@@ -1,23 +1,18 @@
 # Kym — pet release QA
 
-**Latest:** B1/#90 is merged and the lead has prepared live integration.
-Use [current beta tasks](../beta/START_HERE.md) for release QA and acceptance;
-do not restart delivered feature work.
+## Current assignment — 3 October 2026
 
-## Current assignment — 2 October 2026
+B1/#90 and its live integration/#91 are complete. Only the focused released visual check remains if unrun.
 
-F2/#67, F5/#73 and the pet QA/preview follow-up/#78 are merged. Continue B1 onboarding, wallet-choice presentation and cosmetic progression. Preserve local work; no pushed B1 handoff is verified. Do not repeat earned forms.
+Use [your current beta brief](../beta/KYM.md) and
+[current progress](../STATUS.md#progress-measurement). No completed feature
+branch should be rebuilt. Genuine wallet acceptance, delivered backup and
+rehearsal remain separate from implementation and simulated checks.
 
-Use [the current beta brief](../beta/KYM.md)
-for new work and [current progress](../STATUS.md#progress-measurement).
-The older task instructions below are retained as finale requirements/history;
-do not recreate merged branches. Genuine wallet acceptance, backup capture
-and rehearsal remain separate from implementation and simulated checks.
+## Earlier finale assignments and evidence
 
-**Current assignment:** [B1 onboarding and progression](../beta/KYM.md).
-The 2 October beta brief supersedes the old next-work assignment below. Preserve
-the completed finale reports. B0 is merged in #80, so start B1 now. The lead
-Codex session reviews and merges passing PRs; teammate agents do not merge.
+The instructions below are retained as history. The current beta brief takes
+precedence; do not restart old tasks or reinterpret dated results as new passes.
 
 **Task PET-RELEASE-QA complete · F2/F5 and QA PR #78 merged · updated 2 October 2026.**
 Your personality panel (#67), earned-form viewer (#73), lead account-scope wiring

@@ -1,12 +1,28 @@
 # Testnet beta: four people, independent build lanes
 
-## Current handoff after B1 integration
+## Current handoff — 3 October, after release QA
 
-Kym B1/#90 is merged. The lead integration completes B4's live chooser,
-onboarding/local reset and progression wiring. Kym has a focused release check,
-YeeWei combined-panel QA, and Larm rendered copy/link verification. Use the
-named role briefs; completed feature branches should not be rebuilt. Remaining
-work is acceptance/release QA and B5 after its gate, then backup/rehearsal.
+B0–B4 are integrated through #92. Reviewed #93/#95 complete Larm's released
+Help verification and YeeWei's combined B1/Help QA. Kym's implementation is
+complete. Do not restart their completed feature or QA branches.
+
+The remaining 10% is B5 runtime/acceptance (6 points) and the genuine final
+session, delivered backup and rehearsal (4 points). The read-only preflight
+helper reduces setup work but cannot pass those gates. Codex runs preparation;
+Deston privately reviews the selected testnet wallet prompts in one coordinated
+session. No routine coding is assigned to Deston.
+
+- Kym: finish the focused released B1 visual check if not already done; report
+  only new reproducible findings. No extra features or repeated full QA sweep.
+- YeeWei: retain #95 evidence; support the final combined acceptance and later
+  enable recovery scenarios only after Codex lands B5 behind its gate.
+- Larm: deliver the actual four documented read-only clips to Deston outside
+  Git, then rehearse the updated runbook/Q&A. Clip filenames/checksums alone
+  do not establish delivery or offline playback.
+
+Use each named brief for the paste-ready continuation. External sessions have
+not automatically received these changes. Mainnet and paid services remain out
+of scope.
 
 ## Earlier requirements and handoffs
 
@@ -119,7 +135,7 @@ The additions above make a better beta; mainnet requires these separate gates:
 | Gate | Present status / owner |
 |---|---|
 | Final genuine wallet acceptance; new provider/recovery acceptance | NOT RUN / Codex prepares, Deston privately approves |
-| Beta lanes integrated and regression suite green | B0/B2/B3 merged; B1 handoff unverified; B4 integration in progress; B5 gated |
+| Beta lanes integrated and regression suite green | B0–B4 merged and checked; assigned B2/B3 QA reviewed; B5 gated |
 | Small real-user pilot with repeat use and support feedback | Not started / team recruits consented testers; no fabricated retention metrics |
 | Focused independent contract/security review; material findings resolved | Not completed / coordinate review, no automatic paid commission |
 | Decide fresh mainnet start versus testnet migration | Undecided / team decision; migration is separate contract/product scope |

@@ -1,23 +1,18 @@
 # Larm — finale presentation and recovery readiness
 
-**Latest:** B1/#90 is merged and the lead has prepared live integration.
-Use [current beta tasks](../beta/START_HERE.md) for release QA and acceptance;
-do not restart delivered feature work.
+## Current assignment — 3 October 2026
 
-## Current assignment — 2 October 2026
+B3 Help QA/#93 and F7 follow-up/#94 are complete. Deliver the documented read-only clips and rehearse accurate judge answers.
 
-F7/#70, finale QA/#86 and B3 help content/#87 are merged. Verify real Help wording/links after integration and maintain the acceptance index. Preserve the runtime-version discrepancy and screenshot limits in dated finale evidence.
+Use [your current beta brief](../beta/LARM.md) and
+[current progress](../STATUS.md#progress-measurement). No completed feature
+branch should be rebuilt. Genuine wallet acceptance, delivered backup and
+rehearsal remain separate from implementation and simulated checks.
 
-Use [the current beta brief](../beta/LARM.md)
-for new work and [current progress](../STATUS.md#progress-measurement).
-The older task instructions below are retained as finale requirements/history;
-do not recreate merged branches. Genuine wallet acceptance, backup capture
-and rehearsal remain separate from implementation and simulated checks.
+## Earlier finale assignments and evidence
 
-**Current assignment:** [B3 support copy and focused verification](../beta/LARM.md).
-The 2 October beta brief adds a deliberately smaller lane. Preserve unfinished
-finale QA/runbook work below on its existing branch. B0 is merged in #80, so
-start B3 now. Codex reviews and merges passing PRs; teammates do not merge.
+The instructions below are retained as history. The current beta brief takes
+precedence; do not restart old tasks or reinterpret dated results as new passes.
 
 **Current task F7 combined QA · branch `test/finale-combined-qa` · updated 2 October 2026.**
 Garden, landing and QA PRs #59/#60/#63/#66/#70 are merged. PR #70 completed the
