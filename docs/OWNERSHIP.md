@@ -3,9 +3,12 @@
 **Current handoff — 3 October:** B0–B4 feature integration is merged through
 #92. Reviewed #93/#95 complete the assigned B3/B2 release QA; Kym's B1
 implementation is complete. Use [current beta roles](beta/START_HERE.md)
-and [weighted progress](STATUS.md#progress-measurement). Codex prepares the
-final genuine wallet session; Deston has private approvals, product review
-and rehearsal only. B5 runtime remains gated on that session.
+and [weighted progress](STATUS.md#progress-measurement). The [repaired-release
+retest](qa/evidence/READ_REPAIR_2026-10-03.md) records scoped wallet acceptance
+PASS for `fa07032`, preserving the earlier failure and observation limits.
+Codex may begin B5 integration; its runtime and changed-release acceptance
+remain outstanding. Deston retains private approvals, product review and
+rehearsal. Backup delivery/playback and rehearsal do not gate B5 engineering.
 
 ## Current beta delegation — 2 October 2026
 
@@ -33,9 +36,10 @@ Beta task allowlists are exclusive: these assignments do not grant permission
 to redesign the earlier pet/community/recap components. Existing scoped finale
 QA can finish independently on its own branch. Use [exact beta interfaces](beta/INTEGRATION.md),
 separate clones/worktrees, and branch from reviewed main. B0 is merged in
-PR #80 at `99086a3`; all three beta lanes can start now. Pending-transaction
-runtime integration waits for final genuine wallet acceptance. All paid
-services stay inactive.
+PR #80 at `99086a3`; the original three beta lanes have completed their assigned
+implementation. The scoped wallet prerequisite for pending-transaction runtime
+integration is now satisfied by the evidence linked above. B5's own acceptance
+remains required. All paid services stay inactive.
 
 ## Finale ownership and historical handoff
 

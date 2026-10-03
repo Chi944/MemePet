@@ -4,7 +4,25 @@ Updated 3 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Genuine wallet session — 3 October, latest checkpoint
+## Scoped wallet acceptance — 3 October, latest checkpoint
+
+The [repaired-release retest](qa/evidence/READ_REPAIR_2026-10-03.md) records
+**scoped genuine wallet acceptance PASS on `fa07032`**. Account 3's care changed
+Buddy/30/three cares to Buddy/40/four cares and community 13 to 14, with automatic
+settled pet/community/recap updates corroborated by Deston and an independently
+verified receipt. Same-chain account isolation, the final OKX connection path,
+same-address provider isolation, disconnect and public read checks followed.
+Deston confirmed manual OKX permission removal. The initial OKX failures,
+incomplete transition observation and unverified Account 3 cosmetic reset remain
+explicit limits; historical network/adoption/rejection evidence was not rerun.
+
+The B5 integration prerequisite is satisfied. Codex may implement the runtime;
+B5 remains **2/8** until its implementation and separate changed-release acceptance
+are complete. Backup delivery/playback and rehearsal remain separate unfinished
+work. Weighted progress is **92/100 overall, 43/51 lead (about 84%)**; completed
+teammate lanes are unchanged. This is testnet delivery progress, not mainnet readiness.
+
+## Genuine wallet session — 3 October, earlier checkpoint
 
 Account 4's care confirmed on the frozen `988ed94` release: Hatchling/10 became
 Buddy/20 and the independently attributed community total changed from 12 to
@@ -104,15 +122,15 @@ Unpublished work is not counted; genuine acceptance remains a separate gate.
 | B2 presentation and regression | 8 / 8 | Assigned combined QA complete; genuine acceptance separate |
 | B3 help copy/verification | 4 / 4 | Released wording/link review complete |
 | B4 provider/retry/Help integration | 9 / 9 | B1 wired; genuine acceptance separate |
-| B5 recovery | 2 / 8 | Runtime and acceptance; gated |
-| Genuine final acceptance, backup and rehearsal | 0 / 4 | Team session |
-| **Overall after reviewed release QA** | **90 / 100 — 90%** | Testnet delivery, not mainnet readiness |
+| B5 recovery | 2 / 8 | Integration prerequisite satisfied; runtime and its own acceptance remain |
+| Genuine final acceptance, backup and rehearsal | 2 / 4 | Wallet acceptance: 2 complete; delivered/playable backup: 1 pending; rehearsal: 1 pending |
+| **Overall after scoped wallet acceptance** | **92 / 100 — 92%** | Testnet delivery, not mainnet readiness |
 
 | Member's assigned lane | Weighted progress | Next action |
 |---|---:|---|
-| Deston / Codex | 41 / 51 — **80%** | Codex releases/read-tests #100; Deston privately approves the focused care recheck and rehearses |
+| Deston / Codex | 43 / 51 — **about 84%** | Codex integrates B5 and coordinates its changed-release acceptance; Deston reviews private prompts only when needed and rehearses |
 | Kym | 22 / 22 — **100% implementation** | Focused released onboarding/progression check; no new feature assignment |
-| YeeWei | 16 / 16 — **100% assigned implementation/QA** | Support final acceptance; B5 follow-up only after the gate |
+| YeeWei | 16 / 16 — **100% assigned implementation/QA** | Await the lead's B5 adapter/scenario handoff; no duplicate completed QA |
 | Larm | 11 / 11 — **100% assigned implementation/QA** | Deliver actual read-only clips and rehearse accurate judge answers |
 
 The existing finale feature implementation is complete. Added beta engineering

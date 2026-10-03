@@ -3,9 +3,12 @@
 **Current handoff — 3 October:** B0–B4 feature integration is merged through
 #92. Reviewed #93/#95 complete the assigned B3/B2 release QA; Kym's B1
 implementation is complete. Use [current beta roles](beta/START_HERE.md)
-and [weighted progress](STATUS.md#progress-measurement). Codex prepares the
-final genuine wallet session; Deston has private approvals, product review
-and rehearsal only. B5 runtime remains gated on that session.
+and [weighted progress](STATUS.md#progress-measurement). The [repaired-release
+retest](qa/evidence/READ_REPAIR_2026-10-03.md) records scoped wallet acceptance
+PASS for `fa07032`, preserving the earlier failure and observation limits.
+Codex may begin B5 integration; its runtime and changed-release acceptance
+remain outstanding. Deston retains private approvals, product review and
+rehearsal. Backup delivery/playback and rehearsal do not gate B5 engineering.
 
 ## Product
 
