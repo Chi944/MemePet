@@ -7,7 +7,9 @@ answers, and none of them stands in for genuine wallet acceptance.
 
 **Updated 3 October 2026 (Singapore)** from `main` at `a83f342` (#94) and the
 PR list. The last app change is `3148238` (#92); everything merged since then
-is under `docs/qa/`, so rows tested on `3148238` still describe the served app.
+is under `docs/qa/`, so the checked app source is unchanged. Those rows remain
+historical results; source comparison is not a fresh browser run or proof
+of the current public alias.
 First compiled 2 October at `ce77d1a` (#87). Update a row only with new
 evidence; keep FAIL / NOT RUN rows.
 
