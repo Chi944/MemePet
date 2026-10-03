@@ -123,6 +123,14 @@ actual OKX connection, same-address provider isolation and disconnect checks are
 documented with their limits. The earlier failed run remains in the evidence.
 This is testnet acceptance for the observed paths, not an independent security audit.
 
+**Latest release, `4a40275`:** the hosted wallet chooser shows one OKX Wallet
+and one MetaMask option. A genuine Account 2 care updated automatically from
+30 to 40 points and community 15 to 16; an ordinary reload retained those facts.
+CI passed 822 app tests, 30 simulated browser cases, six fictional preview cases
+and the contract checks. [Release and receipt evidence](docs/qa/evidence/B5_RECOVERY_2026-10-03.md)
+separates this result from pending-transaction recovery, which was not observed:
+the care confirmed before refresh.
+
 The dated September table below belongs to product runtime `af886a75`.
 Current implementation and remaining delivery work are tracked in
 [project status](docs/STATUS.md).
@@ -226,7 +234,7 @@ are isolated from live reads; preview routes return **404 in production**.
 
 | Layer | Choice | Purpose |
 |---|---|---|
-| Framework | Next.js 16.3.5, React 19, TypeScript | Routes, rendering and server-generated share images |
+| Framework | Next.js 16.3.8, React 19, TypeScript | Routes, rendering and server-generated share images |
 | Styling | CSS Modules, custom properties, Geist / Geist Mono | Consistent black/lime interface and motion |
 | Chain access | viem + an injected EIP-1193 wallet | Explicit reads and adoption/care requests |
 | Contract | Solidity 0.8.24 / Foundry | Registry and UTC-day rules |
@@ -313,11 +321,12 @@ node --test docs/qa/counter-check.regression.mjs
 node --test docs/qa/rpc-recovery.regression.mjs
 ```
 
-Install Foundry and its test library before running contract checks:
+Use Foundry **v1.8.3** and the pinned test library before running contract checks
+([full setup](docs/DEV_SETUP.md#checks)):
 
 ```bash
 cd contracts
-forge install foundry-rs/forge-std --no-git
+forge install foundry-rs/forge-std@rev=bf647bd6046f2f7da30d0c2bf435e5c76a780c1b --no-git
 cd ..
 npm run test:contracts
 ```
@@ -388,7 +397,10 @@ separates automated and read-only browser checks from genuine wallet actions.
 
 The core/finale features and B0–B4 beta scope are integrated. Scoped wallet
 acceptance is recorded; B5 recovery has separate runtime and wallet checks.
-A delivered, playable finale backup and a timed rehearsal remain outstanding.
+A labelled 2:14 silent finale backup is delivered and has passed full local
+playback; its [recording and verification limits](docs/qa/evidence/FINALE_BACKUP_2026-10-03.md)
+remain explicit. Genuine pending-refresh recovery and a timed team rehearsal
+remain outstanding.
 The free [OKX.AI service packet](docs/finale/OKX_AI_SERVICE.md) is prepared;
 registration and a genuine call through OKX.AI remain pending. No included model
 credits or deployed AI chat are claimed. The [parallel build plan](docs/finale/START_HERE.md) assigns

@@ -5,10 +5,15 @@ The [completed first run](evidence/FINAL_WALLET_2026-10-03.md) records a genuine
 confirmed care but failed automatic pet/community reads on `988ed94`.
 The [repaired-release retest](evidence/READ_REPAIR_2026-10-03.md) records scoped
 wallet acceptance PASS for `fa07032`, preserving that earlier failure and all
-observation limits. B5 runtime is now merged in #102 and its production identity
-is recorded in [B5 recovery evidence](evidence/B5_RECOVERY_2026-10-03.md).
-Genuine changed-release recovery acceptance remains NOT RUN. Backup
-delivery/playback and rehearsal remain unfinished and do not block engineering.
+observation limits. B5 shipped in #102; latest reviewed #104 at `4a40275` is
+production verified, with 822 app tests, 30 simulated browser cases and six
+fictional previews passed in CI. [B5 recovery evidence](evidence/B5_RECOVERY_2026-10-03.md)
+records Account 2's automatic care updates and ordinary reload on that release.
+No saved hash was restored; genuine B5 recovery acceptance remains NOT RUN.
+The lead's [silent 2:14 backup](evidence/FINALE_BACKUP_2026-10-03.md) is delivered
+locally and passed full playback with its recording gap disclosed. Venue playback
+and human rehearsal remain NOT RUN. Larm's clips remain separate and undelivered;
+the lead's backup pass does not establish their receipt or genuine B5 recovery.
 A direct, corroborated retest can establish acceptance without a video; a video
 is required only for the separate recorded-backup deliverable. The template
 table below is not the latest result index. Historical network/adoption/rejection

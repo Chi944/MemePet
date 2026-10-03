@@ -15,7 +15,31 @@ team can rehearse against.
 **Deston privately approves wallet connections and transactions.** Codex prepares
 the page, recording and public verification; nobody signs on Deston's behalf.
 
-## Current handoff — 3 October, B5 genuine acceptance pending
+## Current handoff — 3 October, wallet-discovery release and verified backup
+
+Reviewed [PR #104](https://github.com/Chi944/MemePet/pull/104), `4a40275`, is
+production verified; CI passed 822 app tests, 30 simulated browser cases and
+six fictional previews. The hosted picker showed one OKX Wallet and one MetaMask.
+[Account 2's genuine care](../../evidence/B5_RECOVERY_2026-10-03.md) automatically
+updated Buddy/30 to 40 points, three to four cares and community 15 to 16.
+Ordinary reload retained those facts; no saved hash was restored, so genuine
+B5 recovery remains **NOT RUN**. Account 2 was then in cooldown until 4 October
+00:00 UTC (08:00 Singapore); the earlier care-due preflight below is historical.
+
+The lead's [silent 2:14 (134.333-second) backup](../../evidence/FINALE_BACKUP_2026-10-03.md)
+is delivered locally and passed full start-to-end playback at 10:35 UTC. It combines
+salvaged approval/pending footage with later confirmed-state footage and explicitly
+discloses the missing confirmation/reload segment. This edit is separate from
+Larm's four read-only clips, which remain undelivered. Venue playback, human
+rehearsal and genuine B5 recovery remain NOT RUN. Deston retains the private cue
+card and final pitch timing.
+
+## Earlier checkpoint — 3 October, B5 genuine acceptance pending
+
+The backup-not-ready statement and Account 2 care-due table in this checkpoint
+describe the earlier preflight. Use the current handoff above for later results.
+The original proposal and checklists below are retained as planning material,
+not the current result index.
 
 - [Scoped genuine wallet acceptance](../../evidence/READ_REPAIR_2026-10-03.md)
   passed on `fa07032`. Account 3's care settled at Buddy/40/four cares and

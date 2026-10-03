@@ -9,13 +9,19 @@ cares. Deliver the actual read-only clips before treating them as backups.
 
 The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
 scoped wallet acceptance on `fa07032`; preserve the earlier failure and the
-new report's limits in judge/runbook claims. The successful retest was not
-recorded. The earlier diagnostic clip is not a finished pitch backup. Deliver
-and verify the existing read-only clips; backup and rehearsal remain separate
-from Codex's now-authorized B5 integration.
+new report's limits in judge/runbook claims. That successful retest was not recorded.
+Latest reviewed [#104](https://github.com/Chi944/MemePet/pull/104), `4a40275`, is
+production verified with 822 app tests, 30 simulated browser cases and six fictional
+previews passed in CI. [The later Account 2 evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md)
+records automatic care updates and ordinary persistence, not B5 saved-hash recovery.
+The lead's [silent 2:14 backup](../qa/evidence/FINALE_BACKUP_2026-10-03.md) is
+delivered locally and passed full playback with the recording gap explicitly
+disclosed. Your four read-only clips remain separate and undelivered; the lead's
+backup pass does not prove those clips were received. Human rehearsal remains NOT RUN.
+Deliver and verify your clips, and retain the recording and B5 limits in rehearsal.
 
 ```text
-Fetch reviewed main, preserving local work. Read docs/beta/LARM.md and the current finale runbook. B3/#93 and released Help QA are complete; do not repeat them. Prepare the four documented read-only clips for delivery to Deston outside Git through the team's existing sharing method. Return usable file locations and checksums; do not claim independent playback until Deston/lead has the files. Rehearse the short runbook/Q&A with accurate care-action attribution. Cite the scoped fa07032 wallet acceptance with its limits; it supplies no new care video. Any new genuine care recording and B5 changed-release acceptance remain lead-owned. No new source feature, wallet action, paid call or merge.
+Fetch reviewed main, preserving local work. Read docs/beta/LARM.md and the current finale runbook. B3/#93 and released Help QA are complete; do not repeat them. Prepare the four documented read-only clips for delivery to Deston outside Git through the team's existing sharing method. Return usable file locations and checksums; do not claim independent playback until Deston/lead has the files. Your undelivered clips are separate from the lead's locally delivered and fully played Account 2 backup, whose recording gap must remain explicit. Rehearse the short runbook/Q&A with accurate care-action attribution; human rehearsal remains NOT RUN. Cite the current #104/4a40275 B5 evidence: automatic care updates and ordinary reload passed, but genuine saved-hash recovery remains NOT RUN. No new source feature, wallet action, paid call or merge.
 ```
 
 ## Earlier requirements and handoffs

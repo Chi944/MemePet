@@ -5,9 +5,11 @@ passes, and a recovered read does not erase an earlier failed refresh.
 
 ## Current records
 
-- [B5 transaction recovery](B5_RECOVERY_2026-10-03.md): public-hash journal, strict receipt/fact validation and simulated browser coverage. Genuine changed-release recovery acceptance remains separate and NOT RUN.
+- [B5 transaction recovery and current #104 release](B5_RECOVERY_2026-10-03.md): production `4a40275`; CI passed 822 app tests, 30 simulated browser cases and six fictional previews. Account 2's automatic care updates and ordinary reload passed, but no saved hash was restored: genuine B5 recovery remains NOT RUN.
 
-- [Repaired-release genuine retest](READ_REPAIR_2026-10-03.md): scoped wallet acceptance PASS on `fa07032`; corroborated automatic settled reads, independent receipt verification, account/provider isolation and disconnect evidence. B5 integration may begin; B5 runtime acceptance, backup delivery/playback and rehearsal remain outstanding. Initial OKX failures and observation limits are preserved.
+- [Delivered finale backup](FINALE_BACKUP_2026-10-03.md): silent 2:14 local artifact, full decode and actual start-to-end playback passed. The salvaged pending segment and later confirmed footage retain an explicit recording-gap disclosure. Venue playback, human rehearsal and genuine B5 recovery remain NOT RUN; Larm's four clips remain separate and undelivered.
+
+- [Repaired-release genuine retest](READ_REPAIR_2026-10-03.md): scoped wallet acceptance PASS on `fa07032`; corroborated automatic settled reads, independent receipt verification, account/provider isolation and disconnect evidence. This satisfied B5's implementation prerequisite; use the current B5 record above for later recovery and backup status. Initial OKX failures and observation limits are preserved.
 
 - [First October genuine wallet session](FINAL_WALLET_2026-10-03.md): Account 4 care confirmed on `988ed94`, but automatic pet/community reads FAILED before recovery. That historical result and diagnostic recording remain unchanged by the later retest.
 
