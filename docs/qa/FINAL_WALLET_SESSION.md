@@ -9,12 +9,18 @@ observation limits. B5 shipped in #102; latest reviewed #104 at `4a40275` is
 production verified, with 822 app tests, 30 simulated browser cases and six
 fictional previews passed in CI. [B5 recovery evidence](evidence/B5_RECOVERY_2026-10-03.md)
 records Account 2's automatic care updates and ordinary reload on that release.
-No saved hash was restored; genuine B5 recovery acceptance remains NOT RUN.
+No saved hash was restored in that public run. The subsequently authorized
+[controlled Local Anvil + real MetaMask acceptance](evidence/B5_LOCAL_WALLET_2026-10-03.md)
+passed both adoption and care pending-refresh recovery using unchanged runtime
+`4a40275`. Each hash was restored before mining and recovered without resubmission;
+receipt-bound pet/community/cooldown facts settled correctly. This closes the
+scoped finale gate. Public X Layer pending-refresh remains **NOT OBSERVED**;
+the local result is not mainnet or broader production-rollout acceptance.
 The lead's [silent 2:14 backup](evidence/FINALE_BACKUP_2026-10-03.md) is delivered
 locally and passed full playback with its recording gap disclosed. Timed team
 rehearsal is **USER-REPORTED PASS (2026-10-03)**, not independently observed by the
-lead. Venue-equipment playback remains NOT RUN. Genuine B5 recovery is the only
-remaining scored deliverable. Larm's clips remain separate and undelivered;
+lead. Venue-equipment playback remains NOT RUN. The scoped finale checklist is
+complete. Larm's clips remain separate and undelivered;
 the lead's backup pass does not establish their receipt or genuine B5 recovery.
 A direct, corroborated retest can establish acceptance without a video; a video
 is required only for the separate recorded-backup deliverable. The template

@@ -6,11 +6,13 @@ implementation is complete. Use [current beta roles](beta/START_HERE.md)
 and [weighted progress](STATUS.md#progress-measurement). The [repaired-release
 retest](qa/evidence/READ_REPAIR_2026-10-03.md) records scoped wallet acceptance
 PASS for `fa07032`, preserving the earlier failure and observation limits.
-B5 runtime is reviewed and merged in #102 at `36b9ba8`, after passing PR CI and
-Vercel preview checks. Production identity and main CI are verified; genuine
-changed-release B5 recovery remains NOT RUN. Deston retains private
-approvals, product review and rehearsal. Backup delivery/playback and rehearsal
-do not gate B5 engineering.
+B5 runtime is reviewed and merged in #102; wallet discovery release #104 is
+production verified at `4a40275`. [Real MetaMask recovery on controlled Local
+Anvil](qa/evidence/B5_LOCAL_WALLET_2026-10-03.md) passed adoption and care across
+refresh, completing the agreed finale checklist. Public X Layer pending-refresh
+remains NOT OBSERVED. Backup playback passed locally and timed rehearsal is
+USER-REPORTED PASS. Existing ownership still governs any newly reproduced defect;
+no additional feature assignment is implied.
 
 ## Current beta delegation — 2 October 2026
 
@@ -40,8 +42,8 @@ QA can finish independently on its own branch. Use [exact beta interfaces](beta/
 separate clones/worktrees, and branch from reviewed main. B0 is merged in
 PR #80 at `99086a3`; the original three beta lanes have completed their assigned
 implementation. The scoped wallet prerequisite for pending-transaction runtime
-integration is now satisfied by the evidence linked above. B5's own acceptance
-remains required. All paid services stay inactive.
+integration and the agreed controlled-local B5 acceptance are now complete,
+with the public-network limits linked above. All paid services stay inactive.
 
 ## Finale ownership and historical handoff
 

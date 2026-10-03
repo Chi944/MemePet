@@ -23,15 +23,22 @@ This earns the delivered-backup point. See the
 [backup record](../qa/evidence/FINALE_BACKUP_2026-10-03.md). Main CI [37114761697](https://github.com/Chi944/MemePet/actions/runs/37114761697)
 also passed.
 
+You then authorized [controlled local recovery](../qa/evidence/B5_LOCAL_WALLET_2026-10-03.md)
+with real MetaMask and Local Anvil chain 31337. Both adoption and care hashes
+returned as pending after reload before mining, then recovered without another
+submission. Receipts and receipt-bound facts verified both operations and the
+care's growth, community and cooldown updates. This closes the agreed finale
+recovery gate. **Public X Layer pending-refresh remains NOT OBSERVED**; the local
+pass does not establish hosted RPC timing, mainnet or a broader production rollout.
+
 1. Forward each teammate their current named beta brief if their external agent
    has not received it. Those sessions are not automatically messaged.
 2. Review the integrated product and confirm the desired demo flow.
 3. The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) has
    recorded scoped wallet acceptance. Reviewed B5 PR #102 is merged at
-   `36b9ba8`; the latest wallet-discovery release is `4a40275`. B5's separate
-   genuine recovery acceptance remains open because the care confirmed before
-   the planned refresh. Codex will coordinate that check. Only
-   review a private wallet prompt when that exact request is ready.
+   `36b9ba8`; the latest wallet-discovery release is `4a40275`. Its controlled-local
+   adoption/care recovery acceptance is complete. No further wallet approval or
+   feature expansion is needed to finish this scoped checklist.
 4. Timed team rehearsal is **USER-REPORTED PASS**, confirmed by you on
    **3 October 2026**. Keep the delivered MP4 and cue card ready; no repeat
    video or rehearsal is required. No exact rehearsal duration, time or venue
@@ -39,16 +46,15 @@ also passed.
 
 Help/B1 integration, assigned B2/B3 release QA and the scoped wallet prerequisite
 are complete. B5 implementation is reviewed, merged and production verified;
-genuine B5 recovery is **NOT RUN**.
-Codex owns the remaining engineering and coordination. Mainnet, paid APIs and
+its agreed real-wallet local recovery gate is **PASS**. Local-test cleanup is
+complete; Codex preserves the evidence limits. Mainnet, paid APIs and
 purchases are outside the current authorization.
 
-Reviewed B5 implementation, the delivered/playable backup and your rehearsal
-confirmation earn **98/100 overall, 49/51 lead (about 96%)**. One genuine B5
-recovery acceptance check accounts for the remaining two points. The
-final-acceptance, backup and rehearsal row is **4/4**. B5 stays **6/8** until
-its genuine changed-release recovery acceptance passes. This does not assign
-coding work to you.
+Reviewed B5 implementation and scoped local recovery, the delivered/playable
+backup and your rehearsal confirmation earn **100/100 scoped finale checklist,
+51/51 lead, B5 8/8**. The final-acceptance, backup and rehearsal row is **4/4**.
+Teammate scores are unchanged. No coding work is assigned to you; these figures
+do not claim mainnet or broader production-rollout completion.
 
 See [weighted progress](../STATUS.md#progress-measurement). Your lead-lane
 percentage includes engineering delegated to Codex, not personal coding work.

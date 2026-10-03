@@ -14,6 +14,10 @@ Latest reviewed [#104](https://github.com/Chi944/MemePet/pull/104), `4a40275`, i
 production verified with 822 app tests, 30 simulated browser cases and six fictional
 previews passed in CI. [The later Account 2 evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md)
 records automatic care updates and ordinary persistence, not B5 saved-hash recovery.
+The later [controlled Local Anvil + real MetaMask run](../qa/evidence/B5_LOCAL_WALLET_2026-10-03.md)
+passed adoption and care pending-refresh recovery without resubmission, closing
+the scoped finale gate. **Public X Layer pending-refresh remains NOT OBSERVED**;
+do not present the local pass as public-network, mainnet or broader rollout proof.
 The lead's [silent 2:14 backup](../qa/evidence/FINALE_BACKUP_2026-10-03.md) is
 delivered locally and passed full playback with the recording gap explicitly
 disclosed. Your four read-only clips remain separate and undelivered; the lead's
@@ -21,10 +25,11 @@ backup pass does not prove those clips were received. Timed team rehearsal is
 **USER-REPORTED PASS (2026-10-03)**, not independently observed by the lead;
 venue-equipment playback remains NOT RUN. No repeat rehearsal is required.
 Deliver and verify your separate clips, and retain the recording and B5 limits
-in the runbook. Genuine B5 recovery is the only remaining scored deliverable.
+in the runbook. The scoped finale checklist is complete; your separate clip
+delivery does not reopen the earned backup point or assign new feature work.
 
 ```text
-Fetch reviewed main, preserving local work. Read docs/beta/LARM.md and the current finale runbook. B3/#93 and released Help QA are complete; do not repeat them. Prepare the four documented read-only clips for delivery to Deston outside Git through the team's existing sharing method. Return usable file locations and checksums; do not claim independent playback until Deston/lead has the files. Your undelivered clips are separate from the lead's locally delivered and fully played Account 2 backup, whose recording gap must remain explicit. Keep accurate care-action attribution in the runbook/Q&A. Timed team rehearsal is USER-REPORTED PASS (2026-10-03); no repeat rehearsal is required and venue-equipment playback is not claimed. Cite the current #104/4a40275 B5 evidence: automatic care updates and ordinary reload passed, but genuine saved-hash recovery remains NOT RUN and is the only remaining scored deliverable. No new source feature, wallet action, paid call or merge.
+Fetch reviewed main, preserving local work. Read docs/beta/LARM.md and the current finale runbook. B3/#93 and released Help QA are complete; do not repeat them. Your four documented read-only clips remain separate from the lead's delivered and fully played Account 2 backup. If delivering them outside Git, return usable locations and checksums without claiming unobserved playback; their delivery does not reopen the earned backup point. Preserve the lead backup's recording-gap disclosure and accurate care-action attribution. Timed team rehearsal is USER-REPORTED PASS (2026-10-03); no repeat is required and venue-equipment playback is not claimed. Cite the controlled-local real MetaMask adoption/care recovery PASS on runtime 4a40275, with public X Layer pending-refresh NOT OBSERVED. The scoped finale checklist is complete, not mainnet or broader rollout readiness. No new feature, wallet action, paid call or merge.
 ```
 
 ## Earlier requirements and handoffs

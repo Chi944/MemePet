@@ -131,6 +131,13 @@ and the contract checks. [Release and receipt evidence](docs/qa/evidence/B5_RECO
 separates this result from pending-transaction recovery, which was not observed:
 the care confirmed before refresh.
 
+**Finale recovery acceptance:** [real MetaMask testing on controlled Local Anvil](docs/qa/evidence/B5_LOCAL_WALLET_2026-10-03.md)
+passed using unchanged runtime `4a40275`. Both adoption and care retained their
+actual pending hashes across refresh and confirmed without resubmission. The care
+added ten points and one community care, with the correct cooldown. Mining was
+held locally to make the pending interval observable; public X Layer
+pending-refresh timing remains **not observed**.
+
 The dated September table below belongs to product runtime `af886a75`.
 Current implementation and remaining delivery work are tracked in
 [project status](docs/STATUS.md).
@@ -155,8 +162,9 @@ separates those observations from the later genuine wallet session linked above.
 and read-only **Check status** panel. It validates transaction identity, receipt
 inclusion and receipt-block pet facts before showing recovered progress. Unresolved
 transactions block another submission; wallet/account changes clear the old view.
-Storage failures retain the returned hash on screen with a warning. Its separate
-changed-release wallet acceptance remains required; the `fa07032` pass predates it.
+Storage failures retain the returned hash on screen with a warning. The separate
+changed-release acceptance above uses real MetaMask on a controlled local chain;
+it is distinct from the earlier public-testnet wallet checks and simulated tests.
 
 | Area | Verified result |
 |---|---|
@@ -379,7 +387,7 @@ and a read-only holder indicator remain optional future work.
 
 - **Testnet prototype:** one community, one mascot; no mainnet deployment or organic usage metrics are claimed. Finale selection does not establish approval of every planned integration.
 - **Public RPC reliability:** failed reads remain Unknown and expose read-only retry. Automatic settled updates passed the [3 October focused retest](docs/qa/evidence/READ_REPAIR_2026-10-03.md); earlier failures remain documented. This is not a guarantee of RPC uptime or latency.
-- **Wallet coverage:** earlier observed MetaMask/OKX paths passed; initial OKX connection failures remain documented. Modern-first discovery now removes duplicate legacy compatibility choices; simulated discovery tests are separate from genuine extension checks. B5 recovery requires its own changed-release wallet acceptance.
+- **Wallet coverage:** earlier observed MetaMask/OKX paths passed; initial OKX connection failures remain documented. Modern-first discovery removes duplicate legacy compatibility choices. Recovery across refresh passed with real MetaMask on controlled Local Anvil; the corresponding public X Layer pending interval was not observed. Simulated discovery tests remain separate from genuine extension checks.
 - **Evidence boundaries:** network mismatch and the real Hatchling-to-Buddy transition were observed in the [first October session](docs/qa/evidence/FINAL_WALLET_2026-10-03.md), with read-back failure/recovery preserved. Normal-motion foreground playback and the copied-link clipboard contents are not established by the final wallet retest.
 - **Wallet warnings:** a fresh approval was reported without a warning; automation did not inspect the extension prompt. Leave any warning unapproved and follow [wallet setup](docs/qa/WALLET_SETUP.md).
 - **Security:** no independent security audit. A dated dependency scan cannot establish zero risk.
@@ -403,19 +411,19 @@ growth. [Dated verification](docs/qa/evidence/PERSONALITY_INTEGRATION_2026-10-01
 separates automated and read-only browser checks from genuine wallet actions.
 
 The core/finale features and B0–B5 beta implementation are integrated. Scoped
-wallet acceptance is recorded; recovery across refresh has a separate genuine
-wallet check.
+public wallet acceptance and the separate controlled-local real-wallet recovery
+check are recorded. The agreed finale/testnet delivery checklist is complete;
+this does not establish mainnet readiness or eliminate the limitations above.
 A labelled 2:14 silent finale backup is delivered and has passed full local
 playback; its [recording and verification limits](docs/qa/evidence/FINALE_BACKUP_2026-10-03.md)
 remain explicit. The team confirmed its timed rehearsal complete on 3 October;
-this is a team-reported result, not a venue-equipment check. Genuine
-pending-refresh recovery remains the last open acceptance item in the agreed
-finale/testnet checklist.
+this is a team-reported result, not a venue-equipment check. On the day, verify
+the display equipment and reserve the pitch wallet's daily care for the demo.
 The free [OKX.AI service packet](docs/finale/OKX_AI_SERVICE.md) is prepared;
 registration and a genuine call through OKX.AI remain pending. No included model
 credits or deployed AI chat are claimed. The [parallel build plan](docs/finale/START_HERE.md) assigns
-isolated work to all four members. Remaining browser checks and the automatic
-refresh limitation stay explicit in [current status](docs/STATUS.md).
+isolated work to all four members. Optional future work and verification limits
+stay explicit in [current status](docs/STATUS.md).
 
 ---
 
