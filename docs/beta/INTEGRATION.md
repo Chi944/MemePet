@@ -101,7 +101,12 @@ YeeWei may extend scenarios under `e2e/dev-preview/`.
 ## B4: selected wallet must remain selected
 
 Use [EIP-6963 discovery](https://eips.ethereum.org/EIPS/eip-6963) with bounded
-legacy fallback for `window.ethereum` / `window.okxwallet`. Treat announcements,
+legacy fallback for `window.ethereum` / `window.okxwallet`. Once a valid modern
+announcement exists, show the announced provider list only. Do not combine it
+with legacy wrappers or merge distinct providers by brand name or `rdns`.
+A late announcement that replaces a selected legacy provider must invalidate
+that session and require an explicit selection, never silently redirect signing.
+Treat announcements,
 names and `rdns` as untrusted metadata, not proof of an authentic brand. Do not
 render injected HTML/SVG icons. Discovery must not request account permissions.
 

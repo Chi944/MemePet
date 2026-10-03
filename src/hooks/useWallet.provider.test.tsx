@@ -223,6 +223,7 @@ describe("useWallet injected provider selection", () => {
     installProvider("ethereum", first);
     const { result } = renderHook(() => useWallet());
     await waitFor(() => expect(result.current.selectedId).not.toBeNull());
+    act(() => { announce(first, "First wallet"); });
     await act(async () => { await result.current.connect(); });
     const previousSession = result.current.providerSessionKey;
     act(() => { announce(second, "Second wallet"); });
@@ -230,6 +231,88 @@ describe("useWallet injected provider selection", () => {
     expect(result.current.address).toBe(accountA);
     expect(result.current.providerSessionKey).toBe(previousSession);
     expect(second.request).not.toHaveBeenCalled();
+  });
+
+  it("shows one OKX choice when its announcement and legacy compatibility wrapper are distinct", async () => {
+    const wrapper = createProvider(); const announced = createProvider();
+    const metamask = createProvider();
+    installProvider("okxwallet", wrapper); installProvider("ethereum", metamask);
+    const { result } = renderHook(() => useWallet());
+    act(() => { announce(metamask, "MetaMask"); announce(announced, "OKX Wallet"); });
+    await waitFor(() => expect(result.current.selectionRequired).toBe(true));
+    expect(result.current.choices.map(({ label }) => label)).toEqual(["MetaMask", "OKX Wallet"]);
+    act(() => { result.current.selectWallet(result.current.choices[1].id); });
+    await act(async () => { await result.current.connect(); });
+    expect(result.current.address).toBe(accountA);
+    expect(wrapper.request).not.toHaveBeenCalled();
+    expect(metamask.request).not.toHaveBeenCalled();
+    const client = result.current.createBrowserWalletClient()!;
+    await client.request({ method: "eth_chainId" });
+    expect(announced.request).toHaveBeenCalledWith({ method: "eth_requestAccounts" });
+    expect(announced.request).toHaveBeenCalledWith({ method: "eth_chainId" });
+  });
+
+  it("requires explicit reselection when a late announcement replaces an intentionally connected legacy wrapper", async () => {
+    const legacy = createProvider(); const modern = createProvider([accountB]);
+    installProvider("okxwallet", legacy);
+    const { result } = renderHook(() => useWallet());
+    await waitFor(() => expect(result.current.selectedId).not.toBeNull());
+    await act(async () => { await result.current.connect(); });
+    const oldFactory = result.current.createBrowserWalletClient;
+    const oldClient = oldFactory()!;
+    const generation = result.current.providerSessionKey;
+    legacy.request.mockClear();
+    act(() => { announce(modern, "OKX Wallet"); });
+    expect(result.current.choices).toHaveLength(1);
+    expect(result.current.selectedId).toBeNull();
+    expect(result.current.selectionRequired).toBe(true);
+    expect(result.current.address).toBeNull();
+    expect(result.current.providerSessionKey).not.toBe(generation);
+    expect(oldFactory()).toBeNull();
+    expect(legacy.listenerCount("accountsChanged")).toBe(0);
+    await expect(oldClient.request({ method: "eth_chainId" })).rejects.toThrow(/wallet session changed/);
+    expect(legacy.request).not.toHaveBeenCalled();
+    expect(modern.request).not.toHaveBeenCalled();
+    act(() => { result.current.selectWallet(result.current.choices[0].id); });
+    expect(modern.request).not.toHaveBeenCalled();
+    await act(async () => { await result.current.connect(); });
+    expect(modern.request).toHaveBeenCalledWith({ method: "eth_requestAccounts" });
+    expect(result.current.address).toBe(accountA);
+  });
+
+  it("keeps the selected provider and ID when its exact reference announces late", async () => {
+    const provider = createProvider(); installProvider("okxwallet", provider);
+    const { result } = renderHook(() => useWallet());
+    await waitFor(() => expect(result.current.selectedId).not.toBeNull());
+    await act(async () => { await result.current.connect(); });
+    const id = result.current.selectedId;
+    const generation = result.current.providerSessionKey;
+    act(() => { announce(provider, "OKX Wallet"); });
+    expect(result.current.selectedId).toBe(id);
+    expect(result.current.providerSessionKey).toBe(generation);
+    expect(result.current.address).toBe(accountA);
+    expect(result.current.choices).toHaveLength(1);
+    expect(provider.listenerCount("accountsChanged")).toBe(1);
+  });
+
+  it("discards an old pending legacy connection when the announced list becomes authoritative", async () => {
+    const legacy = createProvider(); const modern = createProvider();
+    const oldRequest = deferred<unknown>();
+    legacy.overrides.set("eth_requestAccounts", () => oldRequest.promise);
+    installProvider("okxwallet", legacy);
+    const { result } = renderHook(() => useWallet());
+    await waitFor(() => expect(result.current.chainId).toBe(1));
+    legacy.request.mockClear();
+    let connect!: Promise<void>;
+    act(() => { connect = result.current.connect(); });
+    act(() => { announce(modern, "OKX Wallet"); });
+    await act(async () => { oldRequest.resolve([accountA]); await connect; });
+    expect(result.current.address).toBeNull();
+    expect(result.current.selectedId).toBeNull();
+    expect(result.current.selectionRequired).toBe(true);
+    expect(result.current.connecting).toBe(false);
+    expect(modern.request).not.toHaveBeenCalled();
+    expect(legacy.request.mock.calls.filter(([call]) => call.method === "eth_chainId")).toHaveLength(0);
   });
 
   it("isolates a same-address same-chain provider swap and ignores events from the old wallet", async () => {

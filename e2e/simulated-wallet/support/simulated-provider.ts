@@ -13,6 +13,8 @@ export interface SimulatedWalletSpec {
   /** Accounts returned when the user connects. */
   readonly connectAccounts: readonly string[];
   readonly chainIdHex: string;
+  /** Optional modern discovery path; a wrapper shares wallet state but has a distinct object identity. */
+  readonly announceProvider?: "same-object" | "distinct-wrapper";
   /** Opt-in returned hash for a fictional send; no signing or network exists. */
   readonly returnedTransactionHash?: string;
 }
@@ -24,6 +26,7 @@ export interface ProviderCall {
 
 type Controls = {
   calls: ProviderCall[];
+  announcedWrapperCalls: ProviderCall[];
   setAccounts: (wallet: string, accounts: string[]) => void;
   setChain: (wallet: string, chainIdHex: string) => void;
 };
@@ -32,6 +35,8 @@ type Controls = {
 export async function installSimulatedWallets(page: Page, wallets: readonly SimulatedWalletSpec[]) {
   await page.addInitScript((specs: readonly SimulatedWalletSpec[]) => {
     const calls: ProviderCall[] = [];
+    const announcedWrapperCalls: ProviderCall[] = [];
+    const announcements: unknown[] = [];
     const providers = new Map<string, { setAccounts: (accounts: string[]) => void; setChain: (chainIdHex: string) => void }>();
     for (const spec of specs) {
       let accounts = [...spec.grantedAccounts];
@@ -74,14 +79,40 @@ export async function installSimulatedWallets(page: Page, wallets: readonly Simu
         },
       });
       Object.defineProperty(window, spec.global, { configurable: true, value: provider });
+      if (spec.announceProvider) {
+        const announcedProvider = spec.announceProvider === "distinct-wrapper"
+          ? {
+            ...provider,
+            request: (args: { method: string }) => {
+              announcedWrapperCalls.push({ wallet: spec.name, method: args.method });
+              return provider.request(args);
+            },
+          }
+          : provider;
+        announcements.push({
+          info: {
+            name: spec.name,
+            uuid: spec.name === "OKX Wallet" ? "22222222-2222-4222-8222-222222222222" : "11111111-1111-4111-8111-111111111111",
+            rdns: spec.name === "OKX Wallet" ? "com.okex.wallet" : "io.metamask",
+            icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>",
+          },
+          provider: announcedProvider,
+        });
+      }
     }
     for (const global of ["ethereum", "okxwallet"]) {
       if (!specs.some((spec) => spec.global === global)) {
         Object.defineProperty(window, global, { configurable: true, value: undefined });
       }
     }
+    window.addEventListener("eip6963:requestProvider", () => {
+      for (const detail of announcements) {
+        window.dispatchEvent(new CustomEvent("eip6963:announceProvider", { detail }));
+      }
+    });
     (window as Window & { __simulatedWallets?: Controls }).__simulatedWallets = {
       calls,
+      announcedWrapperCalls,
       setAccounts: (wallet, accounts) => providers.get(wallet)?.setAccounts(accounts),
       setChain: (wallet, chainIdHex) => providers.get(wallet)?.setChain(chainIdHex),
     };
@@ -99,6 +130,7 @@ export async function installSimulatedWallets(page: Page, wallets: readonly Simu
         (window as Window & { __simulatedWallets?: Controls }).__simulatedWallets!.setChain(name, next);
       }, [wallet, chainIdHex] as const),
     calls: () => page.evaluate(() => (window as Window & { __simulatedWallets?: Controls }).__simulatedWallets!.calls),
+    announcedWrapperCalls: () => page.evaluate(() => (window as Window & { __simulatedWallets?: Controls }).__simulatedWallets!.announcedWrapperCalls),
   };
 }
 

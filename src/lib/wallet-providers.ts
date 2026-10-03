@@ -65,28 +65,35 @@ function legacyLabel(provider: EthereumProvider, source?: "okx"): string {
 
 /** Discovery is read-only: it never invokes provider.request or asks for accounts. */
 export function discoverWallets(target: Window, onChange: (snapshot: WalletDiscovery) => void): () => void {
-  const entries = new Map<EthereumProvider, { wallet: DiscoveredWallet; announced: boolean }>();
+  // Announcements and legacy injection are alternative discovery channels.
+  // Extensions may expose different wrapper objects in each; merging channels
+  // invents duplicate choices. Names/rdns/flags are not wallet identity proof.
+  const announcedEntries = new Map<EthereumProvider, DiscoveredWallet>();
+  const legacyEntries = new Map<EthereumProvider, DiscoveredWallet>();
+  const ids = new WeakMap<EthereumProvider, string>();
   let nextId = 0;
   let settled = false;
   let stopped = false;
 
   const publish = () => {
-    if (!stopped) onChange({ wallets: [...entries.values()].map(({ wallet }) => wallet), settled });
+    const entries = announcedEntries.size > 0 ? announcedEntries : legacyEntries;
+    if (!stopped) onChange({ wallets: [...entries.values()], settled });
   };
-  const add = (provider: EthereumProvider, name: string, announced: boolean) => {
+  const add = (entries: Map<EthereumProvider, DiscoveredWallet>, provider: EthereumProvider, name: string) => {
     const existing = entries.get(provider);
     if (existing) {
-      if (announced) {
-        existing.announced = true;
-        existing.wallet = { ...existing.wallet, label: name };
-      }
+      entries.set(provider, { ...existing, label: name });
       return;
     }
-    if (entries.size < MAX_PROVIDERS) {
-      entries.set(provider, { wallet: { id: `wallet-${++nextId}`, label: name, provider }, announced });
-    }
+    if (entries.size >= MAX_PROVIDERS) return;
+    // A reference that appears in both channels keeps its opaque ID. Distinct
+    // announced providers stay distinct even when all metadata is identical.
+    let id = ids.get(provider);
+    if (!id) { id = `wallet-${++nextId}`; ids.set(provider, id); }
+    entries.set(provider, { id, label: name, provider });
   };
   const scanLegacy = () => {
+    if (announcedEntries.size > 0) { publish(); return; }
     const found = new Set<EthereumProvider>();
     const ethereum = property(target, "ethereum");
     const children = property(ethereum, "providers");
@@ -94,18 +101,16 @@ export function discoverWallets(target: Window, onChange: (snapshot: WalletDisco
       ? children.slice(0, MAX_PROVIDERS).filter(isProvider) : [];
     // A legacy multiplexer is not an additional wallet when it exposes providers.
     if (providers.length) {
-      for (const provider of providers) { found.add(provider); add(provider, legacyLabel(provider), false); }
+      for (const provider of providers) { found.add(provider); add(legacyEntries, provider, legacyLabel(provider)); }
     } else if (isProvider(ethereum)) {
-      found.add(ethereum); add(ethereum, legacyLabel(ethereum), false);
+      found.add(ethereum); add(legacyEntries, ethereum, legacyLabel(ethereum));
     }
     const okx = property(target, "okxwallet");
     if (isProvider(okx)) {
-      found.add(okx); add(okx, legacyLabel(okx, "okx"), false);
-      const existing = entries.get(okx);
-      if (existing && !existing.announced) existing.wallet = { ...existing.wallet, label: "OKX Wallet" };
+      found.add(okx); add(legacyEntries, okx, legacyLabel(okx, "okx"));
     }
-    for (const [provider, entry] of entries) {
-      if (!entry.announced && !found.has(provider)) entries.delete(provider);
+    for (const provider of legacyEntries.keys()) {
+      if (!found.has(provider)) legacyEntries.delete(provider);
     }
     publish();
   };
@@ -114,7 +119,7 @@ export function discoverWallets(target: Window, onChange: (snapshot: WalletDisco
     const provider = property(detail, "provider");
     const name = label(property(property(detail, "info"), "name"));
     if (!isProvider(provider) || !name) return;
-    add(provider, name, true);
+    add(announcedEntries, provider, name);
     publish();
   };
   target.addEventListener("eip6963:announceProvider", announce);
