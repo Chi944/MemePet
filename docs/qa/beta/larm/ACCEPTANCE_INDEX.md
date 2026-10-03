@@ -5,9 +5,11 @@ One row per beta checkpoint. Evidence belongs to the named owner and is
 the evidence column states. SIMULATED rows use fictional providers and RPC
 answers, and none of them stands in for genuine wallet acceptance.
 
-**Updated 3 October 2026 (Singapore)** from `main` at `3148238` (#92) and the
-PR list. First compiled 2 October at `ce77d1a` (#87). Update a row only with
-new evidence; keep FAIL / NOT RUN rows.
+**Updated 3 October 2026 (Singapore)** from `main` at `a83f342` (#94) and the
+PR list. The last app change is `3148238` (#92); everything merged since then
+is under `docs/qa/`, so rows tested on `3148238` still describe the served app.
+First compiled 2 October at `ce77d1a` (#87). Update a row only with new
+evidence; keep FAIL / NOT RUN rows.
 
 | # | Checkpoint | Owner | Release / PR | Evidence (attributed) | Status |
 |---|---|---|---|---|---|
@@ -23,12 +25,13 @@ new evidence; keep FAIL / NOT RUN rows.
 | 10 | B3 FAQ content (`HELP_ENTRIES`, `SUPPORT_URL = null`) | Larm | [#87](https://github.com/Chi944/memepet/pull/87), merged `a92416f` | Larm: typecheck, lint, 639 tests, local render check; PR CI 36986537913 passed. Lead edited four sentences when B1 shipped (#91), checked in row 13 | PASS (content + automated) |
 | 11 | Public `/help` route and navigation | Codex (lead) | [#88](https://github.com/Chi944/memepet/pull/88), merged `d3941c4` | Lead: 639 tests, build, 3 read-only Help browser cases at 320/390/1440 px; main CI 36989672641. [BETA_HELP](../../evidence/BETA_HELP_2026-10-02.md) | PASS (automated + browser) |
 | 12 | Official guidance links in the FAQ | Larm | #87; rechecked on release `3148238` | Larm, 2 and 3 October: all 6 destinations opened, 200, titles/content match (below) | PASS (on 3 October) |
-| 13 | FAQ wording and links on the released `/help` | Larm | release `3148238`, this PR | Larm, 3 October: live HTML matches `help.ts` at `3148238` (49/49 strings); 320/390/1440 px layout; real-key keyboard check. Details below | PASS (HOSTED, read-only) |
+| 13 | FAQ wording and links on the released `/help` | Larm | release `3148238`, [#93](https://github.com/Chi944/memepet/pull/93), merged `aed1a29` | Larm, 3 October: live HTML matches `help.ts` at `3148238` (49/49 strings); 320/390/1440 px layout; real-key keyboard check. Details below. YeeWei's production check (row 16) independently agrees on layout, keyboard and links | PASS (HOSTED, read-only) |
 | 14 | Final genuine wallet acceptance | Deston (private approval), Codex | [FINAL_WALLET_SESSION](../../FINAL_WALLET_SESSION.md) | None | NOT RUN |
 | 15 | B5 transaction recovery runtime (8 recovery cases) | Codex, **after row 14** | gated | 8 cases still skipped at `3148238`; "Check status" not wired into any live route or hook | NOT RUN |
-| 16 | Combined B1/Help release QA | YeeWei | pending | Not received by 3 October | NOT RUN |
-| 17 | Focused released onboarding/progression check | Kym | pending | Not received by 3 October | NOT RUN |
+| 16 | Combined B1/Help release QA | YeeWei | [#95](https://github.com/Chi944/memepet/pull/95), merged `4e48f94`; tested `3148238` | YeeWei, 2 October 17:20–17:40 UTC: typecheck, lint, 737 tests, build; 21 SIMULATED browser cases passed, 8 B5 cases skipped; 6 FICTIONAL preview cases passed. Production, no wallet, Connect not clicked: `/help` and disconnected `/pet` at 320/390/1440 px with keyboard order, Enter/Space, no overflow and no console errors; 6 official links plus View source all 200; `/dev/*` 404. Contract tests NOT RUN locally (main CI Contracts passed). Her NOT RUN list stands: genuine wallets, live connected milestones and chapters, Safari, Firefox, real phones, alias proof. [HELP_B1_RELEASE_QA](../yeewei/HELP_B1_RELEASE_QA_2026-10-03.md) | PASS (automated + SIMULATED + HOSTED read-only) |
+| 17 | Focused released onboarding/progression check | Kym | pending | No report on `main` at `a83f342` (3 October) | NOT RUN |
 | 18 | Finale combined QA (separate from beta) | Larm | [#86](https://github.com/Chi944/memepet/pull/86), merged `ce77d1a` | Larm: hosted G/O/E and fixture rows PASS; read recovery executed; W1–W6 and E12 NOT RUN. The lead's qualification stands: the local runtime version is unresolved and alias-to-SHA was not proven during that run. [COMBINED_QA](../../finale/larm/COMBINED_QA_2026-10-02.md) | PARTIAL |
+| 19 | Finale combined QA rerun on the beta release | Larm | [#94](https://github.com/Chi944/memepet/pull/94), merged `a83f342`; tested `3148238` | Larm, 2 October 16:40–17:00 UTC: hosted G2–G4, O1–O7, E1–E9 and R12 PASS; fixture E10 and R1–R11 PASS, closing the R10 open-evidence and R11 eligible-branch gaps; local runtime recorded (Node 24.19.0, Next.js 16.3.8). Alias-to-SHA still not proven by me. W1–W6 and E12 NOT RUN; read recovery not rerun. [COMBINED_QA](../../finale/larm/COMBINED_QA_2026-10-03.md) | PARTIAL |
 
 ## Release check of `/help` — 3 October 2026 (row 13)
 
