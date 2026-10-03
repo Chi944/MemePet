@@ -1,26 +1,30 @@
 # Testnet beta: four people, independent build lanes
 
-## Current handoff — 3 October, after release QA
+## Current handoff — 3 October, after scoped wallet acceptance
 
-The first genuine run confirmed Account 4's care but failed automatic pet and
-community read-back. See [actual evidence](../qa/evidence/FINAL_WALLET_2026-10-03.md).
-Codex owns PR #100's targeted retry repair, release and focused genuine recheck.
-B5 remains gated; this does not reopen completed teammate implementation.
+The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
+**scoped genuine wallet acceptance PASS for `fa07032`** and satisfies the B5
+integration prerequisite. The [earlier Account 4 read-back failure](../qa/evidence/FINAL_WALLET_2026-10-03.md)
+remains historical FAIL. Initial OKX connection failures and observation limits
+remain explicit; the pass covers the observed final paths, not every wallet path.
+Codex may now integrate B5 and must obtain its separate changed-release acceptance.
+This does not reopen completed teammate implementation.
 
 B0–B4 are integrated through #92. Reviewed #93/#95 complete Larm's released
 Help verification and YeeWei's combined B1/Help QA. Kym's implementation is
 complete. Do not restart their completed feature or QA branches.
 
-The remaining 10% is B5 runtime/acceptance (6 points) and the genuine final
-session, delivered backup and rehearsal (4 points). The read-only preflight
-helper reduces setup work but cannot pass those gates. Codex runs preparation;
-Deston privately reviews the selected testnet wallet prompts in one coordinated
-session. No routine coding is assigned to Deston.
+The remaining 8% is B5 runtime/acceptance (6 points), a delivered and independently
+playable backup (1 point), and rehearsal (1 point). Scoped wallet acceptance earns
+2 of the 4 acceptance/backup/rehearsal points: overall **92/100**, lead **43/51
+(about 84%)**, B5 still **2/8**. Backup and rehearsal do not gate B5 engineering.
+Codex handles implementation and preparation; Deston retains private approvals,
+product review and rehearsal, with no routine coding assigned.
 
 - Kym: finish the focused released B1 visual check if not already done; report
   only new reproducible findings. No extra features or repeated full QA sweep.
-- YeeWei: retain #95 evidence; support the final combined acceptance and later
-  enable recovery scenarios only after Codex lands B5 behind its gate.
+- YeeWei: retain #95 evidence; enable the recovery scenarios only after the
+  lead supplies the B5 runtime adapter and exact changed-release handoff.
 - Larm: deliver the actual four documented read-only clips to Deston outside
   Git, then rehearse the updated runbook/Q&A. Clip filenames/checksums alone
   do not establish delivery or offline playback.
@@ -139,8 +143,8 @@ The additions above make a better beta; mainnet requires these separate gates:
 
 | Gate | Present status / owner |
 |---|---|
-| Final genuine wallet acceptance; new provider/recovery acceptance | First care confirmed; automatic read-back failed; #100 repair/recheck pending. B5 gated / Codex prepares, Deston privately approves |
-| Beta lanes integrated and regression suite green | B0–B4 merged and checked; assigned B2/B3 QA reviewed; B5 gated |
+| Final genuine wallet acceptance; new provider/recovery acceptance | Scoped `fa07032` wallet acceptance PASS; B5 integration may begin, with its own changed-release acceptance still required |
+| Beta lanes integrated and regression suite green | B0–B4 merged and checked; assigned B2/B3 QA reviewed; B5 runtime/acceptance outstanding |
 | Small real-user pilot with repeat use and support feedback | Not started / team recruits consented testers; no fabricated retention metrics |
 | Focused independent contract/security review; material findings resolved | Not completed / coordinate review, no automatic paid commission |
 | Decide fresh mainnet start versus testnet migration | Undecided / team decision; migration is separate contract/product scope |

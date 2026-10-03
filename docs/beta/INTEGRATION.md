@@ -1,6 +1,18 @@
 # B0–B5 shared contracts and release gates
 
-## Current handoff after B1 integration
+## Current handoff — 3 October, after scoped wallet acceptance
+
+The [repaired-release evidence](../qa/evidence/READ_REPAIR_2026-10-03.md) records
+**scoped genuine wallet acceptance PASS on `fa07032`**. The prerequisite for
+B5 runtime integration is satisfied; the lead may begin implementation. B5
+runtime remains unimplemented at this checkpoint and requires its own tests,
+review and genuine acceptance on the changed release. Backup delivery/playback
+and rehearsal are separate unfinished deliverables, not engineering gates.
+The evidence preserves historical controls, initial OKX connection failures,
+user-confirmed manual OKX cleanup and unverified, nonblocking Account 3 cosmetic
+restoration; this is not blanket approval of every provider path.
+
+## Earlier handoff after B1 integration
 
 The live B1 integration replaces WalletProviderPicker with WalletChooser
 and mounts OnboardingPanel/ProgressionPanel using mapBetaPanelState from one
@@ -136,6 +148,10 @@ lead may prepare pure helpers and simulated cases now. Only persist the public
 hash and minimal version/action/scope metadata after the wallet returns a hash;
 never persist keys, signatures, balance, credentials or claimed game progress.
 
+**3 October gate status:** the scoped acceptance record linked above satisfies
+that prerequisite. Runtime implementation can begin; this does not pass B5's
+separate implementation, regression or changed-release acceptance checks.
+
 - Persist scope by chain/registry/account so it survives refresh. Use the active
   provider-session generation only as an in-memory stale-result guard, not as
   an ephemeral persistent key. Validate and bound untrusted storage input.
@@ -223,4 +239,5 @@ Harness setup or a smoke pass alone does not complete YeeWei's scenario suite.
    in-scope PRs. Leave unfinished or failing PRs open with a concrete blocker;
    teammate agents never merge. Give Deston a concise result and PR link.
 5. After merge, verify deployment and only the newly required live cases.
-   B5 stays gated; unfinished beta features remain off the finale release.
+   B5 requires its own changed-release acceptance; unfinished beta features
+   remain off the finale release.

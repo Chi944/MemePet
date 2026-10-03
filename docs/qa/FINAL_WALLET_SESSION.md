@@ -3,9 +3,15 @@
 **Updated 3 October 2026 (Singapore). This document is the procedure.**
 The [completed first run](evidence/FINAL_WALLET_2026-10-03.md) records a genuine
 confirmed care but failed automatic pet/community reads on `988ed94`.
-That failure remains open pending repair release and a focused genuine recheck;
-B5 runtime stays gated. The template table below is not the latest result index.
-Codex prepares and operates the app; Deston
+The [repaired-release retest](evidence/READ_REPAIR_2026-10-03.md) records scoped
+wallet acceptance PASS for `fa07032`, preserving that earlier failure and all
+observation limits. The B5 integration prerequisite is satisfied; B5 runtime
+still requires its own implementation and changed-release acceptance. Backup
+delivery/playback and rehearsal remain unfinished and do not block engineering.
+A direct, corroborated retest can establish acceptance without a video; a video
+is required only for the separate recorded-backup deliverable. The template
+table below is not the latest result index. Historical network/adoption/rejection
+coverage is not a new repaired-release pass. Codex prepares and operates the app; Deston
 privately reviews wallet prompts. No keys, passwords or recovery words are
 needed. A successful test, receipt read or screenshot is not a wallet approval.
 
@@ -158,8 +164,9 @@ Save its block as `B0`, UTC time and total. This is a read-only command.
 
 ### 2. Request exactly one genuine care
 
-Codex clicks the app's care control only after the baseline and recording are
-ready. Deston privately approves only a request from A on **1952**, to the
+Codex clicks the app's care control only after the baseline and private approval
+coordination are ready. If also capturing a backup, prepare its recording first.
+Deston privately approves only a request from A on **1952**, to the
 registry above, with **zero transferred value**, no token-spending approval and
 only testnet gas. If any detail differs or a warning appears, leave it unapproved.
 

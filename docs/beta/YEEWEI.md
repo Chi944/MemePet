@@ -4,14 +4,16 @@
 
 Your B2 implementation and assigned combined release QA are complete in #95.
 Keep that report; no duplicate browser suite or repeat disconnected-page sweep
-is needed. Remaining genuine-wallet/B5 gaps are explicit and lead-coordinated.
+is needed. B5 runtime work and its new acceptance remain lead-coordinated.
 
-The first genuine care confirmed but automatic pet/community reads failed.
-Codex owns the targeted #100 repair and live recheck; B5 scenarios remain
-gated. Preserve this failure separately from your passing simulated suite.
+The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
+scoped wallet acceptance and clears the prerequisite for Codex's B5 integration.
+Keep the original read-back failure and both genuine reports separate from your
+simulated suite. The eight B5 scenarios still await a working runtime adapter
+and the lead's exact handoff; they are not already passing.
 
 ```text
-Fetch reviewed main, preserving local work. Read docs/beta/YEEWEI.md. B2 and #95 are complete. Keep existing evidence and help the team follow the final acceptance checklist; do not claim its genuine rows from simulated tests. Do not enable the eight recovery cases until the lead ships the gated B5 adapter. Report only new reproducible defects within your assigned paths; no new feature, wallet action, paid call or merge. After acceptance, await the lead's exact changed-release recovery handoff.
+Fetch reviewed main, preserving local work. Read docs/beta/YEEWEI.md. B2 and #95 are complete. Keep existing evidence; scoped fa07032 wallet acceptance now permits lead B5 integration, but simulated tests do not establish genuine rows. Wait for the lead's working B5 adapter and exact scenario handoff before enabling the eight recovery cases. Report only new reproducible defects within your assigned paths; no new feature, wallet action, paid call or merge. B5 will require its own changed-release acceptance.
 ```
 
 ## Earlier requirements and handoffs

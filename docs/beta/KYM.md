@@ -6,9 +6,10 @@ B1 is complete and integrated in #91. Keep your focused released chooser,
 local-reset and milestone visual check if it is still pending; no new feature
 work is needed. Preserve your original evidence and report only new defects.
 
-The first genuine care run found a lead-owned read-back failure; PR #100 and
-its changed-release recheck are Codex's work. Do not rebuild your panels or
-mark that wallet gate passed from component checks.
+The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
+scoped wallet acceptance; the earlier read-back failure remains historical.
+Codex now owns B5 integration and its separate acceptance. Do not rebuild your
+panels or convert component checks into additional genuine wallet passes.
 
 ```text
 Fetch reviewed main, preserving local work. Read docs/beta/KYM.md. B1 is complete; do not rebuild it or redo the whole QA suite. Finish only the focused released onboarding/progression visual check if unrun, covering narrow/wide layout and keyboard behavior. Record actual runtime and distinguish fictional, simulated and genuine checks. Change only your assigned components/evidence for reproduced defects. No wallet actions, shared code, paid calls or merges. Return evidence or a small fix PR; if already done, return its existing reference.
