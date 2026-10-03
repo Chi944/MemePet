@@ -8,8 +8,10 @@ work is needed. Preserve your original evidence and report only new defects.
 
 The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
 scoped wallet acceptance; the earlier read-back failure remains historical.
-Codex now owns B5 integration and its separate acceptance. Do not rebuild your
-panels or convert component checks into additional genuine wallet passes.
+The lead completed [B5 acceptance with real MetaMask on controlled Local Anvil](../qa/evidence/B5_LOCAL_WALLET_2026-10-03.md).
+The scoped finale checklist is 100/100; public X Layer pending-refresh remains
+NOT OBSERVED. Your completed 22/22 implementation score is unchanged. Do not
+rebuild panels or convert component checks into additional genuine wallet passes.
 
 ```text
 Fetch reviewed main, preserving local work. Read docs/beta/KYM.md. B1 is complete; do not rebuild it or redo the whole QA suite. Finish only the focused released onboarding/progression visual check if unrun, covering narrow/wide layout and keyboard behavior. Record actual runtime and distinguish fictional, simulated and genuine checks. Change only your assigned components/evidence for reproduced defects. No wallet actions, shared code, paid calls or merges. Return evidence or a small fix PR; if already done, return its existing reference.

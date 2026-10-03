@@ -4,7 +4,32 @@ Updated 3 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Wallet discovery release — 3 October, latest checkpoint
+## Scoped finale checklist complete — 3 October, latest checkpoint
+
+The [controlled local B5 acceptance](qa/evidence/B5_LOCAL_WALLET_2026-10-03.md)
+passed for both adoption and care using a real MetaMask extension, user-approved
+transactions and Local Anvil chain **31337**. The application used unchanged
+runtime `4a40275` with isolated local network/registry configuration. Each real
+hash returned as pending after reload before mining; Check status recovered it
+without resubmission. The two operations used nonces 0 and 1 and succeeded in
+blocks 2 and 3. Receipt-bound facts showed care changing 0 to 10 points and
+community 0 to 1, with the correct 4 October 00:00 UTC / 08:00 Singapore cooldown.
+A second reload retained those facts without restoring a stale recovery panel.
+
+This closes the user-approved controlled-local recovery gate: **scoped finale
+checklist 100/100, lead 51/51, B5 8/8**. Teammate scores are unchanged. The delivered
+backup retains its recording-gap disclosure; timed team rehearsal remains
+**USER-REPORTED PASS (2026-10-03)**. No further feature work or repeat rehearsal is
+required by this checklist. Local-test cleanup is complete: the local app reported
+wallet access revoked, the tab closed, and the owned services stopped. The public
+page remained on chain 1952; the isolated checkout is preserved in the archive.
+
+**Public X Layer pending-refresh recovery remains NOT OBSERVED.** The local pass
+does not establish hosted RPC/block-timing coverage, venue-equipment playback,
+mainnet readiness or completion of a broader production rollout. The public
+attempts, earlier failures and their limits remain recorded below.
+
+## Wallet discovery release — 3 October, earlier checkpoint
 
 [PR #104](https://github.com/Chi944/MemePet/pull/104) merged at **09:57:05 UTC**
 as `4a40275ceed86438e527bac8bba26a86493e06f7`; its tree matches reviewed runtime
@@ -198,7 +223,9 @@ weighted by deliverables, not elapsed time, code quality, readiness or mainnet
 completion. They supersede earlier estimates with smaller denominators.
 B1/B4 are merged; B2/B3 QA credit follows reviewed #93/#95. B5 implementation
 credit follows reviewed merge #102 and the verified production deployment;
-genuine changed-release acceptance remains a separate gate. The delivered backup
+the user-approved controlled-local MetaMask adoption/care recovery closes the
+scoped finale acceptance gate. Public X Layer pending-refresh remains NOT OBSERVED.
+The delivered backup
 and completed local playback earn one additional point. Deston's 3 October
 confirmation that the timed team rehearsal finished earns its separate point
 as **USER-REPORTED PASS**, without claiming an observed duration or venue playback.
@@ -211,19 +238,19 @@ as **USER-REPORTED PASS**, without claiming an observed duration or venue playba
 | B2 presentation and regression | 8 / 8 | Assigned combined QA complete; genuine acceptance separate |
 | B3 help copy/verification | 4 / 4 | Released wording/link review complete |
 | B4 provider/retry/Help integration | 9 / 9 | B1 wired; genuine acceptance separate |
-| B5 recovery | 6 / 8 | Reviewed implementation merged in #102; genuine B5 acceptance remains 2 points |
+| B5 recovery | 8 / 8 | Controlled Local Anvil + real MetaMask adoption/care recovery PASS; public X Layer pending-refresh NOT OBSERVED |
 | Genuine final acceptance, backup and rehearsal | 4 / 4 | Wallet acceptance: 2 complete; delivered/playable backup: 1 complete; timed team rehearsal: 1 complete (USER-REPORTED PASS, 3 October) |
-| **Overall after team rehearsal confirmation** | **98 / 100 — 98%** | One genuine B5 recovery acceptance check remains, worth 2 points; not mainnet readiness |
+| **Scoped finale checklist** | **100 / 100 — 100%** | Complete within the agreed scope; not mainnet readiness or broader production-rollout completion |
 
 | Member's assigned lane | Weighted progress | Next action |
 |---|---:|---|
-| Deston / Codex | 49 / 51 — **about 96%** | Codex coordinates the remaining genuine B5 acceptance check; Deston reviews private prompts only when needed |
+| Deston / Codex | 51 / 51 — **100% scoped checklist** | Preserve the accepted evidence and its local/public limits; local-test cleanup complete |
 | Kym | 22 / 22 — **100% implementation** | Focused released onboarding/progression check; no new feature assignment |
 | YeeWei | 16 / 16 — **100% assigned implementation/QA** | Retain #95; cite the lead's eight passing B5 scenarios and report only new scoped defects |
 | Larm | 11 / 11 — **100% assigned implementation/QA** | Keep the delivered labelled backup and accurate judge answers ready; no repeat rehearsal required |
 
 The existing finale feature implementation is complete. Recorded beta engineering
-is 49/51 (about 96%) after reviewed B5 merge #102; that does not erase completed
+is 51/51 after reviewed B5 implementation and scoped local acceptance; that does not erase completed
 finale work. Deston's
 percentage includes work delegated to Codex, not a personal coding obligation.
 Use [current role briefs](beta/START_HERE.md) for paste-ready teammate prompts.

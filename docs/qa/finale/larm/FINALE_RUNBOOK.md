@@ -15,16 +15,25 @@ team can rehearse against.
 **Deston privately approves wallet connections and transactions.** Codex prepares
 the page, recording and public verification; nobody signs on Deston's behalf.
 
-## Current handoff — 3 October, wallet-discovery release and verified backup
+## Current handoff — 3 October, finale checklist complete
 
 Reviewed [PR #104](https://github.com/Chi944/MemePet/pull/104), `4a40275`, is
 production verified; CI passed 822 app tests, 30 simulated browser cases and
 six fictional previews. The hosted picker showed one OKX Wallet and one MetaMask.
 [Account 2's genuine care](../../evidence/B5_RECOVERY_2026-10-03.md) automatically
 updated Buddy/30 to 40 points, three to four cares and community 15 to 16.
-Ordinary reload retained those facts; no saved hash was restored, so genuine
-B5 recovery remains **NOT RUN**. Account 2 was then in cooldown until 4 October
+Ordinary reload retained those facts; no saved hash was restored in that public
+attempt. Account 2 was then in cooldown until 4 October
 00:00 UTC (08:00 Singapore); the earlier care-due preflight below is historical.
+
+The later [controlled Local Anvil acceptance](../../evidence/B5_LOCAL_WALLET_2026-10-03.md)
+passed with real MetaMask and unchanged runtime `4a40275`. Both user-approved
+adoption and care remained pending across reload, restored the same hashes and
+confirmed without resubmission after mining resumed. Care added ten growth points
+and one community care with the correct cooldown. This closes the agreed B5
+finale gate using Deston's chosen local method. **Public X Layer pending-refresh
+remains NOT OBSERVED**; do not describe local mining control as public-network
+timing evidence.
 
 The lead's [silent 2:14 (134.333-second) backup](../../evidence/FINALE_BACKUP_2026-10-03.md)
 is delivered locally and passed full start-to-end playback at 10:35 UTC. It combines
@@ -32,8 +41,8 @@ salvaged approval/pending footage with later confirmed-state footage and explici
 discloses the missing confirmation/reload segment. This edit is separate from
 Larm's four read-only clips, which remain undelivered. Timed team rehearsal is
 **USER-REPORTED PASS (2026-10-03)**, not independently observed by the lead;
-venue-equipment playback remains NOT RUN. Genuine B5 recovery is the only
-remaining scored deliverable. No repeat rehearsal is required. Deston retains
+venue-equipment playback remains NOT RUN. The agreed finale checklist is complete;
+no further build or repeat rehearsal is required. Deston retains
 the private cue card and final pitch timing.
 
 ## Earlier checkpoint — 3 October, B5 genuine acceptance pending

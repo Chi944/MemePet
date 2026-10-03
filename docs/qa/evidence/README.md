@@ -5,9 +5,11 @@ passes, and a recovered read does not erase an earlier failed refresh.
 
 ## Current records
 
-- [B5 transaction recovery and current #104 release](B5_RECOVERY_2026-10-03.md): production `4a40275`; CI passed 822 app tests, 30 simulated browser cases and six fictional previews. Account 2's automatic care updates and ordinary reload passed, but no saved hash was restored: genuine B5 recovery remains NOT RUN.
+- [Controlled local B5 acceptance](B5_LOCAL_WALLET_2026-10-03.md): real MetaMask, user-approved adoption and care, Local Anvil chain 31337 and unchanged runtime `4a40275`. Both hashes returned pending after reload before mining, then recovered without resubmission with verified receipt-bound facts. Scoped finale checklist **100/100**, lead **51/51**, B5 **8/8**; public X Layer pending-refresh remains NOT OBSERVED. This is not mainnet or broader production-rollout completion.
 
-- [Delivered finale backup](FINALE_BACKUP_2026-10-03.md): silent 2:14 local artifact, full decode and actual start-to-end playback passed. The salvaged pending segment and later confirmed footage retain an explicit recording-gap disclosure. Timed team rehearsal is separately USER-REPORTED PASS (2026-10-03), not independently observed by the lead. Venue-equipment playback is NOT RUN; genuine B5 recovery is the only remaining scored deliverable. Larm's four clips remain separate and undelivered.
+- [B5 transaction recovery and current #104 release](B5_RECOVERY_2026-10-03.md): production `4a40275`; CI passed 822 app tests, 30 simulated browser cases and six fictional previews. Public care/adoption succeeded, but public pending-refresh was NOT OBSERVED. The controlled local pass above does not change those historical observations.
+
+- [Delivered finale backup](FINALE_BACKUP_2026-10-03.md): silent 2:14 local artifact, full decode and actual start-to-end playback passed. The salvaged pending segment and later confirmed footage retain an explicit recording-gap disclosure. Timed team rehearsal is separately USER-REPORTED PASS (2026-10-03), not independently observed by the lead. Venue-equipment playback is NOT RUN. Larm's four clips remain separate and undelivered; neither changes the completed scoped finale checklist.
 
 - [Repaired-release genuine retest](READ_REPAIR_2026-10-03.md): scoped wallet acceptance PASS on `fa07032`; corroborated automatic settled reads, independent receipt verification, account/provider isolation and disconnect evidence. This satisfied B5's implementation prerequisite; use the current B5 record above for later recovery and backup status. Initial OKX failures and observation limits are preserved.
 

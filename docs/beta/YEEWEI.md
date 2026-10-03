@@ -4,7 +4,8 @@
 
 Your B2 implementation and assigned combined release QA are complete in #95.
 Keep that report; no duplicate browser suite or repeat disconnected-page sweep
-is needed. B5 production is verified; its new genuine acceptance remains lead-coordinated.
+is needed. B5 production is verified and its agreed controlled-local real-wallet
+acceptance is complete; keep the public-network limits explicit.
 
 The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
 scoped wallet acceptance and clears the prerequisite for Codex's B5 integration.
@@ -15,16 +16,20 @@ fixes duplicate wallet wrappers and is production verified. Its CI passed 822 ap
 tests, 30 simulated browser cases and six fictional previews; main CI also passed.
 Cite [the lead's B5 evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md) rather than
 rerunning or claiming those checks as your own. Account 2's genuine care and
-ordinary reload did not restore a saved hash; genuine B5 recovery remains NOT RUN.
+ordinary reload did not restore a saved hash; public X Layer pending-refresh remains
+NOT OBSERVED. The later [Local Anvil + real MetaMask acceptance](../qa/evidence/B5_LOCAL_WALLET_2026-10-03.md)
+passed adoption and care pending-refresh recovery without resubmission, using
+unchanged runtime `4a40275`. This closes the scoped finale gate, not public-network
+recovery coverage or mainnet readiness.
 The lead's [labelled backup](../qa/evidence/FINALE_BACKUP_2026-10-03.md) passed full
 local playback with its recording gap disclosed; it does not close B5 acceptance
 or establish venue-equipment playback. Timed team rehearsal is separately
 **USER-REPORTED PASS (2026-10-03)**, not independently observed by the lead.
-Only genuine B5 recovery remains open in the scored scope. No additional browser
-suite or repeat rehearsal is assigned to you.
+The scoped finale checklist is complete. No additional browser suite, feature
+work or repeat rehearsal is assigned to you.
 
 ```text
-Fetch reviewed main, preserving local work. Read docs/beta/YEEWEI.md. B2 and #95 are complete. Keep existing evidence. The lead's B5 runtime shipped in #102; latest wallet-discovery release #104 at 4a40275 is production verified, with 822 app tests, 30 simulated browser cases and six fictional previews passed in CI. Cite the B5 evidence; do not rebuild the adapter or duplicate completed tests. Account 2's genuine care and ordinary reload are not saved-hash recovery. Report only new reproducible defects within your assigned paths; no new feature, wallet action, paid call or merge. Genuine changed-release B5 recovery remains NOT RUN and lead-coordinated.
+Fetch reviewed main, preserving local work. Read docs/beta/YEEWEI.md. B2 and #95 are complete. Keep existing evidence. The lead's B5 runtime shipped in #102; latest wallet-discovery release #104 at 4a40275 is production verified, with 822 app tests, 30 simulated browser cases and six fictional previews passed in CI. Cite the B5 evidence and the controlled-local real MetaMask adoption/care recovery PASS. Public X Layer pending-refresh remains NOT OBSERVED; local acceptance is not mainnet or broader production-rollout completion. The scoped finale checklist is complete. Do not rebuild the adapter or duplicate completed tests; report only new reproducible defects within your assigned paths. No new feature, wallet action, paid call or merge.
 ```
 
 ## Earlier requirements and handoffs
