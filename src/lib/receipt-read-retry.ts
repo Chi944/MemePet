@@ -3,11 +3,13 @@ function isReadTemporarilyUnavailable(error: unknown): boolean {
   let cause = error;
   let unavailableHeaderWrapper = false;
   let internalRpcCause = false;
+  let unknownRpcCause = false;
   while (typeof cause === "object" && cause !== null && !visited.has(cause)) {
     visited.add(cause);
     const detail = cause as {
       name?: string; code?: number; status?: number; cause?: unknown;
       data?: unknown; raw?: unknown; signature?: unknown; reason?: unknown;
+      message?: string; details?: string;
     };
     if (detail.name === "ContractFunctionRevertedError") {
       // viem can wrap an RPC -32603 (for example, "header not found") as a
@@ -32,12 +34,23 @@ function isReadTemporarilyUnavailable(error: unknown): boolean {
     if (detail.name === "HttpRequestError") {
       return detail.status === undefined || [408, 429, 500, 502, 503, 504].includes(detail.status);
     }
-    if (typeof detail.code === "number" && [-1, -32000, -32001, -32002, -32005, -32007, -32603, 429].includes(detail.code)) {
+    if (detail.code === -32019) {
+      // X Layer can return this JSON-RPC error with HTTP 400 while a block is
+      // not yet visible. viem preserves its code and provider message. Do not
+      // retry other -32019 failures, HTTP 400s in general, or revert payloads.
+      return (detail.details ?? detail.message) === "block is out of range" &&
+        detail.data === undefined && detail.raw === undefined && detail.signature === undefined;
+    }
+    if (detail.code === -1) {
+      // An UnknownRpcError may wrap a specific provider code. Let that inner
+      // classification win before falling back to the generic transient case.
+      unknownRpcCause = true;
+    } else if (typeof detail.code === "number" && [-32000, -32001, -32002, -32005, -32007, -32603, 429].includes(detail.code)) {
       return true;
     }
     cause = detail.cause;
   }
-  return unavailableHeaderWrapper && internalRpcCause;
+  return unavailableHeaderWrapper ? internalRpcCause : unknownRpcCause;
 }
 
 /** Retry temporary RPC read failures at most twice; never retry a wallet write. */
