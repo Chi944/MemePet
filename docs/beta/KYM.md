@@ -1,17 +1,13 @@
 # Kym — B1 onboarding and continued progression
 
-## Current handoff after B1 integration
+## Current handoff — 3 October
 
-B1/#90 is merged and the lead integration wires all three components.
-Your assigned feature implementation is complete. Preserve your dated harness
-evidence; it is not a live-wallet pass. After the integration merges, inspect
-the released chooser, local reset wording and milestone layout at narrow and
-wide widths. Report only reproduced defects in your component folders, with
-runtime identity and actual evidence. Do not recreate the B1 feature branch.
+B1 is complete and integrated in #91. Keep your focused released chooser,
+local-reset and milestone visual check if it is still pending; no new feature
+work is needed. Preserve your original evidence and report only new defects.
 
-Paste to your agent:
 ```text
-Fetch reviewed main after the lead B1 integration merges. B1/#90 is complete. Preserve local work and use test/beta-onboarding-release for a focused rendered-release check of your components. Follow docs/beta/KYM.md ownership; change only onboarding/progression components and docs/qa/beta/kym. Verify wallet-selection-disabled presentation, UTC/local reset wording, unknown states and milestone layout. Use /dev/beta for fictional boundaries; cite the lead suites. No actual wallet actions, shared hooks/routes/config, paid calls or merges. Return a small evidence/fix PR only for new observations.
+Fetch reviewed main, preserving local work. Read docs/beta/KYM.md. B1 is complete; do not rebuild it or redo the whole QA suite. Finish only the focused released onboarding/progression visual check if unrun, covering narrow/wide layout and keyboard behavior. Record actual runtime and distinguish fictional, simulated and genuine checks. Change only your assigned components/evidence for reproduced defects. No wallet actions, shared code, paid calls or merges. Return evidence or a small fix PR; if already done, return its existing reference.
 ```
 
 ## Earlier requirements and handoffs

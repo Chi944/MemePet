@@ -4,7 +4,26 @@ Updated 3 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Live onboarding and progression — 3 October, latest checkpoint
+## Release QA and acceptance preparation — 3 October, latest checkpoint
+
+Larm's B3 release review #93 and YeeWei's combined B1/Help review #95 are
+reviewed and merged. Their dated reports cover rendered Help, narrow layouts,
+disconnected onboarding and simulated/fictional scenarios. They close B2/B3's
+assigned QA deliverables, without claiming genuine wallet acceptance or real
+mobile-wallet coverage. Larm's F7 follow-up #94 preserves those limits and the
+unattributed-care caveat in judge answers. Read-only backup clips documented on
+his machine are not yet a delivered, independently played finale backup.
+
+The lead adds a bounded, read-only wallet preflight command for the final
+session. It checks the four existing public demo accounts against one pinned
+block, rechecks the header, and derives care availability from chain time.
+No wallet action, funding, signing, persistence or B5 runtime is enabled.
+The associated lead PR records checks, source/merge/deployment identity and
+any actual preflight result. [Dated preflight evidence](qa/evidence/ACCEPTANCE_PREP_2026-10-03.md)
+records block 42548794: all four accounts due, Account 4 at 10 points. Recheck
+before use. Preparation itself earns no acceptance credit.
+
+## Live onboarding and progression — 3 October, earlier checkpoint
 
 Kym's B1 PR #90 is reviewed and merged at `99050c6`. The lead integration
 replaces the temporary wallet picker, mounts her onboarding and cosmetic
@@ -56,7 +75,7 @@ browser cases remain skipped. No persisted recovery is enabled.
 These are **planning estimates for the expanded approved testnet scope**,
 weighted by deliverables, not elapsed time, code quality, readiness or mainnet
 completion. They supersede earlier estimates with smaller denominators.
-B1 and B4 integration count once the checked integration PR merges.
+B1/B4 are merged; B2/B3 QA credit follows reviewed #93/#95.
 Unpublished work is not counted; genuine acceptance remains a separate gate.
 
 | Deliverable | Completed weight / total | Remaining |
@@ -64,22 +83,22 @@ Unpublished work is not counted; genuine acceptance remains a separate gate.
 | Existing core and finale feature implementation | 45 / 45 | Final acceptance is a separate row |
 | B0 shared foundation | 10 / 10 | Complete |
 | B1 onboarding/progression | 12 / 12 | Implementation and integration complete; release QA remains below |
-| B2 presentation and regression | 6 / 8 | Final combined integration QA |
-| B3 help copy/verification | 3 / 4 | Rendered release follow-up |
+| B2 presentation and regression | 8 / 8 | Assigned combined QA complete; genuine acceptance separate |
+| B3 help copy/verification | 4 / 4 | Released wording/link review complete |
 | B4 provider/retry/Help integration | 9 / 9 | B1 wired; genuine acceptance separate |
 | B5 recovery | 2 / 8 | Runtime and acceptance; gated |
 | Genuine final acceptance, backup and rehearsal | 0 / 4 | Team session |
-| **Overall after checked B1 integration merge** | **87 / 100 — 87%** | Testnet delivery, not mainnet readiness |
+| **Overall after reviewed release QA** | **90 / 100 — 90%** | Testnet delivery, not mainnet readiness |
 
 | Member's assigned lane | Weighted progress | Next action |
 |---|---:|---|
 | Deston / Codex | 41 / 51 — **80%** | Codex prepares acceptance; Deston reviews/approves privately and rehearses |
 | Kym | 22 / 22 — **100% implementation** | Focused released onboarding/progression check; no new feature assignment |
-| YeeWei | 14 / 16 — **88%** | Combined B1/Help release QA |
-| Larm | 10 / 11 — **91%** | Verify rendered Help copy/links and update acceptance index |
+| YeeWei | 16 / 16 — **100% assigned implementation/QA** | Support final acceptance; B5 follow-up only after the gate |
+| Larm | 11 / 11 — **100% assigned implementation/QA** | Deliver actual read-only clips and rehearse accurate judge answers |
 
 The existing finale feature implementation is complete. Added beta engineering
-is 42/51 (about 82%); that does not erase completed finale work. Deston's
+is 45/51 (about 88%); that does not erase completed finale work. Deston's
 percentage includes work delegated to Codex, not a personal coding obligation.
 Use [current role briefs](beta/START_HERE.md) for paste-ready teammate prompts.
 External agent sessions have not automatically received these updates.

@@ -1,12 +1,15 @@
 # Larm — B3 support copy and focused verification
 
-## Current handoff after B1 integration
+## Current handoff — 3 October
 
-B1/#90 is merged; the lead integration updates Help from planned milestones
-to actual cosmetic milestones and explains the local reset label. After that
-release merges, continue `docs/beta-help-release-check` and verify these exact
-rendered claims, official links and the acceptance index. Recovery still says
-planned; support stays unavailable. Preserve all genuine-wallet NOT RUN rows.
+Your B3 implementation and released Help review are complete in #93. The
+F7 follow-up preserves genuine-wallet gaps. Use the corrected judge wording:
+care actions are not users, and only attributed actions may be called team
+cares. Deliver the actual read-only clips before treating them as backups.
+
+```text
+Fetch reviewed main, preserving local work. Read docs/beta/LARM.md and the current finale runbook. B3/#93 and released Help QA are complete; do not repeat them. Prepare the four documented read-only clips for delivery to Deston outside Git through the team's existing sharing method. Return usable file locations and checksums; do not claim independent playback until Deston/lead has the files. Rehearse the short runbook/Q&A with accurate care-action attribution. The genuine care recording and final wallet acceptance remain lead-owned. No new source feature, wallet action, paid call or merge.
+```
 
 ## Earlier requirements and handoffs
 

@@ -10,7 +10,8 @@ You do not need to write code or repeat teammate tasks.
    on a named release. Approve/reject privately as instructed; never share keys.
 4. Review the genuine backup recording and rehearse the three-minute pitch.
 
-No new wallet action is needed while Help/B1 integration is being checked.
+Help/B1 integration and assigned B2/B3 release QA are complete. Codex now
+runs the read-only preflight before coordinating your final wallet session.
 Keep B5 runtime disabled until the existing acceptance gate passes. Mainnet,
 paid APIs and purchases are outside the current authorization.
 

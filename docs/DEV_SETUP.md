@@ -39,6 +39,7 @@ npm test
 npm run build
 node --test docs/qa/counter-check.regression.mjs
 node --test docs/qa/rpc-recovery.regression.mjs
+node --test docs/qa/wallet-preflight.regression.mjs
 ```
 
 Contract checks use Foundry **v1.8.3** (commit

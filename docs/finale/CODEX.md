@@ -1,12 +1,13 @@
 # Codex — engineering, integration and release
 
-**Latest:** B1/#90 is merged and the lead has prepared live integration.
+**Latest:** B1 integration/#91 and CI stabilization/#92 are merged; assigned
+B2/B3 release QA is reviewed in #93/#95. Prepare final genuine acceptance.
 Use [current beta tasks](../beta/START_HERE.md) for release QA and acceptance;
 do not restart delivered feature work.
 
 ## Current assignment — 2 October 2026
 
-Finale features and beta foundation/provider/retry/presentation/content handoffs through #87 are merged. Finish Help release checks, integrate Kym B1 when available, and prepare one genuine final wallet session. B5 runtime waits for that acceptance; helpers alone do not enable it.
+Finale features and B0–B4 are merged; assigned B2/B3 release checks are complete. Prepare one genuine final wallet session using the read-only preflight. B5 runtime waits for that acceptance; helpers alone do not enable it.
 
 Use [the current beta brief](../beta/INTEGRATION.md)
 for new work and [current progress](../STATUS.md#progress-measurement).

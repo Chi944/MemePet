@@ -5,6 +5,8 @@ passes, and a recovered read does not erase an earlier failed refresh.
 
 ## Current records
 
+- [Acceptance preparation and public preflight](ACCEPTANCE_PREP_2026-10-03.md): reviewed teammate QA, 44 helper regressions and a block-pinned four-account read; genuine wallet acceptance remains NOT RUN.
+
 - [B1 live integration](B1_INTEGRATION_2026-10-02.md): wallet onboarding/local reset and cosmetic progression; simulated/fictional browser evidence, not genuine wallet acceptance.
 
 - [Public Help integration](BETA_HELP_2026-10-02.md): real B3 content, B2 panel, read-only browser checks and current handoffs; genuine wallet acceptance remains separate.

@@ -1,23 +1,18 @@
 # YeeWei — a recap judges can read quickly
 
-**Latest:** B1/#90 is merged and the lead has prepared live integration.
-Use [current beta tasks](../beta/START_HERE.md) for release QA and acceptance;
-do not restart delivered feature work.
+## Current assignment — 3 October 2026
 
-## Current assignment — 2 October 2026
+B2 implementation and combined release QA/#95 are complete. Support final acceptance; B5 follow-up awaits the lead gate.
 
-F6/#72, evidence-focus/#75, B2/#83 and recap QA/#84 are merged. Review the integrated Help release, then the combined B1 panels after Kym hands them off. Cite existing regression coverage rather than duplicating it.
+Use [your current beta brief](../beta/YEEWEI.md) and
+[current progress](../STATUS.md#progress-measurement). No completed feature
+branch should be rebuilt. Genuine wallet acceptance, delivered backup and
+rehearsal remain separate from implementation and simulated checks.
 
-Use [the current beta brief](../beta/YEEWEI.md)
-for new work and [current progress](../STATUS.md#progress-measurement).
-The older task instructions below are retained as finale requirements/history;
-do not recreate merged branches. Genuine wallet acceptance, backup capture
-and rehearsal remain separate from implementation and simulated checks.
+## Earlier finale assignments and evidence
 
-**Current assignment:** [B2 recovery, help and browser regression](../beta/YEEWEI.md).
-The 2 October beta brief supplies new work in separate folders. Finish any
-remaining finale QA below without rewriting its history. B0 is merged in #80,
-so start B2 now. Codex reviews and merges passing PRs; teammates do not merge.
+The instructions below are retained as history. The current beta brief takes
+precedence; do not restart old tasks or reinterpret dated results as new passes.
 
 **Task COMPANION-COMBINED-QA · F6 and its release QA fix merged in #72/#75 · branch `test/companion-combined-qa` · updated 2 October 2026.**
 Your F3 and F6 implementation is complete. The lead's F6 review also corrects
