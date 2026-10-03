@@ -1,9 +1,61 @@
 import { expect, test } from "@playwright/test";
+import { ACCOUNT_A, ACCOUNT_B, SIMULATED_LABEL, SimulatedChain, petPage } from "./support/simulated-chain";
+import { WRITE_OR_SIGN, installSimulatedWallets } from "./support/simulated-provider";
 
 type SimulatedControls = {
   calls: { wallet: string; method: string }[];
   emitFromMetaMask: () => void;
 };
+
+test("SIMULATED: modern discovery shows one OKX choice for distinct legacy and announced wrappers", async ({ page, baseURL }) => {
+  test.info().annotations.push({ type: "evidence", description: `${SIMULATED_LABEL}. Distinct fictional OKX wrapper objects and coexisting MetaMask; no extension, real wallet or transaction.` });
+  await page.setViewportSize({ width: 390, height: 1000 });
+  const chain = new SimulatedChain();
+  chain.setPet(ACCOUNT_A, 1);
+  chain.setPet(ACCOUNT_B, 3);
+  await chain.install(page, baseURL!);
+  const wallets = await installSimulatedWallets(page, [
+    { global: "ethereum", name: "MetaMask", grantedAccounts: [], connectAccounts: [ACCOUNT_A], chainIdHex: "0x7a0", announceProvider: "same-object" },
+    { global: "okxwallet", name: "OKX Wallet", grantedAccounts: [], connectAccounts: [ACCOUNT_B], chainIdHex: "0x7a0", announceProvider: "distinct-wrapper" },
+  ]);
+  const ui = petPage(page);
+  await page.goto("/pet");
+  await expect(page.getByRole("radio")).toHaveCount(2);
+  await expect(page.getByRole("radio", { name: "MetaMask", exact: true })).toHaveCount(1);
+  await expect(page.getByRole("radio", { name: "OKX Wallet", exact: true })).toHaveCount(1);
+  const connect = page.getByRole("button", { name: "Connect wallet", exact: true }).first();
+  await expect(connect).toBeDisabled();
+  expect(await wallets.calls()).toEqual([]);
+
+  await page.getByRole("radio", { name: "OKX Wallet", exact: true }).check();
+  expect(await wallets.calls()).toEqual([]);
+  await connect.click();
+  await expect(ui.wallet).toHaveText(ACCOUNT_B);
+  await expect(ui.growth).toHaveText("30 growth points");
+  const expectedConnect = [{ wallet: "OKX Wallet", method: "eth_requestAccounts" }];
+  expect((await wallets.calls()).filter(({ method }) => method === "eth_requestAccounts")).toEqual(expectedConnect);
+  expect((await wallets.announcedWrapperCalls()).filter(({ method }) => method === "eth_requestAccounts")).toEqual(expectedConnect);
+  expect((await wallets.calls()).every(({ wallet }) => wallet === "OKX Wallet")).toBe(true);
+
+  // A subsequent legacy rescan must not reintroduce the extra OKX object.
+  await page.evaluate(() => {
+    window.dispatchEvent(new Event("focus"));
+    window.dispatchEvent(new Event("ethereum#initialized"));
+  });
+  await expect(page.getByRole("radio")).toHaveCount(2);
+  await expect(ui.wallet).toHaveText(ACCOUNT_B);
+  await page.getByRole("radio", { name: "MetaMask", exact: true }).check();
+  await expect(ui.wallet).toHaveText("Not connected");
+  await connect.click();
+  await expect(ui.wallet).toHaveText(ACCOUNT_A);
+  await expect(ui.growth).toHaveText("10 growth points");
+  expect((await wallets.calls()).filter(({ method }) => method === "eth_requestAccounts")).toEqual([
+    ...expectedConnect,
+    { wallet: "MetaMask", method: "eth_requestAccounts" },
+  ]);
+  expect((await wallets.calls()).filter(({ method }) => WRITE_OR_SIGN.test(method))).toEqual([]);
+  chain.expectNoUnexpectedTraffic();
+});
 
 for (const width of [390, 1440]) {
   test(`SIMULATED: chosen provider owns connect, network and disconnect at ${width}px`, async ({ page, baseURL }) => {

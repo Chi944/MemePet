@@ -81,8 +81,64 @@ describe("read-only EIP-6963 and legacy discovery", () => {
     expect(discovery.snapshot.wallets).toHaveLength(8);
     expect(() => announce(Object.defineProperty({}, "request", { get() { throw new Error("bad getter"); } }))).not.toThrow();
     for (const name of ["", " ", "<img src=x>", "a".repeat(65), "spoof\u202e"]) announce(provider(), name);
-    announce(provider(), "Additional provider");
     expect(discovery.snapshot.wallets).toHaveLength(8);
+    const modern = Array.from({ length: 12 }, () => provider());
+    for (const wallet of modern) announce(wallet, "Modern provider");
+    expect(discovery.snapshot.wallets).toHaveLength(8);
+    expect(discovery.snapshot.wallets.map(({ provider }) => provider)).toEqual(modern.slice(0, 8));
+    expect(many.every((wallet) => !discovery.snapshot.wallets.some(({ provider }) => provider === wallet as unknown as EthereumProvider))).toBe(true);
+  });
+
+  it("prefers announced providers over distinct compatibility wrappers without probing them", () => {
+    const legacyMetaMask = provider({ isMetaMask: true });
+    const legacyOkx = provider({ isOkxWallet: true });
+    const modernMetaMask = provider({ isMetaMask: true });
+    const modernOkx = provider({ isOkxWallet: true });
+    install("ethereum", legacyMetaMask); install("okxwallet", legacyOkx);
+    const respond = () => {
+      announce(modernMetaMask, "MetaMask");
+      announce(modernOkx, "OKX Wallet");
+    };
+    window.addEventListener("eip6963:requestProvider", respond);
+    const discovery = start();
+    window.removeEventListener("eip6963:requestProvider", respond);
+    expect(discovery.snapshot.wallets.map(({ provider }) => provider)).toEqual([modernMetaMask, modernOkx]);
+    expect(discovery.snapshot.wallets.map(({ label }) => label)).toEqual(["MetaMask", "OKX Wallet"]);
+    const ids = discovery.snapshot.wallets.map(({ id }) => id);
+    vi.advanceTimersByTime(WALLET_DISCOVERY_DELAY_MS);
+    window.dispatchEvent(new Event("focus"));
+    window.dispatchEvent(new Event("ethereum#initialized"));
+    respond();
+    expect(discovery.snapshot.wallets.map(({ id }) => id)).toEqual(ids);
+    for (const wallet of [legacyMetaMask, legacyOkx, modernMetaMask, modernOkx]) expect(wallet.request).not.toHaveBeenCalled();
+  });
+
+  it("keeps genuine announced providers distinct despite matching metadata and methods", () => {
+    const sharedRequest = vi.fn();
+    const first = provider({ request: sharedRequest, isOkxWallet: true });
+    const second = provider({ request: sharedRequest, isOkxWallet: true });
+    const discovery = start();
+    announce(first, "OKX Wallet"); announce(second, "OKX Wallet");
+    expect(discovery.snapshot.wallets).toHaveLength(2);
+    expect(discovery.snapshot.wallets[0].id).not.toBe(discovery.snapshot.wallets[1].id);
+    expect(discovery.snapshot.wallets.map(({ provider }) => provider)).toEqual([first, second]);
+    expect(sharedRequest).not.toHaveBeenCalled();
+  });
+
+  it("uses legacy providers only while no valid announcement exists", () => {
+    const legacy = provider({ isOkxWallet: true });
+    install("okxwallet", legacy);
+    const discovery = start();
+    vi.advanceTimersByTime(WALLET_DISCOVERY_DELAY_MS);
+    announce({}, "Broken announcement"); announce(provider(), "<svg>");
+    expect(discovery.snapshot.wallets[0].provider).toBe(legacy);
+    const modern = provider();
+    announce(modern, "Modern wallet");
+    expect(discovery.snapshot.wallets.map(({ provider }) => provider)).toEqual([modern]);
+    install("ethereum", provider({ isMetaMask: true }));
+    window.dispatchEvent(new Event("focus"));
+    expect(discovery.snapshot.wallets.map(({ provider }) => provider)).toEqual([modern]);
+    expect(legacy.request).not.toHaveBeenCalled(); expect(modern.request).not.toHaveBeenCalled();
   });
 
   it("rejects invalid announced metadata without creating a choice", () => {

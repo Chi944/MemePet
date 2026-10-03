@@ -99,6 +99,12 @@ Missing a day never removes earned growth. The prototype has no MemePet token,
 marketplace, staking or financial rewards. Adoption and care do not request token
 allowances or token transfers; wallet approval and network gas are still required.
 
+When both MetaMask and OKX Wallet are installed, choose the wallet explicitly.
+MemePet prefers modern wallet discovery and uses older injection methods only
+when no modern wallet is discovered, avoiding duplicate compatibility entries.
+Older extensions that only support legacy injection may be absent when a modern
+wallet is available. Choosing a wallet does not approve a transaction.
+
 | Hatchling · 0 points | Buddy · 20 points | Guardian · 50 points |
 |:---:|:---:|:---:|
 | <img src="public/pets/hatchling.png" alt="Hatchling stage artwork" width="170"> | <img src="public/pets/buddy.png" alt="Buddy stage artwork" width="170"> | <img src="public/pets/guardian.png" alt="Guardian stage artwork" width="170"> |
@@ -357,7 +363,7 @@ and a read-only holder indicator remain optional future work.
 
 - **Testnet prototype:** one community, one mascot; no mainnet deployment or organic usage metrics are claimed. Finale selection does not establish approval of every planned integration.
 - **Public RPC reliability:** failed reads remain Unknown and expose read-only retry. Automatic settled updates passed the [3 October focused retest](docs/qa/evidence/READ_REPAIR_2026-10-03.md); earlier failures remain documented. This is not a guarantee of RPC uptime or latency.
-- **Wallet coverage:** the final observed MetaMask/OKX paths passed; initial OKX connection failures remain unexplained. Every duplicate-labelled provider path is not claimed verified. B5 recovery requires its own changed-release wallet acceptance.
+- **Wallet coverage:** earlier observed MetaMask/OKX paths passed; initial OKX connection failures remain documented. Modern-first discovery now removes duplicate legacy compatibility choices; simulated discovery tests are separate from genuine extension checks. B5 recovery requires its own changed-release wallet acceptance.
 - **Evidence boundaries:** network mismatch and the real Hatchling-to-Buddy transition were observed in the [first October session](docs/qa/evidence/FINAL_WALLET_2026-10-03.md), with read-back failure/recovery preserved. Normal-motion foreground playback and the copied-link clipboard contents are not established by the final wallet retest.
 - **Wallet warnings:** a fresh approval was reported without a warning; automation did not inspect the extension prompt. Leave any warning unapproved and follow [wallet setup](docs/qa/WALLET_SETUP.md).
 - **Security:** no independent security audit. A dated dependency scan cannot establish zero risk.
