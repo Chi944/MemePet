@@ -1,8 +1,11 @@
 # Final wallet acceptance — one planned session
 
-**Updated 3 October 2026 (Singapore). This is a plan, not a completed run.**
-All results in the final table remain **NOT RUN** until their actual steps are
-observed on the named runtime. Codex prepares and operates the app; Deston
+**Updated 3 October 2026 (Singapore). This document is the procedure.**
+The [completed first run](evidence/FINAL_WALLET_2026-10-03.md) records a genuine
+confirmed care but failed automatic pet/community reads on `988ed94`.
+That failure remains open pending repair release and a focused genuine recheck;
+B5 runtime stays gated. The template table below is not the latest result index.
+Codex prepares and operates the app; Deston
 privately reviews wallet prompts. No keys, passwords or recovery words are
 needed. A successful test, receipt read or screenshot is not a wallet approval.
 

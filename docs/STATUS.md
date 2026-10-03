@@ -4,7 +4,25 @@ Updated 3 October 2026 (Singapore). Team **The four musketeers**: Deston,
 Kym, Larm and YeeWei. The recorded release and the 25 September follow-up run remain
 separate evidence; see [September wallet QA](qa/evidence/LATEST_RELEASE_QA_2026-09-24.md).
 
-## Release QA and acceptance preparation — 3 October, latest checkpoint
+## Genuine wallet session — 3 October, latest checkpoint
+
+Account 4's care confirmed on the frozen `988ed94` release: Hatchling/10 became
+Buddy/20 and the independently attributed community total changed from 12 to
+13. **Automatic pet and community read-back failed.** The recap refreshed
+automatically; subsequent background pet recovery and manual community retry
+are recorded separately. Account return, cooldown, earned forms, personality,
+disconnect/reload and an unconnected public page were also checked, with
+their limits in [the genuine evidence](qa/evidence/FINAL_WALLET_2026-10-03.md).
+
+PR #100 repairs a reproduced retry-classification gap for X Layer's exact
+`-32019` / `block is out of range` response. The original browser error body
+was not captured, so this is not proof of its precise cause. A focused genuine
+care on the verified repaired release is still required. B5 runtime remains
+gated. The captured failure/recovery clip is diagnostic evidence, not a polished
+finale backup. Weighted progress stays **90/100 overall, 41/51 lead** until the
+remaining deliverable gates pass; completed teammate lanes are unchanged.
+
+## Release QA and acceptance preparation — 3 October, earlier checkpoint
 
 Larm's B3 release review #93 and YeeWei's combined B1/Help review #95 are
 reviewed and merged. Their dated reports cover rendered Help, narrow layouts,
@@ -92,7 +110,7 @@ Unpublished work is not counted; genuine acceptance remains a separate gate.
 
 | Member's assigned lane | Weighted progress | Next action |
 |---|---:|---|
-| Deston / Codex | 41 / 51 — **80%** | Codex prepares acceptance; Deston reviews/approves privately and rehearses |
+| Deston / Codex | 41 / 51 — **80%** | Codex releases/read-tests #100; Deston privately approves the focused care recheck and rehearses |
 | Kym | 22 / 22 — **100% implementation** | Focused released onboarding/progression check; no new feature assignment |
 | YeeWei | 16 / 16 — **100% assigned implementation/QA** | Support final acceptance; B5 follow-up only after the gate |
 | Larm | 11 / 11 — **100% assigned implementation/QA** | Deliver actual read-only clips and rehearse accurate judge answers |

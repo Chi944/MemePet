@@ -2,6 +2,11 @@
 
 ## Current handoff — 3 October, after release QA
 
+The first genuine run confirmed Account 4's care but failed automatic pet and
+community read-back. See [actual evidence](../qa/evidence/FINAL_WALLET_2026-10-03.md).
+Codex owns PR #100's targeted retry repair, release and focused genuine recheck.
+B5 remains gated; this does not reopen completed teammate implementation.
+
 B0–B4 are integrated through #92. Reviewed #93/#95 complete Larm's released
 Help verification and YeeWei's combined B1/Help QA. Kym's implementation is
 complete. Do not restart their completed feature or QA branches.
@@ -29,8 +34,8 @@ of scope.
 Approved by Deston on **2 October 2026**, after the finale feature handoff.
 This is additional scope, not unfinished work retroactively assigned to the
 finale. Preserve the existing release and its dated evidence. Final genuine
-wallet acceptance in [the session plan](../qa/FINAL_WALLET_SESSION.md) is still
-**NOT RUN**. New simulated tests cannot close it.
+wallet acceptance follows [the session plan](../qa/FINAL_WALLET_SESSION.md);
+the latest result is linked above. New simulated tests cannot close it.
 
 **Latest authorization, 2 October:** the lead Codex session now merges reviewed,
 passing PRs as well as handling shared engineering, conflicts and release
@@ -134,7 +139,7 @@ The additions above make a better beta; mainnet requires these separate gates:
 
 | Gate | Present status / owner |
 |---|---|
-| Final genuine wallet acceptance; new provider/recovery acceptance | NOT RUN / Codex prepares, Deston privately approves |
+| Final genuine wallet acceptance; new provider/recovery acceptance | First care confirmed; automatic read-back failed; #100 repair/recheck pending. B5 gated / Codex prepares, Deston privately approves |
 | Beta lanes integrated and regression suite green | B0–B4 merged and checked; assigned B2/B3 QA reviewed; B5 gated |
 | Small real-user pilot with repeat use and support feedback | Not started / team recruits consented testers; no fabricated retention metrics |
 | Focused independent contract/security review; material findings resolved | Not completed / coordinate review, no automatic paid commission |
