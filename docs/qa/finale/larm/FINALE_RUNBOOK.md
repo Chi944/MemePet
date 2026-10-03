@@ -34,9 +34,10 @@ the 7th fall on the previous UTC day and do not block the pitch.
 | 2026-09-30 02:59:56 UTC, block 42 278 359 | **4** | `node docs/qa/counter-check.mjs` |
 | 2026-09-30 17:45:35 UTC, block 42 331 498 | **7** | `node docs/qa/counter-check.mjs` |
 | 2026-10-02 08:07:25 UTC, block 42 469 608 | **12** | `node docs/qa/counter-check.mjs` ([F7 combined QA](COMBINED_QA_2026-10-02.md)) |
+| 2026-10-02 16:42:12 UTC, block 42 500 495 | **12** | `node docs/qa/counter-check.mjs` ([3 October rerun](COMBINED_QA_2026-10-03.md)) |
 
-Blooming needs 20. At the latest recorded total of 12 (2 October), 8 more
-genuine confirmed cares remain. Each wallet can care at most once per UTC day. Use the actual
+Blooming needs 20. At the latest recorded total of 12 (2 October, 16:42 UTC),
+8 more genuine confirmed cares remain. Each wallet can care at most once per UTC day. Use the actual
 total on stage; this table is a dated observation, not a forecast.
 
 - **Show the garden as it really is** — the true total, sprouting, with how
@@ -56,11 +57,11 @@ total on stage; this table is a dated observation, not a forecast.
 
 ## Three-minute flow (proposal)
 
-Checked against hosted observations on 2 October in
-[F7 combined QA](COMBINED_QA_2026-10-02.md). GitHub listed deployment
-6803705884 for `5a84e23`, but that run did not independently resolve the
-public alias to a commit. Its local runtime version also remains unresolved.
-Labels in quotes are the app's own text. F6 is merged: "Read block" now sits
+Rechecked on 3 October against release `3148238` (GitHub Production
+deployment 6812922873) in [the 3 October rerun](COMBINED_QA_2026-10-03.md);
+the [2 October run](COMBINED_QA_2026-10-02.md) is kept as history. The alias
+was not independently resolved to a commit (the lead's release notes record
+it). Labels in quotes are the app's own text. F6 is merged: "Read block" now sits
 inside the closed **View verified evidence** disclosure, so **open it before
 pointing at the block** (checklist row S1). The closed recap already shows
 "Confirmed at block N". Recheck these labels on the release Codex names for
@@ -74,12 +75,20 @@ testnet produced roughly one block per second; that is not a receipt time.
 | Time | Screen | What to show and say |
 |---|---|---|
 | 0:00–0:20 | Overview `/` | The idea in one line: *"Adopt a meme-community mascot. A little daily care grows your pet and the community's garden."* No token to buy |
-| 0:20–0:40 | Pet home `/pet`, connected | The real pet: stage, growth points, "Ready" in **Daily care**. *"Care history comes from the X Layer testnet registry; growth is derived from confirmed cares."* |
-| 0:40–1:30 | **Daily care** | Press care. In the wallet: approve (Deston only). The badge moves "In your wallet" → "Pending" → "Confirmed". **This is the buffer.** While it is pending, say: *"No progress is awarded until the receipt confirms."* When it confirms: "Care is confirmed. Your pet's progress is up to date." Expected: growth **+10** (automatic read-back on this release is still NOT RUN; check in rehearsal) |
+| 0:20–0:40 | Pet home `/pet`, connected | The real pet: stage, growth points, "Ready" in **Daily care**. *"Care history comes from the X Layer testnet registry; growth is derived from confirmed cares."* Below Daily care, the **Getting started** card should read "Ready for a little care"; no need to mention it |
+| 0:40–1:30 | **Daily care** | Press care. In the wallet: approve (Deston only). The badge moves "In your wallet" → "Pending" → "Confirmed". **This is the buffer.** While it is pending, say: *"No progress is awarded until the receipt confirms."* When it confirms: "Care is confirmed. Your pet's progress is up to date." Expected: growth **+10** (automatic read-back on this release is still NOT RUN; check in rehearsal). Optional, if the Getting started card has switched to "Your next little care": *"And the next care opens tomorrow; the app shows it in your local time, the rule is UTC."* |
 | 1:30–1:55 | Garden (same page) | Expected: the garden total is one higher. **The automatic garden update after a new care has not been observed live yet** (QA row X3), so check it in the rehearsal. If it has not moved, press **Retry reading** once. *"Every confirmed care adds one here. It counts care actions, not people. At 20 the garden blooms. It's a goal inside the app: no token, no reward. We're at [read it off the screen]."* One line for the reference: *"Themed around XDOG, an X Layer meme community. A reference, not a partnership."* |
 | 1:55–2:20 | **Read-only recap** | Ask "Explain progress". Point at the label **"Standard explanation"**. Open **View verified evidence** (click, or Enter on the summary), then point at "Read block" / "Block time". *"Every answer is a standard explanation of confirmed activity, and it shows the block it was read from."* Leave the evidence open for the next beat |
 | 2:20–2:50 | **Mochi, your way** | With that answer still on screen, press "Explore" or "Practise". The style line changes (curious when Explore leads, focused when Practise leads, playful when balanced) and the same answer is reworded, with the same facts and the same Read block (still visible in the open evidence). *"This changes how Mochi explains, not the facts. It is stored only in this browser, earns no growth and trains no model."* |
 | 2:50–3:00 | — | Close. If the care did not confirm, say so and use the backup (below) |
+
+Optional, only if ahead of time (about 10 s): scroll to **Keep growing
+together** (shown only while connected). *"Milestones are cosmetic labels from
+confirmed cares: no money, no tokens, no extra growth."* The stage pet had 3
+cares on 2 October, so after a fourth the first personal milestone (5) is not
+yet earned; read what the panel actually says. It has only been seen in the
+lead's and Kym's simulated runs, never with a real wallet, so check it in the
+rehearsal before using this line.
 
 Optional, only if ahead of time (about 10 s): on the pet, select the earned
 Hatchling form. The notice reads "Viewing Hatchling · Your current stage is
@@ -96,7 +105,7 @@ reload while the care is pending.
 | Say | Do not say |
 |---|---|
 | "care actions" / "confirmed cares" | "users", "holders", "members", "people", "community growth" |
-| "team demo cares" (for today's total) | "organic", "traction", "adoption" |
+| "team demo cares" (only for actions we have attributed to team wallets) | "organic", "traction", "adoption" |
 | "explanation style" / "Mochi explains differently" | "Mochi learns", "AI personality", "trained", "smart" |
 | "Standard explanation" | "AI answer", "the model says" |
 | "a reference to XDOG" | "partnered with", "endorsed by", "official XDOG app" |
@@ -109,8 +118,14 @@ reload while the care is pending.
 
 - [ ] Codex has named the release SHA to demo; confirm the hosted site serves
       a deployment built from it.
-- [ ] `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/finale` and
-      `/dev/companion` all return 404 on the hosted site.
+- [ ] `/dev/pet`, `/dev/landing`, `/dev/community`, `/dev/finale`,
+      `/dev/companion` and `/dev/beta` all return 404 on the hosted site.
+- [ ] **Stage browser profile has only the pitch wallet extension enabled.**
+      Code reading (not yet seen live): the wallet choice is not saved. With one
+      wallet installed, the app picks it on load and can restore an earlier
+      connection; with MetaMask and OKX both enabled, **every reload asks you
+      to choose the wallet and press Connect again**. Confirm this in the
+      rehearsal.
 - [ ] Phone hotspot tested with the demo laptop: the site loads and the
       registry reads succeed over it.
 - [ ] A **genuine** backup recording exists (see below), made on the release
@@ -131,9 +146,10 @@ reload while the care is pending.
       and set the 0:40–1:30 buffer from it. Also note whether growth and the
       garden total updated **without a reload** (QA row X3); if not, plan the
       Retry press into the script.
-- [ ] Recap labels rechecked on the named release. Verified on 2 October
-      (fixture): "Explain progress", "Next care time", "Contribution",
-      "Standard explanation", "View verified evidence" → "Read block".
+- [ ] Recap labels rechecked on the named release. Verified on 2 and 3 October
+      (fixture, `3148238` on 3 October): "Explain progress", "Next care time",
+      "Contribution", "Standard explanation", "View verified evidence" →
+      "Read block".
 
 ### Morning of 7 October
 
@@ -162,7 +178,8 @@ Decide fast. Do not debug on stage.
 | Mochi is not moving | Check "Animate Mochi" — it was probably switched off earlier. One press turns it on. It changes only the artwork, never the pet's data |
 | Wallet prompt does not appear | Do not wait more than ~15 s. Move on; show the confirmed part from the backup |
 | Transaction stays pending | Say *"progress appears only after the receipt confirms"* — true, and a feature. Continue the talk and come back; if it has not confirmed by the end, the backup shows a confirmed care |
-| Wrong network | Use **Switch network** in the app |
+| Wrong network | Use **Switch network** in the app (the Getting started card also offers "Switch to X Layer testnet") |
+| "Choose your wallet" appears after a reload | Choose the pitch wallet, then **Connect chosen wallet**. Approve only the expected connection in the wallet |
 | Wallet or browser shows a **security warning** | **Do not approve it.** Go to the backup. Never bypass a warning on stage |
 | Care is refused as already cared today | The cooldown trap above has been hit. Show the cooldown message — it demonstrates the once-a-day rule — and use the backup for the care itself |
 | Garden total is lower than expected | Show it as it is. Never switch to the preview to make it look further along |

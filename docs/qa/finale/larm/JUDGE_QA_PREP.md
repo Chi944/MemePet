@@ -5,9 +5,10 @@ team can say as written. Every answer points to its source. Where something is
 not done or not known, the answer says so.
 
 Written against `7d4144b` on 1 October 2026; updated with 2 October hosted
-observations ([F7 combined QA](COMBINED_QA_2026-10-02.md)). That run did not
-independently resolve the public alias to a commit, and its local runtime
-version remains unresolved; the report preserves those limits.
+observations ([F7 combined QA](COMBINED_QA_2026-10-02.md)) and rechecked on
+3 October against release `3148238` ([rerun](COMBINED_QA_2026-10-03.md)).
+Neither run independently resolved the public alias to a commit; the reports
+preserve that limit.
 Dated figures keep their dates. Numbers change: **read live
 numbers off the screen**, not from this sheet. Words to avoid are in
 [`FINALE_RUNBOOK.md`](FINALE_RUNBOOK.md#words-to-use-words-to-avoid).
@@ -16,8 +17,8 @@ numbers off the screen**, not from this sheet. Words to avoid are in
 
 **"How many users do you have?"**
 > We count care actions, not people. One wallet can care once a day, so the
-> number is not a user count. Today's total is the team's own demo cares; we
-> don't claim outside users.
+> number is not a user count. We have used team wallets for testing, but we
+> do not claim these totals represent outside users.
 
 Source: `docs/STATUS.md`, `INTEGRATED_QA_2026-09-30.md`. The three demo
 accounts have cared twice each, so they account for at least six of the
@@ -29,6 +30,8 @@ Later reading: on 2 October at 08:07 UTC the counter read **12** (block
 stage pet's care on 1 October at 16:34 UTC (block 42 413 656); the others are
 not attributed in our records. Do not call them team or community cares.
 On stage, read the live number off the screen.
+
+Still **12** at 16:42 UTC on 2 October (block 42 500 495).
 
 **"Isn't the garden easy to fake with lots of wallets?"**
 > Yes. Anyone can make many wallets, and that's why we call it care actions
@@ -43,8 +46,12 @@ wallet and one care per UTC day.
 **"Is there a token? Can I earn anything?"**
 > No. There's no MemePet token, marketplace, staking or reward. Adopting and
 > caring ask for no token approvals or transfers; you only pay testnet gas.
+> The milestones on your pet page are cosmetic labels from confirmed cares:
+> no money, no tokens, no extra growth.
 
-Source: README "What MemePet does" and "Product scope".
+Source: README "What MemePet does" and "Product scope"; the milestones panel
+copy "Cosmetic recognition only: no money, tokens or extra growth points"
+(`ProgressionPanel.tsx`, B1 #90/#91).
 
 **"What's the market, then?"**
 > We built for Build a Market's meme track: a daily ritual around a meme
@@ -104,9 +111,27 @@ cannot care for someone else's pet."
 
 **"What if I miss a day?"**
 > Nothing is lost. Growth never goes down. The day resets at 00:00 UTC, which
-> is 08:00 in Singapore.
+> is 08:00 in Singapore. After you care, the app also shows the next reset in
+> your local time.
 
-Source: README; `FINALE_RUNBOOK.md` trap 1.
+Source: README; `FINALE_RUNBOOK.md` trap 1; onboarding card "Next reset in
+your local time" (`OnboardingPanel.tsx`, #91).
+
+**"Does it work on mobile?"**
+> On desktop it works with a browser wallet extension. The app suggests
+> opening it inside a mobile wallet's browser, but we haven't tested that on
+> real phones yet. There's no WalletConnect or QR pairing.
+
+Source: onboarding copy; mobile wallet browsers are NOT RUN in Kym's B1
+handoff and the lead's B1 evidence; Help FAQ "What do I need…".
+
+**"How do people get help?"**
+> There's a public Help page with plain answers and official wallet and faucet
+> links. We haven't set up a monitored support contact yet, so the app says so
+> instead of listing one.
+
+Source: https://memepet.vercel.app/help (#88); `SUPPORT_URL = null` in
+`src/content/help.ts`.
 
 ## Community reference
 
@@ -121,13 +146,16 @@ note.
 ## What doesn't work yet
 
 **"What would you fix next?" / "What's not working?"**
-> Three things:
+> Four things:
 >
 > - Automatic refresh of the shared total has returned Unknown before. The
 >   app shows Unknown instead of a number. Retry recovered it in our recorded
 >   tests; persistent failures remain unknown.
 > - We haven't yet seen, on this release, the page update by itself after a
 >   new care.
+> - If you reload while a care is pending, the app doesn't pick that
+>   transaction back up yet. That recovery is planned, after our final wallet
+>   checks.
 > - There is no security audit.
 
 Source: README "Known limitations"; `COMMUNITY_INITIAL_READ_2026-09-30.md`;
@@ -150,7 +178,8 @@ For "how do we know these numbers are real?":
    Checked on 1 October: returned `careCount 2` and `communityTotalCares 7` at
    block 42 359 328. Checked on 2 October at 08:07 UTC: `careCount 3`,
    `growthPoints 30`, `stage buddy` and `communityTotalCares 12` at block
-   42 469 610, with `source: standard`.
+   42 469 610, with `source: standard`. Same values at 16:42 UTC on 2 October
+   (block 42 500 519, release `3148238`).
 3. **The registry on the explorer:** `0xe844152262D243a7B90F6e07FF7A67F1d7FeD216`
    on X Layer testnet. If the explorer shows a login page, reload; don't log in
    on stage.
