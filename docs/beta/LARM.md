@@ -7,6 +7,11 @@ F7 follow-up preserves genuine-wallet gaps. Use the corrected judge wording:
 care actions are not users, and only attributed actions may be called team
 cares. Deliver the actual read-only clips before treating them as backups.
 
+The lead's first genuine care confirmed, but automatic pet/community refresh
+failed and required recovery. Keep that limitation in judge/runbook claims
+until the #100 changed-release recheck passes. The new local recording is a
+labelled diagnostic clip, not the finished pitch backup.
+
 ```text
 Fetch reviewed main, preserving local work. Read docs/beta/LARM.md and the current finale runbook. B3/#93 and released Help QA are complete; do not repeat them. Prepare the four documented read-only clips for delivery to Deston outside Git through the team's existing sharing method. Return usable file locations and checksums; do not claim independent playback until Deston/lead has the files. Rehearse the short runbook/Q&A with accurate care-action attribution. The genuine care recording and final wallet acceptance remain lead-owned. No new source feature, wallet action, paid call or merge.
 ```
