@@ -1,5 +1,19 @@
 # B0–B5 shared contracts and release gates
 
+## B5 implementation handoff — 3 October
+
+The runtime now connects the strict public-hash journal, bounded resolver and
+recovery panel. [Implementation evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md)
+records checks and remaining genuine changed-release acceptance. `usePetRegistry`
+exposes `recoveryState`, `recoveryBlocksWrites`, `recoveryStorageMessage` and
+read-only `checkTransactionStatus`. UI and write callbacks both block unresolved
+submissions. Provider changes clear old views while the stable account scope
+retains its journal. The previous acceptance gate was satisfied before these edits.
+
+Community reads remain separate: a recovered pet does not claim a verified
+community total. B5's own wallet acceptance, backup and rehearsal are not passed
+by the automated suite. Earlier preparation-only descriptions below are history.
+
 ## Current handoff — 3 October, after scoped wallet acceptance
 
 The [repaired-release evidence](../qa/evidence/READ_REPAIR_2026-10-03.md) records

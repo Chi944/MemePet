@@ -20,18 +20,19 @@ export const ACCOUNT_B = "0x2000000000000000000000000000000000000002";
 const CHAIN_ID = DEPLOYMENT.chainId!;
 const REGISTRY = DEPLOYMENT.registryAddress!;
 const RPC_URL = DEPLOYMENT.rpcUrl!;
-const BLOCK_NUMBER = BigInt(4_200_000);
-const BLOCK_TIME_MS = Date.parse("2026-10-02T12:00:00.000Z");
-const BLOCK_DAY = BigInt(Math.floor(BLOCK_TIME_MS / 86_400_000));
+export const BLOCK_NUMBER = BigInt(4_200_000);
+export const BLOCK_TIME_MS = Date.parse("2026-10-02T12:00:00.000Z");
+export const BLOCK_DAY = BigInt(Math.floor(BLOCK_TIME_MS / 86_400_000));
+export const BLOCK_HASH = `0x${"ab".repeat(32)}` as Hex;
 
 /** A pet answer: confirmed care count, a genuine no-pet, or a failed read. */
 export type PetAnswer = number | "no-pet" | "fail";
 export type TotalAnswer = number | "fail";
 
-type RequestKind = "pet" | "community" | "companion";
+type RequestKind = "pet" | "community" | "companion" | "transaction" | "receipt";
 export interface SimulatedRequest {
   readonly kind: RequestKind;
-  /** Lower-case wallet address for pet/companion requests. */
+  /** Lower-case owner for pet/companion, transaction hash for recovery reads. */
   readonly address: string | null;
 }
 
@@ -60,7 +61,13 @@ export interface HeldAnswer {
 export class SimulatedChain {
   readonly pets = new Map<string, PetAnswer>();
   readonly companion = new Map<string, PetAnswer>();
+  readonly lastCareDays = new Map<string, bigint>();
+  blockNumber = BLOCK_NUMBER;
   communityTotal: TotalAnswer = 42;
+  /** JSON-RPC wire values, owned entirely by the simulated recovery tests. */
+  readonly transactions = new Map<string, Record<string, unknown> | null>();
+  readonly receipts = new Map<string, Record<string, unknown> | null>();
+  readonly rpcRequests: { method: string; params: unknown[] }[] = [];
   readonly requests: SimulatedRequest[] = [];
   readonly blocked: string[] = [];
   private readonly holds: Hold[] = [];
@@ -71,8 +78,9 @@ export class SimulatedChain {
     reject: (error: Error) => void;
   }>();
 
-  setPet(address: string, answer: PetAnswer, options: { companion?: boolean } = {}) {
+  setPet(address: string, answer: PetAnswer, options: { companion?: boolean; caredToday?: boolean } = {}) {
     this.pets.set(address.toLowerCase(), answer);
+    this.lastCareDays.set(address.toLowerCase(), options.caredToday ? BLOCK_DAY : BLOCK_DAY - BigInt(1));
     if (options.companion !== false) this.companion.set(address.toLowerCase(), answer);
   }
 
@@ -183,6 +191,7 @@ export class SimulatedChain {
 
   private async answerRpc(route: Route) {
     const body = route.request().postDataJSON() as { id: number; method: string; params: unknown[] };
+    this.rpcRequests.push({ method: body.method, params: body.params });
     const reply = (result: unknown) => route.fulfill({
       status: 200, contentType: "application/json", body: JSON.stringify({ jsonrpc: "2.0", id: body.id, result }),
     });
@@ -191,8 +200,24 @@ export class SimulatedChain {
     });
 
     if (body.method === "eth_chainId") return reply(`0x${CHAIN_ID.toString(16)}`);
-    if (body.method === "eth_blockNumber") return reply(`0x${BLOCK_NUMBER.toString(16)}`);
-    if (body.method === "eth_getBlockByNumber") return reply(simulatedBlock());
+    if (body.method === "eth_blockNumber") return reply(`0x${this.blockNumber.toString(16)}`);
+    if (body.method === "eth_getBlockByNumber") {
+      const requested = body.params[0];
+      const number = typeof requested === "string" && /^0x[0-9a-f]+$/i.test(requested)
+        ? BigInt(requested) : this.blockNumber;
+      const block = simulatedBlock(number);
+      if (body.params[1] === true) {
+        return reply({ ...block, transactions: [...this.transactions.values()].filter((transaction) =>
+          transaction?.blockNumber === block.number) });
+      }
+      return reply(block);
+    }
+    if (body.method === "eth_getTransactionByHash" || body.method === "eth_getTransactionReceipt") {
+      const hash = String(body.params[0]).toLowerCase();
+      const kind = body.method === "eth_getTransactionByHash" ? "transaction" : "receipt";
+      const answer = (kind === "transaction" ? this.transactions : this.receipts).get(hash) ?? null;
+      return this.deliver(route, { kind, address: hash }, () => reply(answer));
+    }
     if (body.method !== "eth_call") {
       this.blocked.push(`RPC ${body.method}`);
       return route.fulfill({ status: 200, contentType: "application/json",
@@ -208,14 +233,15 @@ export class SimulatedChain {
     if (decoded.functionName === "petOf") {
       const address = (decoded.args[0] as string).toLowerCase();
       const answer = this.pets.get(address) ?? "no-pet";
+      const lastCareDay = this.lastCareDays.get(address) ?? BLOCK_DAY - BigInt(1);
       return this.deliver(route, { kind: "pet", address }, () => {
         if (answer === "fail") return unavailable();
         const exists = answer !== "no-pet";
         const careCount = exists ? answer : 0;
         return reply(encodeFunctionResult({
           abi: petRegistryAbi, functionName: "petOf",
-          // Last care was the previous UTC day, so care is not on cooldown.
-          result: [exists, exists ? 1 : 0, careCount, exists && careCount > 0 ? BLOCK_DAY - BigInt(1) : BigInt(0)],
+          // Baselines are due by default; mined care fixtures explicitly set today.
+          result: [exists, exists ? 1 : 0, careCount, exists && careCount > 0 ? lastCareDay : BigInt(0)],
         }));
       });
     }
@@ -238,10 +264,11 @@ export class SimulatedChain {
     const key = address.toLowerCase();
     const answer = this.companion.get(key) ?? "no-pet";
     const total = this.communityTotal;
+    const caredToday = this.lastCareDays.get(key) === BLOCK_DAY;
     return this.deliver(route, { kind: "companion", address: key }, () => answer === "fail"
       ? route.fulfill({ status: 503, contentType: "application/json", body: '{"error":"SIMULATED unavailable"}' })
       : route.fulfill({ status: 200, contentType: "application/json",
-        body: JSON.stringify(companionBody(address, answer, total === "fail" ? null : total)) }));
+        body: JSON.stringify(companionBody(address, answer, total === "fail" ? null : total, caredToday)) }));
   }
 
   /** Assert that nothing unexpected left the browser. */
@@ -252,11 +279,11 @@ export class SimulatedChain {
   }
 }
 
-function simulatedBlock() {
+function simulatedBlock(number = BLOCK_NUMBER) {
   const hex = (value: bigint | number) => `0x${value.toString(16)}`;
   const zero32 = `0x${"0".repeat(64)}`;
   return {
-    number: hex(BLOCK_NUMBER), hash: `0x${"ab".repeat(32)}`, parentHash: zero32,
+    number: hex(number), hash: number === BLOCK_NUMBER ? BLOCK_HASH : `0x${number.toString(16).padStart(64, "0")}`, parentHash: zero32,
     timestamp: hex(BLOCK_TIME_MS / 1000), nonce: "0x0000000000000000", difficulty: "0x0", totalDifficulty: "0x0",
     gasLimit: "0x1c9c380", gasUsed: "0x0", miner: `0x${"0".repeat(40)}`, extraData: "0x",
     logsBloom: `0x${"0".repeat(512)}`, transactionsRoot: zero32, stateRoot: zero32, receiptsRoot: zero32,
@@ -264,12 +291,12 @@ function simulatedBlock() {
   };
 }
 
-function companionBody(address: string, answer: Exclude<PetAnswer, "fail">, communityTotal: number | null) {
+function companionBody(address: string, answer: Exclude<PetAnswer, "fail">, communityTotal: number | null, caredToday = false) {
   const scope = { chainId: CHAIN_ID, walletAddress: getAddress(address), registryAddress: REGISTRY };
   if (answer === "no-pet") return { schemaVersion: 1, scope, facts: { kind: "no-pet", dataMode: "live" } };
   const blockIso = new Date(BLOCK_TIME_MS).toISOString();
-  // Match the RPC fixture: an existing pet last cared yesterday (or never).
-  const nextCareAtIso = blockIso;
+  // Match the RPC fixture's explicit mined-care cooldown when present.
+  const nextCareAtIso = caredToday ? new Date(Number(BLOCK_DAY + BigInt(1)) * 86_400_000).toISOString() : blockIso;
   return {
     schemaVersion: 1,
     scope,

@@ -69,7 +69,7 @@ describe("TransactionRecoveryPanel", () => {
 
   it("separates a confirmed receipt from unavailable pet facts", () => {
     render(<TransactionRecoveryPanel state={recoveryFixtures.waitingFacts} onCheckStatus={vi.fn()} />);
-    expect(screen.getByText(/network confirmed this transaction, but your pet and community details could not be read/i)).toBeInTheDocument();
+    expect(screen.getByText(/network confirmed this transaction, but your pet details could not be read/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Check status" })).toBeInTheDocument();
   });
 

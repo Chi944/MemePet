@@ -6,9 +6,11 @@ implementation is complete. Use [current beta roles](beta/START_HERE.md)
 and [weighted progress](STATUS.md#progress-measurement). The [repaired-release
 retest](qa/evidence/READ_REPAIR_2026-10-03.md) records scoped wallet acceptance
 PASS for `fa07032`, preserving the earlier failure and observation limits.
-Codex may begin B5 integration; its runtime and changed-release acceptance
-remain outstanding. Deston retains private approvals, product review and
-rehearsal. Backup delivery/playback and rehearsal do not gate B5 engineering.
+B5 runtime is implemented and tested on its feature branch; Codex is completing
+review/release checks. No merge/deployment is claimed at this checkpoint, and
+genuine changed-release B5 recovery remains NOT RUN. Deston retains private
+approvals, product review and rehearsal. Backup delivery/playback and rehearsal
+do not gate B5 engineering.
 
 ## Product
 

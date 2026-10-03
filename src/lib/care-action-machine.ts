@@ -18,6 +18,8 @@ export type LivePetControllerInput = {
   /** Which write produced txPhase. An adopt receipt must not read as a confirmed care. */
   readonly txKind?: "idle" | "adopt" | "care";
   readonly transactionHash?: string;
+  /** An existing submitted hash has no verified final result yet. */
+  readonly transactionUnresolved?: boolean;
   readonly txErrorMessage?: string;
   /** When false, care remains unavailable even if a pet exists. */
   readonly careEnabled: boolean;
@@ -50,6 +52,13 @@ export function resolveCareActionState(
 
   if (input.txPhase === "submitting") {
     return { kind: "submitting" };
+  }
+
+  if (input.transactionUnresolved) {
+    return {
+      kind: "unavailable",
+      message: "A submitted transaction still needs verification. Use Check status in its transaction panel; no new transaction will be sent.",
+    };
   }
 
   if (input.txPhase === "pending") {

@@ -12,6 +12,7 @@ import { Card } from "@/components/ui/Card";
 import { WalletChooser } from "@/components/onboarding/WalletChooser";
 import { OnboardingPanel } from "@/components/onboarding/OnboardingPanel";
 import { ProgressionPanel } from "@/components/progression/ProgressionPanel";
+import { TransactionRecoveryPanel } from "@/components/recovery/TransactionRecoveryPanel";
 import { mapBetaPanelState } from "@/lib/beta-panel-state";
 import { useCommunityStats } from "@/hooks/useCommunityStats";
 import { usePetRegistry } from "@/hooks/usePetRegistry";
@@ -42,7 +43,7 @@ export function PetLiveClient() {
     address: wallet.address,
     wrongChain: wallet.wrongChain,
     confirmedBlockNumber: registry.confirmedBlockNumber,
-    isWriting: registry.isSubmitting,
+    isWriting: registry.isSubmitting || registry.recoveryBlocksWrites,
     providerSessionKey: wallet.providerSessionKey,
   });
 
@@ -85,6 +86,7 @@ export function PetLiveClient() {
         txPhase: registry.txPhase,
         txKind: registry.txKind,
         transactionHash: registry.transactionHash,
+        transactionUnresolved: registry.recoveryBlocksWrites,
         txErrorMessage: registry.txErrorMessage ?? undefined,
         careEnabled: true,
         cooldownAvailableAtIso: registry.cooldownAvailableAtIso,
@@ -95,6 +97,7 @@ export function PetLiveClient() {
       registry.readErrorMessage,
       registry.readStatus,
       registry.transactionHash,
+      registry.recoveryBlocksWrites,
       registry.txErrorMessage,
       registry.txKind,
       registry.txPhase,
@@ -106,7 +109,12 @@ export function PetLiveClient() {
 
   const beta = mapBetaPanelState({ deployment: wallet.deployment, wallet, registry, community: community.community });
   function retryPetRead() {
-    if (!registry.isSubmitting && !wallet.selectionBusy && !wallet.wrongChain && wallet.address && registry.readStatus === "error") registry.retryPet();
+    if (registry.isSubmitting || wallet.selectionBusy || wallet.wrongChain || !wallet.address) return;
+    if (registry.recoveryBlocksWrites) {
+      void registry.checkTransactionStatus();
+    } else if (registry.readStatus === "error") {
+      registry.retryPet();
+    }
   }
   function retryProgression() {
     if (registry.isSubmitting || wallet.selectionBusy || wallet.wrongChain) return;
@@ -224,7 +232,7 @@ export function PetLiveClient() {
           !registry.hasPet ? (
             <Button
               onClick={() => void registry.adopt()}
-              disabled={registry.isSubmitting}
+              disabled={registry.isSubmitting || registry.recoveryBlocksWrites}
             >
               Adopt pet
             </Button>
@@ -253,6 +261,16 @@ export function PetLiveClient() {
           </p>
         ) : null}
       </Card>
+
+      {wallet.address && !wallet.wrongChain && registry.recoveryState?.kind === "tracking" ? (
+        <TransactionRecoveryPanel
+          state={registry.recoveryState}
+          onCheckStatus={() => void registry.checkTransactionStatus()}
+        />
+      ) : null}
+      {wallet.address && !wallet.wrongChain && registry.recoveryStorageMessage ? (
+        <p className="status-note" role="status">{registry.recoveryStorageMessage}</p>
+      ) : null}
 
       {registry.hasPet && registry.pet ? (
         <div className="pet-live-grid">
@@ -309,7 +327,7 @@ export function PetLiveClient() {
             </p>
           </div>
           {wallet.address && !wallet.wrongChain && registry.readStatus === "ready" &&
-            registry.hasPet && !registry.isSubmitting ? <PersonalityPanel {...personality} /> : null}
+            registry.hasPet && !registry.isSubmitting && !registry.recoveryBlocksWrites ? <PersonalityPanel {...personality} /> : null}
           <CompanionPanel {...companion} />
         </section>
         <FinaleCommunitySection {...community.finale} deployment={wallet.deployment} />

@@ -5,6 +5,8 @@ passes, and a recovered read does not erase an earlier failed refresh.
 
 ## Current records
 
+- [B5 transaction recovery](B5_RECOVERY_2026-10-03.md): public-hash journal, strict receipt/fact validation and simulated browser coverage. Genuine changed-release recovery acceptance remains separate and NOT RUN.
+
 - [Repaired-release genuine retest](READ_REPAIR_2026-10-03.md): scoped wallet acceptance PASS on `fa07032`; corroborated automatic settled reads, independent receipt verification, account/provider isolation and disconnect evidence. B5 integration may begin; B5 runtime acceptance, backup delivery/playback and rehearsal remain outstanding. Initial OKX failures and observation limits are preserved.
 
 - [First October genuine wallet session](FINAL_WALLET_2026-10-03.md): Account 4 care confirmed on `988ed94`, but automatic pet/community reads FAILED before recovery. That historical result and diagnostic recording remain unchanged by the later retest.

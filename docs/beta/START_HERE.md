@@ -1,30 +1,38 @@
 # Testnet beta: four people, independent build lanes
 
-## Current handoff — 3 October, after scoped wallet acceptance
+## Current handoff — 3 October, B5 release review in progress
 
 The [repaired-release retest](../qa/evidence/READ_REPAIR_2026-10-03.md) records
 **scoped genuine wallet acceptance PASS for `fa07032`** and satisfies the B5
 integration prerequisite. The [earlier Account 4 read-back failure](../qa/evidence/FINAL_WALLET_2026-10-03.md)
 remains historical FAIL. Initial OKX connection failures and observation limits
 remain explicit; the pass covers the observed final paths, not every wallet path.
-Codex may now integrate B5 and must obtain its separate changed-release acceptance.
-This does not reopen completed teammate implementation.
+Codex has implemented and tested B5 on `feat/beta-pending-recovery`; review and
+release checks are in progress, with no merge or deployment claimed here.
+[B5 evidence](../qa/evidence/B5_RECOVERY_2026-10-03.md) records 815 passing app
+tests, eight passing recovery browser cases and all 29 passing simulated browser
+cases. Genuine changed-release B5 recovery remains **NOT RUN**. This does not
+reopen completed teammate implementation or inherit the earlier wallet pass.
 
 B0–B4 are integrated through #92. Reviewed #93/#95 complete Larm's released
 Help verification and YeeWei's combined B1/Help QA. Kym's implementation is
 complete. Do not restart their completed feature or QA branches.
 
-The remaining 8% is B5 runtime/acceptance (6 points), a delivered and independently
-playable backup (1 point), and rehearsal (1 point). Scoped wallet acceptance earns
-2 of the 4 acceptance/backup/rehearsal points: overall **92/100**, lead **43/51
-(about 84%)**, B5 still **2/8**. Backup and rehearsal do not gate B5 engineering.
+Recorded credit remains **92/100 overall, 43/51 lead (about 84%), B5 2/8** until
+the implementation passes review and merges. **Conditionally after that merge**,
+the four implementation points bring progress to **96/100 overall, 47/51 lead
+(about 92%), B5 6/8**. Remaining then: genuine B5 recovery acceptance (2 points),
+a delivered and independently playable backup (1), and rehearsal (1). The earlier
+scoped wallet acceptance retains its 2 points. Backup and rehearsal do not gate
+B5 engineering.
 Codex handles implementation and preparation; Deston retains private approvals,
 product review and rehearsal, with no routine coding assigned.
 
 - Kym: finish the focused released B1 visual check if not already done; report
   only new reproducible findings. No extra features or repeated full QA sweep.
-- YeeWei: retain #95 evidence; enable the recovery scenarios only after the
-  lead supplies the B5 runtime adapter and exact changed-release handoff.
+- YeeWei: retain #95 evidence and cite the lead's eight passing B5 simulated
+  scenarios. Do not rebuild the adapter or repeat completed QA; report only new
+  scoped defects. Genuine B5 acceptance remains lead-coordinated.
 - Larm: deliver the actual four documented read-only clips to Deston outside
   Git, then rehearse the updated runbook/Q&A. Clip filenames/checksums alone
   do not establish delivery or offline playback.
@@ -143,8 +151,8 @@ The additions above make a better beta; mainnet requires these separate gates:
 
 | Gate | Present status / owner |
 |---|---|
-| Final genuine wallet acceptance; new provider/recovery acceptance | Scoped `fa07032` wallet acceptance PASS; B5 integration may begin, with its own changed-release acceptance still required |
-| Beta lanes integrated and regression suite green | B0–B4 merged and checked; assigned B2/B3 QA reviewed; B5 runtime/acceptance outstanding |
+| Final genuine wallet acceptance; new provider/recovery acceptance | Scoped `fa07032` wallet acceptance PASS; genuine changed-release B5 recovery NOT RUN |
+| Beta lanes integrated and regression suite green | B0–B4 merged and checked; B5 implemented/tested on branch, review and release checks in progress; merge/deployment not claimed |
 | Small real-user pilot with repeat use and support feedback | Not started / team recruits consented testers; no fabricated retention metrics |
 | Focused independent contract/security review; material findings resolved | Not completed / coordinate review, no automatic paid commission |
 | Decide fresh mainnet start versus testnet migration | Undecided / team decision; migration is separate contract/product scope |

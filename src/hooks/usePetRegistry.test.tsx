@@ -1,12 +1,16 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { BlockNotFoundError, ResourceUnavailableRpcError, type Address, type WalletClient } from "viem";
+import { BlockNotFoundError, ResourceUnavailableRpcError, encodeFunctionData, type Address, type WalletClient } from "viem";
 import type { Deployment } from "@/lib/deployment";
+import { petRegistryAbi } from "@/lib/pet-registry-abi";
 import { RPC_READ_BUDGET_MS } from "@/lib/read-budget";
 
 const rpc = vi.hoisted(() => ({
   readContract: vi.fn(),
   getBlock: vi.fn(),
+  getChainId: vi.fn(),
+  getTransaction: vi.fn(),
+  getTransactionReceipt: vi.fn(),
   waitForTransactionReceipt: vi.fn(),
   writeContract: vi.fn(),
 }));
@@ -23,7 +27,8 @@ const walletB = "0x2222222222222222222222222222222222222222" as Address;
 const hashA = `0x${"a".repeat(64)}`;
 const hashB = `0x${"b".repeat(64)}`;
 const day = BigInt(20_000);
-const block = { number: BigInt(10), timestamp: day * BigInt(86400) + BigInt(3600) };
+const blockHash = `0x${"c".repeat(64)}`;
+const block = { hash: blockHash, number: BigInt(10), timestamp: day * BigInt(86400) + BigInt(3600) };
 const emptyPet = [false, 0, 0, BigInt(0)] as const;
 const adoptedPet = [true, 1, 0, BigInt(0)] as const;
 const caredPet = [true, 1, 1, day] as const;
@@ -69,6 +74,33 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
   afterEach(() => vi.useRealTimers());
   beforeEach(() => {
     vi.resetAllMocks();
+    window.localStorage.clear();
+    rpc.getChainId.mockResolvedValue(deployment.chainId);
+    // Full independent transaction/receipt/header evidence for the runtime resolver.
+    // The waiter remains separately deferred in race tests; it alone proves nothing.
+    const observedReceipt = async () => {
+      const waiter = rpc.waitForTransactionReceipt.mock.results.at(-1);
+      const included = waiter ? await waiter.value : { status: "success", blockNumber: block.number };
+      const writeIndex = Math.max(0, rpc.writeContract.mock.calls.length - 1);
+      const request = rpc.writeContract.mock.calls[writeIndex]?.[0];
+      const hash = rpc.writeContract.mock.results[writeIndex]
+        ? await rpc.writeContract.mock.results[writeIndex].value : hashA;
+      return { ...included, transactionHash: hash, from: request?.account ?? walletA,
+        to: deployment.registryAddress, blockHash, transactionIndex: 0 };
+    };
+    rpc.getTransactionReceipt.mockImplementation(observedReceipt);
+    rpc.getTransaction.mockImplementation(async () => {
+      const receipt = await observedReceipt();
+      const request = rpc.writeContract.mock.calls.at(-1)?.[0];
+      const action = request?.functionName ?? "adopt";
+      return { hash: receipt.transactionHash, from: receipt.from, to: receipt.to,
+        blockNumber: receipt.blockNumber, blockHash: receipt.blockHash, transactionIndex: 0,
+        chainId: deployment.chainId, value: BigInt(0), nonce: 1,
+        input: action === "adopt"
+          ? encodeFunctionData({ abi: petRegistryAbi, functionName: "adopt", args: [1] })
+          : encodeFunctionData({ abi: petRegistryAbi, functionName: "care" }),
+      };
+    });
     rpc.getBlock.mockResolvedValue(block);
     rpc.readContract.mockResolvedValue(emptyPet);
     rpc.writeContract.mockResolvedValue(hashA);
@@ -142,12 +174,12 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     expect(result.current.pet?.growthPoints).toBe(0);
     expect(rpc.writeContract).toHaveBeenCalledOnce();
     const receiptReads = rpc.getBlock.mock.calls.filter(([args]) => args.blockNumber !== undefined);
-    expect(receiptReads).toHaveLength(2);
+    expect(receiptReads).toHaveLength(failedRead === "block" ? 3 : 4);
     for (const [args] of receiptReads) expect(args.blockNumber).toBe(block.number);
     for (const [args] of rpc.readContract.mock.calls) expect(args.blockNumber).toBe(block.number);
   });
 
-  it("stops after three unavailable receipt reads and keeps confirmed-but-stale wording", async () => {
+  it("stops after three unavailable inclusion-header reads and keeps confirmation unknown", async () => {
     const { result } = mountRegistry();
     await waitFor(() => expect(result.current.readStatus).toBe("ready"));
     rpc.getBlock.mockRejectedValue(new BlockNotFoundError({ blockNumber: block.number }));
@@ -155,9 +187,10 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
 
     expect(rpc.getBlock.mock.calls.filter(([args]) => args.blockNumber !== undefined)).toHaveLength(3);
     expect(rpc.writeContract).toHaveBeenCalledOnce();
-    expect(result.current.txPhase).toBe("success");
-    expect(result.current.readStatus).toBe("error");
-    expect(result.current.readErrorMessage).toMatch(/Adoption confirmed on chain/);
+    expect(result.current.txPhase).toBe("idle");
+    expect(result.current.recoveryState).toMatchObject({ phase: "confirmation-unknown" });
+    expect(result.current.recoveryBlocksWrites).toBe(true);
+    expect(result.current.confirmedBlockNumber).toBeUndefined();
     expect(result.current.pet).toBeNull();
   });
 
@@ -253,11 +286,13 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
       await waitFor(() => expect(result.current.txPhase).toBe("pending"));
       rerender({ address: walletB });
       await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+      rpc.getTransaction.mockRejectedValue(new Error("New session cannot verify the transaction yet"));
       rerender({ address: walletA });
-      await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+      await waitFor(() => expect(result.current.recoveryState).toMatchObject({ phase: "confirmation-unknown" }));
       await act(async () => { receipt.resolve({ status, blockNumber: block.number }); await write; });
       expect(result.current.txPhase).toBe("idle");
-      expect(result.current.transactionHash).toBeUndefined();
+      expect(result.current.transactionHash).toBe(hashA);
+      expect(result.current.recoveryBlocksWrites).toBe(true);
       expect(result.current.confirmedBlockNumber).toBeUndefined();
       expect(result.current.txErrorMessage).toBeNull();
       expect(result.current.pet).toBeNull();
@@ -272,7 +307,7 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     await act(async () => { await result.current.care(); });
     expect(rpc.writeContract).not.toHaveBeenCalled();
 
-    rpc.getBlock.mockResolvedValue({ number: BigInt(11), timestamp: block.timestamp + BigInt(86400) });
+    rpc.getBlock.mockResolvedValue({ ...block, number: BigInt(11), timestamp: block.timestamp + BigInt(86400) });
     await act(async () => { await result.current.refreshPet(); });
     await waitFor(() => expect(result.current.cooldownAvailableAtIso).toBeNull());
     expect(rpc.readContract).toHaveBeenLastCalledWith(
@@ -366,17 +401,18 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     act(() => { write = result.current.adopt(); });
     await waitFor(() => expect(result.current.txPhase).toBe("pending"));
 
+    rpc.getTransaction.mockRejectedValue(new Error("Current provider read is unavailable"));
     rerender({ providerSessionKey: "okx" });
-    expect(result.current.transactionHash).toBeUndefined();
-    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    await waitFor(() => expect(result.current.recoveryState).toMatchObject({ phase: "confirmation-unknown" }));
     rerender({ providerSessionKey: "metamask" });
-    await waitFor(() => expect(result.current.readStatus).toBe("ready"));
+    await waitFor(() => expect(result.current.recoveryState).toMatchObject({ phase: "confirmation-unknown" }));
     await act(async () => { receipt.resolve({ status, blockNumber: block.number }); await write; });
 
     expect(result.current.txPhase).toBe("idle");
     expect(result.current.pet).toBeNull();
     expect(result.current.confirmedBlockNumber).toBeUndefined();
-    expect(result.current.transactionHash).toBeUndefined();
+    expect(result.current.transactionHash).toBe(hashA);
+    expect(result.current.recoveryBlocksWrites).toBe(true);
     expect(result.current.txErrorMessage).toBeNull();
     expect(rpc.getBlock.mock.calls.filter(([args]) => args.blockNumber !== undefined)).toHaveLength(0);
   });
@@ -391,15 +427,16 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     rpc.readContract.mockReturnValueOnce(receiptRead.promise);
     let write!: Promise<void>;
     act(() => { write = result.current.care(); });
-    await waitFor(() => expect(result.current.confirmedBlockNumber).toBe(block.number));
     await waitFor(() => expect(rpc.readContract).toHaveBeenCalledTimes(2));
+    expect(result.current.confirmedBlockNumber).toBeUndefined();
 
+    rpc.getTransaction.mockRejectedValue(new Error("New provider cannot verify inclusion yet"));
     rerender({ providerSessionKey: "okx" });
     expect(result.current.confirmedBlockNumber).toBeUndefined();
     expect(result.current.pet).toBeNull();
-    await waitFor(() => expect(result.current.pet?.growthPoints).toBe(10));
+    await waitFor(() => expect(result.current.recoveryState).toMatchObject({ phase: "confirmation-unknown" }));
     await act(async () => { receiptRead.resolve(evolved); await write; });
-    expect(result.current.pet?.growthPoints).toBe(10);
+    expect(result.current.pet).toBeNull();
     expect(result.current.celebrateStageUp).toBe(false);
     expect(result.current.txPhase).toBe("idle");
   });
@@ -552,17 +589,21 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     await waitFor(() => expect(result.current.readStatus).toBe("ready"));
     const receiptNumber = BigInt(20);
     rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: receiptNumber });
-    rpc.getBlock.mockRejectedValueOnce(new Error("Receipt snapshot temporarily unavailable"));
+    rpc.getBlock.mockResolvedValue({ ...block, number: receiptNumber });
+    rpc.readContract.mockRejectedValueOnce(new Error("Receipt snapshot temporarily unavailable"));
     await act(async () => { await result.current.care(); });
     expect(result.current.readStatus).toBe("error");
     act(() => { result.current.dismissTx(); });
-    expect(result.current.confirmedBlockNumber).toBeUndefined();
+    expect(result.current.confirmedBlockNumber).toBe(receiptNumber);
+    expect(result.current.recoveryBlocksWrites).toBe(true);
     rpc.getBlock.mockImplementation(async ({ blockNumber }) => ({ ...block, number: blockNumber ?? block.number }));
     rpc.readContract.mockResolvedValue(caredPet);
-    await act(async () => { result.current.retryPet(); });
+    await act(async () => { await result.current.checkTransactionStatus(); });
     expect(result.current.pet?.growthPoints).toBe(10);
     expect(rpc.readContract).toHaveBeenLastCalledWith(expect.objectContaining({ blockNumber: receiptNumber }));
     expect(rpc.writeContract).toHaveBeenCalledOnce();
+    act(() => { result.current.dismissTx(); });
+    expect(result.current.confirmedBlockNumber).toBeUndefined();
 
     // A newer latest block must advance time instead of pinning forever.
     rpc.getBlock.mockResolvedValue({ ...block, number: BigInt(21), timestamp: block.timestamp + BigInt(86400) });
@@ -583,16 +624,17 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     const { result } = mountRegistry();
     await waitFor(() => expect(result.current.readStatus).toBe("ready"));
     rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: BigInt(20) });
-    rpc.getBlock.mockRejectedValueOnce(new Error("Read failed"));
+    rpc.getBlock.mockResolvedValue({ ...block, number: BigInt(20) });
+    rpc.readContract.mockRejectedValueOnce(new Error("Read failed"));
     await act(async () => { await result.current.care(); });
     rpc.getBlock.mockImplementation(async ({ blockNumber }) => {
       if (blockNumber !== undefined) throw new Error("Receipt block unavailable");
       return block;
     });
-    await act(async () => { result.current.retryPet(); });
+    await act(async () => { await result.current.checkTransactionStatus(); });
     expect(result.current.readStatus).toBe("error");
     expect(result.current.pet).toBeNull();
-    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(rpc.readContract).toHaveBeenCalledTimes(2);
     expect(rpc.writeContract).toHaveBeenCalledOnce();
   });
 
@@ -605,16 +647,17 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     expect(rpc.writeContract).not.toHaveBeenCalled();
   });
 
-  it("keeps receipt success but rejects a mismatched immediate read-back header", async () => {
+  it("keeps confirmation unknown for a mismatched immediate read-back header", async () => {
     const { result } = mountRegistry();
     await waitFor(() => expect(result.current.readStatus).toBe("ready"));
     rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: BigInt(20) });
     // This replica returns block 10 even though block 20 was requested.
     await act(async () => { await result.current.adopt(); });
-    expect(result.current.txPhase).toBe("success");
-    expect(result.current.confirmedBlockNumber).toBe(BigInt(20));
-    expect(result.current.readStatus).toBe("error");
-    expect(result.current.readErrorMessage).toMatch(/Adoption confirmed on chain/);
+    expect(result.current.txPhase).toBe("idle");
+    expect(result.current.recoveryState).toMatchObject({ phase: "confirmation-unknown" });
+    expect(result.current.recoveryBlocksWrites).toBe(true);
+    expect(result.current.confirmedBlockNumber).toBeUndefined();
+
     expect(result.current.pet).toBeNull();
     expect(rpc.readContract).toHaveBeenCalledOnce();
     expect(rpc.writeContract).toHaveBeenCalledOnce();
@@ -625,27 +668,29 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
     const { result } = mountRegistry();
     await waitFor(() => expect(result.current.readStatus).toBe("ready"));
     rpc.waitForTransactionReceipt.mockResolvedValue({ status: "success", blockNumber: BigInt(20) });
-    rpc.getBlock.mockRejectedValueOnce(new Error("Read failed"));
+    rpc.getBlock.mockResolvedValue({ ...block, number: BigInt(20) });
+    rpc.readContract.mockRejectedValueOnce(new Error("Read failed"));
     await act(async () => { await result.current.care(); });
     rpc.getBlock.mockImplementation(async ({ blockNumber }) => ({
       ...block, number: blockNumber === undefined ? block.number : number,
     }));
-    await act(async () => { result.current.retryPet(); });
+    await act(async () => { await result.current.checkTransactionStatus(); });
     expect(rpc.getBlock).toHaveBeenLastCalledWith({ blockNumber: BigInt(20) });
     expect(result.current.readStatus).toBe("error");
     expect(result.current.pet).toBeNull();
-    expect(result.current.txPhase).toBe("success");
-    expect(result.current.confirmedBlockNumber).toBe(BigInt(20));
-    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(result.current.txPhase).toBe("idle");
+    expect(result.current.recoveryState).toMatchObject({ phase: "confirmation-unknown" });
+    expect(result.current.confirmedBlockNumber).toBeUndefined();
+    expect(rpc.readContract).toHaveBeenCalledTimes(2);
     expect(rpc.writeContract).toHaveBeenCalledOnce();
   });
 
-  it("bounds a stalled receipt snapshot while preserving confirmed success", async () => {
+  it("bounds a stalled receipt snapshot without claiming an unrechecked header is current", async () => {
     const { result } = mountRegistry();
     await waitFor(() => expect(result.current.readStatus).toBe("ready"));
     vi.useFakeTimers();
-    const stalled = deferred<typeof block>();
-    rpc.getBlock.mockReturnValue(stalled.promise);
+    const stalled = deferred<typeof adoptedPet>();
+    rpc.readContract.mockReturnValue(stalled.promise);
     let write!: Promise<void>;
     await act(async () => { write = result.current.adopt(); });
     expect(result.current.txPhase).toBe("pending");
@@ -653,12 +698,14 @@ describe("usePetRegistry confirmed reads and wallet sessions", () => {
       await vi.advanceTimersByTimeAsync(RPC_READ_BUDGET_MS);
       await write;
     });
-    expect(result.current.txPhase).toBe("success");
+    expect(result.current.txPhase).toBe("idle");
+    expect(result.current.recoveryState).toMatchObject({ phase: "confirmation-unknown" });
+    expect(result.current.recoveryBlocksWrites).toBe(true);
     expect(result.current.readStatus).toBe("error");
-    expect(result.current.readErrorMessage).toMatch(/Adoption confirmed on chain/);
-    expect(result.current.confirmedBlockNumber).toBe(block.number);
-    await act(async () => { stalled.resolve(block); });
-    expect(rpc.readContract).toHaveBeenCalledOnce();
+    expect(result.current.readErrorMessage).toMatch(/not fully verified/);
+    expect(result.current.confirmedBlockNumber).toBeUndefined();
+    await act(async () => { stalled.resolve(adoptedPet); });
+    expect(rpc.readContract).toHaveBeenCalledTimes(2);
     expect(rpc.writeContract).toHaveBeenCalledOnce();
     expect(result.current.pet).toBeNull();
   });

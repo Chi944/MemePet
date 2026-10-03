@@ -5,7 +5,8 @@
 three explicitly READ-ONLY Help cases at 320/390/1440px. Help uses real copy,
 blocks unexpected API/external requests and must not inspect a wallet.
 Run `npm run test:e2e:previews` separately for fictional development panels.
-Skipped B5 tests do not count as passes or genuine wallet acceptance.
+B5 recovery scenarios now run in the simulated suite. They do not count as
+genuine wallet acceptance; use the dated B5 evidence for the changed-release gate.
 
 Current setup for the existing Next.js app. Historical scaffolding tasks are complete.
 

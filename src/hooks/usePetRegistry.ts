@@ -7,6 +7,7 @@ import {
   http,
   type Hash,
   type WalletClient,
+  type ReplacementReturnType,
 } from "viem";
 import { careCooldownAvailableAtIso } from "@/lib/care-cooldown";
 import { APPROVED_COMMUNITY_ID } from "@/lib/pet-progress";
@@ -15,6 +16,10 @@ import { petRegistryAbi, type PetOfResult } from "@/lib/pet-registry-abi";
 import type { Deployment } from "@/lib/deployment";
 import { chainFromDeployment } from "@/lib/chains";
 import { readWithBudget, RPC_READ_HTTP_OPTIONS } from "@/lib/read-budget";
+import { pendingTransactionStorageKey, type PendingTransactionRecord, type PendingTransactionScope } from "@/lib/pending-transaction-record";
+import { loadPendingTransaction, savePendingTransaction, removePendingTransactionIfMatching } from "@/lib/pending-transaction-storage";
+import { resolvePendingTransaction, type PendingRecoveryResult } from "@/lib/pending-transaction-recovery";
+import type { TransactionRecoveryState } from "@/types/beta";
 import type { PetViewModel } from "@/types/view-models";
 
 export type PetReadStatus = "idle" | "loading" | "ready" | "error";
@@ -61,9 +66,46 @@ type WalletSession = {
   operation: object | null;
   revision: number;
   retryingRead: boolean;
+  pendingRecord: PendingTransactionRecord | null;
+  replacement?: ReplacementReturnType;
   /** Never let a lagging replica undo this session's confirmed transaction. */
   minimumBlockNumber?: bigint;
 };
+
+const RECOVERY_STORAGE_MESSAGE = "Transaction recovery storage is unavailable or could not be updated. Keep any returned public transaction hash before leaving this page.";
+export const RECEIPT_WAIT_TIMEOUT_MS = 60_000;
+
+function recordScope(record: PendingTransactionRecord): PendingTransactionScope {
+  return { chainId: record.chainId, registryAddress: record.registryAddress, address: record.address };
+}
+
+function explorerLink(deployment: Deployment, hash: string): string | null {
+  if (!/^0x[0-9a-fA-F]{64}$/.test(hash) || !deployment.explorerBaseUrl) return null;
+  try {
+    const url = new URL(deployment.explorerBaseUrl);
+    if (url.protocol !== "https:" || url.username || url.password) return null;
+    url.pathname = `${url.pathname.replace(/\/$/, "")}/tx/${hash}`;
+    url.search = "";
+    url.hash = "";
+    return url.href;
+  } catch { return null; }
+}
+
+function recoveryView(
+  deployment: Deployment,
+  result: PendingRecoveryResult | { phase: "checking" | "pending" | "confirmation-unknown"; record: PendingTransactionRecord },
+): TransactionRecoveryState {
+  const common = {
+    kind: "tracking" as const, action: result.record.action,
+    transactionHash: result.record.transactionHash,
+    explorerUrl: explorerLink(deployment, result.record.transactionHash),
+    networkLabel: deployment.networkName ?? "Configured network", dataMode: "live" as const,
+  };
+  return result.phase === "replaced"
+    ? { ...common, phase: "replaced", replacementHash: result.replacementHash,
+      replacementExplorerUrl: explorerLink(deployment, result.replacementHash) }
+    : { ...common, phase: result.phase };
+}
 
 function isUserRejection(error: unknown): boolean {
   const message = error instanceof Error ? error.message : String(error);
@@ -83,7 +125,7 @@ export function usePetRegistry({
   providerSessionKey = "",
   createWalletClient,
 }: UsePetRegistryArgs) {
-  const cacheKey = `${providerSessionKey}:${address ?? "none"}:${deployment.chainId ?? "none"}:${deployment.registryAddress ?? "none"}:${wrongChain ? "wrong" : "ok"}`;
+  const cacheKey = `${providerSessionKey}:${address ?? "none"}:${deployment.chainId ?? "none"}:${deployment.registryAddress ?? "none"}:${wrongChain ? "wrong" : "ok"}:${deployment.rpcUrl ?? "none"}`;
   const [activeKey, setActiveKey] = useState(cacheKey);
   const [snapshot, setSnapshot] = useState<PetSnapshot>(emptySnapshot);
   const [txPhase, setTxPhase] = useState<TxPhase>("idle");
@@ -94,6 +136,10 @@ export function usePetRegistry({
   const [refreshToken, setRefreshToken] = useState(0);
   const [celebrateStageUp, setCelebrateStageUp] = useState(false);
   const sessionRef = useRef<WalletSession | null>(null);
+  // A storage failure must not hide a returned hash. No game facts are persisted.
+  const memoryRecords = useRef(new Map<string, PendingTransactionRecord>());
+  const [recoveryState, setRecoveryState] = useState<TransactionRecoveryState>({ kind: "idle" });
+  const [recoveryStorageMessage, setRecoveryStorageMessage] = useState<string | null>(null);
 
   if (activeKey !== cacheKey) {
     setActiveKey(cacheKey);
@@ -104,6 +150,8 @@ export function usePetRegistry({
     setConfirmedBlockNumber(undefined);
     setTxErrorMessage(null);
     setCelebrateStageUp(false);
+    setRecoveryState({ kind: "idle" });
+    setRecoveryStorageMessage(null);
   }
 
   // chainFromDeployment builds a fresh object for any chain id outside X Layer,
@@ -112,21 +160,152 @@ export function usePetRegistry({
   const chain = useMemo(() => chainFromDeployment(deployment), [deployment]);
   const registryAddress = deployment.registryAddress as Address | null;
 
+  const scope = useMemo<PendingTransactionScope | null>(() =>
+    address && registryAddress && chain && !wrongChain
+      ? { chainId: chain.id, registryAddress, address } : null,
+  [address, registryAddress, chain, wrongChain]);
+
+  const resolveRecord = useCallback(async (
+    session: WalletSession, record: PendingTransactionRecord, isCurrent: () => boolean,
+    stageBeforeCare: PetViewModel["stage"] | null = null,
+  ) => {
+    let result: PendingRecoveryResult | undefined;
+    try {
+      result = await resolvePendingTransaction({ deployment, record, isCurrent, replacement: session.replacement });
+    } catch {
+      if (isCurrent()) {
+        setRecoveryState(recoveryView(deployment, { phase: "confirmation-unknown", record }));
+        setTxPhase("idle");
+      }
+      return;
+    }
+    if (!result || !isCurrent()) return;
+    const originalKey = pendingTransactionStorageKey(recordScope(record));
+    const verifiedRecord = result.record;
+    // Only the resolver's verified allowed-call replacement can become this journal.
+    if (verifiedRecord.transactionHash !== record.transactionHash) {
+      if (!savePendingTransaction(verifiedRecord, record.transactionHash)) setRecoveryStorageMessage(RECOVERY_STORAGE_MESSAGE);
+      if (originalKey) memoryRecords.current.set(originalKey, verifiedRecord);
+      session.pendingRecord = verifiedRecord;
+      session.replacement = undefined;
+    }
+    setRecoveryState(recoveryView(deployment, result));
+    setTransactionHash(verifiedRecord.transactionHash);
+    setTxKind(verifiedRecord.action);
+    setTxErrorMessage(null);
+    if (result.phase === "confirmed" || result.phase === "confirmed-awaiting-facts") {
+      session.minimumBlockNumber = result.blockNumber;
+      setConfirmedBlockNumber(result.blockNumber);
+      setTxPhase("success");
+      if (result.phase === "confirmed-awaiting-facts") {
+        setSnapshot((previous) => ({ ...previous, readStatus: "error",
+          readErrorMessage: verifiedRecord.action === "adopt"
+            ? "Adoption confirmed on chain, but refreshing the pet failed. The displayed state may be out of date."
+            : "Care confirmed on chain, but refreshing the pet failed. The displayed progress may be out of date.",
+        }));
+        return;
+      }
+      const mapped = mapPetOfToViewModel(result.rawPet);
+      setSnapshot({ readStatus: "ready", readErrorMessage: null, rawPet: result.rawPet,
+        hasPet: mapped.kind === "pet", pet: mapped.kind === "pet" ? mapped.pet : null,
+        chainTimeMs: result.chainTimeMs });
+      if (verifiedRecord.action === "care" && mapped.kind === "pet" && stageBeforeCare !== null &&
+        mapped.pet.stage !== stageBeforeCare) setCelebrateStageUp(true);
+    } else if (result.phase === "reverted" || result.phase === "cancelled") {
+      setTxPhase("error");
+      setTxErrorMessage(result.phase === "cancelled"
+        ? "The transaction was cancelled. No progress was awarded."
+        : verifiedRecord.action === "adopt"
+          ? "The adoption transaction reverted. No pet was created."
+          : "The care transaction reverted. No progress was awarded.");
+    } else {
+      // Pending/missing is not confirmed failure or permission for another write.
+      setTxPhase("idle");
+      setConfirmedBlockNumber(undefined);
+      setSnapshot({ ...emptySnapshot, readStatus: "error",
+        readErrorMessage: "This transaction is not fully verified yet. Check its status before sending another transaction." });
+      return;
+    }
+    session.pendingRecord = null;
+    session.replacement = undefined;
+    if (originalKey && memoryRecords.current.get(originalKey)?.transactionHash === verifiedRecord.transactionHash) {
+      memoryRecords.current.delete(originalKey);
+    }
+    if (!removePendingTransactionIfMatching(verifiedRecord)) setRecoveryStorageMessage(RECOVERY_STORAGE_MESSAGE);
+    setRefreshToken((value) => value + 1);
+  }, [deployment]);
+
+  const checkTransactionStatus = useCallback(async () => {
+    const session = sessionRef.current;
+    if (!scope || !session?.active || session.key !== cacheKey || session.operation || !session.pendingRecord) return;
+    const record = session.pendingRecord;
+    const operation = {};
+    session.operation = operation;
+    session.revision += 1;
+    const isCurrent = () => session.active && sessionRef.current === session && session.operation === operation;
+    setRecoveryState(recoveryView(deployment, { phase: "checking", record }));
+    try { await resolveRecord(session, record, isCurrent); }
+    finally { if (session.operation === operation) session.operation = null; }
+  }, [cacheKey, deployment, resolveRecord, scope]);
+
   useEffect(() => {
-    // A new session identity also invalidates A → B → A writes. Comparing
-    // address strings alone would accept the original A result after return.
+    // Session identity invalidates returning old results; the public journal
+    // deliberately survives provider changes and refresh in the same scope.
     const session: WalletSession = {
-      key: cacheKey,
-      active: true,
-      operation: null,
-      revision: 0,
-      retryingRead: false,
+      key: cacheKey, active: true, operation: null, revision: 0,
+      retryingRead: false, pendingRecord: null,
     };
     sessionRef.current = session;
-    return () => {
-      session.active = false;
+    if (scope) {
+      const key = pendingTransactionStorageKey(scope);
+      const loaded = loadPendingTransaction(scope);
+      const record = loaded.record ?? (key ? memoryRecords.current.get(key) : null) ?? null;
+      if (record) {
+        if (key) memoryRecords.current.set(key, record);
+        session.pendingRecord = record;
+        session.operation = {};
+      }
+      // Install the synchronous guard first, then publish the external-storage
+      // result asynchronously. Cleanup suppresses Strict Mode's obsolete pass.
+      const operation = session.operation;
+      const isCurrent = () => session.active && sessionRef.current === session && session.operation === operation;
+      void (async () => {
+        await Promise.resolve();
+        if (!isCurrent()) return;
+        if (!loaded.available) setRecoveryStorageMessage(RECOVERY_STORAGE_MESSAGE);
+        if (!record) return;
+        setTransactionHash(record.transactionHash);
+        setTxKind(record.action);
+        setRecoveryState(recoveryView(deployment, { phase: "checking", record }));
+        try { await resolveRecord(session, record, isCurrent); }
+        finally { if (session.operation === operation) session.operation = null; }
+      })();
+    }
+
+    return () => { session.active = false; };
+  }, [cacheKey, deployment, resolveRecord, scope]);
+
+  useEffect(() => {
+    if (!scope) return;
+    const key = pendingTransactionStorageKey(scope);
+    const changed = (event: StorageEvent) => {
+      if (event.key !== key && event.key !== null) return;
+      const session = sessionRef.current;
+      if (!session?.active || session.key !== cacheKey || session.operation) return;
+      const loaded = loadPendingTransaction(scope);
+      if (!loaded.available) setRecoveryStorageMessage(RECOVERY_STORAGE_MESSAGE);
+      // A deletion/corrupt value never proves that our in-memory transaction failed.
+      if (!loaded.record) return;
+      session.pendingRecord = loaded.record;
+      session.revision += 1;
+      setTransactionHash(loaded.record.transactionHash);
+      setTxKind(loaded.record.action);
+      setSnapshot(emptySnapshot);
+      void checkTransactionStatus();
     };
-  }, [cacheKey]);
+    window.addEventListener("storage", changed);
+    return () => window.removeEventListener("storage", changed);
+  }, [cacheKey, checkTransactionStatus, scope]);
 
   useEffect(() => {
     if (!address || !registryAddress || !chain || wrongChain) {
@@ -143,7 +322,7 @@ export function usePetRegistry({
 
   useEffect(() => {
     const session = sessionRef.current;
-    if (!address || !registryAddress || !chain || wrongChain || !session || session.operation) {
+    if (!address || !registryAddress || !chain || wrongChain || !session || session.operation || session.pendingRecord) {
       return;
     }
 
@@ -255,15 +434,17 @@ export function usePetRegistry({
     if (!address || !registryAddress || !chain || wrongChain ||
       !session?.active || session.key !== cacheKey || session.operation ||
       session.retryingRead || snapshot.readStatus !== "error") return;
+    if (session.pendingRecord) { void checkTransactionStatus(); return; }
 
     // Lock immediately: repeated clicks in the same render still start one read.
     session.retryingRead = true;
     session.revision += 1;
     setSnapshot({ ...emptySnapshot, readStatus: "loading" });
     setRefreshToken((value) => value + 1);
-  }, [address, cacheKey, chain, registryAddress, snapshot.readStatus, wrongChain]);
+  }, [address, cacheKey, chain, checkTransactionStatus, registryAddress, snapshot.readStatus, wrongChain]);
 
   const dismissTx = useCallback(() => {
+    if (sessionRef.current?.pendingRecord) return;
     setTxPhase("idle");
     setTxKind("idle");
     setTransactionHash(undefined);
@@ -274,11 +455,27 @@ export function usePetRegistry({
   const runWrite = useCallback(
     async (kind: "adopt" | "care") => {
       const session = sessionRef.current;
-      if (!session?.active || session.key !== cacheKey || session.operation) {
+      if (!session?.active || session.key !== cacheKey || session.operation || session.pendingRecord) {
         return;
       }
 
       if (!address || !registryAddress || !chain || wrongChain) {
+        return;
+      }
+
+      // Another tab may have saved a hash after this session opened.
+      const capturedScope: PendingTransactionScope = { chainId: chain.id, registryAddress, address };
+      const stored = loadPendingTransaction(capturedScope);
+      if (!stored.available) setRecoveryStorageMessage(RECOVERY_STORAGE_MESSAGE);
+      const scopeKey = pendingTransactionStorageKey(capturedScope);
+      const savedRecord = stored.record ?? (scopeKey ? memoryRecords.current.get(scopeKey) : null);
+      if (savedRecord) {
+        session.revision += 1;
+        session.pendingRecord = savedRecord;
+        setSnapshot({ ...emptySnapshot, readStatus: "error",
+          readErrorMessage: "A saved transaction needs verification. Check its status before sending another transaction." });
+        setRecoveryState(recoveryView(deployment, { phase: "confirmation-unknown", record: savedRecord }));
+        setTransactionHash(savedRecord.transactionHash);
         return;
       }
 
@@ -326,11 +523,12 @@ export function usePetRegistry({
       setTxPhase("awaiting-signature");
 
       const stageBeforeCare = kind === "care" ? snapshot.pet?.stage ?? null : null;
+      let returnedRecord: PendingTransactionRecord | null = null;
 
       try {
         const publicClient = createPublicClient({
           chain,
-          transport: http(deployment.rpcUrl ?? undefined),
+          transport: http(deployment.rpcUrl ?? undefined, RPC_READ_HTTP_OPTIONS),
         });
 
         const hash = (await walletClient.writeContract(
@@ -352,124 +550,37 @@ export function usePetRegistry({
               },
         )) as Hash;
 
-        if (!isCurrentOperation()) {
-          return;
-        }
-
+        // Save a late public hash under its captured original scope, without
+        // replacing a different unresolved record from a newer operation.
+        returnedRecord = { version: 1, ...capturedScope, action: kind, transactionHash: hash.toLowerCase() as Hash };
+        const key = pendingTransactionStorageKey(capturedScope);
+        if (key && !memoryRecords.current.has(key)) memoryRecords.current.set(key, returnedRecord);
+        const saved = savePendingTransaction(returnedRecord);
+        if (!isCurrentOperation()) return;
+        if (!saved) setRecoveryStorageMessage(RECOVERY_STORAGE_MESSAGE);
+        session.pendingRecord = returnedRecord;
         setTransactionHash(hash);
+        setRecoveryState(recoveryView(deployment, { phase: "pending", record: returnedRecord }));
         setTxPhase("pending");
-
-        const receipt = await publicClient.waitForTransactionReceipt({ hash });
-
-        if (!isCurrentOperation()) {
-          return;
-        }
-
-        if (receipt.status !== "success") {
-          setTxPhase("error");
-          setTxErrorMessage(
-            kind === "adopt"
-              ? "The adoption transaction reverted. No pet was created."
-              : "The care transaction reverted. No progress was awarded.",
-          );
-          return;
-        }
-
-        // Related reads must use the receipt's state, not an independently
-        // cached or lagging "latest" response from the RPC service.
-        session.minimumBlockNumber = receipt.blockNumber;
-        setConfirmedBlockNumber(receipt.blockNumber);
-
-        // Re-read before treating the write as success. A hash alone is not enough.
-        let result;
-        let chainTimeMs;
         try {
-          const readClient = createPublicClient({
-            chain,
-            transport: http(deployment.rpcUrl ?? undefined, RPC_READ_HTTP_OPTIONS),
-          });
-          // RPC replicas can expose a receipt before its state is readable.
-          // Retry only reads, at the same confirmed block, with a bounded wait.
-          const confirmed = await readWithBudget(
-            async (canRead) => {
-              const blockNumber = receipt.blockNumber;
-              const block = await readClient.getBlock({
-                blockNumber,
-              });
-              if (!canRead()) return;
-              if (block.number !== blockNumber) {
-                throw new Error("Receipt block does not match the requested block");
-              }
-              const petResult = await readClient.readContract({
-                address: registryAddress,
-                abi: petRegistryAbi,
-                functionName: "petOf",
-                args: [address],
-                blockNumber,
-              });
-              return { result: petResult, chainTimeMs: Number(block.timestamp) * 1000 };
+          await publicClient.waitForTransactionReceipt({ hash, timeout: RECEIPT_WAIT_TIMEOUT_MS,
+            onReplaced: (replacement) => {
+              if (isCurrentOperation()) session.replacement = replacement;
             },
-            isCurrentOperation,
-          );
-          if (!confirmed) return;
-          result = confirmed.result;
-          chainTimeMs = confirmed.chainTimeMs;
-        } catch {
-          // The receipt already confirmed success, so the write DID land. Say
-          // so, and mark the display as stale rather than claiming failure.
-          if (!isCurrentOperation()) {
-            return;
-          }
-          setSnapshot((previous) => ({
-            ...previous,
-            readStatus: "error",
-            readErrorMessage:
-              kind === "adopt"
-                ? "Adoption confirmed on chain, but refreshing the pet failed. The displayed state may be out of date."
-                : "Care confirmed on chain, but refreshing the pet failed. The displayed progress may be out of date.",
-          }));
-          setTxPhase("success");
-          return;
-        }
-
-        if (!isCurrentOperation()) {
-          return;
-        }
-
-        const mappedRaw: PetOfResult = {
-          exists: result[0],
-          communityId: result[1],
-          careCount: result[2],
-          lastCareDay: result[3],
-        };
-        const mapped = mapPetOfToViewModel(mappedRaw);
-
-        setSnapshot({
-          readStatus: "ready",
-          readErrorMessage: null,
-          rawPet: mappedRaw,
-          hasPet: mapped.kind === "pet",
-          pet: mapped.kind === "pet" ? mapped.pet : null,
-          chainTimeMs,
-        });
-
-        if (
-          kind === "care" &&
-          mapped.kind === "pet" &&
-          stageBeforeCare !== null &&
-          mapped.pet.stage !== stageBeforeCare
-        ) {
-          setCelebrateStageUp(true);
-        }
-
-        setTxPhase("success");
-        setRefreshToken((value) => value + 1);
+          });
+        } catch { /* A timeout/missing receipt stays unresolved until the resolver checks it. */ }
+        if (!isCurrentOperation()) return;
+        await resolveRecord(session, returnedRecord, isCurrentOperation, stageBeforeCare);
       } catch (error) {
         if (!isCurrentOperation()) {
           return;
         }
 
-        if (isUserRejection(error)) {
+        if (returnedRecord) {
+          setRecoveryState(recoveryView(deployment, { phase: "confirmation-unknown", record: returnedRecord }));
+          setTxPhase("idle");
+          setTxErrorMessage(null);
+        } else if (isUserRejection(error)) {
           setTxPhase("rejected");
           setTxErrorMessage(
             "You declined the wallet request. No progress was awarded.",
@@ -496,8 +607,9 @@ export function usePetRegistry({
       chain,
       cooldownAvailableAtIso,
       createWalletClient,
-      deployment.rpcUrl,
+      deployment,
       registryAddress,
+      resolveRecord,
       snapshot.hasPet,
       snapshot.readStatus,
       snapshot.pet?.stage,
@@ -528,6 +640,11 @@ export function usePetRegistry({
     txPhase === "pending";
 
   return {
+    recoveryState,
+    recoveryStorageMessage,
+    recoveryBlocksWrites: recoveryState.kind === "tracking" &&
+      !["confirmed", "reverted", "cancelled"].includes(recoveryState.phase),
+    checkTransactionStatus,
     readStatus: readStatusForUi,
     readErrorMessage: snapshot.readErrorMessage,
     pet: snapshot.pet,

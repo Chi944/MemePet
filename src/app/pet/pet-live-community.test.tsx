@@ -6,6 +6,9 @@ import type { Deployment } from "@/lib/deployment";
 const rpc = vi.hoisted(() => ({
   readContract: vi.fn(),
   getBlock: vi.fn(),
+  getChainId: vi.fn(),
+  getTransaction: vi.fn(),
+  getTransactionReceipt: vi.fn(),
   waitForTransactionReceipt: vi.fn(),
   writeContract: vi.fn(),
 }));
@@ -34,6 +37,7 @@ const deployment: Deployment = {
 const day = BigInt(20_000);
 const receiptBlock = BigInt(11);
 const hash = `0x${"a".repeat(64)}`;
+const blockHash = `0x${"b".repeat(64)}`;
 
 function deferred<T>() {
   let resolve!: (value: T) => void;
@@ -112,6 +116,16 @@ describe("live care refreshes the community counter", () => {
       switchNetwork: vi.fn(),
     });
     rpc.writeContract.mockResolvedValue(hash);
+    rpc.getChainId.mockResolvedValue(31337);
+    rpc.getTransaction.mockResolvedValue({
+      hash, chainId: 31337, from: address, to: deployment.registryAddress,
+      value: BigInt(0), input: "0x093a37ff", nonce: 1,
+      blockNumber: receiptBlock, blockHash, transactionIndex: 0,
+    });
+    rpc.getTransactionReceipt.mockResolvedValue({
+      transactionHash: hash, from: address, to: deployment.registryAddress,
+      blockNumber: receiptBlock, blockHash, transactionIndex: 0, status: "success",
+    });
   });
 
   afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
@@ -124,6 +138,7 @@ describe("live care refreshes the community counter", () => {
       rpc.waitForTransactionReceipt.mockReturnValue(receipt.promise);
       rpc.getBlock.mockImplementation(async ({ blockNumber }) => ({
         number: blockNumber ?? (confirmed ? receiptBlock : BigInt(10)),
+        hash: blockHash,
         timestamp: day * BigInt(86400) + BigInt(3600),
       }));
       rpc.readContract.mockImplementation(async ({ functionName, blockNumber }) => {
@@ -151,7 +166,9 @@ describe("live care refreshes the community counter", () => {
       await act(async () => {
         fireEvent.click(screen.getByRole("button", { name: /Care for Mochi/ }));
       });
-      expect(screen.getByRole("button", { name: "Pending confirmation" })).toBeDisabled();
+      expect(screen.queryByRole("button", { name: /Care for Mochi|Try care again/ })).not.toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: "Waiting for confirmation" })).toBeInTheDocument();
+      expect(within(screen.getByRole("region", { name: "Care for your pet" })).getByText(/submitted transaction still needs verification/)).toBeInTheDocument();
       expect(communityTotal()).toHaveTextContent("0");
       expect(recap().getByText("Loading MemePet activity…")).toBeInTheDocument();
       expect(recap().queryByRole("button", { name: "Explain progress" })).not.toBeInTheDocument();
@@ -186,6 +203,7 @@ describe("live care refreshes the community counter", () => {
     let retrying = false;
     rpc.getBlock.mockImplementation(async ({ blockNumber }) => ({
       number: blockNumber ?? (confirmed ? receiptBlock : BigInt(10)),
+      hash: blockHash,
       timestamp: day * BigInt(86400) + BigInt(3600),
     }));
     rpc.waitForTransactionReceipt.mockImplementation(async () => {

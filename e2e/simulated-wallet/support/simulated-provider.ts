@@ -13,6 +13,8 @@ export interface SimulatedWalletSpec {
   /** Accounts returned when the user connects. */
   readonly connectAccounts: readonly string[];
   readonly chainIdHex: string;
+  /** Opt-in returned hash for a fictional send; no signing or network exists. */
+  readonly returnedTransactionHash?: string;
 }
 
 export interface ProviderCall {
@@ -23,15 +25,17 @@ export interface ProviderCall {
 type Controls = {
   calls: ProviderCall[];
   setAccounts: (wallet: string, accounts: string[]) => void;
+  setChain: (wallet: string, chainIdHex: string) => void;
 };
 
-/** Install fake providers. Writes and signatures are rejected and recorded. */
+/** Install fake providers. Writes reject unless a fictional returned hash is supplied. */
 export async function installSimulatedWallets(page: Page, wallets: readonly SimulatedWalletSpec[]) {
   await page.addInitScript((specs: readonly SimulatedWalletSpec[]) => {
     const calls: ProviderCall[] = [];
-    const providers = new Map<string, { setAccounts: (accounts: string[]) => void }>();
+    const providers = new Map<string, { setAccounts: (accounts: string[]) => void; setChain: (chainIdHex: string) => void }>();
     for (const spec of specs) {
       let accounts = [...spec.grantedAccounts];
+      let chainIdHex = spec.chainIdHex;
       const listeners = new Map<string, Set<(...args: unknown[]) => void>>();
       const emit = (event: string, value: unknown) => {
         for (const listener of listeners.get(event) ?? []) listener(value);
@@ -42,11 +46,12 @@ export async function installSimulatedWallets(page: Page, wallets: readonly Simu
         async request({ method }: { method: string }) {
           calls.push({ wallet: spec.name, method });
           if (method === "eth_accounts") return [...accounts];
-          if (method === "eth_chainId") return spec.chainIdHex;
+          if (method === "eth_chainId") return chainIdHex;
           if (method === "eth_requestAccounts") {
             accounts = [...spec.connectAccounts];
             return [...accounts];
           }
+          if (method === "eth_sendTransaction" && spec.returnedTransactionHash) return spec.returnedTransactionHash;
           throw Object.assign(new Error(`SIMULATED: ${method} is not available`), { code: 4200 });
         },
         on(event: string, listener: (...args: unknown[]) => void) {
@@ -63,6 +68,10 @@ export async function installSimulatedWallets(page: Page, wallets: readonly Simu
           accounts = [...next];
           emit("accountsChanged", [...accounts]);
         },
+        setChain: (next) => {
+          chainIdHex = next;
+          emit("chainChanged", next);
+        },
       });
       Object.defineProperty(window, spec.global, { configurable: true, value: provider });
     }
@@ -74,6 +83,7 @@ export async function installSimulatedWallets(page: Page, wallets: readonly Simu
     (window as Window & { __simulatedWallets?: Controls }).__simulatedWallets = {
       calls,
       setAccounts: (wallet, accounts) => providers.get(wallet)?.setAccounts(accounts),
+      setChain: (wallet, chainIdHex) => providers.get(wallet)?.setChain(chainIdHex),
     };
   }, wallets);
 
@@ -83,6 +93,11 @@ export async function installSimulatedWallets(page: Page, wallets: readonly Simu
       page.evaluate(([name, next]) => {
         (window as Window & { __simulatedWallets?: Controls }).__simulatedWallets!.setAccounts(name, next);
       }, [wallet, accounts] as const),
+    /** Simulate a wallet's external chain change; never request a switch. */
+    setChain: (wallet: SimulatedWalletSpec["name"], chainIdHex: string) =>
+      page.evaluate(([name, next]) => {
+        (window as Window & { __simulatedWallets?: Controls }).__simulatedWallets!.setChain(name, next);
+      }, [wallet, chainIdHex] as const),
     calls: () => page.evaluate(() => (window as Window & { __simulatedWallets?: Controls }).__simulatedWallets!.calls),
   };
 }

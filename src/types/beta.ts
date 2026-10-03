@@ -67,7 +67,7 @@ export interface ProgressionPanelProps {
   readonly onRetry: () => void;
 }
 
-/** Display contract only. Persistence/runtime wiring waits for final acceptance. */
+/** Display contract only. The lead owns journal validation and read-only recovery. */
 export type TransactionRecoveryState =
   | { readonly kind: "idle" }
   | {
