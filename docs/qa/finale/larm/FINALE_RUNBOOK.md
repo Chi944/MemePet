@@ -105,7 +105,7 @@ reload while the care is pending.
 | Say | Do not say |
 |---|---|
 | "care actions" / "confirmed cares" | "users", "holders", "members", "people", "community growth" |
-| "team demo cares" (for today's total) | "organic", "traction", "adoption" |
+| "team demo cares" (only for actions we have attributed to team wallets) | "organic", "traction", "adoption" |
 | "explanation style" / "Mochi explains differently" | "Mochi learns", "AI personality", "trained", "smart" |
 | "Standard explanation" | "AI answer", "the model says" |
 | "a reference to XDOG" | "partnered with", "endorsed by", "official XDOG app" |

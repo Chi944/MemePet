@@ -17,8 +17,8 @@ numbers off the screen**, not from this sheet. Words to avoid are in
 
 **"How many users do you have?"**
 > We count care actions, not people. One wallet can care once a day, so the
-> number is not a user count. Today's total is the team's own demo cares; we
-> don't claim outside users.
+> number is not a user count. We have used team wallets for testing, but we
+> do not claim these totals represent outside users.
 
 Source: `docs/STATUS.md`, `INTEGRATED_QA_2026-09-30.md`. The three demo
 accounts have cared twice each, so they account for at least six of the
